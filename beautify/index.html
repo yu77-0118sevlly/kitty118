@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>Pocket OS</title>
+  <style>
+    :root {
+      --bg-primary: #ffffff;
+      --bg-secondary: #f6f6f6;
+      --bg-tertiary: #eeeeee;
+      --border-color: #e2e2e2;
+      --text-primary: #111111;
+      --text-secondary: #666666;
+      --text-tertiary: #999999;
+      --accent: #000000;
+      --danger: #444444;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      font-family: var(--font-stack);
+    }
+
+    body, html {
+      width: 100%;
+      height: 100%;
+      background: #000000;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* 手机主容器：无多余边框，直通屏幕边缘 */
+    #phone-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      max-width: 440px;
+      max-height: 940px;
+      background: var(--bg-primary);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* 浏览器全屏或真机时自动完全铺满 */
+    @media (max-width: 600px), (max-height: 900px) {
+      #phone-container {
+        max-width: 100%;
+        max-height: 100%;
+      }
+    }
+
+    /* 顶部状态栏 */
+    .status-bar {
+      height: 44px;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: -0.2px;
+      color: var(--text-primary);
+      z-index: 100;
+      background: transparent;
+    }
+
+    .status-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .icon-btn-ghost {
+      background: none;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-primary);
+      padding: 4px;
+    }
+
+    .icon-svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+    }
+
+    /* 屏幕视图承载区 */
+    #view-viewport {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* 各应用页面及主屏 */
+    .view {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--bg-primary);
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(0.98);
+      transition: opacity 0.22s ease, transform 0.22s ease;
+      z-index: 10;
+    }
+
+    .view.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: scale(1);
+      z-index: 20;
+    }
+
+    /* 主屏幕 (Home Screen) */
+    #view-home {
+      display: flex;
+      flex-direction: column;
+      padding: 24px 28px;
+    }
+
+    .home-header {
+      margin-top: 28px;
+      margin-bottom: 50px;
+    }
+
+    .home-date {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-tertiary);
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .home-time-display {
+      font-size: 54px;
+      font-weight: 200;
+      letter-spacing: -2px;
+      color: var(--text-primary);
+      line-height: 1;
+    }
+
+    .home-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      row-gap: 36px;
+      column-gap: 20px;
+      justify-items: center;
+    }
+
+    .app-icon-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      outline: none;
+    }
+
+    .app-icon-box {
+      width: 68px;
+      height: 68px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-primary);
+      transition: transform 0.15s ease, background 0.15s ease;
+    }
+
+    .app-icon-item:active .app-icon-box {
+      transform: scale(0.92);
+      background: var(--bg-tertiary);
+    }
+
+    .app-icon-item span {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      letter-spacing: -0.2px;
+    }
+
+    /* 导航顶栏（应用内通用） */
+    .app-nav-bar {
+      height: 52px;
+      padding: 0 16px;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+      background: var(--bg-primary);
+    }
+
+    .app-nav-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-primary);
+      letter-spacing: -0.3px;
+    }
+
+    .nav-action-btn {
+      background: none;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-primary);
+      padding: 6px 8px;
+      border-radius: var(--radius-sm);
+    }
+
+    .nav-action-btn:active {
+      background: var(--bg-secondary);
+    }
+
+    /* 内容滚动区域 */
+    .scroll-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* 聊天应用 */
+    #chat-messages {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      padding-bottom: 16px;
+    }
+
+    .chat-bubble-row {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .chat-bubble-row.user {
+      align-items: flex-end;
+    }
+
+    .chat-bubble-row.assistant {
+      align-items: flex-start;
+    }
+
+    .chat-bubble {
+      max-width: 82%;
+      padding: 12px 14px;
+      font-size: 14px;
+      line-height: 1.5;
+      word-break: break-word;
+      user-select: text;
+      -webkit-user-select: text;
+    }
+
+    .chat-bubble-row.user .chat-bubble {
+      background: #111111;
+      color: #ffffff;
+      border-radius: 16px 16px 4px 16px;
+    }
+
+    .chat-bubble-row.assistant .chat-bubble {
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      border: 1px solid var(--border-color);
+      border-radius: 16px 16px 16px 4px;
+    }
+
+    .chat-meta {
+      font-size: 10px;
+      color: var(--text-tertiary);
+      margin-top: 4px;
+      padding: 0 4px;
+    }
+
+    .chat-input-area {
+      padding: 10px 14px;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--bg-primary);
+    }
+
+    .chat-input {
+      flex: 1;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 10px 14px;
+      font-size: 14px;
+      color: var(--text-primary);
+      outline: none;
+      resize: none;
+      height: 40px;
+      line-height: 20px;
+      user-select: text;
+      -webkit-user-select: text;
+    }
+
+    .chat-input::placeholder {
+      color: var(--text-tertiary);
+    }
+
+    .chat-send-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: #111111;
+      border: none;
+      outline: none;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .chat-send-btn:disabled {
+      background: var(--bg-tertiary);
+      color: var(--text-tertiary);
+      cursor: not-allowed;
+    }
+
+    /* 表单与列表组件（用于世界书 & 设置） */
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      letter-spacing: -0.2px;
+      margin-bottom: 8px;
+    }
+
+    .form-input, .form-textarea, .form-select {
+      width: 100%;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 10px 12px;
+      font-size: 13px;
+      color: var(--text-primary);
+      outline: none;
+      user-select: text;
+      -webkit-user-select: text;
+    }
+
+    .form-input:focus, .form-textarea:focus, .form-select:focus {
+      border-color: #111111;
+      background: var(--bg-primary);
+    }
+
+    .form-textarea {
+      min-height: 80px;
+      resize: vertical;
+      line-height: 1.4;
+    }
+
+    .form-hint {
+      font-size: 11px;
+      color: var(--text-tertiary);
+      margin-top: 6px;
+      line-height: 1.4;
+    }
+
+    .btn-block {
+      width: 100%;
+      padding: 12px;
+      border-radius: var(--radius-sm);
+      background: #111111;
+      color: #ffffff;
+      border: none;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .btn-block.btn-outline {
+      background: transparent;
+      border: 1px solid var(--border-color);
+      color: var(--text-primary);
+      margin-top: 10px;
+    }
+
+    .btn-block:active {
+      opacity: 0.8;
+    }
+
+    /* 世界书条目列表 */
+    .lore-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      margin-bottom: 12px;
+    }
+
+    .lore-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .lore-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .lore-actions {
+      display: flex;
+      gap: 12px;
+    }
+
+    .lore-meta-keys {
+      display: inline-block;
+      font-size: 11px;
+      color: var(--text-secondary);
+      background: var(--bg-tertiary);
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-bottom: 8px;
+    }
+
+    .lore-content {
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      user-select: text;
+      -webkit-user-select: text;
+    }
+
+    /* 开关组件 */
+    .switch-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 38px;
+      height: 22px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: var(--bg-tertiary);
+      transition: .2s;
+      border-radius: 22px;
+      border: 1px solid var(--border-color);
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 16px;
+      width: 16px;
+      left: 2px;
+      bottom: 2px;
+      background-color: #ffffff;
+      transition: .2s;
+      border-radius: 50%;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    }
+
+    input:checked + .slider {
+      background-color: #111111;
+      border-color: #111111;
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(16px);
+    }
+
+    /* 底部导航条 (Home Indicator) */
+    .home-bar-area {
+      height: 28px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: transparent;
+      z-index: 100;
+      cursor: pointer;
+    }
+
+    .home-bar-pill {
+      width: 130px;
+      height: 4px;
+      background: var(--text-primary);
+      border-radius: 2px;
+      opacity: 0.25;
+      transition: opacity 0.15s ease, width 0.15s ease;
+    }
+
+    .home-bar-area:hover .home-bar-pill,
+    .home-bar-area:active .home-bar-pill {
+      opacity: 0.8;
+      width: 140px;
+    }
+
+    /* 模态弹层 (添加/编辑世界书等) */
+    .modal-backdrop {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      z-index: 200;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+
+    .modal-backdrop.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-card {
+      width: 100%;
+      max-height: 85%;
+      background: var(--bg-primary);
+      border-top-left-radius: var(--radius-lg);
+      border-top-right-radius: var(--radius-lg);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transform: translateY(100%);
+      transition: transform 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .modal-backdrop.active .modal-card {
+      transform: translateY(0);
+    }
+
+    .modal-header {
+      padding: 16px;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--text-tertiary);
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="phone-container">
+    <!-- 顶部状态栏 -->
+    <div class="status-bar">
+      <div id="status-time">09:41</div>
+      <div class="status-actions">
+        <!-- 网页全屏切换按钮 -->
+        <button id="fullscreen-toggle" class="icon-btn-ghost" title="切换全屏">
+          <svg class="icon-svg" viewBox="0 0 24 24">
+            <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
+          </svg>
+        </button>
+        <!-- 信号/电量极简指示 -->
+        <svg class="icon-svg" viewBox="0 0 24 24">
+          <path d="M5 12.55a11 11 0 0 1 14.08 0"></path>
+          <path d="M1.42 9a16 16 0 0 1 21.16 0"></path>
+          <path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path>
+          <line x1="12" y1="20" x2="12.01" y2="20"></line>
+        </svg>
+      </div>
+    </div>
+
+    <!-- 视图承载区 -->
+    <div id="view-viewport">
+      <!-- 桌面主屏 -->
+      <section id="view-home" class="view active">
+        <div class="home-header">
+          <div id="home-date" class="home-date">MONDAY, JAN 01</div>
+          <div id="home-time" class="home-time-display">09:41</div>
+        </div>
+
+        <div class="home-grid">
+          <!-- 聊天 App 图标 -->
+          <button class="app-icon-item" onclick="openView('chat')">
+            <div class="app-icon-box">
+              <svg class="icon-svg" style="width:28px;height:28px;" viewBox="0 0 24 24">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+              </svg>
+            </div>
+            <span>对话</span>
+          </button>
+
+          <!-- 世界书 App 图标 -->
+          <button class="app-icon-item" onclick="openView('lorebook')">
+            <div class="app-icon-box">
+              <svg class="icon-svg" style="width:28px;height:28px;" viewBox="0 0 24 24">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+              </svg>
+            </div>
+            <span>世界书</span>
+          </button>
+
+          <!-- 设置 App 图标 -->
+          <button class="app-icon-item" onclick="openView('settings')">
+            <div class="app-icon-box">
+              <svg class="icon-svg" style="width:28px;height:28px;" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="3"></circle>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+              </svg>
+            </div>
+            <span>设置</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- 聊天 App 页面 -->
+      <section id="view-chat" class="view">
+        <div class="app-nav-bar">
+          <button class="nav-action-btn" onclick="openView('home')">
+            <svg class="icon-svg" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"></path></svg>
+          </button>
+          <div class="app-nav-title" id="chat-header-title">对话</div>
+          <button class="nav-action-btn" onclick="clearCurrentChat()">清空</button>
+        </div>
+        <div class="scroll-content" id="chat-messages">
+          <div class="empty-state" id="chat-empty-hint">发送消息开始对话</div>
+        </div>
+        <div class="chat-input-area">
+          <input type="text" id="chat-input" class="chat-input" placeholder="输入消息..." autocomplete="off" />
+          <button id="chat-send-btn" class="chat-send-btn" onclick="sendChatMessage()">
+            <svg class="icon-svg" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+          </button>
+        </div>
+      </section>
+
+      <!-- 世界书 App 页面 -->
+      <section id="view-lorebook" class="view">
+        <div class="app-nav-bar">
+          <button class="nav-action-btn" onclick="openView('home')">
+            <svg class="icon-svg" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"></path></svg>
+          </button>
+          <div class="app-nav-title">世界书设定</div>
+          <button class="nav-action-btn" onclick="openLoreModal()">新建</button>
+        </div>
+        <div class="scroll-content" id="lorebook-list">
+          <!-- 动态渲染词条 -->
+        </div>
+      </section>
+
+      <!-- 设置 App 页面 -->
+      <section id="view-settings" class="view">
+        <div class="app-nav-bar">
+          <button class="nav-action-btn" onclick="openView('home')">
+            <svg class="icon-svg" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"></path></svg>
+          </button>
+          <div class="app-nav-title">系统与接口设置</div>
+          <div style="width: 32px;"></div>
+        </div>
+        <div class="scroll-content">
+          <div class="form-group">
+            <label class="form-label">接口服务地址 (API Base URL)</label>
+            <input type="text" id="setting-api-url" class="form-input" placeholder="https://api.openai.com/v1" />
+            <div class="form-hint">支持 OpenAI 兼容格式接口，例如 OneAPI / DeepSeek / 官方API。</div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">接口密钥 (API Key)</label>
+            <input type="password" id="setting-api-key" class="form-input" placeholder="sk-..." />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">模型名称 (Model)</label>
+            <input type="text" id="setting-api-model" class="form-input" placeholder="gpt-4o-mini 或 deepseek-chat" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">默认系统人设 (System Prompt)</label>
+            <textarea id="setting-system-prompt" class="form-textarea" placeholder="你是一个随身AI助手，回复简洁高雅..."></textarea>
+          </div>
+
+          <div class="switch-container">
+            <span style="font-size: 13px; font-weight: 500; color: var(--text-primary);">世界书全局激活</span>
+            <label class="switch">
+              <input type="checkbox" id="setting-lore-enabled" checked />
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <div style="margin-top: 24px;">
+            <button class="btn-block" onclick="saveSettings()">保存配置</button>
+            <button class="btn-block btn-outline" onclick="toggleFullscreen()">浏览器全屏显示</button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- 底部回到桌面小白条 -->
+    <div class="home-bar-area" onclick="openView('home')">
+      <div class="home-bar-pill"></div>
+    </div>
+
+    <!-- 世界书新建/编辑模态弹窗 -->
+    <div id="modal-lore" class="modal-backdrop">
+      <div class="modal-card">
+        <div class="modal-header">
+          <button class="nav-action-btn" onclick="closeLoreModal()">取消</button>
+          <div class="modal-title" id="lore-modal-title">新设定词条</div>
+          <button class="nav-action-btn" onclick="saveLoreItem()">完成</button>
+        </div>
+        <div class="scroll-content" style="max-height: 480px;">
+          <input type="hidden" id="lore-item-id" />
+          <div class="form-group">
+            <label class="form-label">词条名称</label>
+            <input type="text" id="lore-item-name" class="form-input" placeholder="例：世界观 / 某人物设定" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">触发关键词 (逗号分隔)</label>
+            <input type="text" id="lore-item-keys" class="form-input" placeholder="例：学院, 魔法, 艾琳" />
+            <div class="form-hint">对话中提到关键词时将自动激活。若留空则始终注入。</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">详细设定内容</label>
+            <textarea id="lore-item-content" class="form-textarea" style="min-height: 120px;" placeholder="在此输入世界规则、背景故事或人物设定..."></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // 基础状态与本地存储键名
+    const STORAGE_KEY_SETTINGS = "pocket_os_settings";
+    const STORAGE_KEY_LOREBOOK = "pocket_os_lorebook";
+    const STORAGE_KEY_MESSAGES = "pocket_os_messages";
+
+    const defaultSettings = {
+      apiUrl: "https://api.openai.com/v1",
+      apiKey: "",
+      model: "gpt-4o-mini",
+      systemPrompt: "你是一个随身AI助手，回复克制、简洁、真实高雅，遵守世界书设定。",
+      loreEnabled: true
+    };
+
+    let appSettings = Object.assign({}, defaultSettings);
+    let loreEntries = [];
+    let chatMessages = [];
+    let isRequesting = false;
+
+    // 时间更新
+    function updateClock() {
+      const now = new Date();
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const timeStr = `${hours}:${minutes}`;
+      
+      const elStatus = document.getElementById('status-time');
+      const elHomeTime = document.getElementById('home-time');
+      if (elStatus) elStatus.textContent = timeStr;
+      if (elHomeTime) elHomeTime.textContent = timeStr;
+
+      const dateStr = now.toLocaleDateString('en-US', {
+        weekday: 'short',
+        month: 'short',
+        day: 'numeric'
+      }).toUpperCase();
+      const elHomeDate = document.getElementById('home-date');
+      if (elHomeDate) elHomeDate.textContent = dateStr;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // 视图导航管理
+    function openView(viewId) {
+      document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+      const target = document.getElementById('view-' + viewId);
+      if (target) {
+        target.classList.add('active');
+      }
+      if (viewId === 'chat') {
+        scrollChatToBottom();
+      }
+    }
+
+    // 浏览器全屏
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen().catch(() => {});
+        }
+      }
+    }
+    document.getElementById('fullscreen-toggle').addEventListener('click', toggleFullscreen);
+
+    // 加载配置
+    function loadSettings() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY_SETTINGS);
+        if (raw) {
+          appSettings = Object.assign({}, defaultSettings, JSON.parse(raw));
+        }
+      } catch (e) {
+        appSettings = Object.assign({}, defaultSettings);
+      }
+      document.getElementById('setting-api-url').value = appSettings.apiUrl || '';
+      document.getElementById('setting-api-key').value = appSettings.apiKey || '';
+      document.getElementById('setting-api-model').value = appSettings.model || '';
+      document.getElementById('setting-system-prompt').value = appSettings.systemPrompt || '';
+      document.getElementById('setting-lore-enabled').checked = !!appSettings.loreEnabled;
+    }
+
+    // 保存配置
+    function saveSettings() {
+      appSettings.apiUrl = document.getElementById('setting-api-url').value.trim() || defaultSettings.apiUrl;
+      appSettings.apiKey = document.getElementById('setting-api-key').value.trim();
+      appSettings.model = document.getElementById('setting-api-model').value.trim() || defaultSettings.model;
+      appSettings.systemPrompt = document.getElementById('setting-system-prompt').value.trim();
+      appSettings.loreEnabled = document.getElementById('setting-lore-enabled').checked;
+
+      localStorage.setItem(STORAGE_KEY_SETTINGS, JSON.stringify(appSettings));
+      alert("配置已更新");
+    }
+
+    // 世界书模块
+    function loadLorebook() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY_LOREBOOK);
+        if (raw) {
+          loreEntries = JSON.parse(raw);
+        } else {
+          // 提供一份初始示例
+          loreEntries = [
+            {
+              id: "init-entry",
+              name: "极简世界法则",
+              keys: "世界, 规则, 设定",
+              content: "这是一个纯粹黑白灰的数字极简维度，言辞克制、优雅理智。",
+              enabled: true
+            }
+          ];
+          saveLoreToStorage();
+        }
+      } catch (e) {
+        loreEntries = [];
+      }
+      renderLoreList();
+    }
+
+    function saveLoreToStorage() {
+      localStorage.setItem(STORAGE_KEY_LOREBOOK, JSON.stringify(loreEntries));
+    }
+
+    function renderLoreList() {
+      const container = document.getElementById('lorebook-list');
+      container.innerHTML = '';
+      if (!loreEntries || loreEntries.length === 0) {
+        container.innerHTML = '<div class="empty-state">暂无世界书条目，点击右上角新建</div>';
+        return;
+      }
+      loreEntries.forEach(entry => {
+        const card = document.createElement('div');
+        card.className = 'lore-card';
+        card.innerHTML = `
+          <div class="lore-card-header">
+            <span class="lore-title">${escapeHtml(entry.name || '未命名')}</span>
+            <div class="lore-actions">
+              <button class="icon-btn-ghost" onclick="editLoreItem('${entry.id}')" title="编辑">
+                <svg class="icon-svg" style="width:14px;height:14px;" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+              </button>
+              <button class="icon-btn-ghost" onclick="deleteLoreItem('${entry.id}')" title="删除">
+                <svg class="icon-svg" style="width:14px;height:14px;" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+              </button>
+            </div>
+          </div>
+          ${entry.keys ? `<div class="lore-meta-keys">触发词: ${escapeHtml(entry.keys)}</div>` : '<div class="lore-meta-keys">始终生效</div>'}
+          <div class="lore-content">${escapeHtml(entry.content || '')}</div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function openLoreModal(id = '') {
+      const modal = document.getElementById('modal-lore');
+      const title = document.getElementById('lore-modal-title');
+      const idInput = document.getElementById('lore-item-id');
+      const nameInput = document.getElementById('lore-item-name');
+      const keysInput = document.getElementById('lore-item-keys');
+      const contentInput = document.getElementById('lore-item-content');
+
+      if (id) {
+        const item = loreEntries.find(e => e.id === id);
+        if (item) {
+          title.textContent = "编辑设定条目";
+          idInput.value = item.id;
+          nameInput.value = item.name;
+          keysInput.value = item.keys || '';
+          contentInput.value = item.content || '';
+        }
+      } else {
+        title.textContent = "新设定条目";
+        idInput.value = '';
+        nameInput.value = '';
+        keysInput.value = '';
+        contentInput.value = '';
+      }
+      modal.classList.add('active');
+    }
+
+    function closeLoreModal() {
+      document.getElementById('modal-lore').classList.remove('active');
+    }
+
+    function saveLoreItem() {
+      const idInput = document.getElementById('lore-item-id').value;
+      const name = document.getElementById('lore-item-name').value.trim();
+      const keys = document.getElementById('lore-item-keys').value.trim();
+      const content = document.getElementById('lore-item-content').value.trim();
+
+      if (!name || !content) {
+        alert("请输入词条名称与设定内容");
+        return;
+      }
+
+      if (idInput) {
+        const idx = loreEntries.findIndex(e => e.id === idInput);
+        if (idx !== -1) {
+          loreEntries[idx].name = name;
+          loreEntries[idx].keys = keys;
+          loreEntries[idx].content = content;
+        }
+      } else {
+        loreEntries.unshift({
+          id: 'lore_' + Date.now(),
+          name,
+          keys,
+          content,
+          enabled: true
+        });
+      }
+
+      saveLoreToStorage();
+      renderLoreList();
+      closeLoreModal();
+    }
+
+    function editLoreItem(id) {
+      openLoreModal(id);
+    }
+
+    function deleteLoreItem(id) {
+      if (confirm("确定删除此设定条目？")) {
+        loreEntries = loreEntries.filter(e => e.id !== id);
+        saveLoreToStorage();
+        renderLoreList();
+      }
+    }
+
+    // 聊天模块
+    function loadChatHistory() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY_MESSAGES);
+        if (raw) {
+          chatMessages = JSON.parse(raw);
+        }
+      } catch (e) {
+        chatMessages = [];
+      }
+      renderMessages();
+    }
+
+    function saveChatHistory() {
+      localStorage.setItem(STORAGE_KEY_MESSAGES, JSON.stringify(chatMessages));
+    }
+
+    function renderMessages() {
+      const container = document.getElementById('chat-messages');
+      container.innerHTML = '';
+      if (!chatMessages || chatMessages.length === 0) {
+        container.innerHTML = '<div class="empty-state" id="chat-empty-hint">发送消息开始对话</div>';
+        return;
+      }
+      chatMessages.forEach(msg => {
+        appendBubbleToDom(msg.role, msg.content, msg.time);
+      });
+      scrollChatToBottom();
+    }
+
+    function appendBubbleToDom(role, text, timeStr) {
+      const emptyHint = document.getElementById('chat-empty-hint');
+      if (emptyHint) emptyHint.remove();
+
+      const container = document.getElementById('chat-messages');
+      const row = document.createElement('div');
+      row.className = `chat-bubble-row ${role}`;
+
+      const bubble = document.createElement('div');
+      bubble.className = 'chat-bubble';
+      bubble.textContent = text;
+
+      const meta = document.createElement('div');
+      meta.className = 'chat-meta';
+      meta.textContent = timeStr || getCurrentTimeStr();
+
+      row.appendChild(bubble);
+      row.appendChild(meta);
+      container.appendChild(row);
+      return bubble;
+    }
+
+    function scrollChatToBottom() {
+      const container = document.getElementById('chat-messages');
+      if (container) {
+        container.scrollTop = container.scrollHeight;
+      }
+    }
+
+    function getCurrentTimeStr() {
+      const d = new Date();
+      return `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
+    }
+
+    function clearCurrentChat() {
+      if (confirm("清空全部对话历史？")) {
+        chatMessages = [];
+        saveChatHistory();
+        renderMessages();
+      }
+    }
+
+    // 获取激活的世界书内容
+    function getMatchedLore(userInput) {
+      if (!appSettings.loreEnabled || !loreEntries || loreEntries.length === 0) {
+        return "";
+      }
+      const matched = [];
+      loreEntries.forEach(entry => {
+        if (!entry.keys || entry.keys.trim() === '') {
+          // 常驻词条
+          matched.push(`【${entry.name}】\n${entry.content}`);
+        } else {
+          const keys = entry.keys.split(/[,，\s]+/).filter(k => k.trim());
+          const hit = keys.some(k => userInput.includes(k));
+          if (hit) {
+            matched.push(`【${entry.name}】\n${entry.content}`);
+          }
+        }
+      });
+      if (matched.length > 0) {
+        return "\n\n[世界书生效背景与规则]:\n" + matched.join("\n\n");
+      }
+      return "";
+    }
+
+    async function sendChatMessage() {
+      if (isRequesting) return;
+      const inputEl = document.getElementById('chat-input');
+      const text = inputEl.value.trim();
+      if (!text) return;
+
+      if (!appSettings.apiKey) {
+        alert("请先前往「设置」配置 API Key");
+        openView('settings');
+        return;
+      }
+
+      const nowTime = getCurrentTimeStr();
+      chatMessages.push({ role: 'user', content: text, time: nowTime });
+      appendBubbleToDom('user', text, nowTime);
+      inputEl.value = '';
+      scrollChatToBottom();
+
+      // 构建向大模型请求的消息列表
+      const loreInjection = getMatchedLore(text);
+      const systemPromptFull = (appSettings.systemPrompt || '') + loreInjection;
+
+      const apiMessages = [];
+      if (systemPromptFull) {
+        apiMessages.push({ role: "system", content: systemPromptFull });
+      }
+      
+      // 取最近10条上下文避免上下文超限
+      const contextWindow = chatMessages.slice(-10);
+      contextWindow.forEach(m => {
+        apiMessages.push({ role: m.role, content: m.content });
+      });
+
+      isRequesting = true;
+      document.getElementById('chat-send-btn').disabled = true;
+
+      // 创建一个临时回复气泡
+      const assistantBubble = appendBubbleToDom('assistant', '...', getCurrentTimeStr());
+      scrollChatToBottom();
+
+      try {
+        let baseUrl = appSettings.apiUrl.replace(/\/+$/, '');
+        let targetUrl = baseUrl.endsWith('/chat/completions') ? baseUrl : `${baseUrl}/chat/completions`;
+
+        const response = await fetch(targetUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${appSettings.apiKey}`
+          },
+          body: JSON.stringify({
+            model: appSettings.model || 'gpt-4o-mini',
+            messages: apiMessages,
+            temperature: 0.7
+          })
+        });
+
+        if (!response.ok) {
+          const errData = await response.text();
+          throw new Error(`API 错误 (${response.status}): ${errData}`);
+        }
+
+        const data = await response.json();
+        const replyText = data.choices && data.choices[0] && data.choices[0].message ? data.choices[0].message.content : "无返回内容";
+
+        assistantBubble.textContent = replyText;
+        chatMessages.push({ role: 'assistant', content: replyText, time: getCurrentTimeStr() });
+        saveChatHistory();
+      } catch (err) {
+        assistantBubble.textContent = "请求失败: " + err.message;
+        chatMessages.push({ role: 'assistant', content: assistantBubble.textContent, time: getCurrentTimeStr() });
+        saveChatHistory();
+      } finally {
+        isRequesting = false;
+        document.getElementById('chat-send-btn').disabled = false;
+        scrollChatToBottom();
+      }
+    }
+
+    // 回车发送
+    document.getElementById('chat-input').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        sendChatMessage();
+      }
+    });
+
+    function escapeHtml(string) {
+      return String(string).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    // 初始化
+    loadSettings();
+    loadLorebook();
+    loadChatHistory();
+  </script>
+</body>
+</html>
