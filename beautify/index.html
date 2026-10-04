@@ -136,77 +136,379 @@
       z-index: 20;
     }
 
-    /* 主屏幕 (Home Screen) */
+    /* 主屏幕 (Home Screen) - 仙气白灰微光波光风格 */
     #view-home {
       display: flex;
       flex-direction: column;
-      padding: 24px 28px;
+      padding: 6px 16px 12px 16px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      background: linear-gradient(180deg, #fbfbfb 0%, #eceef1 45%, #dfe3e8 100%);
+      position: relative;
     }
 
-    .home-header {
-      margin-top: 28px;
-      margin-bottom: 50px;
+    /* 装饰性波光弥散背景粒子 */
+    #view-home::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: 
+        radial-gradient(circle at 50% 20%, rgba(255,255,255,0.95) 0%, transparent 60%),
+        radial-gradient(circle at 20% 75%, rgba(255,255,255,0.7) 0%, transparent 45%),
+        radial-gradient(circle at 80% 85%, rgba(255,255,255,0.5) 0%, transparent 40%);
+      pointer-events: none;
+      z-index: 0;
     }
 
-    .home-date {
-      font-size: 13px;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      color: var(--text-tertiary);
-      font-weight: 600;
-      margin-bottom: 6px;
-    }
-
-    .home-time-display {
-      font-size: 54px;
-      font-weight: 200;
-      letter-spacing: -2px;
-      color: var(--text-primary);
-      line-height: 1;
-    }
-
-    .home-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      row-gap: 36px;
-      column-gap: 20px;
-      justify-items: center;
-    }
-
-    .app-icon-item {
+    .home-content-wrapper {
+      position: relative;
+      z-index: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 10px;
-      cursor: pointer;
-      background: none;
-      border: none;
-      outline: none;
+      gap: 11px;
+      width: 100%;
     }
 
-    .app-icon-box {
-      width: 68px;
-      height: 68px;
-      background: var(--bg-secondary);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-lg);
+    /* 顶部超小天气胶囊 */
+    .mini-pill-tag {
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.85);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+      padding: 4px 18px;
+      border-radius: 20px;
+      font-size: 11px;
+      color: #666;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      letter-spacing: 0.5px;
+    }
+
+    /* 顶部大时钟药丸卡片 */
+    .widget-time-pill {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.68);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      border-radius: 36px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.04);
+    }
+
+    .widget-avatar-circle {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: #ffffff;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.06);
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--text-primary);
-      transition: transform 0.15s ease, background 0.15s ease;
+      overflow: hidden;
+      flex-shrink: 0;
     }
 
-    .app-icon-item:active .app-icon-box {
-      transform: scale(0.92);
-      background: var(--bg-tertiary);
+    .widget-avatar-circle svg {
+      width: 42px;
+      height: 42px;
     }
 
-    .app-icon-item span {
-      font-size: 12px;
+    .widget-time-mid {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .widget-clock-text {
+      font-size: 26px;
+      font-weight: 300;
+      color: #444444;
+      letter-spacing: 1.5px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      line-height: 1.1;
+    }
+
+    .widget-sub-capsule {
+      margin-top: 4px;
+      background: rgba(255, 255, 255, 0.85);
+      border: 1px solid rgba(230, 230, 230, 0.9);
+      border-radius: 14px;
+      padding: 2px 10px;
+      font-size: 9px;
+      color: #777777;
+      letter-spacing: 0.3px;
+    }
+
+    .widget-battery-gauge {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #ffffff 60%, #ededed 100%);
+      border: 2px solid #e0e0e0;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.06);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 9px;
+      font-weight: 700;
+      color: #555555;
+      flex-shrink: 0;
+    }
+
+    .widget-tag-label {
+      font-size: 9px;
+      font-weight: 600;
+      color: #888888;
+      letter-spacing: 0.5px;
+      text-align: center;
+      margin-top: -4px;
+    }
+
+    /* 中间唯美情侣/纪念日卡片 */
+    .widget-memorial-card {
+      width: 100%;
+      background: linear-gradient(170deg, rgba(255,255,255,0.72) 0%, rgba(246,248,250,0.6) 100%);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      border-radius: 28px;
+      padding: 14px 14px 10px 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+      position: relative;
+    }
+
+    .memorial-header-title {
+      font-size: 11px;
       font-weight: 500;
-      color: var(--text-secondary);
+      color: #555555;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .memorial-avatars-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      width: 100%;
+      margin-bottom: 10px;
+    }
+
+    .wing-avatar-wrap {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .memorial-rabbit-avatar {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: #ffffff;
+      border: 2px solid #ffffff;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .memorial-days-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+    }
+
+    .memorial-days-num {
+      font-size: 15px;
+      font-weight: 600;
+      color: #333333;
+      letter-spacing: 0.5px;
+    }
+
+    .memorial-heartbeat-line {
+      font-size: 9px;
+      color: #777777;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      letter-spacing: 0.5px;
+    }
+
+    /* 下半部分：左侧卡片 + 右侧 2x2 图标 */
+    .home-bottom-grid {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1.3fr;
+      gap: 12px;
+      align-items: start;
+    }
+
+    /* 左下角小组件 */
+    .widget-left-angel {
+      background: linear-gradient(160deg, rgba(255,255,255,0.7) 0%, rgba(240,243,246,0.55) 100%);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      border-radius: 26px;
+      padding: 12px 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.03);
+    }
+
+    .widget-left-time {
+      font-size: 16px;
+      font-weight: 400;
+      color: #333333;
+      margin-bottom: 8px;
+      letter-spacing: 1px;
+    }
+
+    .angel-avatar-box {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: #ffffff;
+      border: 2px solid #ffffff;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 8px;
+    }
+
+    .widget-left-footer {
+      font-size: 8px;
+      color: #777777;
+      background: rgba(255,255,255,0.85);
+      border-radius: 10px;
+      padding: 2px 6px;
+      white-space: nowrap;
+    }
+
+    /* 右侧 2x2 极简拟态白灰图标 */
+    .home-app-grid-2x2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .home-app-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      outline: none;
+    }
+
+    .home-app-icon-squircle {
+      width: 56px;
+      height: 56px;
+      border-radius: 17px;
+      background: linear-gradient(135deg, #ffffff 0%, #f0f2f5 100%);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.05), inset 0 1px 2px rgba(255, 255, 255, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #333333;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .home-app-btn:active .home-app-icon-squircle {
+      transform: scale(0.92);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+    }
+
+    .home-app-btn span {
+      font-size: 11px;
+      font-weight: 500;
+      color: #555555;
       letter-spacing: -0.2px;
+    }
+
+    .icon-kanji {
+      font-size: 26px;
+      font-weight: 700;
+      color: #333333;
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    }
+
+    /* 搜索栏胶囊 */
+    .search-pill-btn {
+      margin-top: 4px;
+      background: rgba(255, 255, 255, 0.65);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.85);
+      border-radius: 16px;
+      padding: 5px 16px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      color: #666666;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+      cursor: pointer;
+    }
+
+    /* 底部 Dock 毛玻璃悬浮托盘 */
+    .home-dock-bar {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.45);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      border-radius: 28px;
+      padding: 8px 18px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+      margin-top: 2px;
+    }
+
+    .dock-icon-squircle {
+      width: 50px;
+      height: 50px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #ffffff 0%, #f0f2f5 100%);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #333333;
+      cursor: pointer;
+      border: none;
+      transition: transform 0.15s ease;
+    }
+
+    .dock-icon-squircle:active {
+      transform: scale(0.92);
     }
 
     /* 导航顶栏（应用内通用） */
@@ -637,43 +939,207 @@
     <div id="view-viewport">
       <!-- 桌面主屏 -->
       <section id="view-home" class="view active">
-        <div class="home-header">
-          <div id="home-date" class="home-date">MONDAY, JAN 01</div>
-          <div id="home-time" class="home-time-display">09:41</div>
-        </div>
+        <div class="home-content-wrapper">
+          
+          <!-- 1. 顶部超细精致胶囊 (晴 ୨୧ 9°) -->
+          <div class="mini-pill-tag">
+            <span>晴</span>
+            <span style="font-size: 13px;">୨୧</span>
+            <span>9°</span>
+          </div>
 
-        <div class="home-grid">
-          <!-- 聊天 App 图标 -->
-          <button class="app-icon-item" onclick="openView('chat')">
-            <div class="app-icon-box">
-              <svg class="icon-svg" style="width:28px;height:28px;" viewBox="0 0 24 24">
-                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+          <!-- 2. 大药丸时钟小组件 (兔兔 + 07🐾39 + 电量) -->
+          <div class="widget-time-pill" onclick="openView('settings')">
+            <!-- 戴眼镜小兔矢量插画 -->
+            <div class="widget-avatar-circle">
+              <svg viewBox="0 0 64 64" fill="none">
+                <!-- 兔耳 -->
+                <path d="M24 8 C20 18, 22 28, 25 32" stroke="#555555" stroke-width="2.5" stroke-linecap="round"/>
+                <path d="M40 8 C44 18, 42 28, 39 32" stroke="#555555" stroke-width="2.5" stroke-linecap="round"/>
+                <!-- 兔脸 -->
+                <ellipse cx="32" cy="40" rx="17" ry="14" fill="#fafafa" stroke="#555555" stroke-width="2.2"/>
+                <!-- 圆圆黑框眼镜 -->
+                <circle cx="26" cy="39" r="6" stroke="#222222" stroke-width="2.2"/>
+                <circle cx="38" cy="39" r="6" stroke="#222222" stroke-width="2.2"/>
+                <path d="M32 39 L32 39" stroke="#222222" stroke-width="2"/>
+                <line x1="30" y1="39" x2="34" y2="39" stroke="#222222" stroke-width="2"/>
+                <ellipse cx="32" cy="45" rx="1.5" ry="1" fill="#444444"/>
               </svg>
             </div>
-            <span>对话</span>
-          </button>
 
-          <!-- 世界书 App 图标 -->
-          <button class="app-icon-item" onclick="openView('lorebook')">
-            <div class="app-icon-box">
-              <svg class="icon-svg" style="width:28px;height:28px;" viewBox="0 0 24 24">
-                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
-              </svg>
+            <!-- 中间时钟 -->
+            <div class="widget-time-mid">
+              <div class="widget-clock-text">
+                <span id="widget-hour">07</span>
+                <span style="font-size: 14px; opacity: 0.65;">🐾</span>
+                <span id="widget-minute">39</span>
+              </div>
+              <div class="widget-sub-capsule">
+                我説幸福就是在你身邊 ˚₊♡₊˚
+              </div>
             </div>
-            <span>世界书</span>
-          </button>
 
-          <!-- 设置 App 图标 -->
-          <button class="app-icon-item" onclick="openView('settings')">
-            <div class="app-icon-box">
-              <svg class="icon-svg" style="width:28px;height:28px;" viewBox="0 0 24 24">
-                <circle cx="12" cy="12" r="3"></circle>
-                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+            <!-- 纯净电量环 -->
+            <div class="widget-battery-gauge">
+              <svg viewBox="0 0 24 24" style="width: 13px; height: 13px; stroke: #444; fill: none; stroke-width: 2.2; margin-bottom: 1px;">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
               </svg>
+              <span>60%</span>
             </div>
-            <span>设置</span>
-          </button>
+          </div>
+          <div class="widget-tag-label">Top Widgets⁺</div>
+
+          <!-- 3. 中间唯美情侣/世界守护小组件 -->
+          <div class="widget-memorial-card" onclick="openView('lorebook')">
+            <div class="memorial-header-title">
+              <span>˚ ༘♡</span>
+              <span>我说幸福就是在你身边</span>
+              <span>♡ ༘˚</span>
+            </div>
+
+            <div class="memorial-avatars-row">
+              <!-- 左兔兔 + 小翅膀 -->
+              <div class="wing-avatar-wrap">
+                <svg viewBox="0 0 24 24" style="width: 18px; height: 18px; stroke: #999; fill: none; stroke-width: 1.5;">
+                  <path d="M3 13c3-4 7-4 10 0-4 1-7 3-10 0z"></path>
+                </svg>
+                <div class="memorial-rabbit-avatar">
+                  <svg viewBox="0 0 50 50" fill="none">
+                    <ellipse cx="20" cy="14" rx="4" ry="10" stroke="#555" stroke-width="2"/>
+                    <ellipse cx="30" cy="14" rx="4" ry="10" stroke="#555" stroke-width="2"/>
+                    <ellipse cx="25" cy="32" rx="14" ry="12" fill="#fff" stroke="#555" stroke-width="2"/>
+                    <circle cx="21" cy="30" r="1.5" fill="#333"/>
+                    <circle cx="29" cy="30" r="1.5" fill="#333"/>
+                    <path d="M23 35 Q25 37 27 35" stroke="#444" stroke-width="1.5" stroke-linecap="round"/>
+                  </svg>
+                </div>
+              </div>
+
+              <!-- 天数 -->
+              <div class="memorial-days-box">
+                <div class="memorial-days-num">1234天</div>
+                <div style="font-size: 8px; color: #aaa;">LORE·LINK</div>
+              </div>
+
+              <!-- 右兔兔 + 小翅膀 -->
+              <div class="wing-avatar-wrap">
+                <div class="memorial-rabbit-avatar">
+                  <svg viewBox="0 0 50 50" fill="none">
+                    <ellipse cx="20" cy="14" rx="4" ry="10" stroke="#555" stroke-width="2"/>
+                    <ellipse cx="30" cy="14" rx="4" ry="10" stroke="#555" stroke-width="2"/>
+                    <ellipse cx="25" cy="32" rx="14" ry="12" fill="#fff" stroke="#555" stroke-width="2"/>
+                    <circle cx="21" cy="30" r="1.5" fill="#333"/>
+                    <circle cx="29" cy="30" r="1.5" fill="#333"/>
+                    <path d="M23 35 Q25 37 27 35" stroke="#444" stroke-width="1.5" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <svg viewBox="0 0 24 24" style="width: 18px; height: 18px; stroke: #999; fill: none; stroke-width: 1.5; transform: scaleX(-1);">
+                  <path d="M3 13c3-4 7-4 10 0-4 1-7 3-10 0z"></path>
+                </svg>
+              </div>
+            </div>
+
+            <!-- 心电图波形 -->
+            <div class="memorial-heartbeat-line">
+              <span>ﮩ٨ـﮩﮩʌ_</span>
+              <span>小喵 ₊♡₊ 小咩</span>
+              <span>_ʌﮩﮩـ٨ﮩ</span>
+            </div>
+          </div>
+          <div class="widget-tag-label">Top Widgets⁺</div>
+
+          <!-- 4. 下半部分：左侧天使兔兔卡片 + 右侧 2x2 极简图标 -->
+          <div class="home-bottom-grid">
+            <!-- 左侧天使卡片 -->
+            <div class="widget-left-angel">
+              <div class="widget-left-time" id="sub-widget-time">07:39</div>
+              <div class="angel-avatar-box">
+                <svg viewBox="0 0 50 50" fill="none">
+                  <ellipse cx="20" cy="14" rx="4" ry="10" stroke="#555" stroke-width="2"/>
+                  <ellipse cx="30" cy="14" rx="4" ry="10" stroke="#555" stroke-width="2"/>
+                  <ellipse cx="25" cy="32" rx="14" ry="12" fill="#fff" stroke="#555" stroke-width="2"/>
+                  <circle cx="21" cy="30" r="1.5" fill="#333"/>
+                  <circle cx="29" cy="30" r="1.5" fill="#333"/>
+                </svg>
+              </div>
+              <div class="widget-left-footer">.+୨୧ 愛を癒す天使 ♡+.</div>
+            </div>
+
+            <!-- 右侧 2x2 图标网格 (对应世界书、设置、对话等) -->
+            <div class="home-app-grid-2x2">
+              <!-- App Store 质感 -> 打开设置 -->
+              <button class="home-app-btn" onclick="openView('settings')">
+                <div class="home-app-icon-squircle">
+                  <svg viewBox="0 0 24 24" style="width:28px;height:28px;stroke:#444;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;">
+                    <circle cx="12" cy="12" r="3"></circle>
+                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                  </svg>
+                </div>
+                <span>设置</span>
+              </button>
+
+              <!-- 备忘录质感 -> 打开世界书 -->
+              <button class="home-app-btn" onclick="openView('lorebook')">
+                <div class="home-app-icon-squircle">
+                  <svg viewBox="0 0 24 24" style="width:26px;height:26px;stroke:#444;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;">
+                    <rect x="4" y="2" width="16" height="20" rx="3"></rect>
+                    <line x1="8" y1="2" x2="8" y2="22"></line>
+                    <line x1="12" y1="7" x2="16" y2="7"></line>
+                    <line x1="12" y1="12" x2="16" y2="12"></line>
+                  </svg>
+                </div>
+                <span>世界书</span>
+              </button>
+
+              <!-- 豆 (豆瓣风格白灰极简拟态) -> 快速设定词条 -->
+              <button class="home-app-btn" onclick="openLoreModal()">
+                <div class="home-app-icon-squircle">
+                  <span class="icon-kanji">豆</span>
+                </div>
+                <span>词条</span>
+              </button>
+
+              <!-- 拼 (拼多多风格白灰极简拟态) -> 打开对话 -->
+              <button class="home-app-btn" onclick="openView('chat')">
+                <div class="home-app-icon-squircle">
+                  <span class="icon-kanji">拼</span>
+                </div>
+                <span>AI聊天</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 5. 搜索胶囊 -->
+          <div class="search-pill-btn" onclick="openView('chat')">
+            <svg viewBox="0 0 24 24" style="width:12px;height:12px;stroke:#666;fill:none;stroke-width:2.2;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <span>搜索或对话</span>
+          </div>
+
+          <!-- 6. 底部 Dock 毛玻璃悬浮托盘 (电话 / 对话气泡 / 淘) -->
+          <div class="home-dock-bar">
+            <!-- 拨号/连线质感 -->
+            <button class="dock-icon-squircle" onclick="openView('lorebook')" title="世界设定">
+              <svg viewBox="0 0 24 24" style="width:26px;height:26px;stroke:#333;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+              </svg>
+            </button>
+
+            <!-- 主对话气泡 (三圆点) -->
+            <button class="dock-icon-squircle" onclick="openView('chat')" title="AI 对话">
+              <svg viewBox="0 0 24 24" style="width:28px;height:28px;stroke:#333;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;">
+                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                <circle cx="9" cy="12" r="0.8" fill="#333"></circle>
+                <circle cx="12" cy="12" r="0.8" fill="#333"></circle>
+                <circle cx="15" cy="12" r="0.8" fill="#333"></circle>
+              </svg>
+            </button>
+
+            <!-- 淘 (极简白灰拟态汉字) -->
+            <button class="dock-icon-squircle" onclick="openView('settings')" title="设置">
+              <span class="icon-kanji" style="font-size:24px;">淘</span>
+            </button>
+          </div>
+
         </div>
       </section>
 
@@ -819,17 +1285,14 @@
       const timeStr = `${hours}:${minutes}`;
       
       const elStatus = document.getElementById('status-time');
-      const elHomeTime = document.getElementById('home-time');
       if (elStatus) elStatus.textContent = timeStr;
-      if (elHomeTime) elHomeTime.textContent = timeStr;
 
-      const dateStr = now.toLocaleDateString('en-US', {
-        weekday: 'short',
-        month: 'short',
-        day: 'numeric'
-      }).toUpperCase();
-      const elHomeDate = document.getElementById('home-date');
-      if (elHomeDate) elHomeDate.textContent = dateStr;
+      const elHour = document.getElementById('widget-hour');
+      const elMinute = document.getElementById('widget-minute');
+      const elSubTime = document.getElementById('sub-widget-time');
+      if (elHour) elHour.textContent = hours;
+      if (elMinute) elMinute.textContent = minutes;
+      if (elSubTime) elSubTime.textContent = timeStr;
     }
     setInterval(updateClock, 1000);
     updateClock();
