@@ -781,25 +781,7 @@
     }
 
     .dock {
-      position: fixed;
-      left: 50%;
-      bottom: calc(12px + env(safe-area-inset-bottom));
-      transform: translateX(-50%);
-      width: min(var(--dock-width, 350px), calc(100vw - 24px));
-      height: 94px;
-      padding: 13px 18px 20px;
-      border-radius: 34px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: rgba(120, 128, 138, 0.34);
-      border: 1px solid rgba(255, 255, 255, 0.22);
-      box-shadow:
-        0 18px 38px rgba(70, 80, 94, 0.18),
-        inset 0 1px 0 rgba(255, 255, 255, 0.34),
-        inset 0 -18px 28px rgba(255, 255, 255, 0.04);
-      backdrop-filter: blur(30px) saturate(180%);
-      -webkit-backdrop-filter: blur(30px) saturate(180%);
+      display: none !important;
     }
 
     .dock-center {
@@ -15444,7 +15426,7 @@
             <span class="camera-dot"><i class="fa-solid fa-camera"></i></span>
           </div>
           <div class="profile-copy">
-            <h1>CatPaw Studio <i class="fa-solid fa-circle-check"></i></h1>
+            <h1>Yuan <i class="fa-solid fa-circle-check"></i></h1>
             <p id="dateText">Sun · Mon · Tue · Wed · Thu · Fri · Sat</p>
           </div>
         </div>
@@ -15497,7 +15479,7 @@
         <div class="album-top">
           <div class="album-copy">
             <strong>One Kiss</strong>
-            <span>CatPaw Studio</span>
+            <span>Yuan</span>
           </div>
           <div class="album-badge">
             <i class="fa-solid fa-bolt"></i>
@@ -15569,7 +15551,7 @@
               <span class="group-icon"><i class="fa-solid fa-mobile-screen-button"></i></span>
               <div class="group-copy">
                 <strong>添加到桌面与全屏</strong>
-                <span>一键将猫爪机安装至手机桌面，享受 APP 式全屏体验</span>
+                <span>一键将 Yuan phone 安装至手机桌面，享受 APP 式全屏体验</span>
               </div>
             </div>
             <i class="fa-solid fa-chevron-down"></i>
@@ -15883,7 +15865,7 @@
             <i class="fa-solid fa-chevron-left"></i>
           </button>
           <div class="qq-title-block">
-            <h2 id="qqHomeTitle" class="qq-home-editable">catpaw_studio</h2>
+            <h2 id="qqHomeTitle" class="qq-home-editable">yuan</h2>
           </div>
           <div class="qq-top-mark">
             <button class="qq-create-btn" id="qqTopSearchBtn" type="button" aria-label="搜索联系人">
@@ -15931,8 +15913,8 @@
 
                 <!-- 名称行 + Bio 签名 + 链接行 -->
                 <div class="msg-name-row">
-                  <strong id="qqFeatureTitle">CatPaw Studio ✦</strong>
-                  <em>studio / cat</em>
+                  <strong id="qqFeatureTitle">Yuan ✦</strong>
+                  <em>studio / yuan</em>
                 </div>
 
                 <div class="ins-bio-box msg-bio-box">
@@ -15940,7 +15922,7 @@
                   <div class="ins-bio-text qq-home-editable" id="qqHomeSubtitle">把对话、歌单灵感和常用联系人收进极简透明卡片。</div>
                   <button class="msg-bio-link" id="msgBioLink" type="button">
                     <i class="fa-solid fa-link"></i>
-                    <span>catpaw.link/studio</span>
+                    <span>yuan.link</span>
                     <small>还有 1 项</small>
                   </button>
                 </div>
@@ -16073,12 +16055,12 @@
 
                   <div class="moments-profile-copy">
                     <div class="mo-name-row">
-                      <strong id="momentsHomeTitle" class="qq-home-editable">CatPaw Moments</strong>
+                      <strong id="momentsHomeTitle" class="qq-home-editable">Yuan Moments</strong>
                       <span class="mo-verified"><i class="fa-solid fa-circle-check"></i>本机记录</span>
                     </div>
                     <div class="moments-profile-email qq-home-editable" id="momentsHomeEmail">
                       <i class="fa-solid fa-link"></i>
-                      <span>contact@catpaw.moments</span>
+                      <span>contact@yuan.moments</span>
                     </div>
                     <p id="momentsHomeSubtitle" class="qq-home-editable">自动收集角色像真人一样随机发布的碎片，也可以进入发布页写自己的动态。</p>
                     <div class="mo-stats">
@@ -16274,7 +16256,7 @@
           <i class="fa-solid fa-music"></i>
         </div>
         <div class="mus-wordmark">
-          <strong>CatPaw Music</strong>
+          <strong>Yuan Music</strong>
           <span id="musicAuthHint">登录后可同步歌单与播放记录</span>
         </div>
       </section>
@@ -16332,7 +16314,7 @@
         </button>
         <div class="musa-greet">
           <small id="musaGreetLabel">Good evening</small>
-          <strong id="musaGreetName">CatPaw</strong>
+          <strong id="musaGreetName">Yuan</strong>
         </div>
         <button class="musa-avatar" id="musaAvatar" type="button" aria-label="我的资料库">
           <i class="fa-solid fa-user"></i>
@@ -16771,7 +16753,7 @@
           <i class="fa-solid fa-chevron-left"></i>
         </button>
         <div class="insc-topbar-name">
-          <strong id="cardPageTitle" class="qq-home-editable">我的猫爪名片</strong>
+          <strong id="cardPageTitle" class="qq-home-editable">我的 Yuan 名片</strong>
         </div>
         <button class="insc-icon-btn trailing" id="cardQuickAdd" type="button" aria-label="快速新增">
           <i class="fa-solid fa-plus"></i>
@@ -16791,7 +16773,7 @@
       </section>
 
       <div class="insc-bio">
-        <strong id="cardProfileName" class="qq-home-editable">CatPaw Keeper</strong>
+        <strong id="cardProfileName" class="qq-home-editable">Yuan Keeper</strong>
         <p id="cardProfileBio" class="qq-home-editable">把角色关系、转账记录、表情和世界观设定收进一张透明卡片。</p>
         <span class="insc-bio-note qq-home-editable" id="cardPageSubtitle">资产、表情包与世界书都在这里整理</span>
       </div>
@@ -17082,7 +17064,7 @@
   <section class="announcement-modal" id="pwaInstallModal" aria-label="添加到桌面引导">
     <div class="announcement-card">
       <header class="announcement-head">
-        <h3>安装猫爪机为独立 APP (PWA)</h3>
+        <h3>安装 Yuan phone 为独立 APP (PWA)</h3>
         <div class="announcement-author-badge">
           <i class="fa-solid fa-mobile-screen"></i>
           <span>无地址栏 · 独立窗口 · 全屏体验</span>
@@ -17092,7 +17074,7 @@
       <div class="announcement-body" id="pwaInstallGuideBody">
         <div class="announcement-item">
           <strong>1. Android Chrome / Edge 用户：</strong>
-          <p>点击设置页面的 <b>【安装猫爪机 APP】</b> 按钮唤起系统原生 PWA 安装弹窗；或点击浏览器右上角菜单，选择 <b>【安装应用】</b> / <b>【添加到主屏幕】</b>。</p>
+          <p>点击设置页面的 <b>【安装 Yuan phone APP】</b> 按钮唤起系统原生 PWA 安装弹窗；或点击浏览器右上角菜单，选择 <b>【安装应用】</b> / <b>【添加到主屏幕】</b>。</p>
         </div>
         <div class="announcement-item">
           <strong>2. iOS / Safari 用户：</strong>
@@ -17852,7 +17834,7 @@
       <div class="chat-settings-list">
         <div class="chat-setting-item">
           <div class="chat-setting-title"><i class="fa-solid fa-file-arrow-up"></i> 导入 TTF 字体文件</div>
-          <input id="fontFileNameInput" type="text" placeholder="字体名称，例如：猫爪手写体" />
+          <input id="fontFileNameInput" type="text" placeholder="字体名称，例如：Yuan手写体" />
           <div class="upload-item" style="margin-top:10px;">
             <strong>选择 .ttf 文件</strong>
             <span>字体会保存到本地数据中，仅当前浏览器可用。</span>
@@ -18428,7 +18410,7 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
     const globalAudioPlayer = new Audio();
     let currentPlayingBubble = null;
 
-    const DB_NAME = "catpaw-desktop-db";
+    const DB_NAME = "yuan-desktop-db";
     const STORE_NAME = "app_state";
     const STATE_KEY = "main";
     const APP_VERSION = "2025-02-22-01";
@@ -18451,7 +18433,7 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       },
       theme: {
         desktopBackground: "",
-        profileTitle: "CatPaw Studio",
+        profileTitle: "Yuan",
         dateCopy: "Sun · Mon · Tue · Wed · Thu · Fri · Sat",
         noteCopy: "things^in*myphone",
         listenCopy: "正在听 WILDFLOWER-BillieEilish",
@@ -18470,7 +18452,7 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
         iconTodo2Image: "",
         iconMusicImage: "",
         desktopBannerImage: "",
-        qqHomeTitle: "猫爪信箱",
+        qqHomeTitle: "Yuan信箱",
         qqHomeSubtitle: "把对话、歌单灵感和常用联系人收进轻雾卡片",
         qqFeatureTitle: "晚风备忘",
         qqFeatureSubtitle: "今日共享片段",
@@ -18480,12 +18462,12 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
         qqFeatureArtImage: "",
         qqCoverThumbImage: "",
         momentsPageTitle: "朋友圈",
-        momentsHomeTitle: "CatPaw Moments",
-        momentsHomeEmail: "contact@catpaw.moments",
+        momentsHomeTitle: "Yuan Moments",
+        momentsHomeEmail: "contact@yuan.moments",
         momentsHomeSubtitle: "自动收集角色像真人一样随机发布的碎片，也可以进入发布页写自己的动态。",
-        cardPageTitle: "我的猫爪名片",
+        cardPageTitle: "我的 Yuan 名片",
         cardPageSubtitle: "资产、表情包与世界书都在这里整理",
-        cardProfileName: "CatPaw Keeper",
+        cardProfileName: "Yuan Keeper",
         cardProfileBio: "把角色关系、转账记录、表情和世界观设定收进一张透明卡片。",
         cardProfileCoverImage: "",
         layoutSize: "default"
@@ -18870,7 +18852,7 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       setupDeviceScale();
 
       const profileTitle = document.querySelector(".profile-copy h1");
-      if (profileTitle) profileTitle.childNodes[0].textContent = `${appState.theme.profileTitle || "CatPaw Studio"} `;
+      if (profileTitle) profileTitle.childNodes[0].textContent = `${appState.theme.profileTitle || "Yuan"} `;
       if (dateText) dateText.textContent = appState.theme.dateCopy || "";
       if (notePill) notePill.textContent = appState.theme.noteCopy || "";
       if (listenText) listenText.textContent = appState.theme.listenCopy || "";
@@ -18878,7 +18860,7 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       if (msgListenText) msgListenText.textContent = appState.theme.listenCopy || "暂无正在播放";
       if (sharedText) sharedText.textContent = appState.theme.sharedCopy || "";
       if (speechText) speechText.textContent = appState.theme.speechCopy || "";
-      if (qqHomeTitle) qqHomeTitle.textContent = appState.theme.qqHomeTitle || "猫爪信箱";
+      if (qqHomeTitle) qqHomeTitle.textContent = appState.theme.qqHomeTitle || "Yuan信箱";
       if (qqHomeSubtitle) qqHomeSubtitle.textContent = appState.theme.qqHomeSubtitle || "";
       if (qqFeatureTitle) qqFeatureTitle.textContent = appState.theme.qqFeatureTitle || "";
       if (qqFeatureSubtitle) qqFeatureSubtitle.textContent = appState.theme.qqFeatureSubtitle || "";
@@ -18886,15 +18868,15 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       if (qqLyricLine2) qqLyricLine2.textContent = appState.theme.qqLyricLine2 || "";
       if (qqLyricLine3) qqLyricLine3.textContent = appState.theme.qqLyricLine3 || "";
       if (momentsPageTitleText) momentsPageTitleText.textContent = appState.theme.momentsPageTitle || "朋友圈";
-      if (momentsHomeTitle) momentsHomeTitle.textContent = appState.theme.momentsHomeTitle || "CatPaw Moments";
+      if (momentsHomeTitle) momentsHomeTitle.textContent = appState.theme.momentsHomeTitle || "Yuan Moments";
       if (momentsHomeEmail) {
         const emailSpan = momentsHomeEmail.querySelector("span");
-        if (emailSpan) emailSpan.textContent = appState.theme.momentsHomeEmail || "contact@catpaw.moments";
+        if (emailSpan) emailSpan.textContent = appState.theme.momentsHomeEmail || "contact@yuan.moments";
       }
       if (momentsHomeSubtitle) momentsHomeSubtitle.textContent = appState.theme.momentsHomeSubtitle || "自动收集角色像真人一样随机发布的碎片，也可以进入发布页写自己的动态。";
-      if (cardPageTitle) cardPageTitle.textContent = appState.theme.cardPageTitle || "我的猫爪名片";
+      if (cardPageTitle) cardPageTitle.textContent = appState.theme.cardPageTitle || "我的 Yuan 名片";
       if (cardPageSubtitle) cardPageSubtitle.textContent = appState.theme.cardPageSubtitle || "资产、表情包与世界书都在这里整理";
-      if (cardProfileName) cardProfileName.textContent = appState.theme.cardProfileName || "CatPaw Keeper";
+      if (cardProfileName) cardProfileName.textContent = appState.theme.cardProfileName || "Yuan Keeper";
       if (cardProfileBio) cardProfileBio.textContent = appState.theme.cardProfileBio || "把角色关系、转账记录、表情和世界观设定收进一张透明卡片。";
 
       renderModels();
@@ -19034,7 +19016,7 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
     }
 
     async function hashMusicPassword(password) {
-      const text = `catpaw-music::${String(password || "")}`;
+      const text = `yuan-music::${String(password || "")}`;
 
       try {
         if (window.crypto?.subtle) {
@@ -19354,7 +19336,7 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       const avatar = document.querySelector("#musaAvatar");
 
       if (greetLabel) greetLabel.textContent = getMusaGreetLabel(new Date().getHours());
-      if (greetName) greetName.textContent = user?.name || "CatPaw";
+      if (greetName) greetName.textContent = user?.name || "Yuan";
       if (avatar) {
         avatar.style.backgroundImage = user?.avatar
           ? `url(${user.avatar})`
@@ -22988,7 +22970,7 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       }));
 
       return {
-        type: "catpaw-role-pack",
+        type: "yuan-role-pack",
         version: 1,
         exportedAt: new Date().toLocaleString("zh-CN"),
         groups: appState.qq.groups || ["未分组"],
@@ -23028,8 +23010,8 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
 
       const role = base.role;
       const safeName = String(role.name || "role").replace(/[\\/:*?"<>|]/g, "_");
-      downloadJson(`catpaw-role-${safeName}.json`, {
-        type: "catpaw-role",
+      downloadJson(`yuan-role-${safeName}.json`, {
+        type: "yuan-role",
         version: 1,
         exportedAt: new Date().toLocaleString("zh-CN"),
         name: role.name || "",
@@ -28823,7 +28805,7 @@ function extractRoleReplyLines(reply) {
     }
 
     function getSafeFontFamilyName(name) {
-      return `CatPawFont_${String(name || "font").replace(/[^\w\u4e00-\u9fa5-]/g, "_")}_${Date.now().toString(36)}`;
+      return `YuanFont_${String(name || "font").replace(/[^\w\u4e00-\u9fa5-]/g, "_")}_${Date.now().toString(36)}`;
     }
 
     function getCustomFontById(fontId) {
@@ -29524,7 +29506,7 @@ function extractRoleReplyLines(reply) {
           target: "profileTitle",
           title: "编辑顶部标题",
           label: "请输入桌面顶部标题",
-          value: appState.theme.profileTitle || "CatPaw Studio"
+          value: appState.theme.profileTitle || "Yuan"
         });
       });
     }
@@ -30012,7 +29994,7 @@ function extractRoleReplyLines(reply) {
 
     if (exportAppDataBtn) {
       exportAppDataBtn.addEventListener("click", () => {
-        downloadJson("catpaw-app-data.json", appState);
+        downloadJson("yuan-app-data.json", appState);
         setResult(settingsResult, "应用数据已导出。");
       });
     }
