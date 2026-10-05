@@ -15405,7 +15405,7 @@
   <div class="login-overlay" id="loginOverlay">
     <div class="login-box">
       <div class="login-title-main">Yuan phone</div>
-      <div class="login-title-sub">登陆啦</div>
+      <div class="login-title-sub">欢迎登陆yuan phone</div>
       <div class="login-input-group">
         <input type="text" id="loginUsername" class="login-input" placeholder="账号" autocomplete="username" />
         <input type="password" id="loginPassword" class="login-input" placeholder="密码" autocomplete="current-password" />
@@ -30284,14 +30284,10 @@ function extractRoleReplyLines(reply) {
       lastTouchEnd = now;
     }, { passive: false });
 
-    function initAnnouncementModal() {
+    function showAnnouncementModal() {
       const modal = document.querySelector("#announcementModal");
       const confirmBtn = document.querySelector("#confirmAnnouncementBtn");
-      const dontShowCheck = document.querySelector("#dontShowAnnouncementCheck");
       if (!modal || !confirmBtn) return;
-
-      const dontShow = localStorage.getItem("catpaw_dont_show_announcement") === "true";
-      if (dontShow) return;
 
       modal.classList.add("show");
 
@@ -30312,15 +30308,13 @@ function extractRoleReplyLines(reply) {
         }
       }, 1000);
 
-      confirmBtn.addEventListener("click", () => {
+      const onConfirm = () => {
         if (confirmBtn.disabled) return;
-
-        if (dontShowCheck && dontShowCheck.checked) {
-          localStorage.setItem("catpaw_dont_show_announcement", "true");
-        }
-
         modal.classList.remove("show");
-      });
+        confirmBtn.removeEventListener("click", onConfirm);
+      };
+
+      confirmBtn.addEventListener("click", onConfirm);
     }
 
     function setupLoginSystem() {
@@ -30339,8 +30333,9 @@ function extractRoleReplyLines(reply) {
         if (u === "yuanzhizhi" && p === "yuanzhizhiovo") {
           overlay.classList.add("hidden");
           if (errorTip) errorTip.textContent = "";
+          showAnnouncementModal();
         } else {
-          if (errorTip) errorTip.textContent = "账号或密码错误";
+          if (errorTip) errorTip.textContent = "账号不在名册";
           pwdInput.value = "";
         }
       };
@@ -30376,7 +30371,6 @@ setupBatteryStatus();
         momentsHistoryExpanded = !!appState.qq.momentsExpanded;
         registerAllCustomFonts();
         renderState();
-        initAnnouncementModal();
         if (autoMomentTimer) clearInterval(autoMomentTimer);
 
         // 刷新后如果一起听还在连接中，恢复搭话心跳。
