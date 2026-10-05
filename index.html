@@ -77,18 +77,94 @@
       height: 100dvh;
       min-height: 0;
       margin: 0 auto;
-      padding: calc(14px + env(safe-area-inset-top)) 16px calc(24px + env(safe-area-inset-bottom)) 16px;
+      padding: 0;
       position: relative;
-      overflow-y: auto;
+      overflow: hidden;
+    }
+
+    /* 左右滑动分页容器（固定高度，禁止上下滚动） */
+    .desktop-carousel {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
       -webkit-overflow-scrolling: touch;
     }
 
-    .desktop::-webkit-scrollbar {
+    .desktop-carousel::-webkit-scrollbar {
       display: none !important;
+    }
+
+    .desktop-page {
+      flex: 0 0 100%;
+      width: 100%;
+      height: 100%;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      display: flex;
+      flex-direction: column;
+      padding: calc(14px + env(safe-area-inset-top)) 16px calc(90px + env(safe-area-inset-bottom)) 16px;
+      overflow: hidden;
+      box-sizing: border-box;
+      position: relative;
+    }
+
+    /* 桌面分页指示圆点 */
+    .desktop-page-dots {
+      position: fixed;
+      left: 50%;
+      bottom: calc(84px + env(safe-area-inset-bottom));
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      z-index: 18;
+      pointer-events: auto;
+    }
+
+    .desktop-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.18);
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .desktop-dot.active {
+      width: 18px;
+      border-radius: 999px;
+      background: #000000;
     }
 
     .screen-hud {
       display: none !important;
+    }
+
+    /* 可拖拽移动的桌面块容器 */
+    .draggable-card {
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: pan-x;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
+      cursor: grab;
+    }
+
+    .draggable-card:active {
+      cursor: grabbing;
+    }
+
+    .draggable-card.dragging {
+      opacity: 0.45;
+      transform: scale(0.96);
+    }
+
+    .draggable-card.drag-over {
+      outline: 2px dashed #000000;
+      outline-offset: 3px;
     }
 
     .hero {
@@ -614,10 +690,166 @@
     /* 桌面自定义小组件区域样式 */
     .desktop-widgets-section {
       margin-top: 14px;
-      display: flex;
-      flex-direction: column;
+      display: grid;
+      grid-template-columns: 1fr;
       gap: 12px;
-      padding-bottom: 96px;
+      padding-bottom: 10px;
+    }
+
+    /* 新增高颜值极简白色小组件系列 */
+    /* 1. 极简时钟翻牌小组件 */
+    .desktop-clock-widget {
+      background: #ffffff;
+      border: 1px solid #ededec;
+      border-radius: 22px;
+      padding: 14px 18px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.025);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .dcw-time-huge {
+      font-size: 32px;
+      font-weight: 800;
+      color: #000000;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .dcw-time-sub {
+      text-align: right;
+    }
+
+    .dcw-time-sub strong {
+      display: block;
+      font-size: 12.5px;
+      color: #111111;
+      font-weight: 700;
+    }
+
+    .dcw-time-sub span {
+      display: block;
+      margin-top: 3px;
+      font-size: 10.5px;
+      color: #8e8e93;
+    }
+
+    /* 2. 每日步数与运动能量卡片 */
+    .desktop-steps-widget {
+      background: #ffffff;
+      border: 1px solid #ededec;
+      border-radius: 22px;
+      padding: 14px 18px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.025);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .dsw-left {
+      min-width: 0;
+    }
+
+    .dsw-tag {
+      font-size: 9.5px;
+      font-weight: 700;
+      color: #8e8e93;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+      display: block;
+    }
+
+    .dsw-count {
+      font-size: 26px;
+      font-weight: 800;
+      color: #111111;
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+
+    .dsw-target {
+      margin-top: 5px;
+      font-size: 10.5px;
+      color: #666666;
+    }
+
+    .dsw-circle-meter {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 3.5px solid #111111;
+      border-right-color: #ededec;
+      display: grid;
+      place-items: center;
+      font-size: 13px;
+      color: #111111;
+      flex-shrink: 0;
+    }
+
+    /* 3. 极简白便签组件 */
+    .desktop-note-widget {
+      background: #ffffff;
+      border: 1px solid #ededec;
+      border-radius: 22px;
+      padding: 14px 18px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.025);
+      cursor: pointer;
+    }
+
+    .dnw-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .dnw-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: #8e8e93;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .dnw-body {
+      font-size: 13px;
+      color: #111111;
+      line-height: 1.5;
+      font-weight: 500;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* 4. 每日灵感语录小组件 */
+    .desktop-quote-widget {
+      background: #fafaf9;
+      border: 1px dashed #dcdcd9;
+      border-radius: 22px;
+      padding: 14px 18px;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .dqw-text {
+      font-size: 12.5px;
+      line-height: 1.55;
+      color: #222222;
+      font-weight: 600;
+      font-style: italic;
+    }
+
+    .dqw-author {
+      margin-top: 6px;
+      font-size: 10px;
+      color: #8e8e93;
+      font-weight: 600;
+      letter-spacing: 0.06em;
     }
 
     .desktop-music-widget {
@@ -15567,140 +15799,159 @@
   </div>
 
   <main class="desktop">
-    <section class="screen-hud" aria-label="状态栏">
-      <div class="hud-left">
-        <span id="clock">17:27</span>
-      </div>
-      <div class="hud-icons">
-        <i class="fa-solid fa-signal"></i>
-        <i class="fa-solid fa-wifi"></i>
-        <span class="hud-battery">90</span>
-      </div>
-    </section>
-
-    <section class="hero" aria-label="桌面顶部小组件">
-      <!-- 极简个人名片小组件（头像、ID、个性签名） -->
-      <section class="profile-card-widget">
-        <div class="profile-card-row">
-          <div class="profile-card-avatar-wrap">
-            <div class="profile-card-avatar" id="avatarOrbit" title="点击更换头像"></div>
-            <span class="profile-card-camera-badge"><i class="fa-solid fa-camera"></i></span>
-          </div>
-          <div class="profile-card-info">
-            <div class="profile-card-id-row">
-              <span class="profile-card-id" id="profileTitleDisplay">Yuan</span>
-              <i class="fa-solid fa-circle-check profile-card-verified"></i>
+    <!-- 固定高度、横向滑动的主屏幕多页容器 -->
+    <div class="desktop-carousel" id="desktopCarousel">
+      <!-- 第一页：基础核心页 -->
+      <section class="desktop-page" data-page-index="0" id="desktopPage1">
+        <!-- 极简个人名片小组件（头像、ID、个性签名） -->
+        <div class="draggable-card profile-card-widget" draggable="true" data-widget-id="profileCard">
+          <div class="profile-card-row">
+            <div class="profile-card-avatar-wrap">
+              <div class="profile-card-avatar" id="avatarOrbit" title="点击更换头像"></div>
+              <span class="profile-card-camera-badge"><i class="fa-solid fa-camera"></i></span>
             </div>
-            <div class="profile-card-bio" id="notePill" title="点击编辑个性签名">things^in*myphone</div>
+            <div class="profile-card-info">
+              <div class="profile-card-id-row">
+                <span class="profile-card-id" id="profileTitleDisplay">Yuan</span>
+                <i class="fa-solid fa-circle-check profile-card-verified"></i>
+              </div>
+              <div class="profile-card-bio" id="notePill" title="点击编辑个性签名">things^in*myphone</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 桌面主体排版：应用网格 + 正方形可替换照片小组件 -->
+        <div class="desktop-main-grid draggable-card" draggable="true" data-widget-id="appsAndPhoto" aria-label="核心应用与照片小组件">
+          <div class="desktop-apps-grid" id="desktopAppsGrid">
+            <a class="app app-stack draggable-app" draggable="true" data-app-id="qq" href="javascript:void(0)" id="qqApp">
+              <span class="app-icon" id="iconTodo1"><i class="fa-brands fa-qq"></i></span>
+              <span>QQ</span>
+            </a>
+
+            <a class="app app-stack draggable-app" draggable="true" data-app-id="settings" href="javascript:void(0)" id="settingsApp">
+              <span class="app-icon" id="iconSettings"><i class="fa-solid fa-gear"></i></span>
+              <span>设置</span>
+            </a>
+
+            <a class="app app-stack draggable-app" draggable="true" data-app-id="card" href="javascript:void(0)" id="cardApp">
+              <span class="app-icon" id="iconTodo2"><i class="fa-regular fa-id-card"></i></span>
+              <span>名片</span>
+            </a>
+
+            <a class="app app-stack draggable-app" draggable="true" data-app-id="music" href="javascript:void(0)" id="musicApp">
+              <span class="app-icon" id="iconMusic"><i class="fa-solid fa-music"></i></span>
+              <span>云音乐</span>
+            </a>
+
+            <a class="app app-stack draggable-app" draggable="true" data-app-id="forum" href="javascript:void(0)" id="forumApp">
+              <span class="app-icon" id="iconForum"><i class="fa-solid fa-comments"></i></span>
+              <span>论坛</span>
+            </a>
+
+            <a class="app app-stack draggable-app" draggable="true" data-app-id="store" href="javascript:void(0)" id="storeApp">
+              <span class="app-icon" id="iconStore"><i class="fa-solid fa-bag-shopping"></i></span>
+              <span>商店</span>
+            </a>
+
+            <a class="app app-stack draggable-app" draggable="true" data-app-id="beautify" href="javascript:void(0)" id="beautifyApp">
+              <span class="app-icon" id="iconBeauty"><i class="fa-solid fa-wand-magic-sparkles"></i></span>
+              <span>美化</span>
+            </a>
+
+            <a class="app app-stack draggable-app" draggable="true" data-app-id="takeout" href="javascript:void(0)" id="takeoutApp">
+              <span class="app-icon" id="iconTakeout"><i class="fa-solid fa-utensils"></i></span>
+              <span>外卖</span>
+            </a>
+          </div>
+
+          <!-- 正方形图片小组件 -->
+          <div class="square-photo-widget" id="squarePhotoWidget" title="点击更换照片">
+            <div class="square-photo-preview" id="memoryLeftCard"></div>
+            <div class="square-photo-empty" id="squarePhotoEmpty">
+              <i class="fa-regular fa-image"></i>
+              <span>照片小组件</span>
+            </div>
+            <span class="square-photo-overlay"><i class="fa-solid fa-camera"></i></span>
+          </div>
+        </div>
+
+        <!-- 页面一小组件槽位 -->
+        <div class="desktop-widgets-section" id="pageOneWidgets"></div>
+      </section>
+
+      <!-- 第二页：拓展小组件与应用页（左右滑动切到此页） -->
+      <section class="desktop-page" data-page-index="1" id="desktopPage2">
+        <div class="desktop-widgets-section" id="pageTwoWidgets" style="padding-top: 10px;">
+          <!-- 极简白色音乐小组件 -->
+          <div class="draggable-card desktop-music-widget" draggable="true" data-widget-id="musicWidget" id="desktopMusicWidget" title="点击前往云音乐">
+            <div class="dmw-left">
+              <div class="dmw-cover" id="albumCard">
+                <i class="fa-solid fa-music" id="albumFallback"></i>
+              </div>
+              <div class="dmw-info">
+                <strong id="listenText">正在听 WILDFLOWER-BillieEilish</strong>
+                <span id="dmwArtist">Billie Eilish · Happier Than Ever</span>
+              </div>
+            </div>
+            <div class="dmw-ctrls">
+              <button class="dmw-btn" type="button" id="dmwPrevBtn" aria-label="上一首"><i class="fa-solid fa-backward-step"></i></button>
+              <button class="dmw-btn play" type="button" id="dmwPlayBtn" aria-label="播放"><i class="fa-solid fa-play"></i></button>
+              <button class="dmw-btn" type="button" id="dmwNextBtn" aria-label="下一首"><i class="fa-solid fa-forward-step"></i></button>
+            </div>
+          </div>
+
+          <!-- 极简日历/日期小组件 -->
+          <div class="draggable-card desktop-calendar-widget" draggable="true" data-widget-id="calendarWidget" id="dateText" title="点击编辑日历备忘">
+            <div class="dcw-header">
+              <span class="dcw-tag">SCHEDULE</span>
+              <span class="dcw-month" id="dcwMonthText">TODAY</span>
+            </div>
+            <div class="dcw-content">
+              <strong id="dcwDayLarge">24</strong>
+              <div class="dcw-memo">
+                <span class="dcw-memo-title">备忘录事项</span>
+                <p class="dcw-memo-sub" id="speechText">お湯をたくさん飲んでください······</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 极简天气挂件小组件 -->
+          <div class="draggable-card weather-glass" draggable="true" data-widget-id="weatherWidget" id="desktopWeatherWidget" style="margin-bottom:0;">
+            <div class="weather-main">
+              <div class="weather-copy">
+                <small>☁︎ 24°C 多云</small>
+                <strong id="notePillWeather">things^in*myphone</strong>
+              </div>
+              <div class="weather-icons">
+                <div class="weather-icon-card" id="memoryMainCard"><i class="fa-solid fa-cloud-rain" id="memoryMainFallback"></i></div>
+                <div class="weather-icon-card" id="memoryRightCard"><i class="fa-solid fa-house" id="memoryRightFallback"></i></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 极简大时钟组件 -->
+          <div class="draggable-card desktop-clock-widget" draggable="true" data-widget-id="clockWidget" id="desktopClockWidget">
+            <div class="dcw-time-huge" id="widgetClockBig">17:27</div>
+            <div class="dcw-time-sub">
+              <strong id="widgetClockDate">FRI 24 FEB</strong>
+              <span>TIME IN SHANGHAI</span>
+            </div>
+          </div>
+
+          <!-- 极简每日灵感语录小组件 -->
+          <div class="draggable-card desktop-quote-widget" draggable="true" data-widget-id="quoteWidget" id="desktopQuoteWidget">
+            <div class="dqw-text" id="widgetQuoteText">“Less is more, simplicity is the ultimate sophistication.”</div>
+            <div class="dqw-author">— YUAN PHONE</div>
           </div>
         </div>
       </section>
+    </div>
 
-      <!-- 桌面主体排版：4个核心APP网格 + 1个正方形可替换图片小组件 -->
-      <section class="desktop-main-grid" aria-label="核心应用与照片小组件">
-        <div class="desktop-apps-grid">
-          <a class="app app-stack" href="javascript:void(0)" id="qqApp">
-            <span class="app-icon" id="iconTodo1"><i class="fa-brands fa-qq"></i></span>
-            <span>QQ</span>
-          </a>
-
-          <a class="app app-stack" href="javascript:void(0)" id="settingsApp">
-            <span class="app-icon" id="iconSettings"><i class="fa-solid fa-gear"></i></span>
-            <span>设置</span>
-          </a>
-
-          <a class="app app-stack" href="javascript:void(0)" id="cardApp">
-            <span class="app-icon" id="iconTodo2"><i class="fa-regular fa-id-card"></i></span>
-            <span>名片</span>
-          </a>
-
-          <a class="app app-stack" href="javascript:void(0)" id="musicApp">
-            <span class="app-icon" id="iconMusic"><i class="fa-solid fa-music"></i></span>
-            <span>云音乐</span>
-          </a>
-
-          <a class="app app-stack" href="javascript:void(0)" id="forumApp">
-            <span class="app-icon" id="iconForum"><i class="fa-solid fa-comments"></i></span>
-            <span>论坛</span>
-          </a>
-
-          <a class="app app-stack" href="javascript:void(0)" id="storeApp">
-            <span class="app-icon" id="iconStore"><i class="fa-solid fa-bag-shopping"></i></span>
-            <span>商店</span>
-          </a>
-
-          <a class="app app-stack" href="javascript:void(0)" id="beautifyApp">
-            <span class="app-icon" id="iconBeauty"><i class="fa-solid fa-wand-magic-sparkles"></i></span>
-            <span>美化</span>
-          </a>
-
-          <a class="app app-stack" href="javascript:void(0)" id="takeoutApp">
-            <span class="app-icon" id="iconTakeout"><i class="fa-solid fa-utensils"></i></span>
-            <span>外卖</span>
-          </a>
-        </div>
-
-        <!-- 正方形图片小组件 -->
-        <div class="square-photo-widget" id="squarePhotoWidget" title="点击更换照片">
-          <div class="square-photo-preview" id="memoryLeftCard"></div>
-          <div class="square-photo-empty" id="squarePhotoEmpty">
-            <i class="fa-regular fa-image"></i>
-            <span>照片小组件</span>
-          </div>
-          <span class="square-photo-overlay"><i class="fa-solid fa-camera"></i></span>
-        </div>
-      </section>
-
-      <!-- 可自定义桌面小组件区域 -->
-      <section class="desktop-widgets-section" aria-label="自定义桌面小组件">
-        <!-- 极简白色音乐小组件 -->
-        <div class="desktop-music-widget" id="desktopMusicWidget" title="点击前往云音乐">
-          <div class="dmw-left">
-            <div class="dmw-cover" id="albumCard">
-              <i class="fa-solid fa-music" id="albumFallback"></i>
-            </div>
-            <div class="dmw-info">
-              <strong id="listenText">正在听 WILDFLOWER-BillieEilish</strong>
-              <span id="dmwArtist">Billie Eilish · Happier Than Ever</span>
-            </div>
-          </div>
-          <div class="dmw-ctrls">
-            <button class="dmw-btn" type="button" id="dmwPrevBtn" aria-label="上一首"><i class="fa-solid fa-backward-step"></i></button>
-            <button class="dmw-btn play" type="button" id="dmwPlayBtn" aria-label="播放"><i class="fa-solid fa-play"></i></button>
-            <button class="dmw-btn" type="button" id="dmwNextBtn" aria-label="下一首"><i class="fa-solid fa-forward-step"></i></button>
-          </div>
-        </div>
-
-        <!-- 极简日历/日期小组件 -->
-        <div class="desktop-calendar-widget" id="dateText" title="点击编辑日历备忘">
-          <div class="dcw-header">
-            <span class="dcw-tag">SCHEDULE</span>
-            <span class="dcw-month" id="dcwMonthText">TODAY</span>
-          </div>
-          <div class="dcw-content">
-            <strong id="dcwDayLarge">24</strong>
-            <div class="dcw-memo">
-              <span class="dcw-memo-title">备忘录事项</span>
-              <p class="dcw-memo-sub" id="speechText">お湯をたくさん飲んでください······</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- 极简天气挂件小组件 -->
-        <div class="weather-glass" id="desktopWeatherWidget" style="margin-bottom:0;">
-          <div class="weather-main">
-            <div class="weather-copy">
-              <small>☁︎ 24°C 多云</small>
-              <strong id="notePill">things^in*myphone</strong>
-            </div>
-            <div class="weather-icons">
-              <div class="weather-icon-card" id="memoryMainCard"><i class="fa-solid fa-cloud-rain" id="memoryMainFallback"></i></div>
-              <div class="weather-icon-card" id="memoryRightCard"><i class="fa-solid fa-house" id="memoryRightFallback"></i></div>
-            </div>
-          </div>
-        </div>
-      </section>
-    </section>
+    <!-- 底部滑动页码圆点指示器 -->
+    <div class="desktop-page-dots" id="desktopPageDots">
+      <span class="desktop-dot active" data-page-dot="0"></span>
+      <span class="desktop-dot" data-page-dot="1"></span>
+    </div>
 
     <!-- 底部极简 Dock 栏 -->
     <nav class="desktop-dock" aria-label="底部快捷应用栏">
@@ -15815,6 +16066,62 @@
         </div>
         <button class="bmp-toggle-btn active" type="button" data-widget-key="weatherWidget">
           <i class="fa-solid fa-check"></i><span>已添加</span>
+        </button>
+      </div>
+
+      <!-- 6. 极简时钟翻牌小组件 -->
+      <div class="bmp-item">
+        <div class="bmp-item-info">
+          <div class="bmp-item-icon"><i class="fa-regular fa-clock"></i></div>
+          <div class="bmp-item-copy">
+            <strong>极简大时钟小组件</strong>
+            <span>超大时间排版与所在城市时区显示，极简黑白</span>
+          </div>
+        </div>
+        <button class="bmp-toggle-btn active" type="button" data-widget-key="clockWidget">
+          <i class="fa-solid fa-check"></i><span>已添加</span>
+        </button>
+      </div>
+
+      <!-- 7. 每日灵感语录小组件 -->
+      <div class="bmp-item">
+        <div class="bmp-item-info">
+          <div class="bmp-item-icon"><i class="fa-solid fa-quote-left"></i></div>
+          <div class="bmp-item-copy">
+            <strong>每日灵感语录组件</strong>
+            <span>极简斜体语录便签，轻点可自主编辑格言</span>
+          </div>
+        </div>
+        <button class="bmp-toggle-btn active" type="button" data-widget-key="quoteWidget">
+          <i class="fa-solid fa-check"></i><span>已添加</span>
+        </button>
+      </div>
+
+      <!-- 8. 每日步数健康小组件 -->
+      <div class="bmp-item">
+        <div class="bmp-item-info">
+          <div class="bmp-item-icon"><i class="fa-solid fa-person-walking"></i></div>
+          <div class="bmp-item-copy">
+            <strong>健康步数小组件</strong>
+            <span>当日运动步数与环形能量进度环</span>
+          </div>
+        </div>
+        <button class="bmp-toggle-btn" type="button" data-widget-key="stepsWidget">
+          <i class="fa-solid fa-plus"></i><span>添加</span>
+        </button>
+      </div>
+
+      <!-- 9. 极简随手记便签组件 -->
+      <div class="bmp-item">
+        <div class="bmp-item-info">
+          <div class="bmp-item-icon"><i class="fa-regular fa-note-sticky"></i></div>
+          <div class="bmp-item-copy">
+            <strong>随手记便签组件</strong>
+            <span>在桌面第二页随时记录灵感与清单</span>
+          </div>
+        </div>
+        <button class="bmp-toggle-btn" type="button" data-widget-key="noteWidget">
+          <i class="fa-solid fa-plus"></i><span>添加</span>
         </button>
       </div>
     </div>
@@ -17412,37 +17719,43 @@
     </div>
   </section>
 
-  <section class="announcement-modal" id="announcementModal" aria-label="开屏公告">
+  <section class="announcement-modal" id="announcementModal" aria-label="更新内容公告">
     <div class="announcement-card">
       <header class="announcement-head">
-        <h3>sweet （沅子机）</h3>
+        <h3>沅子机更新内容</h3>
         <div class="announcement-author-badge">
-          <i class="fa-solid fa-user-pen"></i>
-          <span>作者：沅/只只 欢迎大家游玩</span>
+          <i class="fa-solid fa-clock"></i>
+          <span>2025年2月23日 10:30 更新</span>
         </div>
       </header>
 
       <div class="announcement-body">
         <div class="announcement-item">
-          <strong>1. 拒绝抄袭与盗用</strong>
-          <p>谢绝任何形式的剽窃、盗用或抄袭。无论是提取我的提示词、请求格式，还是处理逻辑，都禁止直接拿走。哪怕是挪到别的小手机上使用也不允许。本作品仅供个人部署自用，未经允许，不得擅自搬运、二改、二次发布源码至任何公开平台。</p>
+          <strong>1. 桌面固定高度与左右滑动分屏</strong>
+          <p>桌面页面高度彻底固定，不再上下拉伸！新增左右丝滑滑动分页，支持第一页核心页与第二页拓展小组件页面自由翻动。</p>
         </div>
 
         <div class="announcement-item">
-          <strong>2. 禁止商业用途</strong>
-          <p>请勿将本项目的代码、设计、提示词及衍生内容用于任何商业盈利行为。</p>
+          <strong>2. 桌面小组件与应用自由拖拽排列</strong>
+          <p>所有应用图标与小组件均支持拖拽自由更换位置，可随心摆放你的个性主屏幕！</p>
+        </div>
+
+        <div class="announcement-item">
+          <strong>3. 美化 App 全新扩充高颜值小组件</strong>
+          <p>新增极简大时钟组件、每日灵感语录组件、随手记便签与步数健康小组件，均可在美化 App 内一键添加至桌面并自由定制。</p>
+        </div>
+
+        <div class="announcement-item">
+          <strong>4. 极简黑白灰视觉与安全登录系统</strong>
+          <p>全系极简纯净白黑配色，登录入口与公告阅读机制全面升级。</p>
         </div>
 
         <div class="announcement-free-tag">
-          本小手机 Sweet（沅phone）完全免费！如果你是通过非官方渠道花钱购买或获得的，由此产生的一切损失与责任，作者概不负责。
+          Sweet（沅phone）完全免费！禁止搬运、抄袭或商业转售。感谢大家的使用与喜爱！
         </div>
       </div>
 
       <footer class="announcement-footer">
-        <label class="announcement-toggle-row">
-          <input type="checkbox" id="dontShowAnnouncementCheck" />
-          <span>下次不再显示此公告</span>
-        </label>
         <button class="announcement-btn" id="confirmAnnouncementBtn" type="button" disabled>
           请阅读公告 (3s)
         </button>
@@ -18815,7 +19128,11 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
           photoWidget: true,
           musicWidget: true,
           calendarWidget: true,
-          weatherWidget: true
+          weatherWidget: true,
+          clockWidget: true,
+          quoteWidget: true,
+          stepsWidget: false,
+          noteWidget: false
         }
       },
       qq: {
@@ -18859,6 +19176,16 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       const minute = String(now.getMinutes()).padStart(2, "0");
       if (clock) {
         clock.textContent = `${hour}:${minute}`;
+      }
+      const widgetClockBig = document.querySelector("#widgetClockBig");
+      if (widgetClockBig) {
+        widgetClockBig.textContent = `${hour}:${minute}`;
+      }
+      const widgetClockDate = document.querySelector("#widgetClockDate");
+      if (widgetClockDate) {
+        const days = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+        const months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+        widgetClockDate.textContent = `${days[now.getDay()]} ${now.getDate()} ${months[now.getMonth()]}`;
       }
       if (qqClock) {
         qqClock.textContent = `${hour}:${minute}`;
@@ -22486,7 +22813,11 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
           photoWidget: true,
           musicWidget: true,
           calendarWidget: true,
-          weatherWidget: true
+          weatherWidget: true,
+          clockWidget: true,
+          quoteWidget: true,
+          stepsWidget: false,
+          noteWidget: false
         };
       }
 
@@ -22496,12 +22827,16 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       const musicWidgetNode = document.querySelector("#desktopMusicWidget");
       const calendarWidgetNode = document.querySelector(".desktop-calendar-widget");
       const weatherWidgetNode = document.querySelector("#desktopWeatherWidget");
+      const clockWidgetNode = document.querySelector("#desktopClockWidget");
+      const quoteWidgetNode = document.querySelector("#desktopQuoteWidget");
 
       if (profileCardNode) profileCardNode.style.display = w.profileCard !== false ? "" : "none";
       if (photoWidgetNode) photoWidgetNode.style.display = w.photoWidget !== false ? "" : "none";
       if (musicWidgetNode) musicWidgetNode.style.display = w.musicWidget !== false ? "" : "none";
       if (calendarWidgetNode) calendarWidgetNode.style.display = w.calendarWidget !== false ? "" : "none";
       if (weatherWidgetNode) weatherWidgetNode.style.display = w.weatherWidget !== false ? "" : "none";
+      if (clockWidgetNode) clockWidgetNode.style.display = w.clockWidget !== false ? "" : "none";
+      if (quoteWidgetNode) quoteWidgetNode.style.display = w.quoteWidget !== false ? "" : "none";
 
       document.querySelectorAll("[data-widget-key]").forEach((btn) => {
         const key = btn.dataset.widgetKey;
@@ -22510,6 +22845,119 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
         btn.innerHTML = active
           ? '<i class="fa-solid fa-check"></i><span>已添加</span>'
           : '<i class="fa-solid fa-plus"></i><span>添加</span>';
+      });
+    }
+
+    // 左右横向滑动分页控制逻辑
+    function setupDesktopCarousel() {
+      const carousel = document.querySelector("#desktopCarousel");
+      const dots = document.querySelectorAll(".desktop-dot");
+      if (!carousel || !dots.length) return;
+
+      carousel.addEventListener("scroll", () => {
+        const scrollLeft = carousel.scrollLeft;
+        const width = carousel.offsetWidth || 1;
+        const pageIndex = Math.round(scrollLeft / width);
+
+        dots.forEach((dot, idx) => {
+          dot.classList.toggle("active", idx === pageIndex);
+        });
+      }, { passive: true });
+
+      dots.forEach((dot) => {
+        dot.addEventListener("click", () => {
+          const idx = Number(dot.dataset.pageDot || 0);
+          const width = carousel.offsetWidth || 390;
+          carousel.scrollTo({ left: idx * width, behavior: "smooth" });
+        });
+      });
+    }
+
+    // 小组件与图标自由拖拽排序交互
+    function setupDraggableWidgets() {
+      let draggedElement = null;
+
+      // 拖拽卡片和小组件
+      document.querySelectorAll(".draggable-card").forEach((card) => {
+        card.addEventListener("dragstart", (e) => {
+          draggedElement = card;
+          card.classList.add("dragging");
+          e.dataTransfer.effectAllowed = "move";
+        });
+
+        card.addEventListener("dragend", () => {
+          if (draggedElement) draggedElement.classList.remove("dragging");
+          document.querySelectorAll(".draggable-card").forEach(c => c.classList.remove("drag-over"));
+          draggedElement = null;
+        });
+
+        card.addEventListener("dragover", (e) => {
+          e.preventDefault();
+          if (draggedElement && draggedElement !== card && draggedElement.classList.contains("draggable-card")) {
+            card.classList.add("drag-over");
+          }
+        });
+
+        card.addEventListener("dragleave", () => {
+          card.classList.remove("drag-over");
+        });
+
+        card.addEventListener("drop", (e) => {
+          e.preventDefault();
+          card.classList.remove("drag-over");
+          if (draggedElement && draggedElement !== card && draggedElement.classList.contains("draggable-card")) {
+            const parent = card.parentNode;
+            if (parent) {
+              const rect = card.getBoundingClientRect();
+              const next = (e.clientY - rect.top) / (rect.bottom - rect.top) > 0.5;
+              parent.insertBefore(draggedElement, next ? card.nextSibling : card);
+            }
+          }
+        });
+      });
+
+      // 核心应用图标的互相拖拽调换
+      document.querySelectorAll(".draggable-app").forEach((app) => {
+        app.addEventListener("dragstart", (e) => {
+          draggedElement = app;
+          app.classList.add("dragging");
+          e.dataTransfer.effectAllowed = "move";
+        });
+
+        app.addEventListener("dragend", () => {
+          if (draggedElement) draggedElement.classList.remove("dragging");
+          document.querySelectorAll(".draggable-app").forEach(a => a.classList.remove("drag-over"));
+          draggedElement = null;
+        });
+
+        app.addEventListener("dragover", (e) => {
+          e.preventDefault();
+          if (draggedElement && draggedElement !== app && draggedElement.classList.contains("draggable-app")) {
+            app.classList.add("drag-over");
+          }
+        });
+
+        app.addEventListener("dragleave", () => {
+          app.classList.remove("drag-over");
+        });
+
+        app.addEventListener("drop", (e) => {
+          e.preventDefault();
+          app.classList.remove("drag-over");
+          if (draggedElement && draggedElement !== app && draggedElement.classList.contains("draggable-app")) {
+            const grid = document.querySelector("#desktopAppsGrid");
+            if (grid) {
+              const all = Array.from(grid.querySelectorAll(".draggable-app"));
+              const fromIndex = all.indexOf(draggedElement);
+              const toIndex = all.indexOf(app);
+              if (fromIndex < toIndex) {
+                grid.insertBefore(draggedElement, app.nextSibling);
+              } else {
+                grid.insertBefore(draggedElement, app);
+              }
+            }
+          }
+        });
       });
     }
 
@@ -30891,6 +31339,8 @@ function extractRoleReplyLines(reply) {
 setupPwaManifest();
 setupCatpawAutoFullscreen();
 setupLoginSystem();
+setupDesktopCarousel();
+setupDraggableWidgets();
 updateTime();
 setupBatteryStatus();
 
