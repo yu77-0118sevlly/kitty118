@@ -326,12 +326,116 @@
       display: none;
     }
 
-    .top-grid {
+    /* 桌面全新极简白色架构 */
+    .hero {
+      padding-top: 8px;
+    }
+
+    /* 极简个人名片小组件 */
+    .profile-card-widget {
+      background: #ffffff;
+      border: 1px solid #ededec;
+      border-radius: 24px;
+      padding: 16px 18px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.025);
+      margin-bottom: 18px;
+    }
+
+    .profile-card-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .profile-card-avatar-wrap {
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .profile-card-avatar {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background-color: #f5f5f5;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      border: 1px solid #ebebeb;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      cursor: pointer;
+    }
+
+    .profile-card-camera-badge {
+      position: absolute;
+      right: -2px;
+      bottom: -2px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #111111;
+      color: #ffffff;
+      font-size: 9px;
       display: grid;
-      grid-template-columns: 64px 64px 1fr;
-      grid-auto-rows: auto;
-      gap: 12px;
+      place-items: center;
+      border: 1.5px solid #ffffff;
+      pointer-events: none;
+    }
+
+    .profile-card-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .profile-card-id-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .profile-card-id {
+      font-size: 16px;
+      font-weight: 700;
+      color: #111111;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      cursor: pointer;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .profile-card-verified {
+      font-size: 11px;
+      color: #8e8e93;
+    }
+
+    .profile-card-bio {
+      margin-top: 5px;
+      font-size: 11.5px;
+      line-height: 1.45;
+      color: #666666;
+      font-weight: 400;
+      cursor: pointer;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* 桌面主体排版：应用与正方形图片小组件 */
+    .desktop-main-grid {
+      display: grid;
+      grid-template-columns: 1fr 144px;
+      gap: 16px;
       align-items: start;
+    }
+
+    /* 四个核心应用 2x2 网格 */
+    .desktop-apps-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px 12px;
+      justify-items: center;
     }
 
     .app {
@@ -340,44 +444,40 @@
     }
 
     .app-stack {
-      display: grid;
-      justify-items: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       gap: 8px;
     }
 
-    /* 极简白色系列桌面图标（纯白底、纯黑白灰矢量图标、细腻阴影与边框） */
     .app-icon {
-      width: 64px;
-      height: 64px;
+      width: 62px;
+      height: 62px;
       border-radius: 19px;
       display: grid;
       place-items: center;
       color: #111111;
-      font-size: 26px;
+      font-size: 24px;
       background: #ffffff;
       border: 1px solid #ebebeb;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.035);
       background-size: cover;
       background-position: center;
       overflow: hidden;
       position: relative;
+      cursor: pointer;
       transition: transform 0.14s ease, box-shadow 0.14s ease;
     }
 
     .app-icon:active {
-      transform: scale(0.94);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
-    }
-
-    .app-icon::before {
-      display: none;
+      transform: scale(0.93);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
     }
 
     .app-icon i {
       position: relative;
       z-index: 1;
       color: #111111;
-      text-shadow: none;
     }
 
     .app-stack span:last-child {
@@ -385,182 +485,71 @@
       font-weight: 600;
       color: #222222;
       letter-spacing: -0.01em;
-      text-shadow: none;
       text-align: center;
     }
 
-    /* 极简纯白音乐小组件 */
-    .album-widget {
-      position: relative;
-      min-height: 138px;
-      grid-row: span 2;
-      border-radius: 22px;
-      padding: 14px;
+    /* 正方形照片小组件 */
+    .square-photo-widget {
+      width: 144px;
+      height: 144px;
+      border-radius: 24px;
       background: #ffffff;
       border: 1px solid #ededec;
       box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
-      overflow: hidden;
-    }
-
-    .album-top {
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      align-items: flex-start;
-    }
-
-    .album-copy strong {
-      display: block;
-      font-size: 12px;
-      color: #111111;
-      font-weight: 700;
-      line-height: 1.25;
-    }
-
-    .album-copy span {
-      display: block;
-      margin-top: 3px;
-      color: #8e8e93;
-      font-size: 10px;
-      font-weight: 500;
-    }
-
-    .album-badge {
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      border: 1px solid #f0f0f0;
-      display: grid;
-      place-items: center;
-      color: #111111;
-      background: #f8f8f8;
-      font-size: 11px;
-      flex-shrink: 0;
-    }
-
-    .album-body {
-      margin-top: 10px;
-      display: grid;
-      grid-template-columns: 1fr 54px;
-      gap: 10px;
-      align-items: center;
-    }
-
-    .album-cover {
-      height: 68px;
-      border-radius: 12px;
-      background-color: #f7f7f7;
-      background-size: cover;
-      background-position: center;
-      border: 1px solid #f0f0f0;
-    }
-
-    .album-disc {
-      width: 54px;
-      height: 54px;
-      border-radius: 50%;
       position: relative;
       overflow: hidden;
-      background: #111111;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
-    }
-
-    .album-disc::before {
-      content: "";
-      position: absolute;
-      inset: 6px;
-      border-radius: 50%;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-    }
-
-    .album-disc::after {
-      content: "";
-      position: absolute;
-      inset: 18px;
-      border-radius: 50%;
-      background: #ffffff;
-      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
-    }
-
-    .album-footer {
-      display: none;
-    }
-
-    /* 极简纯白分享片段卡片 */
-    .mid-glass {
-      margin-top: 14px;
-      border-radius: 22px;
-      padding: 14px;
-      background: #ffffff;
-      border: 1px solid #ededec;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
-    }
-
-    .mid-tabs {
-      display: flex;
-      justify-content: flex-start;
-      gap: 8px;
-      margin-bottom: 12px;
-      font-size: 11px;
-      font-weight: 600;
-      color: #8e8e93;
-    }
-
-    .mid-tabs span {
-      padding: 4px 12px;
-      border-radius: 999px;
       cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.14s ease, box-shadow 0.14s ease;
     }
 
-    .mid-tabs .active {
-      background: #111111;
-      color: #ffffff;
-      font-weight: 600;
+    .square-photo-widget:active {
+      transform: scale(0.97);
     }
 
-    .mid-content {
-      display: grid;
-      grid-template-columns: 74px 74px 1fr;
-      gap: 10px;
-      align-items: stretch;
-    }
-
-    .mid-thumb {
-      border-radius: 14px;
-      min-height: 74px;
+    .square-photo-preview {
+      position: absolute;
+      inset: 0;
       background-color: #f7f7f7;
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
-      border: 1px solid #f0f0f0;
     }
 
-    .mid-thumb.one {
-      background-image: none;
-      background-color: #f7f7f7;
+    .square-photo-overlay {
+      position: absolute;
+      right: 8px;
+      bottom: 8px;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: rgba(17, 17, 17, 0.85);
+      color: #ffffff;
+      font-size: 11px;
+      display: grid;
+      place-items: center;
+      border: 1.5px solid #ffffff;
+      pointer-events: none;
     }
 
-    .mid-thumb.two {
-      background-image: none;
-      background-color: #f7f7f7;
-    }
-
-    .mid-text {
+    .square-photo-empty {
+      position: relative;
+      z-index: 1;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      color: #111111;
-      font-size: 10.5px;
-      line-height: 1.45;
+      align-items: center;
+      gap: 6px;
+      color: #8e8e93;
+      font-size: 11px;
       font-weight: 500;
-      padding: 2px 0;
-      text-shadow: none;
-      cursor: pointer;
     }
 
-    .mid-text small {
-      color: #8e8e93;
-      font-size: 9.5px;
+    .square-photo-empty i {
+      font-size: 24px;
+      color: #b0b0b5;
     }
 
     .bubble-zone {
@@ -15247,124 +15236,75 @@
       </div>
     </section>
 
-    <section class="hero" aria-label="桌面头部">
-      <div class="hero-top">
-        <button class="hero-close" type="button" aria-label="关闭">
-          <i class="fa-solid fa-xmark"></i>
-        </button>
-        <div class="hero-page">1/4</div>
-        <button class="hero-side-btn" type="button" aria-label="占位"></button>
-      </div>
-
-      <div class="profile-shell">
-        <div class="profile-banner" id="desktopBanner"></div>
-        <div class="profile-row">
-          <div class="avatar-orbit" id="avatarOrbit">
-            <i class="fa-solid fa-snowflake" id="avatarFallback" style="display:none;"></i>
-            <span class="camera-dot"><i class="fa-solid fa-camera"></i></span>
+    <section class="hero" aria-label="桌面顶部小组件">
+      <!-- 极简个人名片小组件（头像、ID、个性签名） -->
+      <section class="profile-card-widget">
+        <div class="profile-card-row">
+          <div class="profile-card-avatar-wrap">
+            <div class="profile-card-avatar" id="avatarOrbit" title="点击更换头像"></div>
+            <span class="profile-card-camera-badge"><i class="fa-solid fa-camera"></i></span>
           </div>
-          <div class="profile-copy">
-            <h1>Yuan <i class="fa-solid fa-circle-check"></i></h1>
-            <p id="dateText">Sun · Mon · Tue · Wed · Thu · Fri · Sat</p>
+          <div class="profile-card-info">
+            <div class="profile-card-id-row">
+              <span class="profile-card-id" id="profileTitleDisplay">Yuan</span>
+              <i class="fa-solid fa-circle-check profile-card-verified"></i>
+            </div>
+            <div class="profile-card-bio" id="notePill" title="点击编辑个性签名">things^in*myphone</div>
           </div>
         </div>
-      </div>
-
-      <div class="calendar-strip">
-        <div class="calendar-item"><small>Sun</small><span>31</span></div>
-        <div class="calendar-item"><small>Mon</small><span>1</span></div>
-        <div class="calendar-item"><small>Tue</small><span>2</span></div>
-        <div class="calendar-item"><small>Wed</small><span>3</span></div>
-        <div class="calendar-item"><small>Thu</small><span>4</span></div>
-        <div class="calendar-item active"><small>Fri</small><span>5</span></div>
-        <div class="calendar-item"><small>Sat</small><span>6</span></div>
-      </div>
-
-      <div class="listen-bar">
-        <div class="listen-dot"><i class="fa-solid fa-headphones-simple"></i></div>
-        <span id="listenText">正在听 WILDFLOWER-BillieEilish</span>
-      </div>
-
-      <div class="weather-glass">
-        <div class="weather-main">
-          <div class="weather-copy">
-            <small>☁︎ 32°C 多云</small>
-            <strong id="notePill">things^in*myphone</strong>
-          </div>
-          <div class="weather-icons">
-            <div class="weather-icon-card" id="albumCard"><i class="fa-solid fa-droplet" id="albumFallback"></i></div>
-            <div class="weather-icon-card" id="memoryMainCard"><i class="fa-solid fa-cloud-rain" id="memoryMainFallback"></i></div>
-            <div class="weather-icon-card" id="memoryRightCard"><i class="fa-solid fa-house" id="memoryRightFallback"></i></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <div class="section-title" aria-hidden="true"></div>
-
-    <section class="top-grid" aria-label="桌面主内容">
-      <a class="app app-stack" href="javascript:void(0)" id="qqApp">
-        <span class="app-icon" id="iconTodo1"><i class="fa-brands fa-qq"></i></span>
-        <span>QQ</span>
-      </a>
-
-      <a class="app app-stack" href="javascript:void(0)" id="settingsApp">
-        <span class="app-icon" id="iconSettings"><i class="fa-solid fa-gear"></i></span>
-        <span>设置</span>
-      </a>
-
-      <section class="album-widget">
-        <div class="album-top">
-          <div class="album-copy">
-            <strong>One Kiss</strong>
-            <span>Yuan</span>
-          </div>
-          <div class="album-badge">
-            <i class="fa-solid fa-bolt"></i>
-          </div>
-        </div>
-        <div class="album-body">
-          <div class="album-cover" id="memoryLeftCard"></div>
-          <div class="album-disc"></div>
-        </div>
-        <div class="album-footer" aria-hidden="true"></div>
       </section>
 
-      <a class="app app-stack" href="javascript:void(0)" id="cardApp">
-        <span class="app-icon" id="iconTodo2"><i class="fa-regular fa-id-card"></i></span>
-        <span>名片</span>
-      </a>
+      <!-- 桌面主体排版：4个核心APP网格 + 1个正方形可替换图片小组件 -->
+      <section class="desktop-main-grid" aria-label="核心应用与照片小组件">
+        <div class="desktop-apps-grid">
+          <a class="app app-stack" href="javascript:void(0)" id="qqApp">
+            <span class="app-icon" id="iconTodo1"><i class="fa-brands fa-qq"></i></span>
+            <span>QQ</span>
+          </a>
 
-      <a class="app app-stack" href="javascript:void(0)" id="musicApp">
-        <span class="app-icon" id="iconMusic"><i class="fa-solid fa-music"></i></span>
-        <span>云音乐</span>
-      </a>
-    </section>
+          <a class="app app-stack" href="javascript:void(0)" id="settingsApp">
+            <span class="app-icon" id="iconSettings"><i class="fa-solid fa-gear"></i></span>
+            <span>设置</span>
+          </a>
 
-    <section class="mid-glass">
-      <div class="mid-tabs">
-        <span>Info</span>
-        <span class="active">Shared</span>
-        <span>Me</span>
-      </div>
-      <div class="mid-content">
-        <div class="mid-thumb one" id="midThumbOne"></div>
-        <div class="mid-thumb two" id="midThumbTwo"></div>
-        <div class="mid-text">
-          <div id="sharedText">✦ [· Pink shirt (♡♡) · Cake skirt✦, · Diamond nail art✦/.. ]</div>
-          <small>99k replies · 520k likes</small>
+          <a class="app app-stack" href="javascript:void(0)" id="cardApp">
+            <span class="app-icon" id="iconTodo2"><i class="fa-regular fa-id-card"></i></span>
+            <span>名片</span>
+          </a>
+
+          <a class="app app-stack" href="javascript:void(0)" id="musicApp">
+            <span class="app-icon" id="iconMusic"><i class="fa-solid fa-music"></i></span>
+            <span>云音乐</span>
+          </a>
         </div>
-      </div>
+
+        <!-- 正方形图片小组件 -->
+        <div class="square-photo-widget" id="squarePhotoWidget" title="点击更换照片">
+          <div class="square-photo-preview" id="memoryLeftCard"></div>
+          <div class="square-photo-empty" id="squarePhotoEmpty">
+            <i class="fa-regular fa-image"></i>
+            <span>照片小组件</span>
+          </div>
+          <span class="square-photo-overlay"><i class="fa-solid fa-camera"></i></span>
+        </div>
+      </section>
     </section>
 
-    <section class="bubble-zone">
-      <div class="widget-title-bottom" aria-hidden="true"></div>
-      <div class="speech" id="speechText">お湯をたくさん飲んでください······</div>
-      <div class="search-bubble">
-        <i class="fa-solid fa-magnifying-glass"></i>
-        搜索
-      </div>
-    </section>
+    <!-- 隐藏原多余节点的兜底挂载，保障JS不报错并支持未来添加 -->
+    <div style="display:none;" aria-hidden="true">
+      <div id="desktopBanner"></div>
+      <div id="avatarFallback"></div>
+      <div id="dateText"></div>
+      <div id="listenText"></div>
+      <div id="albumCard"><div id="albumFallback"></div></div>
+      <div id="memoryMainCard"><div id="memoryMainFallback"></div></div>
+      <div id="memoryRightCard"><div id="memoryRightFallback"></div></div>
+      <div id="midThumbOne"></div>
+      <div id="midThumbTwo"></div>
+      <div id="sharedText"></div>
+      <div id="speechText"></div>
+      <div id="iconBeauty"></div>
+    </div>
   </main>
 
   <section class="beautify-page" id="settingsPage" aria-label="设置应用页面">
@@ -18691,6 +18631,8 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
 
       const profileTitle = document.querySelector(".profile-copy h1");
       if (profileTitle) profileTitle.childNodes[0].textContent = `${appState.theme.profileTitle || "Yuan"} `;
+      const profileTitleDisplay = document.querySelector("#profileTitleDisplay");
+      if (profileTitleDisplay) profileTitleDisplay.textContent = appState.theme.profileTitle || "Yuan";
       if (dateText) dateText.textContent = appState.theme.dateCopy || "";
       if (notePill) notePill.textContent = appState.theme.noteCopy || "";
       if (listenText) listenText.textContent = appState.theme.listenCopy || "";
@@ -29337,15 +29279,58 @@ function extractRoleReplyLines(reply) {
     }
 
     const profileTitleNode = document.querySelector(".profile-copy h1");
+    const profileTitleDisplay = document.querySelector("#profileTitleDisplay");
 
-    if (profileTitleNode) {
-      profileTitleNode.addEventListener("click", () => {
-        openTextEditor({
-          target: "profileTitle",
-          title: "编辑顶部标题",
-          label: "请输入桌面顶部标题",
-          value: appState.theme.profileTitle || "Yuan"
-        });
+    const onEditProfileTitle = () => {
+      openTextEditor({
+        target: "profileTitle",
+        title: "编辑名字 / ID",
+        label: "请输入你的名称或个性ID",
+        value: appState.theme.profileTitle || "Yuan"
+      });
+    };
+
+    if (profileTitleNode) profileTitleNode.addEventListener("click", onEditProfileTitle);
+    if (profileTitleDisplay) profileTitleDisplay.addEventListener("click", onEditProfileTitle);
+
+    // 头像点击直接换头像图片
+    if (avatarOrbit) {
+      avatarOrbit.addEventListener("click", () => {
+        const input = document.createElement("input");
+        input.type = "file";
+        input.accept = "image/*";
+        input.onchange = (e) => {
+          const file = e.target.files?.[0];
+          readImage(file, async (src) => {
+            appState.theme.avatarImage = src;
+            applyCoverImage(avatarOrbit, avatarFallback, src);
+            renderState();
+            await saveState();
+          });
+        };
+        input.click();
+      });
+    }
+
+    // 正方形图片小组件点击直接替换照片
+    const squarePhotoWidget = document.querySelector("#squarePhotoWidget");
+    if (squarePhotoWidget) {
+      squarePhotoWidget.addEventListener("click", () => {
+        const input = document.createElement("input");
+        input.type = "file";
+        input.accept = "image/*";
+        input.onchange = (e) => {
+          const file = e.target.files?.[0];
+          readImage(file, async (src) => {
+            appState.theme.memoryLeftImage = src;
+            applyCoverImage(memoryLeftCard, null, src);
+            const emptyHint = document.querySelector("#squarePhotoEmpty");
+            if (emptyHint) emptyHint.style.display = src ? "none" : "";
+            renderState();
+            await saveState();
+          });
+        };
+        input.click();
       });
     }
 
