@@ -17655,30 +17655,49 @@
 
       <!-- 尺寸固定不拉长，左右滑动分页容器 -->
       <div class="announcement-carousel" id="announcementCarousel">
-        <!-- 第 1 页 -->
+        <!-- 第 1 页：最新优化与组件瘦身 -->
         <div class="announcement-slide">
           <div class="announcement-item">
-            <strong>1. 主屏视觉与日期精修</strong>
-            <p>居中超大时间下方已添加星期与日期显示，顶部个性符号更新为 Angel user，整体上移并优化间距，不再过于疏离。</p>
+            <strong>1. 登录系统彻底移除</strong>
+            <p>去除开屏登录锁屏与遮罩层，开机直达主屏桌面，不再发生按键无效或卡顿情况。</p>
           </div>
           <div class="announcement-item">
-            <strong>2. 冗余小组件全面删减精简</strong>
-            <p>已彻底移除云音乐、日历备忘录、天气状态、极简大时钟和每日灵感组件，只保留核心拍立得与别针卡片，桌面更纯净。</p>
+            <strong>2. 冗余小组件全面精简</strong>
+            <p>根据需求彻底删除了云音乐、日历备忘录、天气状态、极简大时钟与每日灵感小组件，桌面纯净无多余元素。</p>
+          </div>
+          <div class="announcement-item">
+            <strong>3. 主屏紧凑布局与日期显示</strong>
+            <p>顶部符号更新为 Angel user，超大时钟下方新增星期与具体日期，整体上移缩短间距，视觉不再疏离。</p>
           </div>
           <div class="announcement-free-tag">
             沅子机是免费小手机 禁止二传二贩
           </div>
         </div>
 
-        <!-- 第 2 页 -->
+        <!-- 第 2 页：往期视觉与小组件专项 -->
         <div class="announcement-slide">
           <div class="announcement-item">
-            <strong>3. 截图同款拍立得与别针照片</strong>
-            <p>第一页仅保留拍立得三联卡片、别针照片与 4 个核心应用，轻点即可自主更换专属高清美照。</p>
+            <strong>4. 截图同款拍立得与别针照片</strong>
+            <p>主屏复刻拍立得三联卡片与别针照片卡片，轻点直接自主选图替换为专属高清相片与自定义文案。</p>
           </div>
           <div class="announcement-item">
-            <strong>4. 沉底极简 Dock 栏与自由拖拽</strong>
-            <p>药丸 Dock 栏沉底固定无边框，其余全部应用归整至第二页应用库，支持长按随心拖拽排版并持久保存。</p>
+            <strong>5. 顶部状态栏极致纯白精简</strong>
+            <p>移除杂乱的信号、WiFi、电量与多余信息，仅保留居中极简个性符号，还原截图高级感。</p>
+          </div>
+          <div class="announcement-free-tag">
+            沅子机是免费小手机 禁止二传二贩
+          </div>
+        </div>
+
+        <!-- 第 3 页：往期交互与架构专项 -->
+        <div class="announcement-slide">
+          <div class="announcement-item">
+            <strong>6. 药丸 Dock 栏沉底与黑线去除</strong>
+            <p>Dock 栏吸附固定于屏幕最底端，去除了底部黑线与生硬边框，其余全部软件归整至第二页应用库。</p>
+          </div>
+          <div class="announcement-item">
+            <strong>7. 全桌面组件自由拖拽位移</strong>
+            <p>支持长按图标或小组件随心拖拽调换摆放顺序，系统自动持久化记忆并保存你的个性化排版。</p>
           </div>
           <div class="announcement-free-tag">
             沅子机是免费小手机 禁止二传二贩
@@ -17689,11 +17708,12 @@
       <div class="announcement-dots" id="announcementDots">
         <span class="announcement-dot active"></span>
         <span class="announcement-dot"></span>
+        <span class="announcement-dot"></span>
       </div>
 
       <footer class="announcement-footer" style="margin-top:auto;">
-        <button class="announcement-btn" id="confirmAnnouncementBtn" type="button" disabled>
-          请阅读公告 (3s)
+        <button class="announcement-btn" id="confirmAnnouncementBtn" type="button">
+          我已知晓 (进入桌面)
         </button>
       </footer>
     </div>
@@ -31225,6 +31245,49 @@ function extractRoleReplyLines(reply) {
       });
     }
 
+    // 公告弹窗滑动翻页与确认控制
+    function setupAnnouncementModal() {
+      const carousel = document.querySelector("#announcementCarousel");
+      const dots = document.querySelectorAll("#announcementDots .announcement-dot");
+      const confirmBtn = document.querySelector("#confirmAnnouncementBtn");
+      const modal = document.querySelector("#announcementModal");
+
+      if (carousel && dots.length) {
+        carousel.addEventListener("scroll", () => {
+          const scrollLeft = carousel.scrollLeft;
+          const width = carousel.offsetWidth || 1;
+          const pageIndex = Math.round(scrollLeft / width);
+
+          dots.forEach((dot, idx) => {
+            dot.classList.toggle("active", idx === pageIndex);
+          });
+        }, { passive: true });
+      }
+
+      if (confirmBtn && modal) {
+        let countdown = 3;
+        confirmBtn.disabled = true;
+        confirmBtn.classList.remove("active");
+        confirmBtn.textContent = `请阅读公告 (${countdown}s)`;
+
+        const timer = setInterval(() => {
+          countdown -= 1;
+          if (countdown > 0) {
+            confirmBtn.textContent = `请阅读公告 (${countdown}s)`;
+          } else {
+            clearInterval(timer);
+            confirmBtn.disabled = false;
+            confirmBtn.classList.add("active");
+            confirmBtn.textContent = "我已知晓 (进入桌面)";
+          }
+        }, 1000);
+
+        confirmBtn.addEventListener("click", () => {
+          modal.classList.remove("show");
+        });
+      }
+    }
+
     // 初始化入口
     (async function initApp() {
       try {
@@ -31236,6 +31299,7 @@ function extractRoleReplyLines(reply) {
         renderState();
         setupDesktopCarousel();
         setupDraggableWidgets();
+        setupAnnouncementModal();
         startAutoMomentLoop();
       } catch (err) {
         console.error("初始化应用失败：", err);
