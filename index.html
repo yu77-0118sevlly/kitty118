@@ -19533,7 +19533,7 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       const snapCityText = document.querySelector("#snapCityText");
       if (snapCityText) snapCityText.textContent = appState.theme.snapCity || "北京";
 
-      if (!appState.theme.snapQuote || appState.theme.snapQuote.includes("無限愛")) {
+      if (appState.theme.snapQuote === undefined || appState.theme.snapQuote === null || appState.theme.snapQuote === "♡₊˚ 無限愛 ⊹ ૮3") {
         appState.theme.snapQuote = "Angel user";
       }
       const snapSymbolQuote = document.querySelector("#snapSymbolQuote");
@@ -30656,6 +30656,19 @@ function extractRoleReplyLines(reply) {
       });
     }
 
+    const clipCardCaption = document.querySelector("#clipCardCaption");
+    if (clipCardCaption) {
+      clipCardCaption.addEventListener("click", (e) => {
+        e.stopPropagation();
+        openTextEditor({
+          target: "clipCaption",
+          title: "编辑便签文案",
+          label: "请输入别针照片下方的文案",
+          value: appState.theme.clipCaption || "ʚ (• . •) ɞ"
+        });
+      });
+    }
+
     const snapSearchPill = document.querySelector("#snapSearchPill");
     if (snapSearchPill) {
       snapSearchPill.addEventListener("click", () => {
@@ -31139,6 +31152,9 @@ function extractRoleReplyLines(reply) {
         if (target === "cardPageSubtitle") appState.theme.cardPageSubtitle = value || "资产、表情包与世界书都在这里整理";
         if (target === "cardProfileName") appState.theme.cardProfileName = value || "CatPaw Keeper";
         if (target === "cardProfileBio") appState.theme.cardProfileBio = value || "把角色关系、转账记录、表情和世界观设定收进一张透明卡片。";
+        if (target === "snapQuote") appState.theme.snapQuote = value || "Angel user";
+        if (target === "snapCity") appState.theme.snapCity = value || "北京";
+        if (target === "clipCaption") appState.theme.clipCaption = value || "ʚ (• . •) ɞ";
 
         renderState();
         await saveState();
