@@ -415,93 +415,66 @@
       height: 100%;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      padding-top: 4px;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 12px;
+      padding-top: 6px;
     }
 
-    /* 1. 顶部小号状态/天气/符号栏 */
+    /* 1. 顶部极简个性符号行 */
     .snap-top-status {
       display: flex;
       flex-direction: column;
-      gap: 6px;
-      padding: 0 8px;
-    }
-
-    .snap-status-row-1 {
-      display: flex;
-      justify-content: space-between;
       align-items: center;
-      color: #7b818a;
-      font-size: 13.5px;
-      font-weight: 600;
-    }
-
-    .snap-city-text {
-      color: #555b63;
-      font-weight: 600;
-      letter-spacing: 0.02em;
-      cursor: pointer;
-    }
-
-    .snap-hud-icons {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 12px;
-      color: #7b818a;
-    }
-
-    .snap-battery-pill {
-      width: 23px;
-      height: 11px;
-      border: none !important;
-      background: transparent;
-      padding: 0;
-      display: inline-flex;
-      align-items: center;
-    }
-
-    .snap-battery-pill-fill {
+      justify-content: center;
+      padding: 2px 0 0;
       width: 100%;
-      height: 100%;
-      background: #7b818a;
-      border-radius: 2.5px;
-    }
-
-    .snap-status-row-2 {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 13.5px;
-      color: #636a73;
-      font-weight: 500;
     }
 
     .snap-symbol-quote {
-      font-size: 13.5px;
-      color: #4b515a;
+      font-size: 14px;
+      font-weight: 600;
+      color: #555b63;
       letter-spacing: 0.04em;
       cursor: pointer;
+      text-align: center;
     }
 
-    /* 2. 居中超大时间显示 */
+    /* 2. 居中时钟与日期组合 */
+    .snap-clock-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 0 0 2px;
+    }
+
     .snap-big-clock {
       text-align: center;
-      font-size: 58px;
+      font-size: 60px;
       font-weight: 400;
       line-height: 1;
       letter-spacing: -0.02em;
-      color: #4a5059;
-      margin: 8px 0 6px;
+      color: #3f444c;
+      margin: 0;
       font-variant-numeric: tabular-nums;
       cursor: pointer;
+    }
+
+    .snap-sub-date {
+      font-size: 12.5px;
+      font-weight: 500;
+      color: #7b818a;
+      margin-top: 4px;
+      letter-spacing: 0.02em;
+      text-align: center;
     }
 
     /* 3. 拍立得三联卡片小组件 (Top Widgets*) */
     .snap-triple-widget {
       position: relative;
       width: 100%;
-      margin: 2px 0 10px;
+      margin: 0;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -610,11 +583,12 @@
 
     /* 4. 双栏排版：左侧别针拍立得卡片 + 右侧四个核心应用 */
     .snap-mid-section {
+      width: 100%;
       display: grid;
       grid-template-columns: 142px 1fr;
       gap: 16px;
       align-items: center;
-      margin-top: 4px;
+      margin-top: 6px;
     }
 
     /* 左侧别针照片卡片 */
@@ -15999,17 +15973,20 @@
       <section class="desktop-page" data-page-index="0" id="desktopPage1">
         <div class="page-aesthetic-wrap">
           <!-- 1. 顶部极简个性符号行 -->
-          <div class="snap-top-status" style="justify-content: center; align-items: center; padding: 4px 0 2px;">
+          <div class="snap-top-status">
             <div style="display:none;" aria-hidden="true">
               <span id="snapCityText"></span>
               <span id="snapDateText"></span>
               <span id="snapTempText"></span>
             </div>
-            <span class="snap-symbol-quote" id="snapSymbolQuote" title="点击编辑个性符号" style="font-size:14px; text-align:center;">Angel user</span>
+            <span class="snap-symbol-quote" id="snapSymbolQuote" title="点击编辑个性符号">Angel user</span>
           </div>
 
-          <!-- 2. 超大极简时钟 -->
-          <div class="snap-big-clock" id="snapBigClockDisplay">10:36</div>
+          <!-- 2. 超大极简时钟及日期 -->
+          <div class="snap-clock-section">
+            <div class="snap-big-clock" id="snapBigClockDisplay">11:16</div>
+            <div class="snap-sub-date" id="snapMainDateDisplay">2月24日 星期二</div>
+          </div>
 
           <!-- 3. 拍立得三联卡片小组件 -->
           <div class="snap-triple-widget draggable-card" draggable="true" data-widget-id="triplePolaroidWidget">
@@ -19242,6 +19219,11 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       if (snapBigClockDisplay) {
         snapBigClockDisplay.textContent = `${hour}:${minute}`;
       }
+      const snapMainDateDisplay = document.querySelector("#snapMainDateDisplay");
+      if (snapMainDateDisplay) {
+        const weekdays = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
+        snapMainDateDisplay.textContent = `${now.getMonth() + 1}月${now.getDate()}日 ${weekdays[now.getDay()]}`;
+      }
       const snapDateText = document.querySelector("#snapDateText");
       if (snapDateText) {
         const m = String(now.getMonth() + 1).padStart(2, "0");
@@ -19651,6 +19633,9 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       const snapCityText = document.querySelector("#snapCityText");
       if (snapCityText) snapCityText.textContent = appState.theme.snapCity || "北京";
 
+      if (!appState.theme.snapQuote || appState.theme.snapQuote.includes("無限愛")) {
+        appState.theme.snapQuote = "Angel user";
+      }
       const snapSymbolQuote = document.querySelector("#snapSymbolQuote");
       if (snapSymbolQuote) snapSymbolQuote.textContent = appState.theme.snapQuote || "Angel user";
 
