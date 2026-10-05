@@ -16396,13 +16396,13 @@
           <!-- 1. 顶部音乐小组件挂件 -->
           <div class="p2-music-card draggable-card" draggable="true" data-widget-id="p2MusicWidget" id="p2MusicWidget">
             <div class="p2-music-top">
-              <div class="p2-music-cover" id="p2MusicCover" style="background-image:url('https://771553.xyz/file/studio/5FDVc1VrKzVdH5mO.jpg');"></div>
+              <div class="p2-music-cover" id="p2MusicCover" title="点击自定义更换头像" style="background-image:url('https://771553.xyz/file/studio/5FDVc1VrKzVdH5mO.jpg'); cursor: pointer;"></div>
               <div class="p2-music-meta">
                 <div class="p2-music-title" id="p2MusicTitle">SAKURA(English Ver.)</div>
                 <div class="p2-music-sub" id="p2MusicSub">Sakura when I see it all hit the g</div>
               </div>
               <div class="p2-music-wave-note">
-                <i class="fa-solid fa-play" style="font-size:9px;"></i>
+                <i class="fa-solid fa-play" style="font-size:9px; color:#111111;"></i>
                 <span>|||||||♪</span>
               </div>
             </div>
@@ -16597,6 +16597,48 @@
           </div>
         </div>
         <button class="bmp-toggle-btn active" type="button" data-widget-key="midSectionWidget">
+          <i class="fa-solid fa-check"></i><span>已添加</span>
+        </button>
+      </div>
+
+      <!-- 3. 第二页：顶部音乐播放小组件 -->
+      <div class="bmp-item">
+        <div class="bmp-item-info">
+          <div class="bmp-item-icon"><i class="fa-solid fa-music"></i></div>
+          <div class="bmp-item-copy">
+            <strong>第二页音乐挂件小组件</strong>
+            <span>顶部粉萌音乐进度条与播放卡，可自定义封面头像</span>
+          </div>
+        </div>
+        <button class="bmp-toggle-btn active" type="button" data-widget-key="p2MusicWidget">
+          <i class="fa-solid fa-check"></i><span>已添加</span>
+        </button>
+      </div>
+
+      <!-- 4. 第二页：大头贴小组件 -->
+      <div class="bmp-item">
+        <div class="bmp-item-info">
+          <div class="bmp-item-icon"><i class="fa-regular fa-face-smile"></i></div>
+          <div class="bmp-item-copy">
+            <strong>第二页大头贴小组件</strong>
+            <span>萌系圆头像、颜文字与气泡卡，轻点随时换图</span>
+          </div>
+        </div>
+        <button class="bmp-toggle-btn active" type="button" data-widget-key="p2AvatarWidget">
+          <i class="fa-solid fa-check"></i><span>已添加</span>
+        </button>
+      </div>
+
+      <!-- 5. 第二页：天气电量萌系小组件 -->
+      <div class="bmp-item">
+        <div class="bmp-item-info">
+          <div class="bmp-item-icon"><i class="fa-solid fa-cloud-sun"></i></div>
+          <div class="bmp-item-copy">
+            <strong>第二页天气电量小组件</strong>
+            <span>羽翼头像、电量角标与日期气温胶囊卡片</span>
+          </div>
+        </div>
+        <button class="bmp-toggle-btn active" type="button" data-widget-key="p2WeatherWidget">
           <i class="fa-solid fa-check"></i><span>已添加</span>
         </button>
       </div>
@@ -19974,6 +20016,11 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       if (snapSymbolQuote) snapSymbolQuote.textContent = appState.theme.snapQuote || "Angel user";
 
       // 第二页小组件图片与文本渲染
+      const p2MusicCover = document.querySelector("#p2MusicCover");
+      if (p2MusicCover) {
+        p2MusicCover.style.backgroundImage = appState.theme.p2MusicCoverImg ? `url(${appState.theme.p2MusicCoverImg})` : "url('https://771553.xyz/file/studio/5FDVc1VrKzVdH5mO.jpg')";
+      }
+
       const p2AvatarCircle = document.querySelector("#p2AvatarCircle");
       if (p2AvatarCircle) {
         p2AvatarCircle.style.backgroundImage = appState.theme.p2AvatarImg ? `url(${appState.theme.p2AvatarImg})` : "url('https://771553.xyz/file/studio/5FDVc1VrKzVdH5mO.jpg')";
@@ -23238,16 +23285,25 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       if (!appState.theme.enabledWidgets) {
         appState.theme.enabledWidgets = {
           triplePolaroidWidget: true,
-          midSectionWidget: true
+          midSectionWidget: true,
+          p2MusicWidget: true,
+          p2AvatarWidget: true,
+          p2WeatherWidget: true
         };
       }
 
       const w = appState.theme.enabledWidgets;
       const triplePolaroid = document.querySelector('[data-widget-id="triplePolaroidWidget"]');
       const midSection = document.querySelector('[data-widget-id="midSectionWidget"]');
+      const p2Music = document.querySelector('[data-widget-id="p2MusicWidget"]');
+      const p2Avatar = document.querySelector('[data-widget-id="p2AvatarWidget"]');
+      const p2Weather = document.querySelector('[data-widget-id="p2WeatherWidget"]');
 
       if (triplePolaroid) triplePolaroid.style.display = w.triplePolaroidWidget !== false ? "" : "none";
       if (midSection) midSection.style.display = w.midSectionWidget !== false ? "" : "none";
+      if (p2Music) p2Music.style.display = w.p2MusicWidget !== false ? "" : "none";
+      if (p2Avatar) p2Avatar.style.display = w.p2AvatarWidget !== false ? "" : "none";
+      if (p2Weather) p2Weather.style.display = w.p2WeatherWidget !== false ? "" : "none";
 
       document.querySelectorAll("[data-widget-key]").forEach((btn) => {
         const key = btn.dataset.widgetKey;
@@ -23337,10 +23393,31 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
         });
       }
 
-      const p2MusicWidget = document.querySelector("#p2MusicWidget");
-      if (p2MusicWidget) {
-        p2MusicWidget.addEventListener("click", (e) => {
-          if (e.target.closest("button")) return;
+      const p2MusicCoverNode = document.querySelector("#p2MusicCover");
+      if (p2MusicCoverNode) {
+        p2MusicCoverNode.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const input = document.createElement("input");
+          input.type = "file";
+          input.accept = "image/*";
+          input.onchange = (ev) => {
+            const file = ev.target.files?.[0];
+            if (!file) return;
+            readImage(file, async (src) => {
+              appState.theme.p2MusicCoverImg = src;
+              p2MusicCoverNode.style.backgroundImage = `url(${src})`;
+              await saveState();
+            });
+          };
+          input.click();
+        });
+      }
+
+      const p2MusicTitleNode = document.querySelector("#p2MusicTitle");
+      if (p2MusicTitleNode) {
+        p2MusicTitleNode.style.cursor = "pointer";
+        p2MusicTitleNode.addEventListener("click", (e) => {
+          e.stopPropagation();
           openMusicPage();
         });
       }
