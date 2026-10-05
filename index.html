@@ -405,230 +405,363 @@
       display: none;
     }
 
-    /* 桌面全新极简白色架构 */
-    .hero {
-      padding-top: 8px;
+    /* 严格对照截图的新版主屏第一页布局样式 */
+    .page-aesthetic-wrap {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding-top: 4px;
     }
 
-    /* 极简个人名片小组件 */
-    .profile-card-widget {
-      background: #ffffff;
-      border: 1px solid #ededec;
-      border-radius: 24px;
-      padding: 16px 18px;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.025);
-      margin-bottom: 18px;
+    /* 1. 顶部小号状态/天气/符号栏 */
+    .snap-top-status {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 0 8px;
     }
 
-    .profile-card-row {
+    .snap-status-row-1 {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #7b818a;
+      font-size: 13.5px;
+      font-weight: 600;
+    }
+
+    .snap-city-text {
+      color: #555b63;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+    }
+
+    .snap-hud-icons {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: #7b818a;
+    }
+
+    .snap-battery-pill {
+      width: 23px;
+      height: 11px;
+      border: 1.4px solid #7b818a;
+      border-radius: 3px;
+      padding: 1px;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .snap-battery-pill-fill {
+      width: 78%;
+      height: 100%;
+      background: #7b818a;
+      border-radius: 1.5px;
+    }
+
+    .snap-status-row-2 {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13.5px;
+      color: #636a73;
+      font-weight: 500;
+    }
+
+    .snap-symbol-quote {
+      font-size: 13.5px;
+      color: #4b515a;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+    }
+
+    /* 2. 居中超大时间显示 */
+    .snap-big-clock {
+      text-align: center;
+      font-size: 58px;
+      font-weight: 400;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      color: #4a5059;
+      margin: 8px 0 6px;
+      font-variant-numeric: tabular-nums;
+      cursor: pointer;
+    }
+
+    /* 3. 拍立得三联卡片小组件 (Top Widgets*) */
+    .snap-triple-widget {
+      position: relative;
+      width: 100%;
+      margin: 2px 0 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .snap-triple-cards {
+      position: relative;
+      width: 100%;
+      height: 140px;
       display: flex;
       align-items: center;
-      gap: 14px;
+      justify-content: center;
     }
 
-    .profile-card-avatar-wrap {
-      position: relative;
-      flex-shrink: 0;
+    /* 贴纸浮饰 */
+    .snap-sticker-heart {
+      position: absolute;
+      left: 14px;
+      top: 14px;
+      font-size: 22px;
+      color: #c9ccd1;
+      z-index: 5;
     }
 
-    .profile-card-avatar {
-      width: 58px;
-      height: 58px;
-      border-radius: 50%;
-      background-color: #f5f5f5;
+    .snap-sticker-spiral {
+      position: absolute;
+      left: 38%;
+      top: 0px;
+      font-size: 19px;
+      color: #a4abb5;
+      z-index: 5;
+    }
+
+    .snap-sticker-star {
+      position: absolute;
+      right: 28px;
+      top: 4px;
+      font-size: 16px;
+      color: #a4abb5;
+      z-index: 5;
+    }
+
+    .snap-sticker-paw {
+      position: absolute;
+      right: 32%;
+      bottom: 2px;
+      font-size: 17px;
+      color: #cbd0d8;
+      z-index: 5;
+    }
+
+    .snap-polaroid-card {
+      position: absolute;
+      width: 96px;
+      height: 122px;
+      background: #ffffff;
+      padding: 6px 6px 18px 6px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04);
+      border-radius: 4px;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s ease;
+      cursor: pointer;
+    }
+
+    .snap-polaroid-img {
+      width: 100%;
+      flex: 1;
+      border-radius: 2px;
+      background-color: #f2f3f5;
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
-      border: 1px solid #ebebeb;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-      cursor: pointer;
     }
 
-    .profile-card-camera-badge {
-      position: absolute;
-      right: -2px;
-      bottom: -2px;
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      background: #111111;
-      color: #ffffff;
-      font-size: 9px;
-      display: grid;
-      place-items: center;
-      border: 1.5px solid #ffffff;
-      pointer-events: none;
+    .snap-card-1 {
+      left: 20px;
+      top: 12px;
+      transform: rotate(-7deg);
+      z-index: 1;
     }
 
-    .profile-card-info {
-      flex: 1;
-      min-width: 0;
+    .snap-card-2 {
+      left: 50%;
+      transform: translateX(-50%) rotate(1deg);
+      top: 8px;
+      z-index: 2;
     }
 
-    .profile-card-id-row {
-      display: flex;
-      align-items: center;
-      gap: 6px;
+    .snap-card-3 {
+      right: 20px;
+      top: 14px;
+      transform: rotate(6deg);
+      z-index: 1;
     }
 
-    .profile-card-id {
-      font-size: 16px;
-      font-weight: 700;
-      color: #111111;
-      letter-spacing: -0.02em;
-      line-height: 1.25;
-      cursor: pointer;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .profile-card-verified {
-      font-size: 11px;
-      color: #8e8e93;
-    }
-
-    .profile-card-bio {
-      margin-top: 5px;
+    .snap-widget-sublabel {
       font-size: 11.5px;
-      line-height: 1.45;
-      color: #666666;
-      font-weight: 400;
-      cursor: pointer;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
+      font-weight: 500;
+      color: #3b3f46;
+      letter-spacing: 0.02em;
+      margin-top: 6px;
+      text-align: center;
     }
 
-    /* 桌面主体排版：应用与正方形图片小组件 */
-    .desktop-main-grid {
+    /* 4. 双栏排版：左侧别针拍立得卡片 + 右侧四个核心应用 */
+    .snap-mid-section {
       display: grid;
-      grid-template-columns: 1fr 144px;
+      grid-template-columns: 142px 1fr;
       gap: 16px;
-      align-items: start;
+      align-items: center;
+      margin-top: 4px;
     }
 
-    /* 四个核心应用 2x2 网格 */
-    .desktop-apps-grid {
+    /* 左侧别针照片卡片 */
+    .snap-clip-card-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .snap-clip-card {
+      position: relative;
+      width: 136px;
+      height: 160px;
+      background: #ffffff;
+      padding: 8px 8px 24px 8px;
+      border-radius: 6px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07);
+      cursor: pointer;
+    }
+
+    .snap-clip-icon {
+      position: absolute;
+      top: -10px;
+      right: 32px;
+      font-size: 26px;
+      color: #555c66;
+      z-index: 10;
+      transform: rotate(-10deg);
+    }
+
+    .snap-clip-img {
+      width: 100%;
+      height: 100%;
+      border-radius: 3px;
+      background-color: #f2f3f5;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .snap-clip-caption {
+      position: absolute;
+      bottom: 6px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-size: 10.5px;
+      color: #3b3f46;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+
+    /* 右侧四个核心应用网格（App Store、备忘录、哔哩哔哩、抖音/QQ/云音乐/设置/美化） */
+    .snap-apps-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 16px 12px;
+      gap: 14px 10px;
       justify-items: center;
     }
 
-    .app {
+    .snap-app-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
       text-decoration: none;
       color: inherit;
     }
 
-    .app-stack {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .app-icon {
-      width: 62px;
-      height: 62px;
-      border-radius: 19px;
+    .snap-app-icon-squircle {
+      width: 58px;
+      height: 58px;
+      border-radius: 17px;
+      background: rgba(255, 255, 255, 0.88);
+      border: 1px solid rgba(230, 233, 238, 0.8);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.035);
       display: grid;
       place-items: center;
-      color: #111111;
-      font-size: 24px;
-      background: #ffffff;
-      border: 1px solid #ebebeb;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.035);
+      color: #2b2e34;
+      font-size: 22px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       background-size: cover;
       background-position: center;
-      overflow: hidden;
-      position: relative;
+      transition: transform 0.14s ease;
       cursor: pointer;
-      transition: transform 0.14s ease, box-shadow 0.14s ease;
     }
 
-    .app-icon:active {
-      transform: scale(0.93);
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+    .snap-app-item:active .snap-app-icon-squircle {
+      transform: scale(0.92);
     }
 
-    .app-icon i {
-      position: relative;
-      z-index: 1;
-      color: #111111;
-    }
-
-    .app-stack span:last-child {
+    .snap-app-title {
       font-size: 11.5px;
       font-weight: 600;
-      color: #222222;
+      color: #3b4047;
       letter-spacing: -0.01em;
       text-align: center;
     }
 
-    /* 正方形照片小组件 */
-    .square-photo-widget {
-      width: 144px;
-      height: 144px;
-      border-radius: 24px;
-      background: #ffffff;
-      border: 1px solid #ededec;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
-      position: relative;
-      overflow: hidden;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      transition: transform 0.14s ease, box-shadow 0.14s ease;
-    }
-
-    .square-photo-widget:active {
-      transform: scale(0.97);
-    }
-
-    .square-photo-preview {
-      position: absolute;
-      inset: 0;
-      background-color: #f7f7f7;
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-    }
-
-    .square-photo-overlay {
-      position: absolute;
-      right: 8px;
-      bottom: 8px;
-      width: 26px;
-      height: 26px;
-      border-radius: 50%;
-      background: rgba(17, 17, 17, 0.85);
-      color: #ffffff;
-      font-size: 11px;
-      display: grid;
-      place-items: center;
-      border: 1.5px solid #ffffff;
-      pointer-events: none;
-    }
-
-    .square-photo-empty {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      flex-direction: column;
+    /* 5. 底部搜索胶囊小泡泡 */
+    .snap-search-pill {
+      margin: 10px auto 4px;
+      display: inline-flex;
       align-items: center;
       gap: 6px;
-      color: #8e8e93;
-      font-size: 11px;
-      font-weight: 500;
+      padding: 6px 18px;
+      border-radius: 999px;
+      background: rgba(215, 220, 226, 0.52);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      color: #333840;
+      font-size: 12px;
+      font-weight: 600;
+      border: 1px solid rgba(255, 255, 255, 0.45);
+      cursor: pointer;
+      align-self: center;
     }
 
-    .square-photo-empty i {
-      font-size: 24px;
-      color: #b0b0b5;
+    /* 6. 最底部极简白透圆角药丸 Dock 底座 */
+    .snap-dock-shelf {
+      margin: 4px auto 8px;
+      width: min(290px, calc(100vw - 44px));
+      height: 68px;
+      background: rgba(215, 220, 226, 0.42);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-radius: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      padding: 0 16px;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+    }
+
+    .snap-dock-shelf .snap-app-icon-squircle {
+      width: 50px;
+      height: 50px;
+      border-radius: 15px;
+      font-size: 20px;
+      background: rgba(255, 255, 255, 0.88);
+    }
+
+    /* 第二页全部小组件与全部软件网格样式 */
+    .page-two-all-apps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px 10px;
+      justify-items: center;
+      margin-bottom: 18px;
     }
 
     .bubble-zone {
@@ -15813,82 +15946,131 @@
   <main class="desktop">
     <!-- 固定高度、横向滑动的主屏幕多页容器 -->
     <div class="desktop-carousel" id="desktopCarousel">
-      <!-- 第一页：基础核心页 -->
+      <!-- 第一页：完全对照截图的极简美学第一页 -->
       <section class="desktop-page" data-page-index="0" id="desktopPage1">
-        <!-- 极简个人名片小组件（头像、ID、个性签名） -->
-        <div class="draggable-card profile-card-widget" draggable="true" data-widget-id="profileCard">
-          <div class="profile-card-row">
-            <div class="profile-card-avatar-wrap">
-              <div class="profile-card-avatar" id="avatarOrbit" title="点击更换头像"></div>
-              <span class="profile-card-camera-badge"><i class="fa-solid fa-camera"></i></span>
-            </div>
-            <div class="profile-card-info">
-              <div class="profile-card-id-row">
-                <span class="profile-card-id" id="profileTitleDisplay">Yuan</span>
-                <i class="fa-solid fa-circle-check profile-card-verified"></i>
+        <div class="page-aesthetic-wrap">
+          <!-- 1. 顶部状态/天气/符号行 -->
+          <div class="snap-top-status">
+            <div class="snap-status-row-1">
+              <span class="snap-city-text" id="snapCityText" title="点击修改位置">北京</span>
+              <div class="snap-hud-icons">
+                <i class="fa-solid fa-signal"></i>
+                <i class="fa-solid fa-wifi"></i>
+                <span class="snap-battery-pill"><span class="snap-battery-pill-fill"></span></span>
               </div>
-              <div class="profile-card-bio" id="notePill" title="点击编辑个性签名">things^in*myphone</div>
+            </div>
+            <div class="snap-status-row-2">
+              <span id="snapDateText">10-05</span>
+              <span class="snap-symbol-quote" id="snapSymbolQuote" title="点击编辑个性符号">♡₊˚ 無限愛 ⊹ ૮૩</span>
+              <span id="snapTempText">7°C</span>
             </div>
           </div>
-        </div>
 
-        <!-- 桌面主体排版：应用网格 + 正方形可替换照片小组件 -->
-        <div class="desktop-main-grid draggable-card" draggable="true" data-widget-id="appsAndPhoto" aria-label="核心应用与照片小组件">
-          <div class="desktop-apps-grid" id="desktopAppsGrid">
-            <a class="app app-stack draggable-app" draggable="true" data-app-id="qq" href="javascript:void(0)" id="qqApp">
-              <span class="app-icon" id="iconTodo1"><i class="fa-brands fa-qq"></i></span>
-              <span>QQ</span>
-            </a>
+          <!-- 2. 超大极简时钟 -->
+          <div class="snap-big-clock" id="snapBigClockDisplay">10:36</div>
 
-            <a class="app app-stack draggable-app" draggable="true" data-app-id="settings" href="javascript:void(0)" id="settingsApp">
-              <span class="app-icon" id="iconSettings"><i class="fa-solid fa-gear"></i></span>
-              <span>设置</span>
-            </a>
+          <!-- 3. 拍立得三联卡片小组件 (Top Widgets*) -->
+          <div class="snap-triple-widget draggable-card" draggable="true" data-widget-id="triplePolaroidWidget">
+            <div class="snap-triple-cards">
+              <span class="snap-sticker-heart"><i class="fa-solid fa-heart"></i></span>
+              <span class="snap-sticker-spiral"><i class="fa-solid fa-circle-notch"></i></span>
+              <span class="snap-sticker-star"><i class="fa-solid fa-star"></i></span>
+              <span class="snap-sticker-paw"><i class="fa-solid fa-paw"></i></span>
 
-            <a class="app app-stack draggable-app" draggable="true" data-app-id="music" href="javascript:void(0)" id="musicApp">
-              <span class="app-icon" id="iconMusic"><i class="fa-solid fa-music"></i></span>
-              <span>云音乐</span>
-            </a>
-
-            <a class="app app-stack draggable-app" draggable="true" data-app-id="forum" href="javascript:void(0)" id="forumApp">
-              <span class="app-icon" id="iconForum"><i class="fa-solid fa-comments"></i></span>
-              <span>论坛</span>
-            </a>
-
-            <a class="app app-stack draggable-app" draggable="true" data-app-id="store" href="javascript:void(0)" id="storeApp">
-              <span class="app-icon" id="iconStore"><i class="fa-solid fa-bag-shopping"></i></span>
-              <span>商店</span>
-            </a>
-
-            <a class="app app-stack draggable-app" draggable="true" data-app-id="beautify" href="javascript:void(0)" id="beautifyApp">
-              <span class="app-icon" id="iconBeauty"><i class="fa-solid fa-wand-magic-sparkles"></i></span>
-              <span>美化</span>
-            </a>
-
-            <a class="app app-stack draggable-app" draggable="true" data-app-id="takeout" href="javascript:void(0)" id="takeoutApp">
-              <span class="app-icon" id="iconTakeout"><i class="fa-solid fa-utensils"></i></span>
-              <span>外卖</span>
-            </a>
-          </div>
-
-          <!-- 正方形图片小组件 -->
-          <div class="square-photo-widget" id="squarePhotoWidget" title="点击更换照片">
-            <div class="square-photo-preview" id="memoryLeftCard"></div>
-            <div class="square-photo-empty" id="squarePhotoEmpty">
-              <i class="fa-regular fa-image"></i>
-              <span>照片小组件</span>
+              <div class="snap-polaroid-card snap-card-1" id="snapPolaroidCard1" title="点击更换第1张照片">
+                <div class="snap-polaroid-img" id="polaroidImg1"></div>
+              </div>
+              <div class="snap-polaroid-card snap-card-2" id="snapPolaroidCard2" title="点击更换第2张照片">
+                <div class="snap-polaroid-img" id="polaroidImg2"></div>
+              </div>
+              <div class="snap-polaroid-card snap-card-3" id="snapPolaroidCard3" title="点击更换第3张照片">
+                <div class="snap-polaroid-img" id="polaroidImg3"></div>
+              </div>
             </div>
-            <span class="square-photo-overlay"><i class="fa-solid fa-camera"></i></span>
+            <div class="snap-widget-sublabel">Top Widgets*</div>
+          </div>
+
+          <!-- 4. 双栏排版：左边别针照片卡片 + 右边仅4个核心软件 -->
+          <div class="snap-mid-section draggable-card" draggable="true" data-widget-id="midSectionWidget">
+            <!-- 左侧别针照片 -->
+            <div class="snap-clip-card-box">
+              <div class="snap-clip-card" id="snapClipCard" title="点击更换别针照片">
+                <span class="snap-clip-icon"><i class="fa-solid fa-paperclip"></i></span>
+                <div class="snap-clip-img" id="clipCardImg"></div>
+                <div class="snap-clip-caption" id="clipCardCaption">ʚ (• . •) ɞ</div>
+              </div>
+              <div class="snap-widget-sublabel">Top Widgets*</div>
+            </div>
+
+            <!-- 右侧仅保留4个核心应用：QQ、云音乐、设置、美化 -->
+            <div class="snap-apps-grid" id="desktopAppsGrid">
+              <a class="snap-app-item draggable-app" draggable="true" data-app-id="qq" href="javascript:void(0)" id="qqApp">
+                <span class="snap-app-icon-squircle" id="iconTodo1"><i class="fa-brands fa-qq"></i></span>
+                <span class="snap-app-title">QQ</span>
+              </a>
+
+              <a class="snap-app-item draggable-app" draggable="true" data-app-id="music" href="javascript:void(0)" id="musicApp">
+                <span class="snap-app-icon-squircle" id="iconMusic"><i class="fa-solid fa-music"></i></span>
+                <span class="snap-app-title">云音乐</span>
+              </a>
+
+              <a class="snap-app-item draggable-app" draggable="true" data-app-id="settings" href="javascript:void(0)" id="settingsApp">
+                <span class="snap-app-icon-squircle" id="iconSettings"><i class="fa-solid fa-gear"></i></span>
+                <span class="snap-app-title">设置</span>
+              </a>
+
+              <a class="snap-app-item draggable-app" draggable="true" data-app-id="beautify" href="javascript:void(0)" id="beautifyApp">
+                <span class="snap-app-icon-squircle" id="iconBeauty"><i class="fa-solid fa-wand-magic-sparkles"></i></span>
+                <span class="snap-app-title">美化</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- 5. 搜索胶囊 -->
+          <div class="snap-search-pill" id="snapSearchPill">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <span>搜索</span>
+          </div>
+
+          <!-- 6. 最底部的极简白透圆角 Dock 架 -->
+          <div class="snap-dock-shelf">
+            <a class="snap-app-icon-squircle" href="javascript:void(0)" id="dockQqApp" title="QQ">
+              <i class="fa-brands fa-qq"></i>
+            </a>
+            <a class="snap-app-icon-squircle" href="javascript:void(0)" id="dockMusicApp" title="云音乐">
+              <i class="fa-solid fa-music"></i>
+            </a>
           </div>
         </div>
-
-        <!-- 页面一小组件槽位 -->
-        <div class="desktop-widgets-section" id="pageOneWidgets"></div>
       </section>
 
-      <!-- 第二页：拓展小组件与应用页（左右滑动切到此页） -->
+      <!-- 第二页：其他软件（论坛、商店、外卖、档案、名片）与丰富的备选小组件 -->
       <section class="desktop-page" data-page-index="1" id="desktopPage2">
-        <div class="desktop-widgets-section" id="pageTwoWidgets" style="padding-top: 10px;">
+        <div style="font-size: 11px; font-weight: 700; color: #8e8e93; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 12px;">全部应用库</div>
+        <div class="page-two-all-apps">
+          <a class="snap-app-item draggable-app" draggable="true" data-app-id="forum" href="javascript:void(0)" id="forumApp">
+            <span class="snap-app-icon-squircle" id="iconForum"><i class="fa-solid fa-comments"></i></span>
+            <span class="snap-app-title">论坛</span>
+          </a>
+
+          <a class="snap-app-item draggable-app" draggable="true" data-app-id="store" href="javascript:void(0)" id="storeApp">
+            <span class="snap-app-icon-squircle" id="iconStore"><i class="fa-solid fa-bag-shopping"></i></span>
+            <span class="snap-app-title">商店</span>
+          </a>
+
+          <a class="snap-app-item draggable-app" draggable="true" data-app-id="takeout" href="javascript:void(0)" id="takeoutApp">
+            <span class="snap-app-icon-squircle" id="iconTakeout"><i class="fa-solid fa-utensils"></i></span>
+            <span class="snap-app-title">外卖</span>
+          </a>
+
+          <a class="snap-app-item draggable-app" draggable="true" data-app-id="archive" href="javascript:void(0)" id="dockArchiveApp">
+            <span class="snap-app-icon-squircle" id="iconArchive"><i class="fa-solid fa-box-archive"></i></span>
+            <span class="snap-app-title">档案</span>
+          </a>
+        </div>
+
+        <div style="font-size: 11px; font-weight: 700; color: #8e8e93; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px;">拓展小组件</div>
+        <div class="desktop-widgets-section" id="pageTwoWidgets" style="padding-top: 2px;">
           <!-- 极简白色音乐小组件 -->
           <div class="draggable-card desktop-music-widget" draggable="true" data-widget-id="musicWidget" id="desktopMusicWidget" title="点击前往云音乐">
             <div class="dmw-left">
@@ -15960,30 +16142,16 @@
       <span class="desktop-dot" data-page-dot="1"></span>
     </div>
 
-    <!-- 底部极简 Dock 栏 -->
-    <nav class="desktop-dock" aria-label="底部快捷应用栏">
-      <a class="dock-app-item" href="javascript:void(0)" id="dockQqApp" title="QQ">
-        <span class="dock-icon"><i class="fa-brands fa-qq"></i></span>
-      </a>
-      <a class="dock-app-item" href="javascript:void(0)" id="dockArchiveApp" title="档案">
-        <span class="dock-icon" id="iconArchive"><i class="fa-solid fa-box-archive"></i></span>
-      </a>
-      <a class="dock-app-item" href="javascript:void(0)" id="dockMusicApp" title="云音乐">
-        <span class="dock-icon"><i class="fa-solid fa-music"></i></span>
-      </a>
-      <a class="dock-app-item" href="javascript:void(0)" id="dockSettingsApp" title="设置">
-        <span class="dock-icon"><i class="fa-solid fa-gear"></i></span>
-      </a>
-    </nav>
-
-    <!-- 隐藏原多余节点的兜底挂载，保障JS不报错并支持未来添加 -->
+    <!-- 隐藏原多余节点的兜底挂载，保障旧函数调用不报错 -->
     <div style="display:none;" aria-hidden="true">
       <div id="desktopBanner"></div>
+      <div id="avatarOrbit"></div>
       <div id="avatarFallback"></div>
-      <div id="memoryMainCard"><div id="memoryMainFallback"></div></div>
-      <div id="memoryRightCard"><div id="memoryRightFallback"></div></div>
-      <div id="midThumbOne"></div>
-      <div id="midThumbTwo"></div>
+      <div id="profileTitleDisplay"></div>
+      <div id="notePill"></div>
+      <div id="squarePhotoWidget"><div id="memoryLeftCard"></div><div id="squarePhotoEmpty"></div></div>
+      <div id="pageOneWidgets"></div>
+      <div id="dockSettingsApp"></div>
       <div id="sharedText"></div>
       <a id="cardApp" href="javascript:void(0)"></a>
     </div>
@@ -18998,8 +19166,15 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
           quoteWidget: true,
           stepsWidget: false,
           noteWidget: false
-        }
-      },
+          },
+          snapCity: "北京",
+          snapQuote: "♡₊˚ 無限愛 ⊹ ૮૩",
+          clipCaption: "ʚ (• . •) ɞ",
+          polaroidImg1: "https://771553.xyz/file/studio/5FDVc1VrKzVdH5mO.jpg",
+          polaroidImg2: "",
+          polaroidImg3: "",
+          clipCardImg: ""
+          },
       qq: {
         roles: [],
         groups: ["未分组"],
@@ -19041,6 +19216,16 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       const minute = String(now.getMinutes()).padStart(2, "0");
       if (clock) {
         clock.textContent = `${hour}:${minute}`;
+      }
+      const snapBigClockDisplay = document.querySelector("#snapBigClockDisplay");
+      if (snapBigClockDisplay) {
+        snapBigClockDisplay.textContent = `${hour}:${minute}`;
+      }
+      const snapDateText = document.querySelector("#snapDateText");
+      if (snapDateText) {
+        const m = String(now.getMonth() + 1).padStart(2, "0");
+        const d = String(now.getDate()).padStart(2, "0");
+        snapDateText.textContent = `${m}-${d}`;
       }
       const widgetClockBig = document.querySelector("#widgetClockBig");
       if (widgetClockBig) {
@@ -19440,6 +19625,28 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       applyIconImage(iconStore, appState.theme.iconStoreImage);
       applyIconImage(iconTakeout, appState.theme.iconTakeoutImage);
       applyIconImage(iconArchive, appState.theme.iconArchiveImage);
+
+      // 第一页截图同款小组件渲染
+      const snapCityText = document.querySelector("#snapCityText");
+      if (snapCityText) snapCityText.textContent = appState.theme.snapCity || "北京";
+
+      const snapSymbolQuote = document.querySelector("#snapSymbolQuote");
+      if (snapSymbolQuote) snapSymbolQuote.textContent = appState.theme.snapQuote || "♡₊˚ 無限愛 ⊹ ૮૩";
+
+      const clipCardCaption = document.querySelector("#clipCardCaption");
+      if (clipCardCaption) clipCardCaption.textContent = appState.theme.clipCaption || "ʚ (• . •) ɞ";
+
+      const polaroidImg1 = document.querySelector("#polaroidImg1");
+      if (polaroidImg1) polaroidImg1.style.backgroundImage = appState.theme.polaroidImg1 ? `url(${appState.theme.polaroidImg1})` : "";
+
+      const polaroidImg2 = document.querySelector("#polaroidImg2");
+      if (polaroidImg2) polaroidImg2.style.backgroundImage = appState.theme.polaroidImg2 ? `url(${appState.theme.polaroidImg2})` : "";
+
+      const polaroidImg3 = document.querySelector("#polaroidImg3");
+      if (polaroidImg3) polaroidImg3.style.backgroundImage = appState.theme.polaroidImg3 ? `url(${appState.theme.polaroidImg3})` : "";
+
+      const clipCardImg = document.querySelector("#clipCardImg");
+      if (clipCardImg) clipCardImg.style.backgroundImage = appState.theme.clipCardImg ? `url(${appState.theme.clipCardImg})` : "";
 
       const dcwDayLarge = document.querySelector("#dcwDayLarge");
       const dcwMonthText = document.querySelector("#dcwMonthText");
@@ -30509,25 +30716,69 @@ function extractRoleReplyLines(reply) {
       });
     }
 
-    // 正方形图片小组件点击直接替换照片
-    const squarePhotoWidget = document.querySelector("#squarePhotoWidget");
-    if (squarePhotoWidget) {
-      squarePhotoWidget.addEventListener("click", () => {
+    // 新增截图小组件自主更换照片与文字交互绑定
+    const bindImageUploadHelper = (elementId, stateField, targetImgId) => {
+      const el = document.querySelector(`#${elementId}`);
+      if (!el) return;
+      el.addEventListener("click", () => {
         const input = document.createElement("input");
         input.type = "file";
         input.accept = "image/*";
         input.onchange = (e) => {
           const file = e.target.files?.[0];
+          if (!file) return;
           readImage(file, async (src) => {
-            appState.theme.memoryLeftImage = src;
-            applyCoverImage(memoryLeftCard, null, src);
-            const emptyHint = document.querySelector("#squarePhotoEmpty");
-            if (emptyHint) emptyHint.style.display = src ? "none" : "";
-            renderState();
+            appState.theme[stateField] = src;
+            const imgEl = document.querySelector(`#${targetImgId}`);
+            if (imgEl) imgEl.style.backgroundImage = `url(${src})`;
             await saveState();
           });
         };
         input.click();
+      });
+    };
+
+    bindImageUploadHelper("snapPolaroidCard1", "polaroidImg1", "polaroidImg1");
+    bindImageUploadHelper("snapPolaroidCard2", "polaroidImg2", "polaroidImg2");
+    bindImageUploadHelper("snapPolaroidCard3", "polaroidImg3", "polaroidImg3");
+    bindImageUploadHelper("snapClipCard", "clipCardImg", "clipCardImg");
+
+    const snapCityText = document.querySelector("#snapCityText");
+    if (snapCityText) {
+      snapCityText.addEventListener("click", () => {
+        openTextEditor({
+          target: "snapCity",
+          title: "编辑城市位置",
+          label: "请输入显示的地理位置",
+          value: appState.theme.snapCity || "北京"
+        });
+      });
+    }
+
+    const snapSymbolQuote = document.querySelector("#snapSymbolQuote");
+    if (snapSymbolQuote) {
+      snapSymbolQuote.addEventListener("click", () => {
+        openTextEditor({
+          target: "snapQuote",
+          title: "编辑个性符号装饰",
+          label: "请输入个性符号文案",
+          value: appState.theme.snapQuote || "♡₊˚ 無限愛 ⊹ ૮૩"
+        });
+      });
+    }
+
+    const snapSearchPill = document.querySelector("#snapSearchPill");
+    if (snapSearchPill) {
+      snapSearchPill.addEventListener("click", () => {
+        if (qqPage) {
+          qqPage.classList.add("show");
+          showQqPanel("qqPanelChats");
+          const searchInput = document.querySelector("#qqContactSearchInput");
+          if (searchInput) {
+            searchInput.scrollIntoView({ behavior: "smooth", block: "center" });
+            setTimeout(() => searchInput.focus(), 220);
+          }
+        }
       });
     }
 
