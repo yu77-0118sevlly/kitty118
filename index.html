@@ -16437,13 +16437,13 @@
             <div class="p2-apps-2x2">
               <!-- 情侣空间 -->
               <a class="snap-app-item draggable-app" draggable="true" data-app-id="lovers" href="javascript:void(0)" id="appLovers">
-                <span class="snap-app-icon-squircle"><i class="fa-solid fa-heart"></i></span>
+                <span class="snap-app-icon-squircle" id="iconLovers"><i class="fa-solid fa-heart"></i></span>
                 <span class="snap-app-title">情侣空间</span>
               </a>
 
               <!-- 记忆中心 -->
               <a class="snap-app-item draggable-app" draggable="true" data-app-id="memory" href="javascript:void(0)" id="appMemoryCenter">
-                <span class="snap-app-icon-squircle"><i class="fa-solid fa-clock-rotate-left"></i></span>
+                <span class="snap-app-icon-squircle" id="iconMemoryCenter"><i class="fa-solid fa-clock-rotate-left"></i></span>
                 <span class="snap-app-title">记忆中心</span>
               </a>
 
@@ -16455,7 +16455,7 @@
 
               <!-- 查手机 -->
               <a class="snap-app-item draggable-app" draggable="true" data-app-id="checkphone" href="javascript:void(0)" id="appCheckPhone">
-                <span class="snap-app-icon-squircle"><i class="fa-solid fa-mobile-screen-button"></i></span>
+                <span class="snap-app-icon-squircle" id="iconCheckPhone"><i class="fa-solid fa-mobile-screen-button"></i></span>
                 <span class="snap-app-title">查手机</span>
               </a>
             </div>
@@ -16466,13 +16466,13 @@
             <div class="p2-apps-2x2">
               <!-- 短信 -->
               <a class="snap-app-item draggable-app" draggable="true" data-app-id="sms" href="javascript:void(0)" id="appSms">
-                <span class="snap-app-icon-squircle"><i class="fa-solid fa-comment-dots"></i></span>
+                <span class="snap-app-icon-squircle" id="iconSms"><i class="fa-solid fa-comment-dots"></i></span>
                 <span class="snap-app-title">短信</span>
               </a>
 
-              <!-- 备忘录 (保留原软件) -->
+              <!-- 备忘录 -->
               <a class="snap-app-item draggable-app" draggable="true" data-app-id="memo" href="javascript:void(0)" id="appMemo">
-                <span class="snap-app-icon-squircle"><i class="fa-regular fa-note-sticky"></i></span>
+                <span class="snap-app-icon-squircle" id="iconMemo"><i class="fa-regular fa-note-sticky"></i></span>
                 <span class="snap-app-title">备忘录</span>
               </a>
 
@@ -16643,7 +16643,19 @@
         </button>
       </div>
 
-      <!-- 应用图标定制部分（由原设置页面迁移至此） -->
+      <!-- 时钟颜色定制部分 -->
+      <div style="font-size: 11px; font-weight: 700; color: #8e8e93; letter-spacing: 0.08em; text-transform: uppercase; margin-top: 14px;">主页时钟颜色定制</div>
+      <div class="upload-item">
+        <strong>主页大时钟颜色</strong>
+        <span>自定义主屏中央超大时钟字体的显示颜色</span>
+        <div style="display: flex; align-items: center; gap: 10px; margin-top: 8px;">
+          <input type="color" id="clockColorPicker" value="#3f444c" style="width: 44px; height: 38px; border: none; border-radius: 10px; cursor: pointer; background: transparent; padding: 0;" />
+          <input type="text" id="clockColorInput" placeholder="#3f444c" style="flex: 1; min-height: 38px; border-radius: 12px; border: 1px solid #ededec; padding: 0 12px; font-size: 13px; color: #111111; outline: none; background: #fafafa;" />
+          <button class="liquid-btn" id="resetClockColorBtn" type="button" style="min-height: 38px; padding: 0 14px;">重置</button>
+        </div>
+      </div>
+
+      <!-- 应用图标定制部分 -->
       <div style="font-size: 11px; font-weight: 700; color: #8e8e93; letter-spacing: 0.08em; text-transform: uppercase; margin-top: 14px;">应用图标定制</div>
 
       <div class="upload-item">
@@ -16652,6 +16664,60 @@
         <div class="single-action">
           <button class="liquid-btn" id="triggerIconTodo1Upload" type="button">自定义 QQ 图标</button>
           <input id="iconTodo1Upload" type="file" accept="image/*" style="display:none;" />
+        </div>
+      </div>
+
+      <div class="upload-item">
+        <strong>「情侣空间」图标</strong>
+        <span>第二页情侣空间入口图标外观</span>
+        <div class="single-action">
+          <button class="liquid-btn" id="triggerIconLoversUpload" type="button">自定义情侣空间图标</button>
+          <input id="iconLoversUpload" type="file" accept="image/*" style="display:none;" />
+        </div>
+      </div>
+
+      <div class="upload-item">
+        <strong>「记忆中心」图标</strong>
+        <span>第二页记忆中心入口图标外观</span>
+        <div class="single-action">
+          <button class="liquid-btn" id="triggerIconMemoryCenterUpload" type="button">自定义记忆中心图标</button>
+          <input id="iconMemoryCenterUpload" type="file" accept="image/*" style="display:none;" />
+        </div>
+      </div>
+
+      <div class="upload-item">
+        <strong>「微博」图标</strong>
+        <span>第二页微博入口图标外观</span>
+        <div class="single-action">
+          <button class="liquid-btn" id="triggerIconForumUpload" type="button">自定义微博图标</button>
+          <input id="iconForumUpload" type="file" accept="image/*" style="display:none;" />
+        </div>
+      </div>
+
+      <div class="upload-item">
+        <strong>「查手机」图标</strong>
+        <span>第二页查手机入口图标外观</span>
+        <div class="single-action">
+          <button class="liquid-btn" id="triggerIconCheckPhoneUpload" type="button">自定义查手机图标</button>
+          <input id="iconCheckPhoneUpload" type="file" accept="image/*" style="display:none;" />
+        </div>
+      </div>
+
+      <div class="upload-item">
+        <strong>「短信」图标</strong>
+        <span>第二页短信应用入口图标外观</span>
+        <div class="single-action">
+          <button class="liquid-btn" id="triggerIconSmsUpload" type="button">自定义短信图标</button>
+          <input id="iconSmsUpload" type="file" accept="image/*" style="display:none;" />
+        </div>
+      </div>
+
+      <div class="upload-item">
+        <strong>「备忘录」图标</strong>
+        <span>第二页备忘录入口图标外观</span>
+        <div class="single-action">
+          <button class="liquid-btn" id="triggerIconMemoUpload" type="button">自定义备忘录图标</button>
+          <input id="iconMemoUpload" type="file" accept="image/*" style="display:none;" />
         </div>
       </div>
 
@@ -19134,6 +19200,11 @@ The goal is not to produce "good writing" but to produce writing that feels true
     const iconStore = document.querySelector("#iconStore");
     const iconTakeout = document.querySelector("#iconTakeout");
     const iconArchive = document.querySelector("#iconArchive");
+    const iconLovers = document.querySelector("#iconLovers");
+    const iconMemoryCenter = document.querySelector("#iconMemoryCenter");
+    const iconCheckPhone = document.querySelector("#iconCheckPhone");
+    const iconSms = document.querySelector("#iconSms");
+    const iconMemo = document.querySelector("#iconMemo");
     const musicApp = document.querySelector("#musicApp");
     const forumApp = document.querySelector("#forumApp");
     const storeApp = document.querySelector("#storeApp");
@@ -19544,10 +19615,16 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
           snapCity: "北京",
           snapQuote: "Angel user",
           clipCaption: "ʚ (• . •) ɞ",
+          clockColor: "#3f444c",
           polaroidImg1: "https://771553.xyz/file/studio/5FDVc1VrKzVdH5mO.jpg",
           polaroidImg2: "",
           polaroidImg3: "",
-          clipCardImg: ""
+          clipCardImg: "",
+          iconLoversImage: "",
+          iconMemoryCenterImage: "",
+          iconCheckPhoneImage: "",
+          iconSmsImage: "",
+          iconMemoImage: ""
           },
       qq: {
         roles: [],
@@ -19594,6 +19671,9 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       const snapBigClockDisplay = document.querySelector("#snapBigClockDisplay");
       if (snapBigClockDisplay) {
         snapBigClockDisplay.textContent = `${hour}:${minute}`;
+        if (appState.theme.clockColor) {
+          snapBigClockDisplay.style.color = appState.theme.clockColor;
+        }
       }
       const snapMainDateDisplay = document.querySelector("#snapMainDateDisplay");
       if (snapMainDateDisplay) {
@@ -20004,6 +20084,21 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       applyIconImage(iconStore, appState.theme.iconStoreImage);
       applyIconImage(iconTakeout, appState.theme.iconTakeoutImage);
       applyIconImage(iconArchive, appState.theme.iconArchiveImage);
+      applyIconImage(iconLovers, appState.theme.iconLoversImage);
+      applyIconImage(iconMemoryCenter, appState.theme.iconMemoryCenterImage);
+      applyIconImage(iconCheckPhone, appState.theme.iconCheckPhoneImage);
+      applyIconImage(iconSms, appState.theme.iconSmsImage);
+      applyIconImage(iconMemo, appState.theme.iconMemoImage);
+
+      // 主页时钟颜色设置
+      const snapBigClockDisplay = document.querySelector("#snapBigClockDisplay");
+      if (snapBigClockDisplay && appState.theme.clockColor) {
+        snapBigClockDisplay.style.color = appState.theme.clockColor;
+      }
+      const clockColorPicker = document.querySelector("#clockColorPicker");
+      const clockColorInput = document.querySelector("#clockColorInput");
+      if (clockColorPicker) clockColorPicker.value = appState.theme.clockColor || "#3f444c";
+      if (clockColorInput) clockColorInput.value = appState.theme.clockColor || "#3f444c";
 
       // 第一页截图同款小组件渲染
       const snapCityText = document.querySelector("#snapCityText");
@@ -23683,17 +23778,18 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
     document.querySelectorAll("[data-widget-key]").forEach((btn) => {
       btn.addEventListener("click", async () => {
         const key = btn.dataset.widgetKey;
-        if (!appState.theme.enabledWidgets) {
+        if (!appState.theme.enabledWidgets || typeof appState.theme.enabledWidgets !== "object") {
           appState.theme.enabledWidgets = {
-            profileCard: true,
-            photoWidget: true,
-            musicWidget: true,
-            calendarWidget: true,
-            weatherWidget: true
+            triplePolaroidWidget: true,
+            midSectionWidget: true,
+            p2MusicWidget: true,
+            p2AvatarWidget: true,
+            p2WeatherWidget: true
           };
         }
 
-        appState.theme.enabledWidgets[key] = !appState.theme.enabledWidgets[key];
+        const currentlyActive = appState.theme.enabledWidgets[key] !== false;
+        appState.theme.enabledWidgets[key] = !currentlyActive;
         renderDesktopWidgetsVisibility();
         await saveState();
       });
@@ -24644,6 +24740,11 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       { btnId: "triggerIconStoreUpload", inputId: "iconStoreUpload" },
       { btnId: "triggerIconTakeoutUpload", inputId: "iconTakeoutUpload" },
       { btnId: "triggerIconArchiveUpload", inputId: "iconArchiveUpload" },
+      { btnId: "triggerIconLoversUpload", inputId: "iconLoversUpload" },
+      { btnId: "triggerIconMemoryCenterUpload", inputId: "iconMemoryCenterUpload" },
+      { btnId: "triggerIconCheckPhoneUpload", inputId: "iconCheckPhoneUpload" },
+      { btnId: "triggerIconSmsUpload", inputId: "iconSmsUpload" },
+      { btnId: "triggerIconMemoUpload", inputId: "iconMemoUpload" },
       { btnId: "triggerImportTheme", inputId: "importThemeInput" },
       { btnId: "triggerImportAppData", inputId: "importAppDataInput" },
       { btnId: "triggerChatAiImage", inputId: "chatAiImageInput" },
@@ -30263,6 +30364,46 @@ function extractRoleReplyLines(reply) {
     bindIconUpload("iconStoreUpload", "iconStoreImage", iconStore);
     bindIconUpload("iconTakeoutUpload", "iconTakeoutImage", iconTakeout);
     bindIconUpload("iconArchiveUpload", "iconArchiveImage", iconArchive);
+    bindIconUpload("iconLoversUpload", "iconLoversImage", iconLovers);
+    bindIconUpload("iconMemoryCenterUpload", "iconMemoryCenterImage", iconMemoryCenter);
+    bindIconUpload("iconCheckPhoneUpload", "iconCheckPhoneImage", iconCheckPhone);
+    bindIconUpload("iconSmsUpload", "iconSmsImage", iconSms);
+    bindIconUpload("iconMemoUpload", "iconMemoImage", iconMemo);
+
+    // 时钟颜色更改交互与保存
+    const clockColorPicker = document.querySelector("#clockColorPicker");
+    const clockColorInput = document.querySelector("#clockColorInput");
+    const resetClockColorBtn = document.querySelector("#resetClockColorBtn");
+
+    const updateDesktopClockColor = async (colorVal) => {
+      appState.theme.clockColor = colorVal;
+      const snapBigClockDisplay = document.querySelector("#snapBigClockDisplay");
+      if (snapBigClockDisplay) {
+        snapBigClockDisplay.style.color = colorVal;
+      }
+      if (clockColorPicker) clockColorPicker.value = colorVal;
+      if (clockColorInput) clockColorInput.value = colorVal;
+      await saveState();
+    };
+
+    if (clockColorPicker) {
+      clockColorPicker.addEventListener("input", (e) => {
+        updateDesktopClockColor(e.target.value);
+      });
+    }
+
+    if (clockColorInput) {
+      clockColorInput.addEventListener("change", (e) => {
+        const val = e.target.value.trim();
+        if (val) updateDesktopClockColor(val);
+      });
+    }
+
+    if (resetClockColorBtn) {
+      resetClockColorBtn.addEventListener("click", () => {
+        updateDesktopClockColor("#3f444c");
+      });
+    }
 
     if (createQqGroup) createQqGroup.addEventListener("click", createGroupFromInput);
     if (qqGroupNameInput) {
