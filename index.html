@@ -16435,28 +16435,28 @@
             </div>
 
             <div class="p2-apps-2x2">
-              <!-- 抖音 (新占位) -->
-              <a class="snap-app-item draggable-app" draggable="true" data-app-id="douyin" href="javascript:void(0)" id="appDouyin">
-                <span class="snap-app-icon-squircle"><i class="fa-brands fa-tiktok"></i></span>
-                <span class="snap-app-title">抖音</span>
+              <!-- 情侣空间 -->
+              <a class="snap-app-item draggable-app" draggable="true" data-app-id="lovers" href="javascript:void(0)" id="appLovers">
+                <span class="snap-app-icon-squircle"><i class="fa-solid fa-heart" style="color:#ff6b8b;"></i></span>
+                <span class="snap-app-title">情侣空间</span>
               </a>
 
-              <!-- 快手 (新占位) -->
-              <a class="snap-app-item draggable-app" draggable="true" data-app-id="kuaishou" href="javascript:void(0)" id="appKuaishou">
-                <span class="snap-app-icon-squircle"><i class="fa-solid fa-video"></i></span>
-                <span class="snap-app-title">快手</span>
+              <!-- 记忆中心 (快手替换) -->
+              <a class="snap-app-item draggable-app" draggable="true" data-app-id="memory" href="javascript:void(0)" id="appMemoryCenter">
+                <span class="snap-app-icon-squircle"><i class="fa-solid fa-clock-rotate-left"></i></span>
+                <span class="snap-app-title">记忆中心</span>
               </a>
 
-              <!-- 论坛 (保留原软件) -->
-              <a class="snap-app-item draggable-app" draggable="true" data-app-id="forum" href="javascript:void(0)" id="forumApp">
-                <span class="snap-app-icon-squircle" id="iconForum"><i class="fa-solid fa-comments"></i></span>
-                <span class="snap-app-title">论坛</span>
+              <!-- 微博 (原论坛替换) -->
+              <a class="snap-app-item draggable-app" draggable="true" data-app-id="weibo" href="javascript:void(0)" id="forumApp">
+                <span class="snap-app-icon-squircle" id="iconForum"><i class="fa-brands fa-weibo" style="color:#e6162d;"></i></span>
+                <span class="snap-app-title">微博</span>
               </a>
 
-              <!-- 商店 (保留原软件) -->
-              <a class="snap-app-item draggable-app" draggable="true" data-app-id="store" href="javascript:void(0)" id="storeApp">
-                <span class="snap-app-icon-squircle" id="iconStore"><i class="fa-solid fa-bag-shopping"></i></span>
-                <span class="snap-app-title">商店</span>
+              <!-- 查手机 -->
+              <a class="snap-app-item draggable-app" draggable="true" data-app-id="checkphone" href="javascript:void(0)" id="appCheckPhone">
+                <span class="snap-app-icon-squircle"><i class="fa-solid fa-mobile-screen-button"></i></span>
+                <span class="snap-app-title">查手机</span>
               </a>
             </div>
           </div>
@@ -16464,13 +16464,13 @@
           <!-- 3. 下段：左侧 4 个软件（保留外卖、档案并补充小红书、备忘录） + 右侧天气电量萌系卡片 -->
           <div class="p2-bot-section">
             <div class="p2-apps-2x2">
-              <!-- 小红书 (新占位) -->
-              <a class="snap-app-item draggable-app" draggable="true" data-app-id="xhs" href="javascript:void(0)" id="appXhs">
-                <span class="snap-app-icon-squircle"><i class="fa-solid fa-bookmark" style="color:#ff2442;"></i></span>
-                <span class="snap-app-title">小红书</span>
+              <!-- 短信 (原小红书替换) -->
+              <a class="snap-app-item draggable-app" draggable="true" data-app-id="sms" href="javascript:void(0)" id="appSms">
+                <span class="snap-app-icon-squircle"><i class="fa-solid fa-comment-dots" style="color:#4cd964;"></i></span>
+                <span class="snap-app-title">短信</span>
               </a>
 
-              <!-- 备忘录 (新占位) -->
+              <!-- 备忘录 (保留原软件) -->
               <a class="snap-app-item draggable-app" draggable="true" data-app-id="memo" href="javascript:void(0)" id="appMemo">
                 <span class="snap-app-icon-squircle"><i class="fa-regular fa-note-sticky"></i></span>
                 <span class="snap-app-title">备忘录</span>
@@ -18126,8 +18126,8 @@
         <!-- 第 3 页：往期交互与架构专项 -->
         <div class="announcement-slide">
           <div class="announcement-item">
-            <strong>6. 第二页截图同款非对称美学布局</strong>
-            <p>第二页现已完整升级：顶部音乐播放挂件、中段大头贴组件与下段翅膀天气电量卡，原有软件（论坛、商店、外卖、档案）均完好保留并排布，补充抖音、快手等占位应用。</p>
+            <strong>6. 第二页截图同款布局与软件焕新</strong>
+            <p>第二页已精准替换为定制应用：情侣空间、记忆中心、微博、查手机、短信，并完整保留备忘录、外卖与档案等实用入口，支持自由拖拽调换顺序。</p>
           </div>
           <div class="announcement-item">
             <strong>7. 药丸 Dock 栏沉底与黑线去除</strong>
@@ -23624,7 +23624,42 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
 
     if (forumApp) {
       forumApp.addEventListener("click", () => {
-        showCatpawAlert("论坛应用即将上线，可与角色共同发帖互动。", "论坛");
+        showCatpawAlert("微博动态正在同步中，可与角色共同发帖互动。", "微博");
+      });
+    }
+
+    const appLovers = document.querySelector("#appLovers");
+    if (appLovers) {
+      appLovers.addEventListener("click", () => {
+        showCatpawAlert("情侣空间互动记录已连接，可在对话中增进与角色的羁绊。", "情侣空间");
+      });
+    }
+
+    const appMemoryCenter = document.querySelector("#appMemoryCenter");
+    if (appMemoryCenter) {
+      appMemoryCenter.addEventListener("click", () => {
+        showCatpawAlert("记忆中心已归档所有角色历史对白与重要时刻。", "记忆中心");
+      });
+    }
+
+    const appCheckPhone = document.querySelector("#appCheckPhone");
+    if (appCheckPhone) {
+      appCheckPhone.addEventListener("click", () => {
+        showCatpawAlert("查手机正在读取角色的私密信息与相册痕迹...", "查手机");
+      });
+    }
+
+    const appSms = document.querySelector("#appSms");
+    if (appSms) {
+      appSms.addEventListener("click", () => {
+        showCatpawAlert("短信箱已归档，暂无新的运营商及验证码短信。", "短信");
+      });
+    }
+
+    const appMemo = document.querySelector("#appMemo");
+    if (appMemo) {
+      appMemo.addEventListener("click", () => {
+        showCatpawAlert("备忘录正在整理便签中，随时记录灵感。", "备忘录");
       });
     }
 
