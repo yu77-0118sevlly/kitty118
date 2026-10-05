@@ -116,7 +116,7 @@
     .desktop-page-dots {
       position: fixed;
       left: 50%;
-      bottom: calc(84px + env(safe-area-inset-bottom));
+      bottom: calc(86px + env(safe-area-inset-bottom));
       transform: translateX(-50%);
       display: flex;
       align-items: center;
@@ -450,18 +450,18 @@
     .snap-battery-pill {
       width: 23px;
       height: 11px;
-      border: 1.4px solid #7b818a;
-      border-radius: 3px;
-      padding: 1px;
+      border: none !important;
+      background: transparent;
+      padding: 0;
       display: inline-flex;
       align-items: center;
     }
 
     .snap-battery-pill-fill {
-      width: 78%;
+      width: 100%;
       height: 100%;
       background: #7b818a;
-      border-radius: 1.5px;
+      border-radius: 2.5px;
     }
 
     .snap-status-row-2 {
@@ -730,9 +730,13 @@
       align-self: center;
     }
 
-    /* 6. 最底部极简白透圆角药丸 Dock 底座 */
+    /* 6. 最底部极简白透圆角药丸 Dock 底座（固定在屏幕最底端） */
     .snap-dock-shelf {
-      margin: 4px auto 8px;
+      position: fixed;
+      left: 50%;
+      bottom: calc(10px + env(safe-area-inset-bottom));
+      transform: translateX(-50%);
+      margin: 0 auto;
       width: min(290px, calc(100vw - 44px));
       height: 68px;
       background: rgba(215, 220, 226, 0.42);
@@ -745,6 +749,7 @@
       gap: 20px;
       padding: 0 16px;
       border: 1px solid rgba(255, 255, 255, 0.35);
+      z-index: 20;
     }
 
     .snap-dock-shelf .snap-app-icon-squircle {
@@ -1348,14 +1353,7 @@
     }
 
     .home-indicator {
-      position: fixed;
-      left: 50%;
-      bottom: calc(6px + env(safe-area-inset-bottom));
-      transform: translateX(-50%);
-      width: 110px;
-      height: 4px;
-      border-radius: 999px;
-      background: rgba(17, 17, 17, 0.42);
+      display: none !important;
     }
 
     .beautify-page,
@@ -17789,9 +17787,24 @@
 
       <div class="announcement-body">
         <div class="announcement-item">
-          <strong>1. 主屏极简架构优化与名片入口整合</strong>
-          <p>移除主屏幕多余的名片图标（名片可直接在 QQ 个人页与底栏快捷打开），桌面视觉更纯净开阔。</p>
+          <strong>1. 拍立得美学主屏与药丸 Dock 底座沉底</strong>
+          <p>Dock 栏已精准固定置于屏幕最底部，并去除底部小黑线条与顶部边框，视觉更通透纯粹、手感更舒适。</p>
         </div>
+
+        <div class="announcement-item">
+          <strong>2. 截图同款小组件与四软件精简首屏</strong>
+          <p>第一页复刻拍立得三联卡片、别针照片小组件与超大时钟，仅保留 4 个核心软件；其他软件与拓展组件归纳于第二页，支持左右顺畅滑屏。</p>
+        </div>
+
+        <div class="announcement-item">
+          <strong>3. 全小组件与应用长按自由调位并记忆</strong>
+          <p>长按小组件或应用图标即可轻松调换排版位置，系统自动永久保存你的个性化桌面布局。</p>
+        </div>
+
+        <div class="announcement-free-tag">
+          沅子机是免费小手机 禁止二传二贩
+        </div>
+      </div>
 
         <div class="announcement-item">
           <strong>2. 小组件与应用图标支持长按自由调位并记忆</strong>
