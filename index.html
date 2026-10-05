@@ -825,6 +825,160 @@
       place-items: center;
     }
 
+    /* 独立极简纯白美化 App (专用于管理主页小组件添加/移除) */
+    .beautify-modal-page {
+      position: fixed;
+      inset: 0;
+      z-index: 55;
+      display: none;
+      background: #ffffff;
+      flex-direction: column;
+      overflow: hidden;
+      padding-top: env(safe-area-inset-top);
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+
+    .beautify-modal-page.show {
+      display: flex;
+    }
+
+    .bmp-head {
+      min-height: 52px;
+      display: grid;
+      grid-template-columns: 40px 1fr 40px;
+      align-items: center;
+      padding: 6px 16px;
+      border-bottom: 1px solid #f4f4f4;
+      flex-shrink: 0;
+    }
+
+    .bmp-back {
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 50%;
+      background: #fafafa;
+      color: #111111;
+      font-size: 15px;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+    }
+
+    .bmp-back:active {
+      background: #efefef;
+    }
+
+    .bmp-title {
+      text-align: center;
+    }
+
+    .bmp-title strong {
+      display: block;
+      font-size: 16px;
+      color: #000000;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .bmp-title span {
+      display: block;
+      font-size: 10px;
+      color: #8e8e93;
+      margin-top: 1px;
+    }
+
+    .bmp-body {
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
+      padding: 16px 18px 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .bmp-intro {
+      background: #fafafa;
+      border-radius: 16px;
+      padding: 12px 14px;
+      color: #666666;
+      font-size: 11.5px;
+      line-height: 1.5;
+      margin-bottom: 4px;
+    }
+
+    .bmp-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      background: #ffffff;
+      border: 1px solid #ededec;
+      border-radius: 20px;
+      padding: 14px 16px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+    }
+
+    .bmp-item-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .bmp-item-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 13px;
+      background: #f7f7f7;
+      color: #111111;
+      font-size: 16px;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+
+    .bmp-item-copy strong {
+      display: block;
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #111111;
+      letter-spacing: -0.01em;
+    }
+
+    .bmp-item-copy span {
+      display: block;
+      margin-top: 3px;
+      font-size: 10.5px;
+      color: #8e8e93;
+      line-height: 1.35;
+    }
+
+    /* 极简白黑开关按钮 */
+    .bmp-toggle-btn {
+      min-height: 34px;
+      padding: 0 16px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      border: 1px solid #ededec;
+      background: #f7f7f7;
+      color: #666666;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+      transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+    }
+
+    .bmp-toggle-btn.active {
+      background: #000000;
+      color: #ffffff;
+      border-color: #000000;
+    }
+
     .home-indicator {
       position: fixed;
       left: 50%;
@@ -15497,7 +15651,7 @@
         </div>
       </section>
 
-      <!-- 新增可自定义桌面小组件区域 -->
+      <!-- 可自定义桌面小组件区域 -->
       <section class="desktop-widgets-section" aria-label="自定义桌面小组件">
         <!-- 极简白色音乐小组件 -->
         <div class="desktop-music-widget" id="desktopMusicWidget" title="点击前往云音乐">
@@ -15531,6 +15685,20 @@
             </div>
           </div>
         </div>
+
+        <!-- 极简天气挂件小组件 -->
+        <div class="weather-glass" id="desktopWeatherWidget" style="margin-bottom:0;">
+          <div class="weather-main">
+            <div class="weather-copy">
+              <small>☁︎ 24°C 多云</small>
+              <strong id="notePill">things^in*myphone</strong>
+            </div>
+            <div class="weather-icons">
+              <div class="weather-icon-card" id="memoryMainCard"><i class="fa-solid fa-cloud-rain" id="memoryMainFallback"></i></div>
+              <div class="weather-icon-card" id="memoryRightCard"><i class="fa-solid fa-house" id="memoryRightFallback"></i></div>
+            </div>
+          </div>
+        </div>
       </section>
     </section>
 
@@ -15561,6 +15729,96 @@
       <div id="sharedText"></div>
     </div>
   </main>
+
+  <!-- 独立全屏美化应用：仅用于浏览并管理主屏幕小组件的添加与移除 -->
+  <section class="beautify-modal-page" id="beautifyModalPage" aria-label="美化与桌面小组件管理">
+    <header class="bmp-head">
+      <button class="bmp-back" id="closeBeautifyModal" type="button" aria-label="返回桌面">
+        <i class="fa-solid fa-chevron-left"></i>
+      </button>
+      <div class="bmp-title">
+        <strong>美化</strong>
+        <span>桌面小组件添加</span>
+      </div>
+      <div></div>
+    </header>
+
+    <div class="bmp-body">
+      <div class="bmp-intro">
+        管理主页面展示的小组件。在此自由添加或移除组件，添加到主页后可轻点小组件自主更换照片、封面与备忘文本。
+      </div>
+
+      <!-- 1. 个人名片小组件 -->
+      <div class="bmp-item">
+        <div class="bmp-item-info">
+          <div class="bmp-item-icon"><i class="fa-regular fa-id-card"></i></div>
+          <div class="bmp-item-copy">
+            <strong>个人名片小组件</strong>
+            <span>展示头像、ID及个性签名，主页直接点可编辑</span>
+          </div>
+        </div>
+        <button class="bmp-toggle-btn active" type="button" data-widget-key="profileCard">
+          <i class="fa-solid fa-check"></i><span>已添加</span>
+        </button>
+      </div>
+
+      <!-- 2. 正方形图片小组件 -->
+      <div class="bmp-item">
+        <div class="bmp-item-info">
+          <div class="bmp-item-icon"><i class="fa-regular fa-image"></i></div>
+          <div class="bmp-item-copy">
+            <strong>正方形照片小组件</strong>
+            <span>摆放在右侧的照片小卡，主页点击自主选图</span>
+          </div>
+        </div>
+        <button class="bmp-toggle-btn active" type="button" data-widget-key="photoWidget">
+          <i class="fa-solid fa-check"></i><span>已添加</span>
+        </button>
+      </div>
+
+      <!-- 3. 云音乐播放小组件 -->
+      <div class="bmp-item">
+        <div class="bmp-item-info">
+          <div class="bmp-item-icon"><i class="fa-solid fa-music"></i></div>
+          <div class="bmp-item-copy">
+            <strong>音乐小组件</strong>
+            <span>桌面迷你听歌条，支持切歌播放与封面展示</span>
+          </div>
+        </div>
+        <button class="bmp-toggle-btn active" type="button" data-widget-key="musicWidget">
+          <i class="fa-solid fa-check"></i><span>已添加</span>
+        </button>
+      </div>
+
+      <!-- 4. 日历日程小组件 -->
+      <div class="bmp-item">
+        <div class="bmp-item-info">
+          <div class="bmp-item-icon"><i class="fa-regular fa-calendar-check"></i></div>
+          <div class="bmp-item-copy">
+            <strong>日历备忘小组件</strong>
+            <span>展示当天日期与备忘录，轻点自主编辑备忘</span>
+          </div>
+        </div>
+        <button class="bmp-toggle-btn active" type="button" data-widget-key="calendarWidget">
+          <i class="fa-solid fa-check"></i><span>已添加</span>
+        </button>
+      </div>
+
+      <!-- 5. 极简天气挂件 -->
+      <div class="bmp-item">
+        <div class="bmp-item-info">
+          <div class="bmp-item-icon"><i class="fa-solid fa-cloud-sun"></i></div>
+          <div class="bmp-item-copy">
+            <strong>天气状态小组件</strong>
+            <span>极简多云与气温状态小挂件，随时直观查看</span>
+          </div>
+        </div>
+        <button class="bmp-toggle-btn active" type="button" data-widget-key="weatherWidget">
+          <i class="fa-solid fa-check"></i><span>已添加</span>
+        </button>
+      </div>
+    </div>
+  </section>
 
   <section class="beautify-page" id="settingsPage" aria-label="设置应用页面">
     <div class="beautify-shell">
@@ -18551,7 +18809,14 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
         cardProfileName: "Yuan Keeper",
         cardProfileBio: "把角色关系、转账记录、表情和世界观设定收进一张透明卡片。",
         cardProfileCoverImage: "",
-        layoutSize: "default"
+        layoutSize: "default",
+        enabledWidgets: {
+          profileCard: true,
+          photoWidget: true,
+          musicWidget: true,
+          calendarWidget: true,
+          weatherWidget: true
+        }
       },
       qq: {
         roles: [],
@@ -18996,6 +19261,9 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       renderCardPage();
       ensureMusicState();
       renderMusicApp();
+      if (typeof renderDesktopWidgetsVisibility === "function") {
+        renderDesktopWidgetsVisibility();
+      }
     }
 
     document.querySelectorAll(".group-toggle").forEach((button) => {
@@ -22208,16 +22476,74 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       musicApp.addEventListener("click", openMusicPage);
     }
 
-    if (beautifyApp && settingsPage) {
-      beautifyApp.addEventListener("click", () => {
-        settingsPage.classList.add("show");
-        const beautifyGroup = document.querySelector("#triggerBgUpload")?.closest(".setting-group");
-        if (beautifyGroup) {
-          beautifyGroup.classList.add("open");
-          beautifyGroup.scrollIntoView({ behavior: "smooth" });
-        }
+    const beautifyModalPage = document.querySelector("#beautifyModalPage");
+    const closeBeautifyModal = document.querySelector("#closeBeautifyModal");
+
+    function renderDesktopWidgetsVisibility() {
+      if (!appState.theme.enabledWidgets) {
+        appState.theme.enabledWidgets = {
+          profileCard: true,
+          photoWidget: true,
+          musicWidget: true,
+          calendarWidget: true,
+          weatherWidget: true
+        };
+      }
+
+      const w = appState.theme.enabledWidgets;
+      const profileCardNode = document.querySelector(".profile-card-widget");
+      const photoWidgetNode = document.querySelector("#squarePhotoWidget");
+      const musicWidgetNode = document.querySelector("#desktopMusicWidget");
+      const calendarWidgetNode = document.querySelector(".desktop-calendar-widget");
+      const weatherWidgetNode = document.querySelector("#desktopWeatherWidget");
+
+      if (profileCardNode) profileCardNode.style.display = w.profileCard !== false ? "" : "none";
+      if (photoWidgetNode) photoWidgetNode.style.display = w.photoWidget !== false ? "" : "none";
+      if (musicWidgetNode) musicWidgetNode.style.display = w.musicWidget !== false ? "" : "none";
+      if (calendarWidgetNode) calendarWidgetNode.style.display = w.calendarWidget !== false ? "" : "none";
+      if (weatherWidgetNode) weatherWidgetNode.style.display = w.weatherWidget !== false ? "" : "none";
+
+      document.querySelectorAll("[data-widget-key]").forEach((btn) => {
+        const key = btn.dataset.widgetKey;
+        const active = w[key] !== false;
+        btn.classList.toggle("active", active);
+        btn.innerHTML = active
+          ? '<i class="fa-solid fa-check"></i><span>已添加</span>'
+          : '<i class="fa-solid fa-plus"></i><span>添加</span>';
       });
     }
+
+    if (beautifyApp && beautifyModalPage) {
+      beautifyApp.addEventListener("click", () => {
+        renderDesktopWidgetsVisibility();
+        beautifyModalPage.classList.add("show");
+      });
+    }
+
+    if (closeBeautifyModal && beautifyModalPage) {
+      closeBeautifyModal.addEventListener("click", () => {
+        beautifyModalPage.classList.remove("show");
+      });
+    }
+
+    document.querySelectorAll("[data-widget-key]").forEach((btn) => {
+      btn.addEventListener("click", async () => {
+        const key = btn.dataset.widgetKey;
+        if (!appState.theme.enabledWidgets) {
+          appState.theme.enabledWidgets = {
+            profileCard: true,
+            photoWidget: true,
+            musicWidget: true,
+            calendarWidget: true,
+            weatherWidget: true
+          };
+        }
+
+        appState.theme.enabledWidgets[key] = !appState.theme.enabledWidgets[key];
+        renderDesktopWidgetsVisibility();
+        await saveState();
+      });
+    });
 
     if (forumApp) {
       forumApp.addEventListener("click", () => {
