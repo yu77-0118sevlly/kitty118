@@ -22,6 +22,10 @@
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
   />
   <style>
+    .login-overlay {
+      display: none !important;
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -15988,19 +15992,6 @@
   </style>
 </head>
 <body>
-  <div class="login-overlay" id="loginOverlay">
-    <div class="login-box">
-      <div class="login-title-main">Yuan phone</div>
-      <div class="login-title-sub">欢迎登陆yuan phone</div>
-      <div class="login-input-group">
-        <input type="text" id="loginUsername" class="login-input" placeholder="账号" autocomplete="username" />
-        <input type="password" id="loginPassword" class="login-input" placeholder="密码" autocomplete="current-password" />
-      </div>
-      <div class="login-error-tip" id="loginErrorTip"></div>
-      <button type="button" class="login-btn" id="loginSubmitBtn">点击登陆</button>
-    </div>
-  </div>
-
   <main class="desktop">
     <!-- 固定高度、横向滑动的主屏幕多页容器 -->
     <div class="desktop-carousel" id="desktopCarousel">
@@ -31344,4 +31335,62 @@ function extractRoleReplyLines(reply) {
     }
 
     async function clearPageCacheOnly() {
-      setResult(settingsResult, "正在清除页面�
+      setResult(settingsResult, "正在清除页面缓存...");
+      try {
+        if ("caches" in window) {
+          const names = await caches.keys();
+          await Promise.all(names.map((name) => caches.delete(name)));
+        }
+        setResult(settingsResult, "缓存已清除，即将刷新...");
+        setTimeout(() => {
+          window.location.reload();
+        }, 300);
+      } catch (err) {
+        setResult(settingsResult, `清理缓存失败：${err.message}`);
+      }
+    }
+
+    if (clearPageCacheBtn) {
+      clearPageCacheBtn.addEventListener("click", clearPageCacheOnly);
+    }
+
+    if (resetAppBtn) {
+      resetAppBtn.addEventListener("click", async () => {
+        const confirmed = await showCatpawConfirm("确定要抹掉所有数据并重置吗？此操作不可逆！", "重置应用");
+        if (!confirmed) return;
+        try {
+          if (dbInstance) {
+            dbInstance.close();
+          }
+          await indexedDB.deleteDatabase(DB_NAME);
+          localStorage.clear();
+          if ("caches" in window) {
+            const names = await caches.keys();
+            await Promise.all(names.map((name) => caches.delete(name)));
+          }
+          window.location.reload();
+        } catch (e) {
+          showCatpawAlert(`重置失败：${e.message}`);
+        }
+      });
+    }
+
+    // 初始化入口
+    (async function initApp() {
+      try {
+        updateTime();
+        setInterval(updateTime, 1000);
+        setupBatteryStatus();
+        setupPwaManifest();
+        await loadState();
+        renderState();
+        setupDesktopCarousel();
+        setupDraggableWidgets();
+        startAutoMomentLoop();
+      } catch (err) {
+        console.error("初始化应用失败：", err);
+      }
+    })();
+  </script>
+</body>
+</html>�
