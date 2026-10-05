@@ -150,33 +150,24 @@
       user-select: none;
       -webkit-user-select: none;
       -webkit-touch-callout: none;
-      touch-action: pan-x;
-      transition: transform 0.18s cubic-bezier(0.2, 0.9, 0.3, 1), box-shadow 0.18s ease, opacity 0.18s ease;
+      transition: transform 0.2s cubic-bezier(0.2, 0.9, 0.3, 1), box-shadow 0.2s ease, opacity 0.2s ease;
       cursor: grab;
-    }
-
-    .draggable-card:active,
-    .draggable-app:active {
-      cursor: grabbing;
-    }
-
-    .draggable-card.dragging,
-    .draggable-app.dragging {
-      opacity: 0.35;
-      transform: scale(0.92);
     }
 
     .draggable-card.is-moving,
     .draggable-app.is-moving {
-      transform: scale(1.05);
-      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12) !important;
-      z-index: 50 !important;
+      opacity: 0.82 !important;
+      transform: scale(1.08) !important;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.16) !important;
+      z-index: 99 !important;
+      pointer-events: none !important;
     }
 
-    .draggable-card.drag-over,
-    .draggable-app.drag-over {
-      outline: 2px dashed #000000;
-      outline-offset: 3px;
+    .draggable-card.drag-target-hover,
+    .draggable-app.drag-target-hover {
+      outline: 2px dashed #000000 !important;
+      outline-offset: 4px !important;
+      border-radius: 18px;
     }
 
     .hero {
@@ -15854,11 +15845,6 @@
               <span>设置</span>
             </a>
 
-            <a class="app app-stack draggable-app" draggable="true" data-app-id="card" href="javascript:void(0)" id="cardApp">
-              <span class="app-icon" id="iconTodo2"><i class="fa-regular fa-id-card"></i></span>
-              <span>名片</span>
-            </a>
-
             <a class="app app-stack draggable-app" draggable="true" data-app-id="music" href="javascript:void(0)" id="musicApp">
               <span class="app-icon" id="iconMusic"><i class="fa-solid fa-music"></i></span>
               <span>云音乐</span>
@@ -15999,6 +15985,7 @@
       <div id="midThumbOne"></div>
       <div id="midThumbTwo"></div>
       <div id="sharedText"></div>
+      <a id="cardApp" href="javascript:void(0)"></a>
     </div>
   </main>
 
@@ -16844,7 +16831,7 @@
           <small id="musaGreetLabel">Good evening</small>
           <strong id="musaGreetName">Yuan</strong>
         </div>
-        <button class="musa-avatar" id="musaAvatar" type="button" aria-label="我的资料库">
+        <button class="musa-avatar" id="musaAvatar" type="button" aria-label="更换头像" title="点击更换头像">
           <i class="fa-solid fa-user"></i>
         </button>
       </header>
@@ -17222,6 +17209,7 @@
 
   <input id="musicImportFileInput" type="file" accept="audio/*" style="display:none;" />
   <input id="musicCoverFileInput" type="file" accept="image/*" style="display:none;" />
+  <input id="musicUserAvatarInput" type="file" accept="image/*" style="display:none;" />
 
   <section class="textpost-modal" id="musicListenInviteModal" aria-label="邀请一起听">
     <div class="textpost-modal-card">
@@ -17633,23 +17621,23 @@
 
       <div class="announcement-body">
         <div class="announcement-item">
-          <strong>1. 桌面固定高度与左右滑动分屏</strong>
-          <p>桌面页面高度彻底固定，不再上下拉伸！新增左右丝滑滑动分页，支持第一页核心页与第二页拓展小组件页面自由翻动。</p>
+          <strong>1. 主屏极简架构优化与名片入口整合</strong>
+          <p>移除主屏幕多余的名片图标（名片可直接在 QQ 个人页与底栏快捷打开），桌面视觉更纯净开阔。</p>
         </div>
 
         <div class="announcement-item">
-          <strong>2. 桌面小组件与应用自由拖拽排列</strong>
-          <p>所有应用图标与小组件均支持拖拽自由更换位置，可随心摆放你的个性主屏幕！</p>
+          <strong>2. 小组件与应用图标支持长按自由调位并记忆</strong>
+          <p>全面升级触屏长按机制！长按应用图标或任意小组件即可唤起浮动位移，随心拖动调换摆放顺序，刷新后永久保存你的排版。</p>
         </div>
 
         <div class="announcement-item">
-          <strong>3. 美化 App 全新扩充高颜值小组件</strong>
-          <p>新增极简大时钟组件、每日灵感语录组件、随手记便签与步数健康小组件，均可在美化 App 内一键添加至桌面并自由定制。</p>
+          <strong>3. 云音乐支持轻点自定义头像</strong>
+          <p>在云音乐右上角或个人账户面板，轻点头像即可直接从相册选取图片更换你的专属音乐形象。</p>
         </div>
 
         <div class="announcement-item">
-          <strong>4. 极简黑白灰视觉与安全登录系统</strong>
-          <p>全系极简纯净白黑配色，登录入口与公告阅读机制全面升级。</p>
+          <strong>4. 现实时间感知迁移至会话独立设置</strong>
+          <p>移除了全局多余选项，每个聊天角色均可单独开启现实时间感知，界面尺寸与功能分类整齐划一。</p>
         </div>
 
         <div class="announcement-free-tag">
@@ -22752,173 +22740,209 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       });
     }
 
-    // 小组件与图标长按拖拽/触屏位置自由调换
+    // 小组件与软件图标长按自由拖拽与持久化记忆排版系统
+    function saveDesktopOrder() {
+      const apps = Array.from(document.querySelectorAll("#desktopAppsGrid .draggable-app"))
+        .map(el => el.dataset.appId).filter(Boolean);
+      const page1Cards = Array.from(document.querySelectorAll("#desktopPage1 > .draggable-card"))
+        .map(el => el.dataset.widgetId).filter(Boolean);
+      const page2Cards = Array.from(document.querySelectorAll("#pageTwoWidgets > .draggable-card"))
+        .map(el => el.dataset.widgetId).filter(Boolean);
+
+      try {
+        localStorage.setItem("yuan_desktop_apps_order", JSON.stringify(apps));
+        localStorage.setItem("yuan_desktop_p1_order", JSON.stringify(page1Cards));
+        localStorage.setItem("yuan_desktop_p2_order", JSON.stringify(page2Cards));
+      } catch (e) {}
+    }
+
+    function restoreDesktopOrder() {
+      try {
+        const savedApps = JSON.parse(localStorage.getItem("yuan_desktop_apps_order") || "[]");
+        const grid = document.querySelector("#desktopAppsGrid");
+        if (grid && savedApps.length) {
+          savedApps.forEach(id => {
+            const el = grid.querySelector(`[data-app-id="${id}"]`);
+            if (el) grid.appendChild(el);
+          });
+        }
+
+        const savedP1 = JSON.parse(localStorage.getItem("yuan_desktop_p1_order") || "[]");
+        const p1 = document.querySelector("#desktopPage1");
+        if (p1 && savedP1.length) {
+          savedP1.forEach(id => {
+            const el = p1.querySelector(`:scope > [data-widget-id="${id}"]`);
+            if (el) p1.appendChild(el);
+          });
+        }
+
+        const savedP2 = JSON.parse(localStorage.getItem("yuan_desktop_p2_order") || "[]");
+        const p2 = document.querySelector("#pageTwoWidgets");
+        if (p2 && savedP2.length) {
+          savedP2.forEach(id => {
+            const el = p2.querySelector(`[data-widget-id="${id}"]`);
+            if (el) p2.appendChild(el);
+          });
+        }
+      } catch (e) {}
+    }
+
     function setupDraggableWidgets() {
+      restoreDesktopOrder();
+
       let activeItem = null;
       let pressTimer = null;
       let isDragging = false;
       let touchStartX = 0;
       let touchStartY = 0;
+      let currentHoverTarget = null;
+      const carousel = document.querySelector("#desktopCarousel");
 
-      const clearAllPressTimers = () => {
+      const clearPress = () => {
         if (pressTimer) {
           clearTimeout(pressTimer);
           pressTimer = null;
         }
       };
 
-      const resetDragState = () => {
-        clearAllPressTimers();
+      const cleanupDrag = () => {
+        clearPress();
         if (activeItem) {
-          activeItem.classList.remove("is-moving", "dragging");
+          activeItem.classList.remove("is-moving");
         }
-        document.querySelectorAll(".draggable-card, .draggable-app").forEach((node) => {
-          node.classList.remove("drag-over", "is-moving", "dragging");
-        });
+        if (currentHoverTarget) {
+          currentHoverTarget.classList.remove("drag-target-hover");
+        }
+        document.querySelectorAll(".drag-target-hover").forEach(el => el.classList.remove("drag-target-hover"));
         activeItem = null;
+        currentHoverTarget = null;
         isDragging = false;
+        if (carousel) carousel.style.overflowX = "auto";
       };
 
-      // 给支持长按互动的元素绑定触摸长按和桌面拖拽事件
-      const bindDraggableElement = (element, isApp) => {
-        // 桌面端原生拖拽
-        element.setAttribute("draggable", "true");
+      const bindDragInteraction = (el, isApp) => {
+        el.setAttribute("draggable", "true");
 
-        element.addEventListener("dragstart", (e) => {
-          activeItem = element;
-          element.classList.add("dragging");
-          e.dataTransfer.effectAllowed = "move";
-        });
-
-        element.addEventListener("dragend", resetDragState);
-
-        element.addEventListener("dragover", (e) => {
-          e.preventDefault();
-          if (activeItem && activeItem !== element && ((isApp && element.classList.contains("draggable-app")) || (!isApp && element.classList.contains("draggable-card")))) {
-            element.classList.add("drag-over");
-          }
-        });
-
-        element.addEventListener("dragleave", () => {
-          element.classList.remove("drag-over");
-        });
-
-        element.addEventListener("drop", (e) => {
-          e.preventDefault();
-          element.classList.remove("drag-over");
-          if (!activeItem || activeItem === element) return;
-
-          if (isApp && activeItem.classList.contains("draggable-app") && element.classList.contains("draggable-app")) {
-            const grid = document.querySelector("#desktopAppsGrid");
-            if (grid) {
-              const all = Array.from(grid.querySelectorAll(".draggable-app"));
-              const fromIdx = all.indexOf(activeItem);
-              const toIdx = all.indexOf(element);
-              if (fromIdx < toIdx) {
-                grid.insertBefore(activeItem, element.nextSibling);
-              } else {
-                grid.insertBefore(activeItem, element);
-              }
-            }
-          } else if (!isApp && activeItem.classList.contains("draggable-card") && element.classList.contains("draggable-card")) {
-            const parent = element.parentNode;
-            if (parent) {
-              const rect = element.getBoundingClientRect();
-              const next = (e.clientY - rect.top) / (rect.bottom - rect.top) > 0.5;
-              parent.insertBefore(activeItem, next ? element.nextSibling : element);
-            }
-          }
-          resetDragState();
-        });
-
-        // 手机触摸端长按（长按 380ms 触发调换模式）
-        element.addEventListener("touchstart", (e) => {
+        // 手机触摸端（长按 320ms 唤起，带触感反馈并锁定横滑）
+        el.addEventListener("touchstart", (e) => {
           if (e.touches.length > 1) return;
           const touch = e.touches[0];
           touchStartX = touch.clientX;
           touchStartY = touch.clientY;
-          clearAllPressTimers();
+          clearPress();
 
           pressTimer = setTimeout(() => {
-            activeItem = element;
+            activeItem = el;
             isDragging = true;
-            element.classList.add("is-moving");
-            if (navigator.vibrate) navigator.vibrate(35);
-          }, 380);
+            el.classList.add("is-moving");
+            if (carousel) carousel.style.overflowX = "hidden";
+            if (navigator.vibrate) navigator.vibrate(40);
+          }, 320);
         }, { passive: true });
 
-        element.addEventListener("touchmove", (e) => {
+        el.addEventListener("touchmove", (e) => {
           const touch = e.touches[0];
-          const deltaX = Math.abs(touch.clientX - touchStartX);
-          const deltaY = Math.abs(touch.clientY - touchStartY);
+          const dx = Math.abs(touch.clientX - touchStartX);
+          const dy = Math.abs(touch.clientY - touchStartY);
 
           if (!isDragging) {
-            // 轻微滑动则取消长按计时
-            if (deltaX > 8 || deltaY > 8) {
-              clearAllPressTimers();
-            }
+            if (dx > 16 || dy > 16) clearPress();
             return;
           }
 
           e.preventDefault();
-          // 在长按拖拽中根据触摸点寻找下方命中的同类元素
-          const hitElement = document.elementFromPoint(touch.clientX, touch.clientY);
-          if (!hitElement) return;
+
+          const elemBelow = document.elementFromPoint(touch.clientX, touch.clientY);
+          if (!elemBelow) return;
 
           const target = isApp
-            ? hitElement.closest(".draggable-app")
-            : hitElement.closest(".draggable-card");
+            ? elemBelow.closest(".draggable-app")
+            : elemBelow.closest(".draggable-card");
 
-          document.querySelectorAll(".draggable-card, .draggable-app").forEach((node) => {
-            node.classList.toggle("drag-over", node === target && node !== activeItem);
-          });
+          if (currentHoverTarget && currentHoverTarget !== target) {
+            currentHoverTarget.classList.remove("drag-target-hover");
+          }
+
+          if (target && target !== activeItem) {
+            target.classList.add("drag-target-hover");
+            currentHoverTarget = target;
+          } else {
+            currentHoverTarget = null;
+          }
         }, { passive: false });
 
-        element.addEventListener("touchend", (e) => {
-          clearAllPressTimers();
+        el.addEventListener("touchend", (e) => {
+          clearPress();
           if (!isDragging || !activeItem) {
-            resetDragState();
+            cleanupDrag();
             return;
           }
 
-          const changedTouch = e.changedTouches[0];
-          const hitElement = document.elementFromPoint(changedTouch.clientX, changedTouch.clientY);
-          if (hitElement) {
-            const target = isApp
-              ? hitElement.closest(".draggable-app")
-              : hitElement.closest(".draggable-card");
-
-            if (target && target !== activeItem) {
-              if (isApp) {
-                const grid = document.querySelector("#desktopAppsGrid");
-                if (grid) {
-                  const all = Array.from(grid.querySelectorAll(".draggable-app"));
-                  const fromIdx = all.indexOf(activeItem);
-                  const toIdx = all.indexOf(target);
-                  if (fromIdx < toIdx) {
-                    grid.insertBefore(activeItem, target.nextSibling);
-                  } else {
-                    grid.insertBefore(activeItem, target);
-                  }
+          if (currentHoverTarget && currentHoverTarget !== activeItem) {
+            const parent = currentHoverTarget.parentNode;
+            if (parent) {
+              const allItems = Array.from(parent.children);
+              const fromIdx = allItems.indexOf(activeItem);
+              const toIdx = allItems.indexOf(currentHoverTarget);
+              if (fromIdx !== -1 && toIdx !== -1) {
+                if (fromIdx < toIdx) {
+                  parent.insertBefore(activeItem, currentHoverTarget.nextSibling);
+                } else {
+                  parent.insertBefore(activeItem, currentHoverTarget);
                 }
-              } else {
-                const parent = target.parentNode;
-                if (parent) {
-                  const rect = target.getBoundingClientRect();
-                  const next = (changedTouch.clientY - rect.top) / (rect.bottom - rect.top) > 0.5;
-                  parent.insertBefore(activeItem, next ? target.nextSibling : target);
-                }
+                saveDesktopOrder();
               }
             }
           }
-          resetDragState();
+          cleanupDrag();
         });
 
-        element.addEventListener("touchcancel", resetDragState);
+        el.addEventListener("touchcancel", cleanupDrag);
+
+        // 桌面端鼠标拖拽事件
+        el.addEventListener("dragstart", (e) => {
+          activeItem = el;
+          el.classList.add("is-moving");
+          e.dataTransfer.effectAllowed = "move";
+        });
+
+        el.addEventListener("dragend", cleanupDrag);
+
+        el.addEventListener("dragover", (e) => {
+          e.preventDefault();
+          if (activeItem && activeItem !== el) {
+            el.classList.add("drag-target-hover");
+          }
+        });
+
+        el.addEventListener("dragleave", () => {
+          el.classList.remove("drag-target-hover");
+        });
+
+        el.addEventListener("drop", (e) => {
+          e.preventDefault();
+          el.classList.remove("drag-target-hover");
+          if (!activeItem || activeItem === el) return;
+          const parent = el.parentNode;
+          if (parent) {
+            const allItems = Array.from(parent.children);
+            const fromIdx = allItems.indexOf(activeItem);
+            const toIdx = allItems.indexOf(el);
+            if (fromIdx !== -1 && toIdx !== -1) {
+              if (fromIdx < toIdx) {
+                parent.insertBefore(activeItem, el.nextSibling);
+              } else {
+                parent.insertBefore(activeItem, el);
+              }
+              saveDesktopOrder();
+            }
+          }
+          cleanupDrag();
+        });
       };
 
-      document.querySelectorAll(".draggable-card").forEach((card) => bindDraggableElement(card, false));
-      document.querySelectorAll(".draggable-app").forEach((app) => bindDraggableElement(app, true));
+      document.querySelectorAll(".draggable-app").forEach(app => bindDragInteraction(app, true));
+      document.querySelectorAll(".draggable-card").forEach(card => bindDragInteraction(card, false));
     }
 
     if (beautifyApp && beautifyModalPage) {
@@ -23109,7 +23133,44 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
     if (musaQuickRecent) musaQuickRecent.addEventListener("click", () => showMusaTab("hot"));
     if (musaGotoLibrary) musaGotoLibrary.addEventListener("click", () => showMusaTab("library"));
     if (musaGotoPlaylists) musaGotoPlaylists.addEventListener("click", () => showMusaTab("library"));
-    if (musaAvatarBtn) musaAvatarBtn.addEventListener("click", () => showMusaTab("library"));
+
+    // 云音乐头像点击支持自定义更换头像
+    const musicUserAvatarInput = document.querySelector("#musicUserAvatarInput");
+    const musaAccountFace = document.querySelector("#musaAccountFace");
+
+    const triggerMusicAvatarChange = () => {
+      if (!getMusicUser()) {
+        showCatpawAlert("请先登录云音乐账号后再设置头像。");
+        return;
+      }
+      musicUserAvatarInput?.click();
+    };
+
+    if (musaAvatarBtn) {
+      musaAvatarBtn.addEventListener("click", triggerMusicAvatarChange);
+    }
+    if (musaAccountFace) {
+      musaAccountFace.style.cursor = "pointer";
+      musaAccountFace.title = "点击更换头像";
+      musaAccountFace.addEventListener("click", triggerMusicAvatarChange);
+    }
+
+    if (musicUserAvatarInput) {
+      musicUserAvatarInput.addEventListener("change", (e) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+        readImage(file, async (src) => {
+          const user = getMusicUser();
+          if (user) {
+            user.avatar = src;
+            renderMusicApp();
+            await saveState();
+            await showCatpawAlert("云音乐头像更换成功！", "头像");
+          }
+          musicUserAvatarInput.value = "";
+        });
+      });
+    }
 
     const musaMiniLike = document.querySelector("#musaMiniLike");
     if (musaMiniLike) {
