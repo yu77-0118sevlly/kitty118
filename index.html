@@ -16007,20 +16007,20 @@
       <!-- 第一页：完全对照截图的极简美学第一页 -->
       <section class="desktop-page" data-page-index="0" id="desktopPage1">
         <div class="page-aesthetic-wrap">
-          <!-- 1. 顶部极简个性符号行（去除了左侧城市/日期与右侧信号/电量/温度） -->
+          <!-- 1. 顶部极简个性符号行 -->
           <div class="snap-top-status" style="justify-content: center; align-items: center; padding: 4px 0 2px;">
             <div style="display:none;" aria-hidden="true">
               <span id="snapCityText"></span>
               <span id="snapDateText"></span>
               <span id="snapTempText"></span>
             </div>
-            <span class="snap-symbol-quote" id="snapSymbolQuote" title="点击编辑个性符号" style="font-size:14px; text-align:center;">♡₊˚ 無限愛 ⊹ ૮૩</span>
+            <span class="snap-symbol-quote" id="snapSymbolQuote" title="点击编辑个性符号" style="font-size:14px; text-align:center;">Angel user</span>
           </div>
 
           <!-- 2. 超大极简时钟 -->
           <div class="snap-big-clock" id="snapBigClockDisplay">10:36</div>
 
-          <!-- 3. 拍立得三联卡片小组件 (Top Widgets*) -->
+          <!-- 3. 拍立得三联卡片小组件 -->
           <div class="snap-triple-widget draggable-card" draggable="true" data-widget-id="triplePolaroidWidget">
             <div class="snap-triple-cards">
               <span class="snap-sticker-heart"><i class="fa-solid fa-heart"></i></span>
@@ -16038,7 +16038,6 @@
                 <div class="snap-polaroid-img" id="polaroidImg3"></div>
               </div>
             </div>
-            <div class="snap-widget-sublabel">Top Widgets*</div>
           </div>
 
           <!-- 4. 双栏排版：左边别针照片卡片 + 右边仅4个核心软件 -->
@@ -16050,7 +16049,6 @@
                 <div class="snap-clip-img" id="clipCardImg"></div>
                 <div class="snap-clip-caption" id="clipCardCaption">ʚ (• . •) ɞ</div>
               </div>
-              <div class="snap-widget-sublabel">Top Widgets*</div>
             </div>
 
             <!-- 右侧仅保留4个核心应用：QQ、云音乐、设置、美化 -->
@@ -16075,12 +16073,6 @@
                 <span class="snap-app-title">美化</span>
               </a>
             </div>
-          </div>
-
-          <!-- 5. 搜索胶囊 -->
-          <div class="snap-search-pill" id="snapSearchPill">
-            <i class="fa-solid fa-magnifying-glass"></i>
-            <span>搜索</span>
           </div>
 
           <!-- 6. 最底部的极简白透圆角 Dock 架 -->
@@ -16229,30 +16221,30 @@
       <!-- 小组件部分 -->
       <div style="font-size: 11px; font-weight: 700; color: #8e8e93; letter-spacing: 0.08em; text-transform: uppercase; margin-top: 4px;">桌面小组件库</div>
 
-      <!-- 1. 个人名片小组件 -->
+      <!-- 1. 拍立得三联卡片小组件 -->
       <div class="bmp-item">
         <div class="bmp-item-info">
-          <div class="bmp-item-icon"><i class="fa-regular fa-id-card"></i></div>
+          <div class="bmp-item-icon"><i class="fa-regular fa-images"></i></div>
           <div class="bmp-item-copy">
-            <strong>个人名片小组件</strong>
-            <span>展示头像、ID及个性签名，主页直接点可编辑</span>
+            <strong>拍立得三联照片组件</strong>
+            <span>主屏顶部三联相片，主页轻点直接更换专属相片</span>
           </div>
         </div>
-        <button class="bmp-toggle-btn active" type="button" data-widget-key="profileCard">
+        <button class="bmp-toggle-btn active" type="button" data-widget-key="triplePolaroidWidget">
           <i class="fa-solid fa-check"></i><span>已添加</span>
         </button>
       </div>
 
-      <!-- 2. 正方形图片小组件 -->
+      <!-- 2. 别针照片卡片小组件 -->
       <div class="bmp-item">
         <div class="bmp-item-info">
-          <div class="bmp-item-icon"><i class="fa-regular fa-image"></i></div>
+          <div class="bmp-item-icon"><i class="fa-solid fa-paperclip"></i></div>
           <div class="bmp-item-copy">
-            <strong>正方形照片小组件</strong>
-            <span>摆放在右侧的照片小卡，主页点击自主选图</span>
+            <strong>别针照片小组件</strong>
+            <span>主屏左侧别针相纸卡片，轻点自主选图与个性文案</span>
           </div>
         </div>
-        <button class="bmp-toggle-btn active" type="button" data-widget-key="photoWidget">
+        <button class="bmp-toggle-btn active" type="button" data-widget-key="midSectionWidget">
           <i class="fa-solid fa-check"></i><span>已添加</span>
         </button>
       </div>
@@ -16262,8 +16254,8 @@
         <div class="bmp-item-info">
           <div class="bmp-item-icon"><i class="fa-solid fa-music"></i></div>
           <div class="bmp-item-copy">
-            <strong>音乐小组件</strong>
-            <span>桌面迷你听歌条，支持切歌播放与封面展示</span>
+            <strong>云音乐播放组件</strong>
+            <span>桌面迷你听歌条，支持切歌、播放与封面展示</span>
           </div>
         </div>
         <button class="bmp-toggle-btn active" type="button" data-widget-key="musicWidget">
@@ -16324,34 +16316,6 @@
         </div>
         <button class="bmp-toggle-btn active" type="button" data-widget-key="quoteWidget">
           <i class="fa-solid fa-check"></i><span>已添加</span>
-        </button>
-      </div>
-
-      <!-- 8. 每日步数健康小组件 -->
-      <div class="bmp-item">
-        <div class="bmp-item-info">
-          <div class="bmp-item-icon"><i class="fa-solid fa-person-walking"></i></div>
-          <div class="bmp-item-copy">
-            <strong>健康步数小组件</strong>
-            <span>当日运动步数与环形能量进度环</span>
-          </div>
-        </div>
-        <button class="bmp-toggle-btn" type="button" data-widget-key="stepsWidget">
-          <i class="fa-solid fa-plus"></i><span>添加</span>
-        </button>
-      </div>
-
-      <!-- 9. 极简随手记便签组件 -->
-      <div class="bmp-item">
-        <div class="bmp-item-info">
-          <div class="bmp-item-icon"><i class="fa-regular fa-note-sticky"></i></div>
-          <div class="bmp-item-copy">
-            <strong>随手记便签组件</strong>
-            <span>在桌面第二页随时记录灵感与清单</span>
-          </div>
-        </div>
-        <button class="bmp-toggle-btn" type="button" data-widget-key="noteWidget">
-          <i class="fa-solid fa-plus"></i><span>添加</span>
         </button>
       </div>
 
@@ -19230,11 +19194,11 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
           weatherWidget: true,
           clockWidget: true,
           quoteWidget: true,
-          stepsWidget: false,
-          noteWidget: false
+          triplePolaroidWidget: true,
+          midSectionWidget: true
           },
           snapCity: "北京",
-          snapQuote: "♡₊˚ 無限愛 ⊹ ૮૩",
+          snapQuote: "Angel user",
           clipCaption: "ʚ (• . •) ɞ",
           polaroidImg1: "https://771553.xyz/file/studio/5FDVc1VrKzVdH5mO.jpg",
           polaroidImg2: "",
@@ -19697,7 +19661,7 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       if (snapCityText) snapCityText.textContent = appState.theme.snapCity || "北京";
 
       const snapSymbolQuote = document.querySelector("#snapSymbolQuote");
-      if (snapSymbolQuote) snapSymbolQuote.textContent = appState.theme.snapQuote || "♡₊˚ 無限愛 ⊹ ૮૩";
+      if (snapSymbolQuote) snapSymbolQuote.textContent = appState.theme.snapQuote || "Angel user";
 
       const clipCardCaption = document.querySelector("#clipCardCaption");
       if (clipCardCaption) clipCardCaption.textContent = appState.theme.clipCaption || "ʚ (• . •) ɞ";
@@ -22949,29 +22913,27 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
     function renderDesktopWidgetsVisibility() {
       if (!appState.theme.enabledWidgets) {
         appState.theme.enabledWidgets = {
-          profileCard: true,
-          photoWidget: true,
+          triplePolaroidWidget: true,
+          midSectionWidget: true,
           musicWidget: true,
           calendarWidget: true,
           weatherWidget: true,
           clockWidget: true,
-          quoteWidget: true,
-          stepsWidget: false,
-          noteWidget: false
+          quoteWidget: true
         };
       }
 
       const w = appState.theme.enabledWidgets;
-      const profileCardNode = document.querySelector(".profile-card-widget");
-      const photoWidgetNode = document.querySelector("#squarePhotoWidget");
+      const triplePolaroid = document.querySelector('[data-widget-id="triplePolaroidWidget"]');
+      const midSection = document.querySelector('[data-widget-id="midSectionWidget"]');
       const musicWidgetNode = document.querySelector("#desktopMusicWidget");
-      const calendarWidgetNode = document.querySelector(".desktop-calendar-widget");
+      const calendarWidgetNode = document.querySelector("#dateText");
       const weatherWidgetNode = document.querySelector("#desktopWeatherWidget");
       const clockWidgetNode = document.querySelector("#desktopClockWidget");
       const quoteWidgetNode = document.querySelector("#desktopQuoteWidget");
 
-      if (profileCardNode) profileCardNode.style.display = w.profileCard !== false ? "" : "none";
-      if (photoWidgetNode) photoWidgetNode.style.display = w.photoWidget !== false ? "" : "none";
+      if (triplePolaroid) triplePolaroid.style.display = w.triplePolaroidWidget !== false ? "" : "none";
+      if (midSection) midSection.style.display = w.midSectionWidget !== false ? "" : "none";
       if (musicWidgetNode) musicWidgetNode.style.display = w.musicWidget !== false ? "" : "none";
       if (calendarWidgetNode) calendarWidgetNode.style.display = w.calendarWidget !== false ? "" : "none";
       if (weatherWidgetNode) weatherWidgetNode.style.display = w.weatherWidget !== false ? "" : "none";
@@ -30828,7 +30790,7 @@ function extractRoleReplyLines(reply) {
           target: "snapQuote",
           title: "编辑个性符号装饰",
           label: "请输入个性符号文案",
-          value: appState.theme.snapQuote || "♡₊˚ 無限愛 ⊹ ૮૩"
+          value: appState.theme.snapQuote || "Angel user"
         });
       });
     }
