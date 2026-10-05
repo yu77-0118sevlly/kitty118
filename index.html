@@ -15301,9 +15301,120 @@
         font-size: 26px;
       }
     }
+
+    /* 启动登录系统 (黑白灰极简 · 居中 · 无表情) */
+    .login-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      background: #f7f7f5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      color: #000000;
+    }
+
+    .login-overlay.hidden {
+      display: none !important;
+    }
+
+    .login-box {
+      width: 100%;
+      max-width: 290px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 14px;
+    }
+
+    .login-title-main {
+      font-size: 24px;
+      font-weight: 700;
+      color: #000000;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+
+    .login-title-sub {
+      font-size: 14px;
+      font-weight: 500;
+      color: #666666;
+      line-height: 1.2;
+      margin-top: -2px;
+    }
+
+    .login-input-group {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 6px;
+    }
+
+    .login-input {
+      width: 100%;
+      height: 44px;
+      background: #ffffff;
+      border: 1px solid #d9d9d9;
+      border-radius: 12px;
+      padding: 0 16px;
+      font-size: 13.5px;
+      color: #000000;
+      text-align: center;
+      outline: none;
+      transition: border-color 0.15s ease;
+    }
+
+    .login-input::placeholder {
+      color: #999999;
+    }
+
+    .login-input:focus {
+      border-color: #000000;
+    }
+
+    .login-btn {
+      width: 100%;
+      height: 44px;
+      background: #000000;
+      color: #ffffff;
+      border: none;
+      border-radius: 12px;
+      font-size: 13.5px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 2px;
+      transition: background 0.15s ease;
+    }
+
+    .login-btn:active {
+      background: #333333;
+    }
+
+    .login-error-tip {
+      font-size: 11.5px;
+      color: #666666;
+      min-height: 16px;
+      margin-top: -4px;
+    }
   </style>
 </head>
 <body>
+  <div class="login-overlay" id="loginOverlay">
+    <div class="login-box">
+      <div class="login-title-main">Yuan phone</div>
+      <div class="login-title-sub">登陆啦</div>
+      <div class="login-input-group">
+        <input type="text" id="loginUsername" class="login-input" placeholder="账号" autocomplete="username" />
+        <input type="password" id="loginPassword" class="login-input" placeholder="密码" autocomplete="current-password" />
+      </div>
+      <div class="login-error-tip" id="loginErrorTip"></div>
+      <button type="button" class="login-btn" id="loginSubmitBtn">点击登陆</button>
+    </div>
+  </div>
+
   <main class="desktop">
     <section class="screen-hud" aria-label="状态栏">
       <div class="hud-left">
@@ -30212,9 +30323,49 @@ function extractRoleReplyLines(reply) {
       });
     }
 
+    function setupLoginSystem() {
+      const overlay = document.querySelector("#loginOverlay");
+      const userInput = document.querySelector("#loginUsername");
+      const pwdInput = document.querySelector("#loginPassword");
+      const submitBtn = document.querySelector("#loginSubmitBtn");
+      const errorTip = document.querySelector("#loginErrorTip");
+
+      if (!overlay || !submitBtn || !userInput || !pwdInput) return;
+
+      const attemptLogin = () => {
+        const u = (userInput.value || "").trim();
+        const p = (pwdInput.value || "").trim();
+
+        if (u === "yuanzhizhi" && p === "yuanzhizhiovo") {
+          overlay.classList.add("hidden");
+          if (errorTip) errorTip.textContent = "";
+        } else {
+          if (errorTip) errorTip.textContent = "账号或密码错误";
+          pwdInput.value = "";
+        }
+      };
+
+      submitBtn.addEventListener("click", attemptLogin);
+
+      userInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          pwdInput.focus();
+        }
+      });
+
+      pwdInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          attemptLogin();
+        }
+      });
+    }
+
     setupPerformanceMode();
 setupPwaManifest();
 setupCatpawAutoFullscreen();
+setupLoginSystem();
 updateTime();
 setupBatteryStatus();
 
