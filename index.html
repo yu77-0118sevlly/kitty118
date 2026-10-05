@@ -12306,7 +12306,7 @@
       max-width: 100% !important;
     }
 
-    /* 开屏公告置中定制 */
+    /* 开屏公告置中定制与固定尺寸 */
     #announcementModal {
       align-items: center !important;
       justify-content: center !important;
@@ -12314,24 +12314,84 @@
     }
 
     #announcementModal .announcement-card {
-      display: block !important;
-      width: min(calc(100vw - 36px), 360px) !important;
-      max-width: 360px !important;
-      max-height: 84dvh !important;
+      display: flex !important;
+      flex-direction: column !important;
+      width: min(calc(100vw - 36px), 340px) !important;
+      max-width: 340px !important;
+      height: 450px !important;
+      max-height: 82dvh !important;
       margin: auto !important;
       border-radius: 28px !important;
-      padding: 22px 20px !important;
+      padding: 20px 18px 16px !important;
       box-shadow: 0 16px 42px rgba(0, 0, 0, 0.22) !important;
+      overflow: hidden !important;
     }
 
     #announcementModal .announcement-card::before {
       display: none !important;
     }
 
+    /* 公告内容横向滑动走马灯分页容器 */
+    .announcement-carousel {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+      margin: 4px 0 10px;
+    }
+
+    .announcement-carousel::-webkit-scrollbar {
+      display: none !important;
+    }
+
+    .announcement-slide {
+      flex: 0 0 100%;
+      width: 100%;
+      height: 100%;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      overflow-y: auto;
+      box-sizing: border-box;
+      padding-right: 2px;
+    }
+
+    .announcement-slide::-webkit-scrollbar {
+      display: none !important;
+    }
+
+    .announcement-dots {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+
+    .announcement-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #e0e0e0;
+      transition: all 0.2s ease;
+    }
+
+    .announcement-dot.active {
+      width: 16px;
+      border-radius: 999px;
+      background: #000000;
+    }
+
     #appDialogModal .announcement-head,
     #pwaInstallModal .announcement-head,
     #announcementModal .announcement-head {
-      margin: 0 0 14px !important;
+      margin: 0 0 10px !important;
       padding: 0 !important;
       border-bottom: 0 !important;
       text-align: left !important;
@@ -15947,21 +16007,14 @@
       <!-- 第一页：完全对照截图的极简美学第一页 -->
       <section class="desktop-page" data-page-index="0" id="desktopPage1">
         <div class="page-aesthetic-wrap">
-          <!-- 1. 顶部状态/天气/符号行 -->
-          <div class="snap-top-status">
-            <div class="snap-status-row-1">
-              <span class="snap-city-text" id="snapCityText" title="点击修改位置">北京</span>
-              <div class="snap-hud-icons">
-                <i class="fa-solid fa-signal"></i>
-                <i class="fa-solid fa-wifi"></i>
-                <span class="snap-battery-pill"><span class="snap-battery-pill-fill"></span></span>
-              </div>
+          <!-- 1. 顶部极简个性符号行（去除了左侧城市/日期与右侧信号/电量/温度） -->
+          <div class="snap-top-status" style="justify-content: center; align-items: center; padding: 4px 0 2px;">
+            <div style="display:none;" aria-hidden="true">
+              <span id="snapCityText"></span>
+              <span id="snapDateText"></span>
+              <span id="snapTempText"></span>
             </div>
-            <div class="snap-status-row-2">
-              <span id="snapDateText">10-05</span>
-              <span class="snap-symbol-quote" id="snapSymbolQuote" title="点击编辑个性符号">♡₊˚ 無限愛 ⊹ ૮૩</span>
-              <span id="snapTempText">7°C</span>
-            </div>
+            <span class="snap-symbol-quote" id="snapSymbolQuote" title="点击编辑个性符号" style="font-size:14px; text-align:center;">♡₊˚ 無限愛 ⊹ ૮૩</span>
           </div>
 
           <!-- 2. 超大极简时钟 -->
@@ -17778,55 +17831,55 @@
   <section class="announcement-modal" id="announcementModal" aria-label="更新内容公告">
     <div class="announcement-card">
       <header class="announcement-head">
-        <h3>沅子机更新内容</h3>
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <h3 style="font-size:18px; margin:0;">沅子机更新内容</h3>
+          <span style="font-size:10.5px; color:#8e8e93; font-weight:600;">左右滑可翻页 ➔</span>
+        </div>
         <div class="announcement-author-badge">
           <i class="fa-solid fa-clock"></i>
           <span>2026年10月5日 10:30 更新</span>
         </div>
       </header>
 
-      <div class="announcement-body">
-        <div class="announcement-item">
-          <strong>1. 拍立得美学主屏与药丸 Dock 底座沉底</strong>
-          <p>Dock 栏已精准固定置于屏幕最底部，并去除底部小黑线条与顶部边框，视觉更通透纯粹、手感更舒适。</p>
+      <!-- 尺寸固定不拉长，左右滑动分页容器 -->
+      <div class="announcement-carousel" id="announcementCarousel">
+        <!-- 第 1 页 -->
+        <div class="announcement-slide">
+          <div class="announcement-item">
+            <strong>1. 顶部状态栏极致精简</strong>
+            <p>已彻底移除顶部两侧的城市、日期、信号、WiFi、电量与气温等杂乱内容，仅保留居中极简个性符号，视觉更干净纯粹。</p>
+          </div>
+          <div class="announcement-item">
+            <strong>2. 截图同款拍立得与别针小组件</strong>
+            <p>第一页精准复刻拍立得三联卡片、别针照片卡片与居中超大时钟，仅展示 4 个核心软件，轻点即可随时更换专属照片。</p>
+          </div>
+          <div class="announcement-free-tag">
+            沅子机是免费小手机 禁止二传二贩
+          </div>
         </div>
 
-        <div class="announcement-item">
-          <strong>2. 截图同款小组件与四软件精简首屏</strong>
-          <p>第一页复刻拍立得三联卡片、别针照片小组件与超大时钟，仅保留 4 个核心软件；其他软件与拓展组件归纳于第二页，支持左右顺畅滑屏。</p>
-        </div>
-
-        <div class="announcement-item">
-          <strong>3. 全小组件与应用长按自由调位并记忆</strong>
-          <p>长按小组件或应用图标即可轻松调换排版位置，系统自动永久保存你的个性化桌面布局。</p>
-        </div>
-
-        <div class="announcement-free-tag">
-          沅子机是免费小手机 禁止二传二贩
-        </div>
-      </div>
-
-        <div class="announcement-item">
-          <strong>2. 小组件与应用图标支持长按自由调位并记忆</strong>
-          <p>全面升级触屏长按机制！长按应用图标或任意小组件即可唤起浮动位移，随心拖动调换摆放顺序，刷新后永久保存你的排版。</p>
-        </div>
-
-        <div class="announcement-item">
-          <strong>3. 云音乐支持轻点自定义头像</strong>
-          <p>在云音乐右上角或个人账户面板，轻点头像即可直接从相册选取图片更换你的专属音乐形象。</p>
-        </div>
-
-        <div class="announcement-item">
-          <strong>4. 现实时间感知迁移至会话独立设置</strong>
-          <p>移除了全局多余选项，每个聊天角色均可单独开启现实时间感知，界面尺寸与功能分类整齐划一。</p>
-        </div>
-
-        <div class="announcement-free-tag">
-          Sweet（沅phone）完全免费！禁止搬运、抄袭或商业转售。感谢大家的使用与喜爱！
+        <!-- 第 2 页 -->
+        <div class="announcement-slide">
+          <div class="announcement-item">
+            <strong>3. 药丸 Dock 栏沉底与黑线去除</strong>
+            <p>Dock 栏已吸附固定至屏幕最底部，并去除底部黑条与边框；其余全部软件已规整收纳至第二页。</p>
+          </div>
+          <div class="announcement-item">
+            <strong>4. 全组件长按自由位移排版</strong>
+            <p>支持长按图标或小组件随心拖拽调换摆放顺序，系统自动持久化记忆你的个性化主屏排版。</p>
+          </div>
+          <div class="announcement-free-tag">
+            沅子机是免费小手机 禁止二传二贩
+          </div>
         </div>
       </div>
 
-      <footer class="announcement-footer">
+      <div class="announcement-dots" id="announcementDots">
+        <span class="announcement-dot active"></span>
+        <span class="announcement-dot"></span>
+      </div>
+
+      <footer class="announcement-footer" style="margin-top:auto;">
         <button class="announcement-btn" id="confirmAnnouncementBtn" type="button" disabled>
           请阅读公告 (3s)
         </button>
@@ -31553,9 +31606,19 @@ function extractRoleReplyLines(reply) {
     function showAnnouncementModal() {
       const modal = document.querySelector("#announcementModal");
       const confirmBtn = document.querySelector("#confirmAnnouncementBtn");
+      const carousel = document.querySelector("#announcementCarousel");
+      const dots = document.querySelectorAll("#announcementDots .announcement-dot");
       if (!modal || !confirmBtn) return;
 
       modal.classList.add("show");
+
+      if (carousel && dots.length) {
+        carousel.scrollLeft = 0;
+        carousel.onscroll = () => {
+          const idx = Math.round(carousel.scrollLeft / (carousel.offsetWidth || 1));
+          dots.forEach((dot, i) => dot.classList.toggle("active", i === idx));
+        };
+      }
 
       let remaining = 3;
       confirmBtn.disabled = true;
