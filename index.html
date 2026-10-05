@@ -38,14 +38,12 @@
     }
 
     :root {
-      --bg: #f4f4f2;
-      --text: #26282b;
-      --muted: #7d8086;
-      --white: rgba(255, 255, 255, 0.92);
-      --line: rgba(255, 255, 255, 0.55);
-      --glass: rgba(255, 255, 255, 0.28);
-      --glass-strong: rgba(255, 255, 255, 0.38);
-      --shadow: 0 10px 30px rgba(114, 116, 122, 0.12);
+      --bg: #f8f8f7;
+      --text: #1a1a1a;
+      --muted: #8e8e93;
+      --white: #ffffff;
+      --line: #ededec;
+      --shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
       --phone-width: 390px;
       --dock-width: 350px;
     }
@@ -61,11 +59,11 @@
 
     body {
       min-height: 100vh;
-      font-family: "Noto Sans TC", "Noto Sans SC", "PingFang TC", "PingFang HK", "PingFang SC", "Heiti TC", "Microsoft JhengHei", "Microsoft YaHei", "Source Han Sans TC", "Source Han Sans SC", sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "PingFang SC", "Noto Sans SC", "Microsoft YaHei", sans-serif;
       color: var(--text);
       overflow-x: hidden;
-      background: #f7f7f5;
-      background-color: #f7f7f5;
+      background: #fafaf9;
+      background-color: #fafaf9;
     }
 
     body.is-android {
@@ -79,171 +77,34 @@
       height: 100dvh;
       min-height: 0;
       margin: 0 auto;
-      padding: env(safe-area-inset-top) 12px calc(102px + env(safe-area-inset-bottom)) 12px;
+      padding: calc(14px + env(safe-area-inset-top)) 16px calc(24px + env(safe-area-inset-bottom)) 16px;
       position: relative;
-      overflow: hidden;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .desktop::-webkit-scrollbar {
+      display: none !important;
     }
 
     .screen-hud {
       display: none !important;
-      justify-content: space-between;
-      align-items: center;
-      padding: 2px 4px 10px;
-      color: rgba(255, 255, 255, 0.96);
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
-      font-size: 15px;
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-    }
-
-    .hud-left {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      min-width: 54px;
-      font-size: 15px;
-      font-weight: 600;
-      font-variant-numeric: tabular-nums;
-      line-height: 1;
-    }
-
-    .hud-icons {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      font-size: 13px;
-      font-weight: 600;
-      line-height: 1;
-    }
-
-    .hud-icons i {
-      opacity: 0.96;
-      transform: translateY(0.2px);
-    }
-
-    .hud-battery {
-      min-width: 44px;
-      padding: 0;
-      border-radius: 0;
-      background: transparent;
-      color: currentColor;
-      font-size: 11px;
-      line-height: 1;
-      display: inline-flex;
-      align-items: center;
-      justify-content: flex-end;
-      gap: 4px;
-      font-variant-numeric: tabular-nums;
-      text-shadow: none;
-    }
-
-    .hud-battery-percent {
-      min-width: 18px;
-      text-align: right;
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: -0.04em;
-      opacity: 0.92;
-    }
-
-    .hud-battery-shell {
-      position: relative;
-      width: 25px;
-      height: 12px;
-      border-radius: 3.8px;
-      border: 1.4px solid currentColor;
-      display: inline-flex;
-      align-items: center;
-      padding: 1.2px;
-      opacity: 0.95;
-    }
-
-    .hud-battery-shell::after {
-      content: "";
-      position: absolute;
-      right: -3.4px;
-      top: 3.3px;
-      width: 2px;
-      height: 5px;
-      border-radius: 0 2px 2px 0;
-      background: currentColor;
-      opacity: 0.9;
-    }
-
-    .hud-battery-fill {
-      height: 100%;
-      width: var(--battery-level, 90%);
-      min-width: 2px;
-      border-radius: 2.4px;
-      background: currentColor;
-      transition: width 0.25s ease, background 0.25s ease;
-    }
-
-    .hud-battery-bolt {
-      display: none;
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      color: #ffffff;
-      font-size: 7px;
-      line-height: 1;
-      filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.16));
-      z-index: 1;
-    }
-
-    .hud-battery.charging .hud-battery-fill {
-      background: #34c759;
-      animation: batteryChargingPulse 1.2s ease-in-out infinite;
-    }
-
-    .hud-battery.charging .hud-battery-bolt {
-      display: block;
-    }
-
-    .hud-battery.low .hud-battery-fill {
-      background: #ff3b30;
     }
 
     .hero {
-      padding-top: 2px;
+      padding-top: 4px;
     }
 
     .hero-top {
       display: none;
-      grid-template-columns: 38px 1fr 38px;
-      align-items: center;
-      margin-bottom: 0;
-      color: rgba(255, 255, 255, 0.96);
-    }
-
-    .hero-close,
-    .hero-side-btn {
-      width: 34px;
-      height: 34px;
-      border: 0;
-      border-radius: 50%;
-      background: transparent;
-      color: inherit;
-      font-size: 19px;
-    }
-
-    .hero-page {
-      text-align: center;
-      font-size: 17px;
-      font-weight: 1000;
-      letter-spacing: 0.04em;
     }
 
     .profile-shell {
       position: relative;
-      margin: 0 0 8px;
+      margin: 0 0 14px;
       padding: 0;
-      border-radius: 0;
       background: transparent;
       box-shadow: none;
-      overflow: visible;
     }
 
     .profile-banner {
@@ -252,156 +113,162 @@
 
     .profile-row {
       display: grid;
-      grid-template-columns: 58px 1fr;
-      gap: 10px;
+      grid-template-columns: 54px 1fr;
+      gap: 12px;
       align-items: center;
     }
 
     .avatar-orbit {
-      width: 56px;
-      height: 56px;
+      width: 54px;
+      height: 54px;
       border-radius: 50%;
-      background:
-        linear-gradient(rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.96)),
-        #ffffff;
-      border: 1px solid rgba(255, 255, 255, 0.38);
-      box-shadow:
-        0 8px 18px rgba(70, 74, 82, 0.12),
-        inset 0 1px 0 rgba(255, 255, 255, 0.44);
+      background-color: #ffffff;
+      background-size: cover;
+      background-position: center;
+      border: 1px solid #e8e8e6;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
       position: relative;
       overflow: hidden;
-      backdrop-filter: blur(18px) saturate(150%);
-      -webkit-backdrop-filter: blur(18px) saturate(150%);
+      cursor: pointer;
     }
 
     .camera-dot {
       position: absolute;
       right: -1px;
-      bottom: 0;
+      bottom: -1px;
       width: 18px;
       height: 18px;
       border-radius: 50%;
       display: grid;
       place-items: center;
-      background: rgba(18, 19, 22, 0.88);
-      color: #fff;
-      font-size: 9px;
-      border: 1px solid rgba(255, 255, 255, 0.68);
+      background: #111111;
+      color: #ffffff;
+      font-size: 8.5px;
+      border: 1.5px solid #ffffff;
     }
 
     .profile-copy {
-      color: #111214;
+      color: #111111;
       min-width: 0;
     }
 
     .profile-copy h1 {
-      font-size: 15px;
+      font-size: 16px;
       line-height: 1.2;
-      font-weight: 1000;
+      font-weight: 700;
+      letter-spacing: -0.02em;
       display: flex;
       align-items: center;
       gap: 6px;
-      color: #111214;
+      color: #000000;
+      cursor: pointer;
     }
 
     .profile-copy h1 i {
-      font-size: 13px;
-      color: #303238;
+      font-size: 12px;
+      color: #8e8e93;
     }
 
     .profile-copy p {
-      margin-top: 5px;
-      color: rgba(255, 255, 255, 0.94);
-      font-size: 9px;
-      font-weight: 900;
+      margin-top: 3px;
+      color: #8e8e93;
+      font-size: 10px;
+      font-weight: 500;
       line-height: 1.35;
-      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      cursor: pointer;
     }
 
+    /* 极简纯白日历条 */
     .calendar-strip {
-      margin: 8px 0 7px;
+      margin: 10px 0 10px;
       display: grid;
       grid-template-columns: repeat(7, 1fr);
-      gap: 4px;
-      color: rgba(255, 255, 255, 0.88);
+      gap: 5px;
+      padding: 10px 8px;
+      background: #ffffff;
+      border: 1px solid #ededec;
+      border-radius: 18px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
       text-align: center;
     }
 
     .calendar-item small {
       display: block;
-      font-size: 8px;
-      opacity: 0.72;
-      margin-bottom: 4px;
-      font-weight: 800;
+      font-size: 8.5px;
+      color: #999999;
+      margin-bottom: 3px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
     }
 
     .calendar-item span {
-      width: 20px;
-      height: 20px;
+      width: 24px;
+      height: 24px;
       margin: 0 auto;
       border-radius: 50%;
       display: grid;
       place-items: center;
-      font-size: 9px;
-      font-weight: 1000;
-      color: #2f3338;
+      font-size: 11px;
+      font-weight: 700;
+      color: #111111;
       background: transparent;
+      transition: background 0.15s ease, color 0.15s ease;
     }
 
     .calendar-item.active span {
-      background: rgba(255, 255, 255, 0.9);
+      background: #111111;
+      color: #ffffff;
     }
 
+    /* 极简听歌状态条 */
     .listen-bar {
       display: flex;
       align-items: center;
-      gap: 8px;
-      margin: 7px 0 8px;
-      color: rgba(34, 36, 40, 0.92);
-      font-weight: 1000;
+      gap: 10px;
+      margin: 8px 0 10px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: #ffffff;
+      border: 1px solid #ededec;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+      color: #111111;
+      font-weight: 600;
+      cursor: pointer;
     }
 
     .listen-dot {
-      width: 28px;
-      height: 28px;
+      width: 24px;
+      height: 24px;
       border-radius: 50%;
       display: grid;
       place-items: center;
-      background: rgba(255, 255, 255, 0.34);
-      backdrop-filter: blur(22px) saturate(170%);
-      -webkit-backdrop-filter: blur(22px) saturate(170%);
-      color: #6d747c;
-      border: 1px solid rgba(255, 255, 255, 0.28);
-      box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.42),
-        0 8px 18px rgba(70, 78, 88, 0.08);
+      background: #f4f4f4;
+      color: #111111;
+      font-size: 10px;
+      flex-shrink: 0;
     }
 
     .listen-bar span {
-      font-size: 11px;
-      color: rgba(34, 36, 40, 0.88);
+      font-size: 11.5px;
+      color: #444444;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
+    /* 极简纯白天气挂件卡片 */
     .weather-glass {
       position: relative;
-      margin: 0 0 10px;
-      min-height: 66px;
-      border-radius: 18px;
-      padding: 10px 10px;
-      background:
-        radial-gradient(circle at 18% 18%, rgba(255, 255, 255, 0.34), transparent 34%),
-        linear-gradient(145deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.08) 58%, rgba(105, 125, 150, 0.12)),
-        rgba(255, 255, 255, 0.14);
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      box-shadow:
-        0 16px 34px rgba(72, 82, 96, 0.14),
-        inset 0 1px 0 rgba(255, 255, 255, 0.34),
-        inset 0 -18px 28px rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(36px) saturate(205%) brightness(1.05);
-      -webkit-backdrop-filter: blur(36px) saturate(205%) brightness(1.05);
+      margin: 0 0 12px;
+      min-height: 64px;
+      border-radius: 20px;
+      padding: 12px 14px;
+      background: #ffffff;
+      border: 1px solid #ededec;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.025);
       overflow: hidden;
     }
 
@@ -414,49 +281,45 @@
       z-index: 1;
       display: grid;
       grid-template-columns: 1fr auto;
-      gap: 10px;
+      gap: 12px;
       align-items: center;
     }
 
     .weather-copy small {
       display: block;
-      font-size: 11px;
-      font-weight: 900;
-      color: #7a8088;
-      margin-bottom: 6px;
+      font-size: 10.5px;
+      font-weight: 600;
+      color: #8e8e93;
+      margin-bottom: 4px;
     }
 
     .weather-copy strong {
       display: block;
-      font-size: 12px;
+      font-size: 12.5px;
       line-height: 1.35;
-      color: #30343a;
+      font-weight: 700;
+      color: #111111;
+      cursor: pointer;
     }
 
     .weather-icons {
       display: flex;
-      gap: 6px;
+      gap: 8px;
     }
 
     .weather-icon-card {
-      width: 52px;
-      height: 52px;
-      border-radius: 14px;
-      background:
-        radial-gradient(circle at 28% 18%, rgba(255, 255, 255, 0.34), transparent 36%),
-        linear-gradient(145deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.06) 58%, rgba(82, 100, 124, 0.1)),
-        rgba(255, 255, 255, 0.14);
-      border: 1px solid rgba(255, 255, 255, 0.16);
+      width: 44px;
+      height: 44px;
+      border-radius: 13px;
+      background: #f7f7f7;
+      border: 1px solid #f0f0f0;
+      background-size: cover;
+      background-position: center;
       display: grid;
       place-items: center;
-      color: rgba(255, 255, 255, 0.92);
-      font-size: 21px;
-      box-shadow:
-        0 12px 24px rgba(70, 80, 94, 0.12),
-        inset 0 1px 0 rgba(255, 255, 255, 0.32),
-        inset 0 -14px 24px rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(34px) saturate(205%) brightness(1.05);
-      -webkit-backdrop-filter: blur(34px) saturate(205%) brightness(1.05);
+      color: #555555;
+      font-size: 16px;
+      transition: background 0.15s ease;
     }
 
     .section-title {
@@ -467,7 +330,7 @@
       display: grid;
       grid-template-columns: 64px 64px 1fr;
       grid-auto-rows: auto;
-      gap: 10px;
+      gap: 12px;
       align-items: start;
     }
 
@@ -482,77 +345,61 @@
       gap: 8px;
     }
 
+    /* 极简白色系列桌面图标（纯白底、纯黑白灰矢量图标、细腻阴影与边框） */
     .app-icon {
       width: 64px;
       height: 64px;
-      border-radius: 18px;
+      border-radius: 19px;
       display: grid;
       place-items: center;
-      color: rgba(255, 255, 255, 0.96);
-      font-size: 28px;
-      background:
-        radial-gradient(circle at 24% 18%, rgba(255, 255, 255, 0.38), transparent 34%),
-        linear-gradient(145deg, rgba(255, 255, 255, 0.2), rgba(196, 211, 231, 0.1) 48%, rgba(73, 86, 105, 0.14)),
-        rgba(205, 220, 238, 0.14);
-      border: 1px solid rgba(255, 255, 255, 0.16);
-      backdrop-filter: blur(42px) saturate(210%) brightness(1.06);
-      -webkit-backdrop-filter: blur(42px) saturate(210%) brightness(1.06);
-      box-shadow:
-        0 16px 30px rgba(48, 62, 82, 0.16),
-        inset 0 1px 0 rgba(255, 255, 255, 0.36),
-        inset 0 -18px 28px rgba(255, 255, 255, 0.05),
-        inset 0 0 18px rgba(255, 255, 255, 0.08);
+      color: #111111;
+      font-size: 26px;
+      background: #ffffff;
+      border: 1px solid #ebebeb;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
       background-size: cover;
       background-position: center;
       overflow: hidden;
       position: relative;
+      transition: transform 0.14s ease, box-shadow 0.14s ease;
+    }
+
+    .app-icon:active {
+      transform: scale(0.94);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
     }
 
     .app-icon::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      border-radius: inherit;
-      background:
-        linear-gradient(150deg, rgba(255, 255, 255, 0.32), rgba(255, 255, 255, 0.08) 35%, rgba(255, 255, 255, 0.02) 62%),
-        radial-gradient(circle at 76% 84%, rgba(255, 255, 255, 0.18), transparent 38%);
-      box-shadow:
-        inset 1px 1px 0 rgba(255, 255, 255, 0.22),
-        inset -1px -1px 0 rgba(67, 82, 104, 0.06);
-      pointer-events: none;
+      display: none;
     }
 
     .app-icon i {
       position: relative;
       z-index: 1;
-      text-shadow: 0 1px 10px rgba(60, 70, 82, 0.16);
+      color: #111111;
+      text-shadow: none;
     }
 
     .app-stack span:last-child {
-      font-size: 11px;
-      font-weight: 1000;
-      color: rgba(255, 255, 255, 0.96);
-      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+      font-size: 11.5px;
+      font-weight: 600;
+      color: #222222;
+      letter-spacing: -0.01em;
+      text-shadow: none;
+      text-align: center;
     }
 
+    /* 极简纯白音乐小组件 */
     .album-widget {
       position: relative;
       min-height: 138px;
       grid-row: span 2;
-      border-radius: 24px;
-      padding: 12px;
-      background:
-        radial-gradient(circle at 18% 14%, rgba(255, 255, 255, 0.4), transparent 32%),
-        linear-gradient(145deg, rgba(255, 255, 255, 0.34), rgba(255, 255, 255, 0.16) 54%, rgba(178, 194, 214, 0.16)),
-        rgba(255, 255, 255, 0.32);
-      border: 1px solid rgba(255, 255, 255, 0.22);
-      box-shadow:
-        0 16px 34px rgba(70, 82, 102, 0.14),
-        inset 0 1px 0 rgba(255, 255, 255, 0.42),
-        inset 0 -20px 30px rgba(255, 255, 255, 0.06);
+      border-radius: 22px;
+      padding: 14px;
+      background: #ffffff;
+      border: 1px solid #ededec;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
       overflow: hidden;
-      backdrop-filter: blur(34px) saturate(190%) brightness(1.05);
-      -webkit-backdrop-filter: blur(34px) saturate(190%) brightness(1.05);
     }
 
     .album-top {
@@ -564,61 +411,58 @@
 
     .album-copy strong {
       display: block;
-      font-size: 10px;
-      color: #2a2d31;
-      font-weight: 1000;
-      line-height: 1.3;
+      font-size: 12px;
+      color: #111111;
+      font-weight: 700;
+      line-height: 1.25;
     }
 
     .album-copy span {
       display: block;
       margin-top: 3px;
-      color: #8b9097;
-      font-size: 9px;
-      font-weight: 900;
+      color: #8e8e93;
+      font-size: 10px;
+      font-weight: 500;
     }
 
     .album-badge {
-      width: 34px;
-      height: 34px;
+      width: 28px;
+      height: 28px;
       border-radius: 50%;
-      border: 1px solid #d9dde2;
+      border: 1px solid #f0f0f0;
       display: grid;
       place-items: center;
-      color: #80868f;
-      background: #fff;
+      color: #111111;
+      background: #f8f8f8;
+      font-size: 11px;
       flex-shrink: 0;
     }
 
     .album-body {
-      margin-top: 8px;
+      margin-top: 10px;
       display: grid;
-      grid-template-columns: 1fr 58px;
-      gap: 8px;
+      grid-template-columns: 1fr 54px;
+      gap: 10px;
       align-items: center;
     }
 
     .album-cover {
-      height: 74px;
-      border-radius: 13px;
-      background: #ffffff;
-      border: 1px solid rgba(255, 255, 255, 0.54);
+      height: 68px;
+      border-radius: 12px;
+      background-color: #f7f7f7;
+      background-size: cover;
+      background-position: center;
+      border: 1px solid #f0f0f0;
     }
 
     .album-disc {
-      width: 58px;
-      height: 58px;
+      width: 54px;
+      height: 54px;
       border-radius: 50%;
       position: relative;
       overflow: hidden;
-      background:
-        radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 1) 0 9%, rgba(205, 211, 218, 0.95) 10% 13%, rgba(255, 255, 255, 0.92) 14% 22%, transparent 23%),
-        conic-gradient(from 18deg, #fbfbfb, #cfd5dc, #ffffff, #e4e8ed, #ffffff, #cbd2da, #fefefe),
-        radial-gradient(circle at 34% 24%, rgba(255, 255, 255, 0.95), transparent 35%);
-      box-shadow:
-        0 8px 18px rgba(85, 95, 110, 0.12),
-        inset 0 0 0 1px rgba(255, 255, 255, 0.58),
-        inset 0 0 14px rgba(130, 140, 154, 0.16);
+      background: #111111;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
     }
 
     .album-disc::before {
@@ -626,103 +470,97 @@
       position: absolute;
       inset: 6px;
       border-radius: 50%;
-      background:
-        conic-gradient(from 80deg, rgba(255, 255, 255, 0.15), rgba(122, 134, 150, 0.12), rgba(255, 255, 255, 0.22), rgba(132, 144, 160, 0.08), rgba(255, 255, 255, 0.18));
-      mix-blend-mode: multiply;
-      opacity: 0.6;
+      border: 1px solid rgba(255, 255, 255, 0.12);
     }
 
     .album-disc::after {
       content: "";
       position: absolute;
-      inset: 19px;
+      inset: 18px;
       border-radius: 50%;
-      background:
-        radial-gradient(circle at 38% 30%, #ffffff, #eef1f4 56%, #ccd3db 100%);
-      box-shadow:
-        inset 0 1px 2px rgba(255, 255, 255, 0.9),
-        0 0 0 1px rgba(190, 198, 208, 0.6);
+      background: #ffffff;
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
     }
 
     .album-footer {
       display: none;
     }
 
+    /* 极简纯白分享片段卡片 */
     .mid-glass {
-      margin-top: 10px;
-      border-radius: 24px;
-      padding: 12px 12px;
-      background:
-        radial-gradient(circle at 15% 18%, rgba(255, 255, 255, 0.34), transparent 34%),
-        linear-gradient(145deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.08) 55%, rgba(115, 135, 160, 0.12)),
-        rgba(255, 255, 255, 0.16);
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      backdrop-filter: blur(36px) saturate(205%) brightness(1.05);
-      -webkit-backdrop-filter: blur(36px) saturate(205%) brightness(1.05);
-      box-shadow:
-        0 16px 34px rgba(70, 82, 104, 0.14),
-        inset 0 1px 0 rgba(255, 255, 255, 0.34),
-        inset 0 -18px 28px rgba(255, 255, 255, 0.05),
-        inset 0 0 20px rgba(255, 255, 255, 0.06);
+      margin-top: 14px;
+      border-radius: 22px;
+      padding: 14px;
+      background: #ffffff;
+      border: 1px solid #ededec;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
     }
 
     .mid-tabs {
       display: flex;
-      justify-content: center;
-      gap: 16px;
-      margin-bottom: 10px;
-      font-size: 10px;
-      font-weight: 1000;
-      color: rgba(255, 255, 255, 0.96);
+      justify-content: flex-start;
+      gap: 8px;
+      margin-bottom: 12px;
+      font-size: 11px;
+      font-weight: 600;
+      color: #8e8e93;
+    }
+
+    .mid-tabs span {
+      padding: 4px 12px;
+      border-radius: 999px;
+      cursor: pointer;
     }
 
     .mid-tabs .active {
-      padding: 5px 12px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.32);
-      border: 1px solid rgba(255, 255, 255, 0.46);
-      color: #fff;
+      background: #111111;
+      color: #ffffff;
+      font-weight: 600;
     }
 
     .mid-content {
       display: grid;
-      grid-template-columns: 76px 76px 1fr;
-      gap: 8px;
+      grid-template-columns: 74px 74px 1fr;
+      gap: 10px;
       align-items: stretch;
     }
 
     .mid-thumb {
-      border-radius: 16px;
-      min-height: 78px;
-      background: rgba(255, 255, 255, 0.34) center / cover no-repeat;
-      border: 1px solid rgba(255, 255, 255, 0.32);
+      border-radius: 14px;
+      min-height: 74px;
+      background-color: #f7f7f7;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      border: 1px solid #f0f0f0;
     }
 
     .mid-thumb.one {
       background-image: none;
-      background-color: #ffffff;
+      background-color: #f7f7f7;
     }
 
     .mid-thumb.two {
       background-image: none;
-      background-color: #ffffff;
+      background-color: #f7f7f7;
     }
 
     .mid-text {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      color: rgba(255, 255, 255, 0.98);
-      font-size: 9px;
-      line-height: 1.4;
-      font-weight: 900;
+      color: #111111;
+      font-size: 10.5px;
+      line-height: 1.45;
+      font-weight: 500;
       padding: 2px 0;
-      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+      text-shadow: none;
+      cursor: pointer;
     }
 
     .mid-text small {
-      color: rgba(255, 255, 255, 0.8);
-      font-size: 9px;
+      color: #8e8e93;
+      font-size: 9.5px;
     }
 
     .bubble-zone {
