@@ -5674,31 +5674,40 @@
       font-weight: 400;
     }
 
-    .chat-setting-item {
-      position: relative;
-      padding: 16px 0 18px;
-      border-radius: 0;
-      background: #ffffff;
-      border: none;
-      border-top: 1px solid #f5f5f5;
-      box-shadow: none;
+    /* 聊天设置模块化统一排版 */
+    .chat-setting-section-header {
+      font-size: 11px;
+      font-weight: 700;
+      color: #8e8e93;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin: 18px 2px 8px;
     }
 
-    .chat-setting-item:first-of-type {
-      border-top: none;
+    .chat-setting-section-header:first-of-type {
+      margin-top: 6px;
+    }
+
+    .chat-setting-item {
+      position: relative;
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: #fbfbfb;
+      border: 1px solid #f2f2f2;
+      box-shadow: none;
+      margin-bottom: 10px;
     }
 
     .chat-setting-title {
       display: flex;
       align-items: center;
       gap: 8px;
-      color: #1a1a1a;
-      font-size: 12px;
+      color: #111111;
+      font-size: 12.5px;
       line-height: 1.3;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      margin-bottom: 12px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-bottom: 10px;
     }
 
     .chat-setting-title i {
@@ -16289,10 +16298,6 @@
                 <span>全局多模态感知 (视觉识图识别)</span>
                 <input id="globalVisionToggle" type="checkbox" />
               </div>
-              <div class="chat-toggle-row">
-                <span>现实时间感知 (感知当下真实时区与日期)</span>
-                <input id="realTimeAwarenessToggle" type="checkbox" />
-              </div>
               <div class="inline-actions">
                 <button class="liquid-btn" id="fetchModelsBtn" type="button">拉取可用模型</button>
                 <button class="liquid-btn primary" id="testApiBtn" type="button">测试连通性</button>
@@ -17915,6 +17920,9 @@
       </div>
 
       <div class="chat-settings-list">
+        <!-- 分组一：身份与人设 -->
+        <div class="chat-setting-section-header">身份与人设</div>
+
         <section class="chat-avatar-pair" aria-label="双方对话头像">
           <button class="chat-avatar-slot" id="chatAvatarSlotSelf" type="button">
             <span class="chat-avatar-ring">
@@ -17943,28 +17951,53 @@
         <div class="chat-setting-item">
           <button class="chat-role-edit-entry" id="openChatRoleEditPage" type="button">
             <div>
-              <div class="chat-setting-title"><i class="fa-solid fa-user-pen"></i> 编辑联系人设定</div>
-              <span>进入独立全屏页面，二次修改角色头像、人设、所在地、生日和共同经历。</span>
+              <div class="chat-setting-title"><i class="fa-solid fa-user-pen"></i> 编辑角色完整设定</div>
+              <span>修改角色名称、性别、人设、所在地、生日和共同经历</span>
             </div>
             <i class="fa-solid fa-chevron-right"></i>
           </button>
         </div>
 
         <div class="chat-setting-item">
-          <div class="chat-setting-title"><i class="fa-solid fa-link"></i> 绑定我的设定</div>
-          <textarea id="chatSettingMyName" placeholder="输入我在本会话中的昵称、身份或完整人设，支持多行长文本"></textarea>
+          <div class="chat-setting-title"><i class="fa-solid fa-link"></i> 绑定我的身份设定</div>
+          <textarea id="chatSettingMyName" placeholder="输入我在本会话中的昵称、身份或完整人设，支持长文本"></textarea>
+        </div>
+
+        <!-- 分组二：认知与模型感知 -->
+        <div class="chat-setting-section-header">认知与模型感知</div>
+
+        <div class="chat-setting-item">
+          <div class="chat-setting-title"><i class="fa-regular fa-clock"></i> 现实时间感知</div>
+          <div class="chat-toggle-row">
+            <span>角色能感知当前真实日期、星期与时刻（如深夜、清晨）</span>
+            <input id="chatRealTimeAwarenessToggle" type="checkbox" />
+          </div>
+        </div>
+
+        <div class="chat-setting-item">
+          <div class="chat-setting-title"><i class="fa-solid fa-brain"></i> 对话记忆轮数</div>
+          <input class="chat-memory-input" id="chatMemoryTurnsInput" type="number" placeholder="默认记住最近 10 轮" />
+          <div class="chat-ai-result">设置发送给 AI 的历史聊天轮数，默认 10 轮。</div>
+        </div>
+
+        <div class="chat-setting-item">
+          <div class="chat-setting-title"><i class="fa-solid fa-book-open"></i> 绑定世界书资料库</div>
+          <div class="chat-toggle-row">
+            <span>读取选中世界书分组中的背景设定与注意事项</span>
+          </div>
+          <select id="chatWorldBookGroupSelect" class="chat-multi-select" multiple></select>
         </div>
 
         <div class="chat-setting-item">
           <div class="chat-setting-title"><i class="fa-regular fa-image"></i> AI 图片感知</div>
           <div class="chat-toggle-row">
-            <span>开启后可上传图片作为本会话感知素材</span>
+            <span>上传图片作为会话感知素材供角色参考</span>
             <input id="chatAiImageToggle" type="checkbox" />
           </div>
           <div class="upload-grid">
             <div class="upload-item">
               <strong>上传感知图片</strong>
-              <span>图片会保存到本地会话设置中，不会自动发送。</span>
+              <span>图片保存在本地会话设置中，不会直接发送。</span>
               <div class="single-action" style="margin-top:8px;">
                 <button class="liquid-btn" id="triggerChatAiImage" type="button">选择感知图片</button>
                 <input id="chatAiImageInput" type="file" accept="image/*" style="display:none;" />
@@ -17974,38 +18007,119 @@
           <div class="chat-ai-result" id="chatAiImageResult">尚未上传感知图片。</div>
         </div>
 
+        <!-- 分组三：气泡与界面视觉 -->
+        <div class="chat-setting-section-header">气泡与界面视觉</div>
+
         <div class="chat-setting-item">
-          <div class="chat-setting-title"><i class="fa-solid fa-users-viewfinder"></i> 显示/隐藏双方头像</div>
+          <div class="chat-setting-title"><i class="fa-solid fa-users-viewfinder"></i> 头像显隐方式</div>
           <div class="chat-toggle-row">
-            <span>控制聊天气泡旁双方头像是否显示</span>
+            <span>显示聊天气泡旁头像</span>
             <input id="chatShowAvatarsToggle" type="checkbox" />
           </div>
           <div class="chat-toggle-row" style="margin-top:10px;">
             <span>仅显示连续发送的首条消息头像</span>
             <input id="chatShowOnlyFirstAvatarToggle" type="checkbox" />
           </div>
-        </div>
-
-        <div class="chat-setting-item">
-          <div class="chat-setting-title"><i class="fa-regular fa-clock"></i> 显示/隐藏消息时间戳</div>
-          <div class="chat-toggle-row">
-            <span>开启后，每条消息旁显示发送时刻，格式为 07:58。</span>
+          <div class="chat-toggle-row" style="margin-top:10px;">
+            <span>显示消息发送精确时间戳</span>
             <input id="chatAvatarTimestampToggle" type="checkbox" />
           </div>
         </div>
 
         <div class="chat-setting-item">
-          <div class="chat-setting-title"><i class="fa-regular fa-face-smile"></i> 角色表情包权限</div>
+          <div class="chat-setting-title"><i class="fa-solid fa-up-right-and-down-left-from-center"></i> 头像尺寸与圆角</div>
+          <div class="chat-slider-block">
+            <div class="chat-slider-head">
+              <span>Avatar Size</span>
+              <span class="chat-slider-value" id="chatAvatarSizeValue">40px</span>
+            </div>
+            <div class="chat-range-row">
+              <input id="chatAvatarSizeRange" type="range" min="22" max="54" step="1" />
+            </div>
+            <div class="chat-slider-scale"><span>小</span><span>大</span></div>
+          </div>
+          <div class="chat-slider-block" style="margin-top:10px;">
+            <div class="chat-slider-head">
+              <span>Corner Radius</span>
+              <span class="chat-slider-value" id="chatAvatarRadiusValue">50%</span>
+            </div>
+            <div class="chat-range-row">
+              <input id="chatAvatarRadiusRange" type="range" min="0" max="50" step="1" />
+            </div>
+            <div class="chat-slider-scale"><span>方</span><span>圆</span></div>
+          </div>
+        </div>
+
+        <div class="chat-setting-item">
+          <div class="chat-setting-title"><i class="fa-solid fa-comment-dots"></i> 气泡内边距与字体</div>
+          <div class="chat-slider-block">
+            <div class="chat-slider-head">
+              <span>Padding Vertical</span>
+              <span class="chat-slider-value" id="chatBubblePadYValue">7px</span>
+            </div>
+            <div class="chat-range-row">
+              <input id="chatBubblePadYRange" type="range" min="2" max="20" step="1" />
+            </div>
+          </div>
+          <div class="chat-slider-block" style="margin-top:10px;">
+            <div class="chat-slider-head">
+              <span>Padding Horizontal</span>
+              <span class="chat-slider-value" id="chatBubblePadXValue">10px</span>
+            </div>
+            <div class="chat-range-row">
+              <input id="chatBubblePadXRange" type="range" min="4" max="26" step="1" />
+            </div>
+          </div>
+          <div class="chat-slider-block" style="margin-top:10px;">
+            <div class="chat-slider-head">
+              <span>Font Size</span>
+              <span class="chat-slider-value" id="chatBubbleFontSizeValue">14px</span>
+            </div>
+            <div class="chat-range-row">
+              <input id="chatBubbleFontSizeRange" type="range" min="10" max="22" step="0.5" />
+            </div>
+          </div>
+        </div>
+
+        <div class="chat-setting-item">
+          <div class="chat-setting-title"><i class="fa-solid fa-font"></i> 对话自定义字体</div>
           <div class="chat-toggle-row">
-            <span>允许角色根据语境主动发送已绑定分组中的表情包</span>
+            <span>为当前会话设置专属字体</span>
+          </div>
+          <button class="liquid-btn chat-favorites-open" id="openFontManager" type="button">管理与选择字体</button>
+          <div class="chat-ai-result" id="chatFontStatus">当前使用系统默认字体。</div>
+        </div>
+
+        <div class="chat-setting-item">
+          <div class="chat-setting-title"><i class="fa-regular fa-images"></i> 会话专属壁纸</div>
+          <div class="upload-item">
+            <strong>上传聊天背景壁纸</strong>
+            <div class="single-action" style="margin-top:8px;">
+              <button class="liquid-btn" id="triggerChatWallpaper" type="button">选择壁纸文件</button>
+              <input id="chatWallpaperUpload" type="file" accept="image/*" style="display:none;" />
+            </div>
+          </div>
+          <div class="chat-wallpaper-actions">
+            <button class="liquid-btn" id="removeChatWallpaper" type="button">移除壁纸</button>
+            <button class="liquid-btn primary" id="previewChatWallpaper" type="button">预览壁纸</button>
+          </div>
+        </div>
+
+        <!-- 分组四：语音与表情互动 -->
+        <div class="chat-setting-section-header">语音与表情互动</div>
+
+        <div class="chat-setting-item">
+          <div class="chat-setting-title"><i class="fa-regular fa-face-smile"></i> 角色主动发表情包</div>
+          <div class="chat-toggle-row">
+            <span>允许角色在聊天中发送已绑定的表情包</span>
             <input id="chatRoleStickerToggle" type="checkbox" />
           </div>
           <select id="chatStickerGroupSelect" class="chat-multi-select" multiple></select>
         </div>
 
         <div class="chat-setting-item">
-          <div class="chat-setting-title"><i class="fa-solid fa-microphone"></i> 角色语音设置</div>
-          <input id="chatVoiceId" type="text" placeholder="MiniMax 专属音色 ID (Voice ID)" style="margin-bottom: 10px;" />
+          <div class="chat-setting-title"><i class="fa-solid fa-microphone"></i> 拟真语音合成参数</div>
+          <input id="chatVoiceId" type="text" placeholder="MiniMax Voice ID (音色编号)" style="margin-bottom: 10px;" />
           <div class="chat-range-row" style="margin-bottom: 8px;">
             <span>语速调节</span>
             <input id="chatVoiceSpeedRange" type="range" min="0.5" max="2.0" step="0.1" value="1.0" />
@@ -18017,174 +18131,39 @@
             <span id="chatVoicePitchValue" style="min-width: 30px; text-align: right;">0</span>
           </div>
           <div class="chat-toggle-row">
-            <span>强制所有回复转为语音条</span>
+            <span>强制将所有回复转为语音条</span>
             <input id="chatForceVoiceToggle" type="checkbox" />
           </div>
         </div>
 
+        <!-- 分组五：数据与管理 -->
+        <div class="chat-setting-section-header">数据与记录管理</div>
+
         <div class="chat-setting-item">
-          <div class="chat-setting-title"><i class="fa-solid fa-book-open"></i> 绑定世界书</div>
-          <div class="chat-toggle-row">
-            <span>角色回复时会读取选中世界书分组中的设定、世界观与注意事项</span>
-          </div>
-          <select id="chatWorldBookGroupSelect" class="chat-multi-select" multiple></select>
+          <div class="chat-setting-title"><i class="fa-solid fa-magnifying-glass"></i> 搜索本地聊天历史</div>
+          <input id="chatHistorySearch" type="search" placeholder="输入关键词匹配本地记录" />
+          <div class="chat-history-results" id="chatHistoryResults">输入关键词后实时检索。</div>
         </div>
 
         <div class="chat-setting-item">
-          <div class="chat-setting-title"><i class="fa-regular fa-images"></i> 设置对话壁纸</div>
-          <div class="upload-item">
-            <strong>上传壁纸</strong>
-            <span>仅作用于当前会话。</span>
-            <div class="single-action" style="margin-top:8px;">
-              <button class="liquid-btn" id="triggerChatWallpaper" type="button">选择壁纸图片</button>
-              <input id="chatWallpaperUpload" type="file" accept="image/*" style="display:none;" />
-            </div>
-          </div>
-          <div class="chat-wallpaper-actions">
-            <button class="liquid-btn" id="removeChatWallpaper" type="button">移除壁纸</button>
-            <button class="liquid-btn primary" id="previewChatWallpaper" type="button">预览当前</button>
+          <div class="chat-setting-title"><i class="fa-solid fa-star"></i> 消息收藏与状态记录</div>
+          <div class="inline-actions" style="margin-top:6px;">
+            <button class="liquid-btn" id="openMessageFavorites" type="button">打开消息收藏夹</button>
+            <button class="liquid-btn" id="openStatusHistory" type="button">查看状态日记记录</button>
           </div>
         </div>
 
         <div class="chat-setting-item">
-          <div class="chat-setting-title"><i class="fa-solid fa-up-right-and-down-left-from-center"></i> 头像大小</div>
-          <div class="chat-slider-block">
-            <div class="chat-slider-head">
-              <span>Avatar Size</span>
-              <span class="chat-slider-value" id="chatAvatarSizeValue">40px</span>
-            </div>
-            <div class="chat-range-row">
-              <input id="chatAvatarSizeRange" type="range" min="22" max="54" step="1" />
-            </div>
-            <div class="chat-slider-scale">
-              <span>22</span>
-              <span>54</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- 已移除：气泡到头像距离、头像位置、气泡位置调节项。 -->
-
-        <div class="chat-setting-item">
-          <div class="chat-setting-title"><i class="fa-solid fa-circle-nodes"></i> 头像圆角</div>
-          <div class="chat-slider-block">
-            <div class="chat-slider-head">
-              <span>Corner Radius</span>
-              <span class="chat-slider-value" id="chatAvatarRadiusValue">50%</span>
-            </div>
-            <div class="chat-range-row">
-              <input id="chatAvatarRadiusRange" type="range" min="0" max="50" step="1" />
-            </div>
-            <div class="chat-slider-scale">
-              <span>方形</span>
-              <span>圆形</span>
-            </div>
-          </div>
+          <div class="chat-setting-title"><i class="fa-solid fa-file-export"></i> 导出角色配置文件</div>
+          <button class="liquid-btn chat-favorites-open" id="exportCurrentRoleBtn" type="button">导出当前角色为独立人设包</button>
         </div>
 
         <div class="chat-setting-item">
-          <div class="chat-setting-title"><i class="fa-solid fa-comment-dots"></i> 气泡内边距</div>
-          <div class="chat-slider-block">
-            <div class="chat-slider-head">
-              <span>Padding Vertical</span>
-              <span class="chat-slider-value" id="chatBubblePadYValue">7px</span>
-            </div>
-            <div class="chat-range-row">
-              <input id="chatBubblePadYRange" type="range" min="2" max="20" step="1" />
-            </div>
-            <div class="chat-slider-scale">
-              <span>紧凑</span>
-              <span>宽松</span>
-            </div>
-          </div>
-          <div class="chat-slider-block" style="margin-top:10px;">
-            <div class="chat-slider-head">
-              <span>Padding Horizontal</span>
-              <span class="chat-slider-value" id="chatBubblePadXValue">10px</span>
-            </div>
-            <div class="chat-range-row">
-              <input id="chatBubblePadXRange" type="range" min="4" max="26" step="1" />
-            </div>
-            <div class="chat-slider-scale">
-              <span>紧凑</span>
-              <span>宽松</span>
-            </div>
-          </div>
+          <div class="chat-setting-title"><i class="fa-solid fa-broom"></i> 清除当前角色记忆</div>
+          <button class="liquid-btn chat-delete-contact" id="clearCurrentContactMemory" type="button">清除聊天记录与动态记忆</button>
         </div>
 
-        <div class="chat-setting-item">
-          <div class="chat-setting-title"><i class="fa-solid fa-text-height"></i> 气泡字体大小</div>
-          <div class="chat-slider-block">
-            <div class="chat-slider-head">
-              <span>Bubble Font Size</span>
-              <span class="chat-slider-value" id="chatBubbleFontSizeValue">14px</span>
-            </div>
-            <div class="chat-range-row">
-              <input id="chatBubbleFontSizeRange" type="range" min="10" max="22" step="0.5" />
-            </div>
-            <div class="chat-slider-scale">
-              <span>10</span>
-              <span>22</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- 移除了会话主题色设置 -->
-
-        <div class="chat-setting-item">
-          <div class="chat-setting-title"><i class="fa-solid fa-font"></i> 对话字体</div>
-          <div class="chat-toggle-row">
-            <span>管理导入字体，并选择当前会话使用的字体。</span>
-          </div>
-          <button class="liquid-btn chat-favorites-open" id="openFontManager" type="button">打开字体管理</button>
-          <div class="chat-ai-result" id="chatFontStatus">当前使用系统默认字体。</div>
-        </div>
-
-        <div class="chat-setting-item">
-          <div class="chat-setting-title"><i class="fa-solid fa-magnifying-glass"></i> 搜索本地会话历史</div>
-          <input id="chatHistorySearch" type="search" placeholder="输入关键词搜索当前会话消息" />
-          <div class="chat-history-results" id="chatHistoryResults">输入关键词后显示本地匹配结果。</div>
-        </div>
-
-        <div class="chat-setting-item">
-          <div class="chat-setting-title"><i class="fa-solid fa-star"></i> 消息收藏夹</div>
-          <div class="chat-toggle-row">
-            <span>查看当前会话中已收藏的消息</span>
-          </div>
-          <button class="liquid-btn chat-favorites-open" id="openMessageFavorites" type="button">打开收藏夹</button>
-        </div>
-
-        <div class="chat-setting-item">
-          <div class="chat-setting-title"><i class="fa-regular fa-heart"></i> 状态查看记录</div>
-          <div class="chat-toggle-row">
-            <span>查看每次点击角色头像生成的动作、服饰、心情与心声日记。</span>
-          </div>
-          <button class="liquid-btn chat-favorites-open" id="openStatusHistory" type="button">打开状态记录</button>
-        </div>
-
-        <div class="chat-setting-item">
-          <div class="chat-setting-title"><i class="fa-solid fa-broom"></i> 清除角色记忆</div>
-          <div class="chat-toggle-row">
-            <span>清除当前角色的全部聊天记录、收藏、状态记录和朋友圈记忆，不删除角色卡与会话外观设置。</span>
-          </div>
-          <button class="liquid-btn chat-delete-contact" id="clearCurrentContactMemory" type="button">清除该角色所有记忆和聊天记录</button>
-        </div>
-
-        <div class="chat-setting-item">
-          <div class="chat-setting-title"><i class="fa-solid fa-brain"></i> 对话记忆设置</div>
-          <input class="chat-memory-input" id="chatMemoryTurnsInput" type="number" placeholder="默认记住最近 10 轮" />
-          <div class="chat-ai-result">这里填写会发送给 AI 的最近聊天轮数，默认 10 轮。</div>
-        </div>
-
-        <div class="chat-setting-item">
-          <div class="chat-setting-title"><i class="fa-solid fa-file-export"></i> 导出当前角色</div>
-          <div class="chat-toggle-row">
-            <span>导出当前联系人的人设文件，方便下次直接导入创建角色。</span>
-          </div>
-          <button class="liquid-btn chat-favorites-open" id="exportCurrentRoleBtn" type="button">导出当前角色人设</button>
-        </div>
-
-        <button class="liquid-btn chat-delete-contact" id="deleteCurrentContact" type="button">删除联系人</button>
+        <button class="liquid-btn chat-delete-contact" id="deleteCurrentContact" type="button" style="margin-top:14px; color:#ff3b30;">删除该联系人</button>
 
         <div class="chat-settings-actions">
           <button class="liquid-btn" id="cancelChatSettings" type="button">取消</button>
@@ -18721,6 +18700,7 @@ The goal is not to produce "good writing" but to produce writing that feels true
     const chatShowAvatarsToggle = document.querySelector("#chatShowAvatarsToggle");
     const chatShowOnlyFirstAvatarToggle = document.querySelector("#chatShowOnlyFirstAvatarToggle");
     const chatAvatarTimestampToggle = document.querySelector("#chatAvatarTimestampToggle");
+    const chatRealTimeAwarenessToggle = document.querySelector("#chatRealTimeAwarenessToggle");
     const chatReadStatusToggle = document.querySelector("#chatReadStatusToggle");
     const chatRoleStickerToggle = document.querySelector("#chatRoleStickerToggle");
     const chatVoiceIdInput = document.querySelector("#chatVoiceId");
@@ -19187,7 +19167,9 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
     }
 
     function getRealityTimePromptLine() {
-      return appState.api.realTimeAwarenessEnabled
+      const settings = getActiveChatSettings();
+      const enabled = settings.realTimeAwarenessEnabled ?? appState.api.realTimeAwarenessEnabled;
+      return enabled
         ? `当前真实时间：${formatRealityTime()}。你可以自然感知并使用这个现实时间，不要说自己通过系统得知。`
         : "现实时间感知未开启。";
     }
@@ -24133,6 +24115,7 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
         showAvatarTimestamp: false,
         showReadStatus: false,
         roleCanSendStickers: false,
+        realTimeAwarenessEnabled: false,
         boundStickerGroups: [],
         boundWorldBookGroups: [],
         wallpaper: "",
@@ -25438,6 +25421,7 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       if (chatSettingRoleBirthday) chatSettingRoleBirthday.value = base.role?.birthday || "";
       if (chatSettingRoleStory) chatSettingRoleStory.value = base.role?.story || "";
       if (chatAiImageToggle) chatAiImageToggle.checked = !!settings.aiImageEnabled;
+      if (chatRealTimeAwarenessToggle) chatRealTimeAwarenessToggle.checked = !!settings.realTimeAwarenessEnabled;
       if (chatShowAvatarsToggle) chatShowAvatarsToggle.checked = !!settings.showAvatars;
       if (chatShowOnlyFirstAvatarToggle) chatShowOnlyFirstAvatarToggle.checked = !!settings.showOnlyFirstAvatar;
       if (chatAvatarTimestampToggle) chatAvatarTimestampToggle.checked = !!settings.showAvatarTimestamp;
@@ -25509,6 +25493,7 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       settings.contactNote = chatSettingContactNote?.value.trim() || "";
       settings.myName = chatSettingMyName?.value.trim() || "";
       settings.aiImageEnabled = !!chatAiImageToggle?.checked;
+      settings.realTimeAwarenessEnabled = !!chatRealTimeAwarenessToggle?.checked;
       settings.showAvatars = !!chatShowAvatarsToggle?.checked;
       settings.showOnlyFirstAvatar = !!chatShowOnlyFirstAvatarToggle?.checked;
       settings.showAvatarTimestamp = !!chatAvatarTimestampToggle?.checked;
