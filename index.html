@@ -39,38 +39,45 @@
     body, html {
       width: 100%;
       height: 100%;
-      background: #000000;
+      height: 100dvh;
+      background: #ffffff;
       overflow: hidden;
       display: flex;
       justify-content: center;
       align-items: center;
     }
 
-    /* 手机主容器：无多余边框，直通屏幕边缘 */
+    /* 手机主容器：在手机端 100% 满屏无黑边，支持 Safari PWA 全屏安全区 */
     #phone-container {
       position: relative;
-      width: 100%;
+      width: 100vw;
       height: 100%;
-      max-width: 440px;
-      max-height: 940px;
+      height: 100dvh;
       background: var(--bg-primary);
       display: flex;
       flex-direction: column;
       overflow: hidden;
     }
 
-    /* 浏览器全屏或真机时自动完全铺满 */
-    @media (max-width: 600px), (max-height: 900px) {
+    /* 仅在电脑宽屏桌面端才限制宽度居中，移动端必须 100% 铺满 */
+    @media (min-width: 768px) {
+      body, html {
+        background: #111111;
+      }
       #phone-container {
-        max-width: 100%;
-        max-height: 100%;
+        max-width: 430px;
+        max-height: 920px;
+        border-radius: 36px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
       }
     }
 
-    /* 顶部状态栏 */
+    /* 顶部独立常驻状态栏：带 safe-area 适配，绝对不会与下方标题重叠 */
     .status-bar {
-      height: 44px;
-      padding: 0 20px;
+      height: calc(44px + env(safe-area-inset-top, 0px));
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-left: 20px;
+      padding-right: 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -78,8 +85,9 @@
       font-weight: 600;
       letter-spacing: -0.2px;
       color: var(--text-primary);
+      flex-shrink: 0;
+      background: var(--bg-primary);
       z-index: 100;
-      background: transparent;
     }
 
     .status-actions {
@@ -544,10 +552,10 @@
       transform: scale(0.92);
     }
 
-    /* 导航顶栏（应用内通用） */
+    /* 导航顶栏（应用内通用）：左上角标准统一返回键 */
     .app-nav-bar {
-      height: 52px;
-      padding: 0 16px;
+      height: 48px;
+      padding: 0 12px;
       border-bottom: 1px solid var(--border-color);
       display: flex;
       align-items: center;
@@ -556,11 +564,34 @@
       background: var(--bg-primary);
     }
 
+    .nav-back-btn {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: none;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-primary);
+      padding: 6px 8px;
+      border-radius: var(--radius-sm);
+    }
+
+    .nav-back-btn:active {
+      background: var(--bg-secondary);
+    }
+
     .app-nav-title {
       font-size: 15px;
       font-weight: 600;
       color: var(--text-primary);
       letter-spacing: -0.3px;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      pointer-events: none;
     }
 
     .nav-action-btn {
@@ -1349,11 +1380,12 @@
         </div>
       </section>
 
-      <!-- 聊天 App 页面 -->
+      <!-- 聊天 App 页面 (第1个) -->
       <section id="view-chat" class="view">
         <div class="app-nav-bar">
-          <button class="nav-action-btn" onclick="openView('home')">
-            <svg class="icon-svg" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"></path></svg>
+          <button class="nav-back-btn" onclick="openView('home')">
+            <svg class="icon-svg" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            <span>返回</span>
           </button>
           <div class="app-nav-title" id="chat-header-title">对话</div>
           <button class="nav-action-btn" onclick="clearCurrentChat()">清空</button>
@@ -1369,11 +1401,12 @@
         </div>
       </section>
 
-      <!-- 世界书 App 页面 -->
+      <!-- 世界书 App 页面 (第3个) -->
       <section id="view-lorebook" class="view">
         <div class="app-nav-bar">
-          <button class="nav-action-btn" onclick="openView('home')">
-            <svg class="icon-svg" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"></path></svg>
+          <button class="nav-back-btn" onclick="openView('home')">
+            <svg class="icon-svg" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            <span>返回</span>
           </button>
           <div class="app-nav-title">世界书设定</div>
           <button class="nav-action-btn" onclick="openLoreModal()">新建</button>
@@ -1383,11 +1416,12 @@
         </div>
       </section>
 
-      <!-- 设置 App 页面 -->
+      <!-- 设置 App 页面 (第2个) -->
       <section id="view-settings" class="view">
         <div class="app-nav-bar">
-          <button class="nav-action-btn" onclick="openView('home')">
-            <svg class="icon-svg" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"></path></svg>
+          <button class="nav-back-btn" onclick="openView('home')">
+            <svg class="icon-svg" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            <span>返回</span>
           </button>
           <div class="app-nav-title">系统与接口设置</div>
           <div style="width: 32px;"></div>
@@ -1432,8 +1466,9 @@
       <!-- 论坛 App 页面 (第4个) -->
       <section id="view-forum" class="view">
         <div class="app-nav-bar">
-          <button class="nav-action-btn" onclick="openView('home')">
-            <svg class="icon-svg" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"></path></svg>
+          <button class="nav-back-btn" onclick="openView('home')">
+            <svg class="icon-svg" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            <span>返回</span>
           </button>
           <div class="app-nav-title">极简论坛</div>
           <button class="nav-action-btn" onclick="alert('论坛广场已保持最新')">刷新</button>
@@ -1456,8 +1491,9 @@
       <!-- 美化 App 页面 (第5个) -->
       <section id="view-beautify" class="view">
         <div class="app-nav-bar">
-          <button class="nav-action-btn" onclick="openView('home')">
-            <svg class="icon-svg" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"></path></svg>
+          <button class="nav-back-btn" onclick="openView('home')">
+            <svg class="icon-svg" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            <span>返回</span>
           </button>
           <div class="app-nav-title">美化中心</div>
           <div style="width:32px;"></div>
@@ -1482,8 +1518,9 @@
       <!-- 音乐 App 页面 (第6个) -->
       <section id="view-music" class="view">
         <div class="app-nav-bar">
-          <button class="nav-action-btn" onclick="openView('home')">
-            <svg class="icon-svg" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"></path></svg>
+          <button class="nav-back-btn" onclick="openView('home')">
+            <svg class="icon-svg" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            <span>返回</span>
           </button>
           <div class="app-nav-title">极简白噪音·音乐</div>
           <div style="width:32px;"></div>
@@ -1500,8 +1537,9 @@
       <!-- 情侣空间 App 页面 (第7个) -->
       <section id="view-loverspace" class="view">
         <div class="app-nav-bar">
-          <button class="nav-action-btn" onclick="openView('home')">
-            <svg class="icon-svg" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"></path></svg>
+          <button class="nav-back-btn" onclick="openView('home')">
+            <svg class="icon-svg" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            <span>返回</span>
           </button>
           <div class="app-nav-title">情侣空间</div>
           <div style="width:32px;"></div>
