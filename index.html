@@ -16080,70 +16080,7 @@
           </a>
         </div>
 
-        <div style="font-size: 11px; font-weight: 700; color: #8e8e93; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px;">拓展小组件</div>
-        <div class="desktop-widgets-section" id="pageTwoWidgets" style="padding-top: 2px;">
-          <!-- 极简白色音乐小组件 -->
-          <div class="draggable-card desktop-music-widget" draggable="true" data-widget-id="musicWidget" id="desktopMusicWidget" title="点击前往云音乐">
-            <div class="dmw-left">
-              <div class="dmw-cover" id="albumCard">
-                <i class="fa-solid fa-music" id="albumFallback"></i>
-              </div>
-              <div class="dmw-info">
-                <strong id="listenText">正在听 WILDFLOWER-BillieEilish</strong>
-                <span id="dmwArtist">Billie Eilish · Happier Than Ever</span>
-              </div>
-            </div>
-            <div class="dmw-ctrls">
-              <button class="dmw-btn" type="button" id="dmwPrevBtn" aria-label="上一首"><i class="fa-solid fa-backward-step"></i></button>
-              <button class="dmw-btn play" type="button" id="dmwPlayBtn" aria-label="播放"><i class="fa-solid fa-play"></i></button>
-              <button class="dmw-btn" type="button" id="dmwNextBtn" aria-label="下一首"><i class="fa-solid fa-forward-step"></i></button>
-            </div>
-          </div>
-
-          <!-- 极简日历/日期小组件 -->
-          <div class="draggable-card desktop-calendar-widget" draggable="true" data-widget-id="calendarWidget" id="dateText" title="点击编辑日历备忘">
-            <div class="dcw-header">
-              <span class="dcw-tag">SCHEDULE</span>
-              <span class="dcw-month" id="dcwMonthText">TODAY</span>
-            </div>
-            <div class="dcw-content">
-              <strong id="dcwDayLarge">24</strong>
-              <div class="dcw-memo">
-                <span class="dcw-memo-title">备忘录事项</span>
-                <p class="dcw-memo-sub" id="speechText">お湯をたくさん飲んでください······</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- 极简天气挂件小组件 -->
-          <div class="draggable-card weather-glass" draggable="true" data-widget-id="weatherWidget" id="desktopWeatherWidget" style="margin-bottom:0;">
-            <div class="weather-main">
-              <div class="weather-copy">
-                <small>☁︎ 24°C 多云</small>
-                <strong id="notePillWeather">things^in*myphone</strong>
-              </div>
-              <div class="weather-icons">
-                <div class="weather-icon-card" id="memoryMainCard"><i class="fa-solid fa-cloud-rain" id="memoryMainFallback"></i></div>
-                <div class="weather-icon-card" id="memoryRightCard"><i class="fa-solid fa-house" id="memoryRightFallback"></i></div>
-              </div>
-            </div>
-          </div>
-
-          <!-- 极简大时钟组件 -->
-          <div class="draggable-card desktop-clock-widget" draggable="true" data-widget-id="clockWidget" id="desktopClockWidget">
-            <div class="dcw-time-huge" id="widgetClockBig">17:27</div>
-            <div class="dcw-time-sub">
-              <strong id="widgetClockDate">FRI 24 FEB</strong>
-              <span>TIME IN SHANGHAI</span>
-            </div>
-          </div>
-
-          <!-- 极简每日灵感语录小组件 -->
-          <div class="draggable-card desktop-quote-widget" draggable="true" data-widget-id="quoteWidget" id="desktopQuoteWidget">
-            <div class="dqw-text" id="widgetQuoteText">“Less is more, simplicity is the ultimate sophistication.”</div>
-            <div class="dqw-author">— YUAN PHONE</div>
-          </div>
-        </div>
+        <div id="pageTwoWidgets" style="display:none;"></div>
       </section>
     </div>
 
@@ -16164,6 +16101,19 @@
       <div id="pageOneWidgets"></div>
       <div id="dockSettingsApp"></div>
       <div id="sharedText"></div>
+      <div id="dateText"></div>
+      <div id="speechText"></div>
+      <div id="listenText"></div>
+      <div id="albumCard"><i id="albumFallback"></i></div>
+      <div id="memoryMainCard"><i id="memoryMainFallback"></i></div>
+      <div id="memoryRightCard"><i id="memoryRightFallback"></i></div>
+      <div id="desktopMusicWidget"></div>
+      <div id="dmwPlayBtn"></div>
+      <div id="dmwPrevBtn"></div>
+      <div id="dmwNextBtn"></div>
+      <div id="desktopWeatherWidget"></div>
+      <div id="desktopClockWidget"></div>
+      <div id="desktopQuoteWidget"></div>
       <a id="cardApp" href="javascript:void(0)"></a>
     </div>
   </main>
@@ -16213,76 +16163,6 @@
           </div>
         </div>
         <button class="bmp-toggle-btn active" type="button" data-widget-key="midSectionWidget">
-          <i class="fa-solid fa-check"></i><span>已添加</span>
-        </button>
-      </div>
-
-      <!-- 3. 云音乐播放小组件 -->
-      <div class="bmp-item">
-        <div class="bmp-item-info">
-          <div class="bmp-item-icon"><i class="fa-solid fa-music"></i></div>
-          <div class="bmp-item-copy">
-            <strong>云音乐播放组件</strong>
-            <span>桌面迷你听歌条，支持切歌、播放与封面展示</span>
-          </div>
-        </div>
-        <button class="bmp-toggle-btn active" type="button" data-widget-key="musicWidget">
-          <i class="fa-solid fa-check"></i><span>已添加</span>
-        </button>
-      </div>
-
-      <!-- 4. 日历日程小组件 -->
-      <div class="bmp-item">
-        <div class="bmp-item-info">
-          <div class="bmp-item-icon"><i class="fa-regular fa-calendar-check"></i></div>
-          <div class="bmp-item-copy">
-            <strong>日历备忘小组件</strong>
-            <span>展示当天日期与备忘录，轻点自主编辑备忘</span>
-          </div>
-        </div>
-        <button class="bmp-toggle-btn active" type="button" data-widget-key="calendarWidget">
-          <i class="fa-solid fa-check"></i><span>已添加</span>
-        </button>
-      </div>
-
-      <!-- 5. 极简天气挂件 -->
-      <div class="bmp-item">
-        <div class="bmp-item-info">
-          <div class="bmp-item-icon"><i class="fa-solid fa-cloud-sun"></i></div>
-          <div class="bmp-item-copy">
-            <strong>天气状态小组件</strong>
-            <span>极简多云与气温状态小挂件，随时直观查看</span>
-          </div>
-        </div>
-        <button class="bmp-toggle-btn active" type="button" data-widget-key="weatherWidget">
-          <i class="fa-solid fa-check"></i><span>已添加</span>
-        </button>
-      </div>
-
-      <!-- 6. 极简时钟翻牌小组件 -->
-      <div class="bmp-item">
-        <div class="bmp-item-info">
-          <div class="bmp-item-icon"><i class="fa-regular fa-clock"></i></div>
-          <div class="bmp-item-copy">
-            <strong>极简大时钟小组件</strong>
-            <span>超大时间排版与所在城市时区显示，极简黑白</span>
-          </div>
-        </div>
-        <button class="bmp-toggle-btn active" type="button" data-widget-key="clockWidget">
-          <i class="fa-solid fa-check"></i><span>已添加</span>
-        </button>
-      </div>
-
-      <!-- 7. 每日灵感语录小组件 -->
-      <div class="bmp-item">
-        <div class="bmp-item-info">
-          <div class="bmp-item-icon"><i class="fa-solid fa-quote-left"></i></div>
-          <div class="bmp-item-copy">
-            <strong>每日灵感语录组件</strong>
-            <span>极简斜体语录便签，轻点可自主编辑格言</span>
-          </div>
-        </div>
-        <button class="bmp-toggle-btn active" type="button" data-widget-key="quoteWidget">
           <i class="fa-solid fa-check"></i><span>已添加</span>
         </button>
       </div>
@@ -17778,12 +17658,12 @@
         <!-- 第 1 页 -->
         <div class="announcement-slide">
           <div class="announcement-item">
-            <strong>1. 顶部状态栏极致精简</strong>
-            <p>已彻底移除顶部两侧的城市、日期、信号、WiFi、电量与气温等杂乱内容，仅保留居中极简个性符号，视觉更干净纯粹。</p>
+            <strong>1. 主屏视觉与日期精修</strong>
+            <p>居中超大时间下方已添加星期与日期显示，顶部个性符号更新为 Angel user，整体上移并优化间距，不再过于疏离。</p>
           </div>
           <div class="announcement-item">
-            <strong>2. 截图同款拍立得与别针小组件</strong>
-            <p>第一页精准复刻拍立得三联卡片、别针照片卡片与居中超大时钟，仅展示 4 个核心软件，轻点即可随时更换专属照片。</p>
+            <strong>2. 冗余小组件全面删减精简</strong>
+            <p>已彻底移除云音乐、日历备忘录、天气状态、极简大时钟和每日灵感组件，只保留核心拍立得与别针卡片，桌面更纯净。</p>
           </div>
           <div class="announcement-free-tag">
             沅子机是免费小手机 禁止二传二贩
@@ -17793,12 +17673,12 @@
         <!-- 第 2 页 -->
         <div class="announcement-slide">
           <div class="announcement-item">
-            <strong>3. 药丸 Dock 栏沉底与黑线去除</strong>
-            <p>Dock 栏已吸附固定至屏幕最底部，并去除底部黑条与边框；其余全部软件已规整收纳至第二页。</p>
+            <strong>3. 截图同款拍立得与别针照片</strong>
+            <p>第一页仅保留拍立得三联卡片、别针照片与 4 个核心应用，轻点即可自主更换专属高清美照。</p>
           </div>
           <div class="announcement-item">
-            <strong>4. 全组件长按自由位移排版</strong>
-            <p>支持长按图标或小组件随心拖拽调换摆放顺序，系统自动持久化记忆你的个性化主屏排版。</p>
+            <strong>4. 沉底极简 Dock 栏与自由拖拽</strong>
+            <p>药丸 Dock 栏沉底固定无边框，其余全部应用归整至第二页应用库，支持长按随心拖拽排版并持久保存。</p>
           </div>
           <div class="announcement-free-tag">
             沅子机是免费小手机 禁止二传二贩
@@ -22890,31 +22770,16 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       if (!appState.theme.enabledWidgets) {
         appState.theme.enabledWidgets = {
           triplePolaroidWidget: true,
-          midSectionWidget: true,
-          musicWidget: true,
-          calendarWidget: true,
-          weatherWidget: true,
-          clockWidget: true,
-          quoteWidget: true
+          midSectionWidget: true
         };
       }
 
       const w = appState.theme.enabledWidgets;
       const triplePolaroid = document.querySelector('[data-widget-id="triplePolaroidWidget"]');
       const midSection = document.querySelector('[data-widget-id="midSectionWidget"]');
-      const musicWidgetNode = document.querySelector("#desktopMusicWidget");
-      const calendarWidgetNode = document.querySelector("#dateText");
-      const weatherWidgetNode = document.querySelector("#desktopWeatherWidget");
-      const clockWidgetNode = document.querySelector("#desktopClockWidget");
-      const quoteWidgetNode = document.querySelector("#desktopQuoteWidget");
 
       if (triplePolaroid) triplePolaroid.style.display = w.triplePolaroidWidget !== false ? "" : "none";
       if (midSection) midSection.style.display = w.midSectionWidget !== false ? "" : "none";
-      if (musicWidgetNode) musicWidgetNode.style.display = w.musicWidget !== false ? "" : "none";
-      if (calendarWidgetNode) calendarWidgetNode.style.display = w.calendarWidget !== false ? "" : "none";
-      if (weatherWidgetNode) weatherWidgetNode.style.display = w.weatherWidget !== false ? "" : "none";
-      if (clockWidgetNode) clockWidgetNode.style.display = w.clockWidget !== false ? "" : "none";
-      if (quoteWidgetNode) quoteWidgetNode.style.display = w.quoteWidget !== false ? "" : "none";
 
       document.querySelectorAll("[data-widget-key]").forEach((btn) => {
         const key = btn.dataset.widgetKey;
