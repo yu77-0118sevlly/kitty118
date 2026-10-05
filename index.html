@@ -738,13 +738,348 @@
       background: rgba(255, 255, 255, 0.88);
     }
 
-    /* 第二页全部小组件与全部软件网格样式 */
-    .page-two-all-apps {
+    /* 第二页专属：粉萌二次元截图同款布局与小组件样式 */
+    .p2-page-wrap {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 12px;
+      padding-top: 2px;
+    }
+
+    /* 1. 顶部音乐小组件 */
+    .p2-music-card {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-radius: 20px;
+      padding: 12px 14px 8px;
+      box-shadow: 0 4px 18px rgba(255, 182, 193, 0.08), 0 2px 8px rgba(0, 0, 0, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.85);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .p2-music-top {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px 10px;
+      grid-template-columns: 50px 1fr auto;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .p2-music-cover {
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+      background-color: #ffe4eb;
+      background-size: cover;
+      background-position: center;
+      box-shadow: 0 3px 10px rgba(255, 140, 170, 0.2);
+      flex-shrink: 0;
+    }
+
+    .p2-music-meta {
+      min-width: 0;
+    }
+
+    .p2-music-title {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #2e3035;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      line-height: 1.25;
+    }
+
+    .p2-music-sub {
+      font-size: 11px;
+      color: #8c9098;
+      margin-top: 3px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .p2-music-wave-note {
+      font-size: 11px;
+      color: #7b8089;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* 播放进度条 */
+    .p2-music-progress-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 10px;
+      color: #8c9098;
+      font-variant-numeric: tabular-nums;
+      padding: 0 2px;
+    }
+
+    .p2-progress-track {
+      flex: 1;
+      height: 3px;
+      background: #e2e4e8;
+      border-radius: 999px;
+      position: relative;
+    }
+
+    .p2-progress-fill {
+      width: 48%;
+      height: 100%;
+      background: #4a4f57;
+      border-radius: 999px;
+      position: relative;
+    }
+
+    .p2-progress-fill::after {
+      content: "";
+      position: absolute;
+      right: -3px;
+      top: -2.5px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #4a4f57;
+    }
+
+    /* 控制按键 */
+    .p2-music-ctrls {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 28px;
+      font-size: 16px;
+      color: #2b2e34;
+      padding: 2px 0 0;
+    }
+
+    .p2-music-ctrl-btn {
+      background: transparent;
+      border: none;
+      color: #2b2e34;
+      font-size: 15px;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      transition: transform 0.12s ease;
+    }
+
+    .p2-music-ctrl-btn:active {
+      transform: scale(0.88);
+    }
+
+    .p2-widget-sublabel {
+      text-align: center;
+      font-size: 10.5px;
+      font-weight: 500;
+      color: #444952;
+      letter-spacing: 0.02em;
+      margin-top: 2px;
+    }
+
+    /* 2. 中段：左侧大头贴组件 + 右侧 4 个软件 */
+    .p2-mid-section {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .p2-avatar-widget-box {
+      position: relative;
+      width: 136px;
+      height: 152px;
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-radius: 18px;
+      padding: 12px 8px 6px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.025);
+      border: 1px solid rgba(255, 255, 255, 0.85);
+      cursor: pointer;
+    }
+
+    /* 截图同款白色四角微边饰 */
+    .p2-avatar-widget-box::before,
+    .p2-avatar-widget-box::after {
+      content: "";
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-color: rgba(255, 255, 255, 0.95);
+      border-style: solid;
+      pointer-events: none;
+    }
+
+    .p2-avatar-widget-box::before {
+      left: -2px;
+      top: -2px;
+      border-width: 2px 0 0 2px;
+      border-top-left-radius: 6px;
+    }
+
+    .p2-avatar-widget-box::after {
+      right: -2px;
+      bottom: -2px;
+      border-width: 0 2px 2px 0;
+      border-bottom-right-radius: 6px;
+    }
+
+    .p2-avatar-circle {
+      width: 66px;
+      height: 66px;
+      border-radius: 50%;
+      background-color: #ffe6ee;
+      background-size: cover;
+      background-position: center;
+      box-shadow: 0 3px 12px rgba(255, 140, 170, 0.25);
+    }
+
+    .p2-avatar-kaomoji {
+      font-size: 11px;
+      font-weight: 700;
+      color: #3b4047;
+      letter-spacing: 0.02em;
+    }
+
+    .p2-avatar-pill {
+      font-size: 9.5px;
+      color: #3b4047;
+      background: rgba(226, 230, 235, 0.65);
+      border-radius: 999px;
+      padding: 3px 8px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 120px;
+      text-align: center;
+    }
+
+    /* 2x2 应用网格 */
+    .p2-apps-2x2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px 10px;
       justify-items: center;
-      margin-bottom: 18px;
+    }
+
+    /* 3. 下段：左侧 4 个软件 + 右侧天气电量萌系组件 */
+    .p2-bot-section {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 140px;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .p2-weather-widget-box {
+      width: 136px;
+      height: 152px;
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-radius: 18px;
+      padding: 12px 8px 6px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.025);
+      border: 1px solid rgba(255, 255, 255, 0.85);
+      cursor: pointer;
+      position: relative;
+    }
+
+    .p2-weather-wing-avatar {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 2px;
+    }
+
+    .p2-weather-avatar-circle {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background-color: #ffe6ee;
+      background-size: cover;
+      background-position: center;
+      box-shadow: 0 3px 12px rgba(255, 140, 170, 0.25);
+    }
+
+    .p2-battery-tag {
+      position: absolute;
+      right: -8px;
+      top: -4px;
+      font-size: 8.5px;
+      color: #7b8089;
+      font-weight: 700;
+      background: rgba(240, 242, 245, 0.88);
+      padding: 1px 4px;
+      border-radius: 4px;
+    }
+
+    .p2-wing-left,
+    .p2-wing-right {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 13px;
+      color: #cbd1d9;
+    }
+
+    .p2-wing-left { left: -14px; }
+    .p2-wing-right { right: -14px; }
+
+    .p2-weather-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 10px;
+      font-weight: 600;
+      color: #6a707a;
+      background: rgba(226, 230, 235, 0.65);
+      padding: 4px 10px;
+      border-radius: 999px;
+    }
+
+    .p2-weather-pill i.fa-sun {
+      color: #ffb834;
+      font-size: 11px;
+    }
+
+    .p2-search-bubble {
+      margin: 4px auto 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 18px;
+      border-radius: 999px;
+      background: rgba(215, 220, 226, 0.52);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      color: #333840;
+      font-size: 12px;
+      font-weight: 600;
+      border: 1px solid rgba(255, 255, 255, 0.45);
+      cursor: pointer;
     }
 
     .bubble-zone {
@@ -16055,29 +16390,128 @@
         </div>
       </section>
 
-      <!-- 第二页：其他软件（论坛、商店、外卖、档案、名片）与丰富的备选小组件 -->
+      <!-- 第二页：完整复刻截图同款粉萌美学布局（顶部音乐挂件、大头贴卡、反向天气卡、原有软件占位与重排） -->
       <section class="desktop-page" data-page-index="1" id="desktopPage2">
-        <div style="font-size: 11px; font-weight: 700; color: #8e8e93; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 12px;">全部应用库</div>
-        <div class="page-two-all-apps">
-          <a class="snap-app-item draggable-app" draggable="true" data-app-id="forum" href="javascript:void(0)" id="forumApp">
-            <span class="snap-app-icon-squircle" id="iconForum"><i class="fa-solid fa-comments"></i></span>
-            <span class="snap-app-title">论坛</span>
-          </a>
+        <div class="p2-page-wrap">
+          <!-- 1. 顶部音乐小组件挂件 -->
+          <div class="p2-music-card draggable-card" draggable="true" data-widget-id="p2MusicWidget" id="p2MusicWidget">
+            <div class="p2-music-top">
+              <div class="p2-music-cover" id="p2MusicCover" style="background-image:url('https://771553.xyz/file/studio/5FDVc1VrKzVdH5mO.jpg');"></div>
+              <div class="p2-music-meta">
+                <div class="p2-music-title" id="p2MusicTitle">SAKURA(English Ver.)</div>
+                <div class="p2-music-sub" id="p2MusicSub">Sakura when I see it all hit the g</div>
+              </div>
+              <div class="p2-music-wave-note">
+                <i class="fa-solid fa-play" style="font-size:9px;"></i>
+                <span>|||||||♪</span>
+              </div>
+            </div>
 
-          <a class="snap-app-item draggable-app" draggable="true" data-app-id="store" href="javascript:void(0)" id="storeApp">
-            <span class="snap-app-icon-squircle" id="iconStore"><i class="fa-solid fa-bag-shopping"></i></span>
-            <span class="snap-app-title">商店</span>
-          </a>
+            <!-- 进度条 -->
+            <div class="p2-music-progress-bar">
+              <span id="p2ProgressCurrent">1: 30</span>
+              <div class="p2-progress-track">
+                <div class="p2-progress-fill"></div>
+              </div>
+              <span id="p2ProgressDuration">-1: 39</span>
+            </div>
 
-          <a class="snap-app-item draggable-app" draggable="true" data-app-id="takeout" href="javascript:void(0)" id="takeoutApp">
-            <span class="snap-app-icon-squircle" id="iconTakeout"><i class="fa-solid fa-utensils"></i></span>
-            <span class="snap-app-title">外卖</span>
-          </a>
+            <!-- 控制键 -->
+            <div class="p2-music-ctrls">
+              <button class="p2-music-ctrl-btn" type="button" id="p2PrevBtn" aria-label="上一首"><i class="fa-solid fa-backward-step"></i></button>
+              <button class="p2-music-ctrl-btn" type="button" id="p2PlayBtn" aria-label="播放"><i class="fa-solid fa-pause"></i></button>
+              <button class="p2-music-ctrl-btn" type="button" id="p2NextBtn" aria-label="下一首"><i class="fa-solid fa-forward-step"></i></button>
+            </div>
+            <div class="p2-widget-sublabel">Top Widgets*</div>
+          </div>
 
-          <a class="snap-app-item draggable-app" draggable="true" data-app-id="archive" href="javascript:void(0)" id="dockArchiveApp">
-            <span class="snap-app-icon-squircle" id="iconArchive"><i class="fa-solid fa-box-archive"></i></span>
-            <span class="snap-app-title">档案</span>
-          </a>
+          <!-- 2. 中段：左侧大头贴挂件 + 右侧 4 个软件（保留论坛、商店并补充抖音、快手） -->
+          <div class="p2-mid-section">
+            <div class="p2-avatar-widget-box draggable-card" draggable="true" data-widget-id="p2AvatarWidget" id="p2AvatarCard" title="点击更换大头贴照片与文案">
+              <div class="p2-avatar-circle" id="p2AvatarCircle" style="background-image:url('https://771553.xyz/file/studio/5FDVc1VrKzVdH5mO.jpg');"></div>
+              <div class="p2-avatar-kaomoji" id="p2AvatarKaomoji">(=^ω^=)</div>
+              <div class="p2-avatar-pill" id="p2AvatarPill">懂我可爱的人 有福啦</div>
+              <div class="p2-widget-sublabel">Top Widgets*</div>
+            </div>
+
+            <div class="p2-apps-2x2">
+              <!-- 抖音 (新占位) -->
+              <a class="snap-app-item draggable-app" draggable="true" data-app-id="douyin" href="javascript:void(0)" id="appDouyin">
+                <span class="snap-app-icon-squircle"><i class="fa-brands fa-tiktok"></i></span>
+                <span class="snap-app-title">抖音</span>
+              </a>
+
+              <!-- 快手 (新占位) -->
+              <a class="snap-app-item draggable-app" draggable="true" data-app-id="kuaishou" href="javascript:void(0)" id="appKuaishou">
+                <span class="snap-app-icon-squircle"><i class="fa-solid fa-video"></i></span>
+                <span class="snap-app-title">快手</span>
+              </a>
+
+              <!-- 论坛 (保留原软件) -->
+              <a class="snap-app-item draggable-app" draggable="true" data-app-id="forum" href="javascript:void(0)" id="forumApp">
+                <span class="snap-app-icon-squircle" id="iconForum"><i class="fa-solid fa-comments"></i></span>
+                <span class="snap-app-title">论坛</span>
+              </a>
+
+              <!-- 商店 (保留原软件) -->
+              <a class="snap-app-item draggable-app" draggable="true" data-app-id="store" href="javascript:void(0)" id="storeApp">
+                <span class="snap-app-icon-squircle" id="iconStore"><i class="fa-solid fa-bag-shopping"></i></span>
+                <span class="snap-app-title">商店</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- 3. 下段：左侧 4 个软件（保留外卖、档案并补充小红书、备忘录） + 右侧天气电量萌系卡片 -->
+          <div class="p2-bot-section">
+            <div class="p2-apps-2x2">
+              <!-- 小红书 (新占位) -->
+              <a class="snap-app-item draggable-app" draggable="true" data-app-id="xhs" href="javascript:void(0)" id="appXhs">
+                <span class="snap-app-icon-squircle"><i class="fa-solid fa-bookmark" style="color:#ff2442;"></i></span>
+                <span class="snap-app-title">小红书</span>
+              </a>
+
+              <!-- 备忘录 (新占位) -->
+              <a class="snap-app-item draggable-app" draggable="true" data-app-id="memo" href="javascript:void(0)" id="appMemo">
+                <span class="snap-app-icon-squircle"><i class="fa-regular fa-note-sticky"></i></span>
+                <span class="snap-app-title">备忘录</span>
+              </a>
+
+              <!-- 外卖 (保留原软件) -->
+              <a class="snap-app-item draggable-app" draggable="true" data-app-id="takeout" href="javascript:void(0)" id="takeoutApp">
+                <span class="snap-app-icon-squircle" id="iconTakeout"><i class="fa-solid fa-utensils"></i></span>
+                <span class="snap-app-title">外卖</span>
+              </a>
+
+              <!-- 档案 (保留原软件) -->
+              <a class="snap-app-item draggable-app" draggable="true" data-app-id="archive" href="javascript:void(0)" id="dockArchiveApp">
+                <span class="snap-app-icon-squircle" id="iconArchive"><i class="fa-solid fa-box-archive"></i></span>
+                <span class="snap-app-title">档案</span>
+              </a>
+            </div>
+
+            <!-- 右侧天气与翅膀电量萌卡 -->
+            <div class="p2-weather-widget-box draggable-card" draggable="true" data-widget-id="p2WeatherWidget" id="p2WeatherCard" title="点击更换天气卡照片与文案">
+              <div class="p2-weather-wing-avatar">
+                <span class="p2-wing-left"><i class="fa-solid fa-feather-pointed"></i></span>
+                <div class="p2-weather-avatar-circle" id="p2WeatherAvatar" style="background-image:url('https://771553.xyz/file/studio/5FDVc1VrKzVdH5mO.jpg');"></div>
+                <span class="p2-wing-right"><i class="fa-solid fa-feather-pointed"></i></span>
+                <span class="p2-battery-tag" id="p2BatteryTag">65%</span>
+              </div>
+              <div class="p2-weather-pill" id="p2WeatherPill">
+                <i class="fa-regular fa-calendar"></i>
+                <span id="p2WeatherDateText">05日</span>
+                <i class="fa-solid fa-sun"></i>
+                <span id="p2WeatherTempText">7℃</span>
+              </div>
+              <div class="p2-widget-sublabel">Top Widgets*</div>
+            </div>
+          </div>
+
+          <!-- 底部搜索胶囊 -->
+          <div class="p2-search-bubble" id="p2SearchPill">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <span>搜索</span>
+          </div>
         </div>
 
         <div id="pageTwoWidgets" style="display:none;"></div>
@@ -17692,12 +18126,12 @@
         <!-- 第 3 页：往期交互与架构专项 -->
         <div class="announcement-slide">
           <div class="announcement-item">
-            <strong>6. 药丸 Dock 栏沉底与黑线去除</strong>
-            <p>Dock 栏吸附固定于屏幕最底端，去除了底部黑线与生硬边框，其余全部软件归整至第二页应用库。</p>
+            <strong>6. 第二页截图同款非对称美学布局</strong>
+            <p>第二页现已完整升级：顶部音乐播放挂件、中段大头贴组件与下段翅膀天气电量卡，原有软件（论坛、商店、外卖、档案）均完好保留并排布，补充抖音、快手等占位应用。</p>
           </div>
           <div class="announcement-item">
-            <strong>7. 全桌面组件自由拖拽位移</strong>
-            <p>支持长按图标或小组件随心拖拽调换摆放顺序，系统自动持久化记忆并保存你的个性化排版。</p>
+            <strong>7. 药丸 Dock 栏沉底与黑线去除</strong>
+            <p>Dock 栏吸附固定于屏幕最底端，去除了底部黑线与生硬边框，其余全部软件归整至第二页应用库。</p>
           </div>
           <div class="announcement-free-tag">
             沅子机是免费小手机 禁止二传二贩
@@ -19538,6 +19972,20 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       }
       const snapSymbolQuote = document.querySelector("#snapSymbolQuote");
       if (snapSymbolQuote) snapSymbolQuote.textContent = appState.theme.snapQuote || "Angel user";
+
+      // 第二页小组件图片与文本渲染
+      const p2AvatarCircle = document.querySelector("#p2AvatarCircle");
+      if (p2AvatarCircle) {
+        p2AvatarCircle.style.backgroundImage = appState.theme.p2AvatarImg ? `url(${appState.theme.p2AvatarImg})` : "url('https://771553.xyz/file/studio/5FDVc1VrKzVdH5mO.jpg')";
+      }
+      const p2WeatherAvatar = document.querySelector("#p2WeatherAvatar");
+      if (p2WeatherAvatar) {
+        p2WeatherAvatar.style.backgroundImage = appState.theme.p2WeatherImg ? `url(${appState.theme.p2WeatherImg})` : "url('https://771553.xyz/file/studio/5FDVc1VrKzVdH5mO.jpg')";
+      }
+      const p2AvatarPill = document.querySelector("#p2AvatarPill");
+      if (p2AvatarPill) {
+        p2AvatarPill.textContent = appState.theme.p2AvatarPillText || "懂我可爱的人 有福啦";
+      }
 
       const clipCardCaption = document.querySelector("#clipCardCaption");
       if (clipCardCaption) clipCardCaption.textContent = appState.theme.clipCaption || "ʚ (• . •) ɞ";
@@ -22834,6 +23282,107 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
           carousel.scrollTo({ left: idx * width, behavior: "smooth" });
         });
       });
+
+      // 第二页小组件自主换图与事件交互
+      const p2AvatarCard = document.querySelector("#p2AvatarCard");
+      if (p2AvatarCard) {
+        p2AvatarCard.addEventListener("click", () => {
+          const input = document.createElement("input");
+          input.type = "file";
+          input.accept = "image/*";
+          input.onchange = (e) => {
+            const file = e.target.files?.[0];
+            if (!file) return;
+            readImage(file, async (src) => {
+              appState.theme.p2AvatarImg = src;
+              const p2AvatarCircle = document.querySelector("#p2AvatarCircle");
+              if (p2AvatarCircle) p2AvatarCircle.style.backgroundImage = `url(${src})`;
+              await saveState();
+            });
+          };
+          input.click();
+        });
+      }
+
+      const p2AvatarPillNode = document.querySelector("#p2AvatarPill");
+      if (p2AvatarPillNode) {
+        p2AvatarPillNode.addEventListener("click", (e) => {
+          e.stopPropagation();
+          openTextEditor({
+            target: "p2AvatarPillText",
+            title: "编辑大头贴个性气泡",
+            label: "请输入显示的个性小胶囊文案",
+            value: appState.theme.p2AvatarPillText || "懂我可爱的人 有福啦"
+          });
+        });
+      }
+
+      const p2WeatherCard = document.querySelector("#p2WeatherCard");
+      if (p2WeatherCard) {
+        p2WeatherCard.addEventListener("click", () => {
+          const input = document.createElement("input");
+          input.type = "file";
+          input.accept = "image/*";
+          input.onchange = (e) => {
+            const file = e.target.files?.[0];
+            if (!file) return;
+            readImage(file, async (src) => {
+              appState.theme.p2WeatherImg = src;
+              const p2WeatherAvatar = document.querySelector("#p2WeatherAvatar");
+              if (p2WeatherAvatar) p2WeatherAvatar.style.backgroundImage = `url(${src})`;
+              await saveState();
+            });
+          };
+          input.click();
+        });
+      }
+
+      const p2MusicWidget = document.querySelector("#p2MusicWidget");
+      if (p2MusicWidget) {
+        p2MusicWidget.addEventListener("click", (e) => {
+          if (e.target.closest("button")) return;
+          openMusicPage();
+        });
+      }
+
+      const p2PlayBtn = document.querySelector("#p2PlayBtn");
+      if (p2PlayBtn) {
+        p2PlayBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          toggleMusicPlayback();
+        });
+      }
+
+      const p2PrevBtn = document.querySelector("#p2PrevBtn");
+      if (p2PrevBtn) {
+        p2PrevBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          playAdjacentMusicSong(-1);
+        });
+      }
+
+      const p2NextBtn = document.querySelector("#p2NextBtn");
+      if (p2NextBtn) {
+        p2NextBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          playAdjacentMusicSong(1);
+        });
+      }
+
+      const p2SearchPill = document.querySelector("#p2SearchPill");
+      if (p2SearchPill) {
+        p2SearchPill.addEventListener("click", () => {
+          if (qqPage) {
+            qqPage.classList.add("show");
+            showQqPanel("qqPanelChats");
+            const searchInput = document.querySelector("#qqContactSearchInput");
+            if (searchInput) {
+              searchInput.scrollIntoView({ behavior: "smooth", block: "center" });
+              setTimeout(() => searchInput.focus(), 220);
+            }
+          }
+        });
+      }
     }
 
     // 小组件与软件图标长按自由拖拽与持久化记忆排版系统
@@ -31155,6 +31704,7 @@ function extractRoleReplyLines(reply) {
         if (target === "snapQuote") appState.theme.snapQuote = value || "Angel user";
         if (target === "snapCity") appState.theme.snapCity = value || "北京";
         if (target === "clipCaption") appState.theme.clipCaption = value || "ʚ (• . •) ɞ";
+        if (target === "p2AvatarPillText") appState.theme.p2AvatarPillText = value || "懂我可爱的人 有福啦";
 
         renderState();
         await saveState();
