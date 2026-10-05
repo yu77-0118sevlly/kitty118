@@ -611,30 +611,218 @@
       display: none !important;
     }
 
-    .dock-center {
-      width: 74px;
-      height: 74px;
-      border-radius: 22px;
-      background: rgba(120, 126, 134, 0.28);
-      border: 1px solid rgba(255, 255, 255, 0.16);
+    /* 桌面自定义小组件区域样式 */
+    .desktop-widgets-section {
+      margin-top: 14px;
       display: flex;
-      align-items: flex-start;
-      justify-content: center;
-      gap: 5px;
-      padding-top: 12px;
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22);
+      flex-direction: column;
+      gap: 12px;
+      padding-bottom: 96px;
     }
 
-    .dock-mini {
-      width: 22px;
-      height: 22px;
-      border-radius: 7px;
+    .desktop-music-widget {
+      background: #ffffff;
+      border: 1px solid #ededec;
+      border-radius: 22px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.025);
+      cursor: pointer;
+      transition: transform 0.12s ease;
+    }
+
+    .desktop-music-widget:active {
+      transform: scale(0.985);
+    }
+
+    .dmw-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+      flex: 1;
+    }
+
+    .dmw-cover {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: #111111;
+      color: #ffffff;
       display: grid;
       place-items: center;
-      color: #fff;
+      font-size: 14px;
+      background-size: cover;
+      background-position: center;
+      flex-shrink: 0;
+    }
+
+    .dmw-info {
+      min-width: 0;
+    }
+
+    .dmw-info strong {
+      display: block;
+      color: #111111;
+      font-size: 12.5px;
+      font-weight: 700;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      line-height: 1.3;
+    }
+
+    .dmw-info span {
+      display: block;
+      margin-top: 3px;
+      color: #8e8e93;
+      font-size: 10px;
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .dmw-ctrls {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .dmw-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: none;
+      background: #f7f7f7;
+      color: #111111;
+      font-size: 11px;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+
+    .dmw-btn.play {
+      background: #111111;
+      color: #ffffff;
+    }
+
+    .dmw-btn:active {
+      opacity: 0.7;
+    }
+
+    .desktop-calendar-widget {
+      background: #ffffff;
+      border: 1px solid #ededec;
+      border-radius: 22px;
+      padding: 14px 18px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.025);
+      cursor: pointer;
+    }
+
+    .dcw-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .dcw-tag {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: #b4b4b4;
+    }
+
+    .dcw-month {
+      font-size: 10px;
+      font-weight: 600;
+      color: #8e8e93;
+    }
+
+    .dcw-content {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .dcw-content strong {
+      font-size: 36px;
+      line-height: 1;
+      font-weight: 800;
+      color: #111111;
+      letter-spacing: -0.04em;
+    }
+
+    .dcw-memo {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .dcw-memo-title {
+      display: block;
       font-size: 12px;
-      background: linear-gradient(180deg, #88df72, #46c757);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.48);
+      font-weight: 700;
+      color: #111111;
+    }
+
+    .dcw-memo-sub {
+      display: block;
+      margin-top: 3px;
+      font-size: 10.5px;
+      color: #666666;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* 极简白色系列 Dock 栏 */
+    .desktop-dock {
+      position: fixed;
+      left: 50%;
+      bottom: calc(14px + env(safe-area-inset-bottom));
+      transform: translateX(-50%);
+      width: min(320px, calc(100vw - 36px));
+      height: 64px;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid #ebebeb;
+      border-radius: 999px;
+      box-shadow: 0 8px 26px rgba(0, 0, 0, 0.06);
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      padding: 0 14px;
+      z-index: 20;
+    }
+
+    .dock-app-item {
+      text-decoration: none;
+      display: grid;
+      place-items: center;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: #f7f7f7;
+      color: #111111;
+      font-size: 18px;
+      transition: transform 0.12s ease, background 0.15s ease;
+    }
+
+    .dock-app-item:active {
+      transform: scale(0.92);
+      background: #ededed;
+    }
+
+    .dock-icon {
+      display: grid;
+      place-items: center;
     }
 
     .home-indicator {
@@ -15276,6 +15464,26 @@
             <span class="app-icon" id="iconMusic"><i class="fa-solid fa-music"></i></span>
             <span>云音乐</span>
           </a>
+
+          <a class="app app-stack" href="javascript:void(0)" id="forumApp">
+            <span class="app-icon" id="iconForum"><i class="fa-solid fa-comments"></i></span>
+            <span>论坛</span>
+          </a>
+
+          <a class="app app-stack" href="javascript:void(0)" id="storeApp">
+            <span class="app-icon" id="iconStore"><i class="fa-solid fa-bag-shopping"></i></span>
+            <span>商店</span>
+          </a>
+
+          <a class="app app-stack" href="javascript:void(0)" id="beautifyApp">
+            <span class="app-icon" id="iconBeauty"><i class="fa-solid fa-wand-magic-sparkles"></i></span>
+            <span>美化</span>
+          </a>
+
+          <a class="app app-stack" href="javascript:void(0)" id="takeoutApp">
+            <span class="app-icon" id="iconTakeout"><i class="fa-solid fa-utensils"></i></span>
+            <span>外卖</span>
+          </a>
         </div>
 
         <!-- 正方形图片小组件 -->
@@ -15288,22 +15496,69 @@
           <span class="square-photo-overlay"><i class="fa-solid fa-camera"></i></span>
         </div>
       </section>
+
+      <!-- 新增可自定义桌面小组件区域 -->
+      <section class="desktop-widgets-section" aria-label="自定义桌面小组件">
+        <!-- 极简白色音乐小组件 -->
+        <div class="desktop-music-widget" id="desktopMusicWidget" title="点击前往云音乐">
+          <div class="dmw-left">
+            <div class="dmw-cover" id="albumCard">
+              <i class="fa-solid fa-music" id="albumFallback"></i>
+            </div>
+            <div class="dmw-info">
+              <strong id="listenText">正在听 WILDFLOWER-BillieEilish</strong>
+              <span id="dmwArtist">Billie Eilish · Happier Than Ever</span>
+            </div>
+          </div>
+          <div class="dmw-ctrls">
+            <button class="dmw-btn" type="button" id="dmwPrevBtn" aria-label="上一首"><i class="fa-solid fa-backward-step"></i></button>
+            <button class="dmw-btn play" type="button" id="dmwPlayBtn" aria-label="播放"><i class="fa-solid fa-play"></i></button>
+            <button class="dmw-btn" type="button" id="dmwNextBtn" aria-label="下一首"><i class="fa-solid fa-forward-step"></i></button>
+          </div>
+        </div>
+
+        <!-- 极简日历/日期小组件 -->
+        <div class="desktop-calendar-widget" id="dateText" title="点击编辑日历备忘">
+          <div class="dcw-header">
+            <span class="dcw-tag">SCHEDULE</span>
+            <span class="dcw-month" id="dcwMonthText">TODAY</span>
+          </div>
+          <div class="dcw-content">
+            <strong id="dcwDayLarge">24</strong>
+            <div class="dcw-memo">
+              <span class="dcw-memo-title">备忘录事项</span>
+              <p class="dcw-memo-sub" id="speechText">お湯をたくさん飲んでください······</p>
+            </div>
+          </div>
+        </div>
+      </section>
     </section>
+
+    <!-- 底部极简 Dock 栏 -->
+    <nav class="desktop-dock" aria-label="底部快捷应用栏">
+      <a class="dock-app-item" href="javascript:void(0)" id="dockQqApp" title="QQ">
+        <span class="dock-icon"><i class="fa-brands fa-qq"></i></span>
+      </a>
+      <a class="dock-app-item" href="javascript:void(0)" id="dockArchiveApp" title="档案">
+        <span class="dock-icon" id="iconArchive"><i class="fa-solid fa-box-archive"></i></span>
+      </a>
+      <a class="dock-app-item" href="javascript:void(0)" id="dockMusicApp" title="云音乐">
+        <span class="dock-icon"><i class="fa-solid fa-music"></i></span>
+      </a>
+      <a class="dock-app-item" href="javascript:void(0)" id="dockSettingsApp" title="设置">
+        <span class="dock-icon"><i class="fa-solid fa-gear"></i></span>
+      </a>
+    </nav>
 
     <!-- 隐藏原多余节点的兜底挂载，保障JS不报错并支持未来添加 -->
     <div style="display:none;" aria-hidden="true">
       <div id="desktopBanner"></div>
       <div id="avatarFallback"></div>
-      <div id="dateText"></div>
-      <div id="listenText"></div>
-      <div id="albumCard"><div id="albumFallback"></div></div>
       <div id="memoryMainCard"><div id="memoryMainFallback"></div></div>
       <div id="memoryRightCard"><div id="memoryRightFallback"></div></div>
       <div id="midThumbOne"></div>
       <div id="midThumbTwo"></div>
       <div id="sharedText"></div>
-      <div id="speechText"></div>
-      <div id="iconBeauty"></div>
     </div>
   </main>
 
@@ -15573,6 +15828,34 @@
                 <div class="single-action">
                   <button class="liquid-btn" id="triggerIconMusicUpload" type="button">替换云音乐图标</button>
                   <input id="iconMusicUpload" type="file" accept="image/*" style="display:none;" />
+                </div>
+              </div>
+              <div class="upload-item">
+                <strong>「论坛」图标</strong>
+                <div class="single-action">
+                  <button class="liquid-btn" id="triggerIconForumUpload" type="button">替换论坛图标</button>
+                  <input id="iconForumUpload" type="file" accept="image/*" style="display:none;" />
+                </div>
+              </div>
+              <div class="upload-item">
+                <strong>「商店」图标</strong>
+                <div class="single-action">
+                  <button class="liquid-btn" id="triggerIconStoreUpload" type="button">替换商店图标</button>
+                  <input id="iconStoreUpload" type="file" accept="image/*" style="display:none;" />
+                </div>
+              </div>
+              <div class="upload-item">
+                <strong>「外卖」图标</strong>
+                <div class="single-action">
+                  <button class="liquid-btn" id="triggerIconTakeoutUpload" type="button">替换外卖图标</button>
+                  <input id="iconTakeoutUpload" type="file" accept="image/*" style="display:none;" />
+                </div>
+              </div>
+              <div class="upload-item">
+                <strong>「档案」图标</strong>
+                <div class="single-action">
+                  <button class="liquid-btn" id="triggerIconArchiveUpload" type="button">替换档案图标</button>
+                  <input id="iconArchiveUpload" type="file" accept="image/*" style="display:none;" />
                 </div>
               </div>
 
@@ -17870,7 +18153,23 @@ The goal is not to produce "good writing" but to produce writing that feels true
     const iconTodo1 = document.querySelector("#iconTodo1");
     const iconTodo2 = document.querySelector("#iconTodo2");
     const iconMusic = document.querySelector("#iconMusic");
+    const iconForum = document.querySelector("#iconForum");
+    const iconStore = document.querySelector("#iconStore");
+    const iconTakeout = document.querySelector("#iconTakeout");
+    const iconArchive = document.querySelector("#iconArchive");
     const musicApp = document.querySelector("#musicApp");
+    const forumApp = document.querySelector("#forumApp");
+    const storeApp = document.querySelector("#storeApp");
+    const takeoutApp = document.querySelector("#takeoutApp");
+    const beautifyApp = document.querySelector("#beautifyApp");
+    const dockQqApp = document.querySelector("#dockQqApp");
+    const dockArchiveApp = document.querySelector("#dockArchiveApp");
+    const dockMusicApp = document.querySelector("#dockMusicApp");
+    const dockSettingsApp = document.querySelector("#dockSettingsApp");
+    const desktopMusicWidget = document.querySelector("#desktopMusicWidget");
+    const dmwPlayBtn = document.querySelector("#dmwPlayBtn");
+    const dmwPrevBtn = document.querySelector("#dmwPrevBtn");
+    const dmwNextBtn = document.querySelector("#dmwNextBtn");
     const musicPage = document.querySelector("#musicPage");
     const closeMusicPage = document.querySelector("#closeMusicPage");
     const qqTabs = document.querySelectorAll(".qq-tab");
@@ -18229,6 +18528,10 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
         iconTodo1Image: "",
         iconTodo2Image: "",
         iconMusicImage: "",
+        iconForumImage: "",
+        iconStoreImage: "",
+        iconTakeoutImage: "",
+        iconArchiveImage: "",
         desktopBannerImage: "",
         qqHomeTitle: "Yuan信箱",
         qqHomeSubtitle: "把对话、歌单灵感和常用联系人收进轻雾卡片",
@@ -18674,6 +18977,18 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       applyIconImage(iconTodo1, appState.theme.iconTodo1Image);
       applyIconImage(iconTodo2, appState.theme.iconTodo2Image);
       applyIconImage(iconMusic, appState.theme.iconMusicImage);
+      applyIconImage(iconForum, appState.theme.iconForumImage);
+      applyIconImage(iconStore, appState.theme.iconStoreImage);
+      applyIconImage(iconTakeout, appState.theme.iconTakeoutImage);
+      applyIconImage(iconArchive, appState.theme.iconArchiveImage);
+
+      const dcwDayLarge = document.querySelector("#dcwDayLarge");
+      const dcwMonthText = document.querySelector("#dcwMonthText");
+      if (dcwDayLarge) dcwDayLarge.textContent = String(new Date().getDate());
+      if (dcwMonthText) {
+        const monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+        dcwMonthText.textContent = `${monthNames[new Date().getMonth()]} ${new Date().getFullYear()}`;
+      }
       applyCoverImage(qqFeatureArt, null, appState.theme.qqFeatureArtImage);
       applyCoverImage(qqCoverThumb, null, appState.theme.qqCoverThumbImage);
       applyCoverImage(cardProfileCover, null, appState.theme.cardProfileCoverImage);
@@ -21893,6 +22208,82 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       musicApp.addEventListener("click", openMusicPage);
     }
 
+    if (beautifyApp && settingsPage) {
+      beautifyApp.addEventListener("click", () => {
+        settingsPage.classList.add("show");
+        const beautifyGroup = document.querySelector("#triggerBgUpload")?.closest(".setting-group");
+        if (beautifyGroup) {
+          beautifyGroup.classList.add("open");
+          beautifyGroup.scrollIntoView({ behavior: "smooth" });
+        }
+      });
+    }
+
+    if (forumApp) {
+      forumApp.addEventListener("click", () => {
+        showCatpawAlert("论坛应用即将上线，可与角色共同发帖互动。", "论坛");
+      });
+    }
+
+    if (storeApp) {
+      storeApp.addEventListener("click", () => {
+        showCatpawAlert("商店系统正在准备中，支持金币选购道具与主题。", "商店");
+      });
+    }
+
+    if (takeoutApp) {
+      takeoutApp.addEventListener("click", () => {
+        showCatpawAlert("外卖小应用开启中，可为心仪的角色点单送餐。", "外卖");
+      });
+    }
+
+    if (dockQqApp && qqPage) {
+      dockQqApp.addEventListener("click", () => qqPage.classList.add("show"));
+    }
+
+    if (dockMusicApp && musicPage) {
+      dockMusicApp.addEventListener("click", openMusicPage);
+    }
+
+    if (dockSettingsApp && settingsPage) {
+      dockSettingsApp.addEventListener("click", () => settingsPage.classList.add("show"));
+    }
+
+    if (dockArchiveApp && cardPage) {
+      dockArchiveApp.addEventListener("click", () => {
+        renderCardPage();
+        cardPage.classList.add("show");
+      });
+    }
+
+    if (desktopMusicWidget && musicPage) {
+      desktopMusicWidget.addEventListener("click", (e) => {
+        if (e.target.closest(".dmw-ctrls")) return;
+        openMusicPage();
+      });
+    }
+
+    if (dmwPlayBtn) {
+      dmwPlayBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        toggleMusicPlayback();
+      });
+    }
+
+    if (dmwPrevBtn) {
+      dmwPrevBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        playAdjacentMusicSong(-1);
+      });
+    }
+
+    if (dmwNextBtn) {
+      dmwNextBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        playAdjacentMusicSong(1);
+      });
+    }
+
     if (closeMusicPage && musicPage) {
       closeMusicPage.addEventListener("click", () => musicPage.classList.remove("show"));
     }
@@ -22697,6 +23088,10 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       { btnId: "triggerIconTodo1Upload", inputId: "iconTodo1Upload" },
       { btnId: "triggerIconTodo2Upload", inputId: "iconTodo2Upload" },
       { btnId: "triggerIconMusicUpload", inputId: "iconMusicUpload" },
+      { btnId: "triggerIconForumUpload", inputId: "iconForumUpload" },
+      { btnId: "triggerIconStoreUpload", inputId: "iconStoreUpload" },
+      { btnId: "triggerIconTakeoutUpload", inputId: "iconTakeoutUpload" },
+      { btnId: "triggerIconArchiveUpload", inputId: "iconArchiveUpload" },
       { btnId: "triggerImportTheme", inputId: "importThemeInput" },
       { btnId: "triggerImportAppData", inputId: "importAppDataInput" },
       { btnId: "triggerChatAiImage", inputId: "chatAiImageInput" },
@@ -28309,6 +28704,10 @@ function extractRoleReplyLines(reply) {
     bindIconUpload("iconTodo1Upload", "iconTodo1Image", iconTodo1);
     bindIconUpload("iconTodo2Upload", "iconTodo2Image", iconTodo2);
     bindIconUpload("iconMusicUpload", "iconMusicImage", iconMusic);
+    bindIconUpload("iconForumUpload", "iconForumImage", iconForum);
+    bindIconUpload("iconStoreUpload", "iconStoreImage", iconStore);
+    bindIconUpload("iconTakeoutUpload", "iconTakeoutImage", iconTakeout);
+    bindIconUpload("iconArchiveUpload", "iconArchiveImage", iconArchive);
 
     if (createQqGroup) createQqGroup.addEventListener("click", createGroupFromInput);
     if (qqGroupNameInput) {
