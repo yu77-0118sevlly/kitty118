@@ -880,12 +880,7 @@
     }
 
     .p2-widget-sublabel {
-      text-align: center;
-      font-size: 10.5px;
-      font-weight: 500;
-      color: #444952;
-      letter-spacing: 0.02em;
-      margin-top: 2px;
+      display: none !important;
     }
 
     /* 2. 中段：左侧大头贴组件 + 右侧 4 个软件 */
@@ -905,11 +900,12 @@
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
       border-radius: 18px;
-      padding: 12px 8px 6px;
+      padding: 14px 8px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center;
+      gap: 8px;
       box-shadow: 0 4px 16px rgba(0, 0, 0, 0.025);
       border: 1px solid rgba(255, 255, 255, 0.85);
       cursor: pointer;
@@ -995,11 +991,12 @@
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
       border-radius: 18px;
-      padding: 12px 8px 6px;
+      padding: 14px 8px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center;
+      gap: 12px;
       box-shadow: 0 4px 16px rgba(0, 0, 0, 0.025);
       border: 1px solid rgba(255, 255, 255, 0.85);
       cursor: pointer;
@@ -1066,20 +1063,7 @@
     }
 
     .p2-search-bubble {
-      margin: 4px auto 0;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 6px 18px;
-      border-radius: 999px;
-      background: rgba(215, 220, 226, 0.52);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      color: #333840;
-      font-size: 12px;
-      font-weight: 600;
-      border: 1px solid rgba(255, 255, 255, 0.45);
-      cursor: pointer;
+      display: none !important;
     }
 
     .bubble-zone {
@@ -16422,7 +16406,6 @@
               <button class="p2-music-ctrl-btn" type="button" id="p2PlayBtn" aria-label="播放"><i class="fa-solid fa-pause"></i></button>
               <button class="p2-music-ctrl-btn" type="button" id="p2NextBtn" aria-label="下一首"><i class="fa-solid fa-forward-step"></i></button>
             </div>
-            <div class="p2-widget-sublabel">Top Widgets*</div>
           </div>
 
           <!-- 2. 中段：左侧大头贴挂件 + 右侧 4 个软件（保留论坛、商店并补充抖音、快手） -->
@@ -16431,7 +16414,6 @@
               <div class="p2-avatar-circle" id="p2AvatarCircle" style="background-image:url('https://771553.xyz/file/studio/5FDVc1VrKzVdH5mO.jpg');"></div>
               <div class="p2-avatar-kaomoji" id="p2AvatarKaomoji">(=^ω^=)</div>
               <div class="p2-avatar-pill" id="p2AvatarPill">懂我可爱的人 有福啦</div>
-              <div class="p2-widget-sublabel">Top Widgets*</div>
             </div>
 
             <div class="p2-apps-2x2">
@@ -16503,14 +16485,7 @@
                 <i class="fa-solid fa-sun"></i>
                 <span id="p2WeatherTempText">7℃</span>
               </div>
-              <div class="p2-widget-sublabel">Top Widgets*</div>
             </div>
-          </div>
-
-          <!-- 底部搜索胶囊 -->
-          <div class="p2-search-bubble" id="p2SearchPill">
-            <i class="fa-solid fa-magnifying-glass"></i>
-            <span>搜索</span>
           </div>
         </div>
 
