@@ -144,25 +144,37 @@
       display: none !important;
     }
 
-    /* 可拖拽移动的桌面块容器 */
-    .draggable-card {
+    /* 可拖拽移动的桌面块与应用容器 */
+    .draggable-card,
+    .draggable-app {
       user-select: none;
       -webkit-user-select: none;
+      -webkit-touch-callout: none;
       touch-action: pan-x;
-      transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
+      transition: transform 0.18s cubic-bezier(0.2, 0.9, 0.3, 1), box-shadow 0.18s ease, opacity 0.18s ease;
       cursor: grab;
     }
 
-    .draggable-card:active {
+    .draggable-card:active,
+    .draggable-app:active {
       cursor: grabbing;
     }
 
-    .draggable-card.dragging {
-      opacity: 0.45;
-      transform: scale(0.96);
+    .draggable-card.dragging,
+    .draggable-app.dragging {
+      opacity: 0.35;
+      transform: scale(0.92);
     }
 
-    .draggable-card.drag-over {
+    .draggable-card.is-moving,
+    .draggable-app.is-moving {
+      transform: scale(1.05);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12) !important;
+      z-index: 50 !important;
+    }
+
+    .draggable-card.drag-over,
+    .draggable-app.drag-over {
       outline: 2px dashed #000000;
       outline-offset: 3px;
     }
@@ -15988,16 +16000,19 @@
         <i class="fa-solid fa-chevron-left"></i>
       </button>
       <div class="bmp-title">
-        <strong>美化</strong>
-        <span>桌面小组件添加</span>
+        <strong>美化中心</strong>
+        <span>小组件与桌面图标管理</span>
       </div>
       <div></div>
     </header>
 
     <div class="bmp-body">
       <div class="bmp-intro">
-        管理主页面展示的小组件。在此自由添加或移除组件，添加到主页后可轻点小组件自主更换照片、封面与备忘文本。
+        在此自由添加/移除桌面小组件，或定制各应用的独立外观图标。添加到桌面后，小组件也可长按任意调换摆放顺序。
       </div>
+
+      <!-- 小组件部分 -->
+      <div style="font-size: 11px; font-weight: 700; color: #8e8e93; letter-spacing: 0.08em; text-transform: uppercase; margin-top: 4px;">桌面小组件库</div>
 
       <!-- 1. 个人名片小组件 -->
       <div class="bmp-item">
@@ -16124,6 +16139,92 @@
           <i class="fa-solid fa-plus"></i><span>添加</span>
         </button>
       </div>
+
+      <!-- 应用图标定制部分（由原设置页面迁移至此） -->
+      <div style="font-size: 11px; font-weight: 700; color: #8e8e93; letter-spacing: 0.08em; text-transform: uppercase; margin-top: 14px;">应用图标定制</div>
+
+      <div class="upload-item">
+        <strong>「QQ」图标</strong>
+        <span>定制主屏与联系人入口的图标外观</span>
+        <div class="single-action">
+          <button class="liquid-btn" id="triggerIconTodo1Upload" type="button">自定义 QQ 图标</button>
+          <input id="iconTodo1Upload" type="file" accept="image/*" style="display:none;" />
+        </div>
+      </div>
+
+      <div class="upload-item">
+        <strong>「设置」图标</strong>
+        <span>设置应用的主屏展示图标</span>
+        <div class="single-action">
+          <button class="liquid-btn" id="triggerIconSettingsUpload" type="button">自定义设置图标</button>
+          <input id="iconSettingsUpload" type="file" accept="image/*" style="display:none;" />
+        </div>
+      </div>
+
+      <div class="upload-item">
+        <strong>「名片」图标</strong>
+        <span>个人名片与资产管理应用图标</span>
+        <div class="single-action">
+          <button class="liquid-btn" id="triggerIconTodo2Upload" type="button">自定义名片图标</button>
+          <input id="iconTodo2Upload" type="file" accept="image/*" style="display:none;" />
+        </div>
+      </div>
+
+      <div class="upload-item">
+        <strong>「云音乐」图标</strong>
+        <span>桌面与 Dock 栏云音乐入口图标</span>
+        <div class="single-action">
+          <button class="liquid-btn" id="triggerIconMusicUpload" type="button">自定义云音乐图标</button>
+          <input id="iconMusicUpload" type="file" accept="image/*" style="display:none;" />
+        </div>
+      </div>
+
+      <div class="upload-item">
+        <strong>「论坛」图标</strong>
+        <span>社区论坛主屏图标</span>
+        <div class="single-action">
+          <button class="liquid-btn" id="triggerIconForumUpload" type="button">自定义论坛图标</button>
+          <input id="iconForumUpload" type="file" accept="image/*" style="display:none;" />
+        </div>
+      </div>
+
+      <div class="upload-item">
+        <strong>「商店」图标</strong>
+        <span>商店应用入口图标</span>
+        <div class="single-action">
+          <button class="liquid-btn" id="triggerIconStoreUpload" type="button">自定义商店图标</button>
+          <input id="iconStoreUpload" type="file" accept="image/*" style="display:none;" />
+        </div>
+      </div>
+
+      <div class="upload-item">
+        <strong>「外卖」图标</strong>
+        <span>外卖小应用主屏图标</span>
+        <div class="single-action">
+          <button class="liquid-btn" id="triggerIconTakeoutUpload" type="button">自定义外卖图标</button>
+          <input id="iconTakeoutUpload" type="file" accept="image/*" style="display:none;" />
+        </div>
+      </div>
+
+      <div class="upload-item">
+        <strong>「档案」图标</strong>
+        <span>Dock 栏快速档案入口图标</span>
+        <div class="single-action">
+          <button class="liquid-btn" id="triggerIconArchiveUpload" type="button">自定义档案图标</button>
+          <input id="iconArchiveUpload" type="file" accept="image/*" style="display:none;" />
+        </div>
+      </div>
+
+      <!-- 美化备份与方案管理 -->
+      <div style="font-size: 11px; font-weight: 700; color: #8e8e93; letter-spacing: 0.08em; text-transform: uppercase; margin-top: 14px;">美化方案备份</div>
+      <div class="inline-actions">
+        <button class="liquid-btn" id="exportThemeBtn" type="button">导出美化方案</button>
+        <button class="liquid-btn primary" id="triggerImportTheme" type="button">导入美化方案</button>
+        <input id="importThemeInput" type="file" accept="application/json" style="display:none;" />
+      </div>
+      <div class="result-box" id="beautifyResult">
+        可随时备份或一键恢复你定制的桌面小组件与图标布局。
+      </div>
     </div>
   </section>
 
@@ -16134,70 +16235,83 @@
           <i class="fa-solid fa-chevron-left"></i>
         </button>
         <div class="beautify-title">
-          <h2>Settings</h2>
+          <h2>系统设置</h2>
         </div>
         <button class="beautify-action" aria-label="设置选项">
-          <i class="fa-solid fa-ellipsis"></i>
+          <i class="fa-solid fa-sliders"></i>
         </button>
       </header>
 
       <section class="setting-list">
-        <!-- PWA 添加到桌面与全屏 -->
+        <!-- 隐藏保留的 PWA 节点，维持应用安装与全屏功能 -->
+        <div style="display:none;" aria-hidden="true">
+          <span id="pwaStatusText"></span>
+          <button id="installPwaBtn" type="button"></button>
+          <button id="toggleFullscreenBtn" type="button"></button>
+          <span id="versionCheckText"></span>
+          <button id="copyVersionInfoBtn" type="button"></button>
+          <button id="hardRefreshPwaBtn" type="button"></button>
+        </div>
+
+        <!-- 1. AI 对话大模型核心配置 -->
         <article class="setting-group open">
           <button class="group-toggle" type="button">
             <div class="group-title">
-              <span class="group-icon"><i class="fa-solid fa-mobile-screen-button"></i></span>
+              <span class="group-icon"><i class="fa-solid fa-brain"></i></span>
               <div class="group-copy">
-                <strong>添加到桌面与全屏</strong>
-                <span>一键将 Yuan phone 安装至手机桌面，享受 APP 式全屏体验</span>
+                <strong>对话大模型核心配置</strong>
+                <span>自定义 API Base 接口、授权密钥与模型型号</span>
               </div>
             </div>
             <i class="fa-solid fa-chevron-down"></i>
           </button>
           <div class="group-body">
             <div class="field-stack">
-              <div class="upload-item">
-                <strong>独立 APP 模式</strong>
-                <span id="pwaStatusText">添加到桌面后，从主屏幕图标启动可自动隐藏浏览器地址栏，享受真正的全屏流畅体验。</span>
-                <div class="inline-actions" style="margin-top:10px;">
-                  <button class="liquid-btn primary" id="installPwaBtn" type="button">
-                    <i class="fa-solid fa-square-plus" style="margin-right:6px;"></i>添加到桌面
-                  </button>
-                  <button class="liquid-btn" id="toggleFullscreenBtn" type="button">
-                    <i class="fa-solid fa-expand" style="margin-right:6px;"></i>手动切换全屏
-                  </button>
-                </div>
+              <div class="field">
+                <label for="apiBase">API Base 接口地址</label>
+                <input id="apiBase" type="text" placeholder="https://api.openai.com/v1" />
               </div>
-              <div class="upload-item">
-                <strong>当前运行版本自检</strong>
-                <span id="versionCheckText">正在读取当前运行的代码版本…</span>
-                <div class="single-action" style="margin-top:10px;">
-                  <button class="liquid-btn" id="copyVersionInfoBtn" type="button">
-                    <i class="fa-solid fa-copy" style="margin-right:6px;"></i>复制版本信息
-                  </button>
-                </div>
+              <div class="field">
+                <label for="apiKey">API 授权密钥 (Key)</label>
+                <input id="apiKey" type="password" placeholder="sk-..." />
               </div>
-              <div class="upload-item">
-                <strong>强制拉取最新代码</strong>
-                <span>iOS 主屏幕 APP 缓存顽固时使用。会注销 Service Worker、清空所有缓存并强制重载，本地角色与聊天数据不受影响。</span>
-                <div class="single-action" style="margin-top:10px;">
-                  <button class="liquid-btn primary" id="hardRefreshPwaBtn" type="button">
-                    <i class="fa-solid fa-rotate" style="margin-right:6px;"></i>彻底清缓存并重载
-                  </button>
-                </div>
+              <div class="field">
+                <label for="modelSelect">快速选择已接入模型</label>
+                <select id="modelSelect">
+                  <option value="">请先点击下方拉取模型</option>
+                </select>
               </div>
+              <div class="field">
+                <label for="modelName">当前生效模型名称</label>
+                <input id="modelName" type="text" placeholder="例如 gpt-4o / claude-3-5-sonnet" />
+              </div>
+              <div class="chat-toggle-row">
+                <span>全局多模态感知 (视觉识图识别)</span>
+                <input id="globalVisionToggle" type="checkbox" />
+              </div>
+              <div class="chat-toggle-row">
+                <span>现实时间感知 (感知当下真实时区与日期)</span>
+                <input id="realTimeAwarenessToggle" type="checkbox" />
+              </div>
+              <div class="inline-actions">
+                <button class="liquid-btn" id="fetchModelsBtn" type="button">拉取可用模型</button>
+                <button class="liquid-btn primary" id="testApiBtn" type="button">测试连通性</button>
+              </div>
+            </div>
+            <div class="result-box" id="apiResult">
+              点击上方测试按钮，验证 API 密钥与当前模型连接状态。
             </div>
           </div>
         </article>
 
-        <!-- 语音合成 (TTS) 设置 -->
+        <!-- 2. MiniMax 语音交互合成 (TTS) -->
         <article class="setting-group">
           <button class="group-toggle" type="button">
             <div class="group-title">
-              <span class="group-icon"><i class="fa-solid fa-microphone"></i></span>
+              <span class="group-icon"><i class="fa-solid fa-microphone-lines"></i></span>
               <div class="group-copy">
-                <strong>语音合成 (TTS) 配置</strong>
-                <span>配置 MiniMax 语音接口，让角色可以发语音</span>
+                <strong>MiniMax 拟真语音合成</strong>
+                <span>配置语音服务，使角色可在对话中实时发送自然语音条</span>
               </div>
             </div>
             <i class="fa-solid fa-chevron-down"></i>
@@ -16206,263 +16320,46 @@
             <div class="field-stack">
               <div class="field">
                 <label for="minimaxGroupId">MiniMax Group ID</label>
-                <input id="minimaxGroupId" type="text" placeholder="输入 Group ID" />
+                <input id="minimaxGroupId" type="text" placeholder="填写服务商提供的 Group ID" />
               </div>
               <div class="field">
-                <label for="minimaxApiKey">MiniMax API Key</label>
-                <input id="minimaxApiKey" type="password" placeholder="输入 API Key" />
+                <label for="minimaxApiKey">MiniMax API 密钥</label>
+                <input id="minimaxApiKey" type="password" placeholder="填写对应的语音 API Key" />
               </div>
               <div class="chat-toggle-row">
-                <span>允许角色发送语音条</span>
+                <span>开启全角色语音消息权限</span>
                 <input id="globalVoiceToggle" type="checkbox" />
               </div>
             </div>
           </div>
         </article>
 
-        <!-- API 设置 -->
-        <article class="setting-group">
-          <button class="group-toggle" type="button">
-            <div class="group-title">
-              <span class="group-icon"><i class="fa-solid fa-sliders"></i></span>
-              <div class="group-copy">
-                <strong>API 模型接口</strong>
-                <span>配置模型 Endpoint、API Key 及交互参数</span>
-              </div>
-            </div>
-            <i class="fa-solid fa-chevron-down"></i>
-          </button>
-          <div class="group-body">
-            <div class="field-stack">
-              <div class="field">
-                <label for="apiBase">API Base URL</label>
-                <input id="apiBase" type="text" placeholder="https://api.example.com/v1" />
-              </div>
-              <div class="field">
-                <label for="apiKey">API Key</label>
-                <input id="apiKey" type="password" placeholder="请输入 API Key" />
-              </div>
-              <div class="field">
-                <label for="modelSelect">模型列表</label>
-                <select id="modelSelect">
-                  <option value="">暂未拉取，请先点击按钮</option>
-                </select>
-              </div>
-              <div class="field">
-                <label for="modelName">当前模型</label>
-                <input id="modelName" type="text" placeholder="可手动输入模型名称" />
-              </div>
-              <div class="chat-toggle-row">
-                <span>全局 API 识图 (智能省 Token)</span>
-                <input id="globalVisionToggle" type="checkbox" />
-              </div>
-              <div class="chat-toggle-row">
-                <span>现实时间感知 (精确日期/时间)</span>
-                <input id="realTimeAwarenessToggle" type="checkbox" />
-              </div>
-              <div class="inline-actions">
-                <button class="liquid-btn" id="fetchModelsBtn" type="button">拉取模型</button>
-                <button class="liquid-btn primary" id="testApiBtn" type="button">测试 API</button>
-              </div>
-            </div>
-            <div class="result-box" id="apiResult">
-              这里会显示模型拉取结果或 API 测试结果。
-            </div>
-          </div>
-        </article>
-
-        <!-- 桌面与组件外观美化 (文件接口全部隐藏，由超大圆角宽按钮触发) -->
-        <article class="setting-group">
-          <button class="group-toggle" type="button">
-            <div class="group-title">
-              <span class="group-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></span>
-              <div class="group-copy">
-                <strong>桌面与组件美化</strong>
-                <span>自定义背景、头像、天气卡及音乐封面图片</span>
-              </div>
-            </div>
-            <i class="fa-solid fa-chevron-down"></i>
-          </button>
-          <div class="group-body">
-            <div class="field-stack">
-              <div class="upload-item">
-                <strong>桌面背景图</strong>
-                <span>高留白、浅色、简约家居或风景效果最佳</span>
-                <div class="single-action">
-                  <button class="liquid-btn" id="triggerBgUpload" type="button">选择背景图片</button>
-                  <input id="bgUpload" type="file" accept="image/*" style="display:none;" />
-                </div>
-              </div>
-              <div class="upload-item">
-                <strong>桌面头像图</strong>
-                <span>建议使用正方形图片，系统自动裁剪为圆形</span>
-                <div class="single-action">
-                  <button class="liquid-btn" id="triggerAvatarUpload" type="button">选择头像图片</button>
-                  <input id="avatarUpload" type="file" accept="image/*" style="display:none;" />
-                </div>
-              </div>
-              <div class="upload-item">
-                <strong>天气挂件图片 1</strong>
-                <span>替换天气卡片中第 1 张图标卡</span>
-                <div class="single-action">
-                  <button class="liquid-btn" id="triggerAlbumUpload" type="button">上传天气图片 1</button>
-                  <input id="albumUpload" type="file" accept="image/*" style="display:none;" />
-                </div>
-              </div>
-              <div class="upload-item">
-                <strong>天气挂件图片 2</strong>
-                <span>替换天气卡片中第 2 张图标卡</span>
-                <div class="single-action">
-                  <button class="liquid-btn" id="triggerMemoryUpload" type="button">上传天气图片 2</button>
-                  <input id="memoryUpload" type="file" accept="image/*" style="display:none;" />
-                </div>
-              </div>
-              <div class="upload-item">
-                <strong>天气挂件图片 3</strong>
-                <span>替换天气卡片中第 3 张图标卡</span>
-                <div class="single-action">
-                  <button class="liquid-btn" id="triggerMemoryRightUpload" type="button">上传天气图片 3</button>
-                  <input id="memoryRightUpload" type="file" accept="image/*" style="display:none;" />
-                </div>
-              </div>
-              <div class="upload-item">
-                <strong>音乐组件封面</strong>
-                <span>替换桌面播放器小组件的图片封面</span>
-                <div class="single-action">
-                  <button class="liquid-btn" id="triggerMemoryLeftUpload" type="button">上传音乐封面</button>
-                  <input id="memoryLeftUpload" type="file" accept="image/*" style="display:none;" />
-                </div>
-              </div>
-              <div class="upload-item">
-                <strong>底部共享大卡图片 1</strong>
-                <span>替换底部玻璃卡片的第一张预览图</span>
-                <div class="single-action">
-                  <button class="liquid-btn" id="triggerMidThumbOneUpload" type="button">上传大卡图 1</button>
-                  <input id="midThumbOneUpload" type="file" accept="image/*" style="display:none;" />
-                </div>
-              </div>
-              <div class="upload-item">
-                <strong>底部共享大卡图片 2</strong>
-                <span>替换底部玻璃卡片的第二张预览图</span>
-                <div class="single-action">
-                  <button class="liquid-btn" id="triggerMidThumbTwoUpload" type="button">上传大卡图 2</button>
-                  <input id="midThumbTwoUpload" type="file" accept="image/*" style="display:none;" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <!-- 应用图标与美化方案 -->
-        <article class="setting-group">
-          <button class="group-toggle" type="button">
-            <div class="group-title">
-              <span class="group-icon"><i class="fa-solid fa-icons"></i></span>
-              <div class="group-copy">
-                <strong>应用图标与方案</strong>
-                <span>替换单个应用图标，导出或导入完整美化方案</span>
-              </div>
-            </div>
-            <i class="fa-solid fa-chevron-down"></i>
-          </button>
-          <div class="group-body">
-            <div class="field-stack">
-              <div class="upload-item">
-                <strong>「设置」图标</strong>
-                <div class="single-action">
-                  <button class="liquid-btn" id="triggerIconSettingsUpload" type="button">替换设置图标</button>
-                  <input id="iconSettingsUpload" type="file" accept="image/*" style="display:none;" />
-                </div>
-              </div>
-              <div class="upload-item">
-                <strong>「QQ」图标</strong>
-                <div class="single-action">
-                  <button class="liquid-btn" id="triggerIconTodo1Upload" type="button">替换 QQ 图标</button>
-                  <input id="iconTodo1Upload" type="file" accept="image/*" style="display:none;" />
-                </div>
-              </div>
-              <div class="upload-item">
-                <strong>「名片」图标</strong>
-                <div class="single-action">
-                  <button class="liquid-btn" id="triggerIconTodo2Upload" type="button">替换名片图标</button>
-                  <input id="iconTodo2Upload" type="file" accept="image/*" style="display:none;" />
-                </div>
-              </div>
-              <div class="upload-item">
-                <strong>「云音乐」图标</strong>
-                <div class="single-action">
-                  <button class="liquid-btn" id="triggerIconMusicUpload" type="button">替换云音乐图标</button>
-                  <input id="iconMusicUpload" type="file" accept="image/*" style="display:none;" />
-                </div>
-              </div>
-              <div class="upload-item">
-                <strong>「论坛」图标</strong>
-                <div class="single-action">
-                  <button class="liquid-btn" id="triggerIconForumUpload" type="button">替换论坛图标</button>
-                  <input id="iconForumUpload" type="file" accept="image/*" style="display:none;" />
-                </div>
-              </div>
-              <div class="upload-item">
-                <strong>「商店」图标</strong>
-                <div class="single-action">
-                  <button class="liquid-btn" id="triggerIconStoreUpload" type="button">替换商店图标</button>
-                  <input id="iconStoreUpload" type="file" accept="image/*" style="display:none;" />
-                </div>
-              </div>
-              <div class="upload-item">
-                <strong>「外卖」图标</strong>
-                <div class="single-action">
-                  <button class="liquid-btn" id="triggerIconTakeoutUpload" type="button">替换外卖图标</button>
-                  <input id="iconTakeoutUpload" type="file" accept="image/*" style="display:none;" />
-                </div>
-              </div>
-              <div class="upload-item">
-                <strong>「档案」图标</strong>
-                <div class="single-action">
-                  <button class="liquid-btn" id="triggerIconArchiveUpload" type="button">替换档案图标</button>
-                  <input id="iconArchiveUpload" type="file" accept="image/*" style="display:none;" />
-                </div>
-              </div>
-
-              <div class="inline-actions" style="margin-top:14px;">
-                <button class="liquid-btn" id="exportThemeBtn" type="button">导出美化方案</button>
-                <button class="liquid-btn primary" id="triggerImportTheme" type="button">导入美化方案</button>
-                <input id="importThemeInput" type="file" accept="application/json" style="display:none;" />
-              </div>
-              <div class="result-box" id="beautifyResult">
-                这里会显示导入和导出美化配置的结果。
-              </div>
-            </div>
-          </div>
-        </article>
-
-
-        <!-- 数据管理与备份 -->
+        <!-- 3. 数据安全与完整备份 -->
         <article class="setting-group">
           <button class="group-toggle" type="button">
             <div class="group-title">
               <span class="group-icon"><i class="fa-solid fa-database"></i></span>
               <div class="group-copy">
-                <strong>数据管理与备份</strong>
-                <span>轻松备份、导入及恢复所有本地角色与应用状态</span>
+                <strong>本地数据备份与重置</strong>
+                <span>完全离线保存，将全部角色、聊天与设定导出为单文件</span>
               </div>
             </div>
             <i class="fa-solid fa-chevron-down"></i>
           </button>
           <div class="group-body">
             <div class="inline-actions" style="margin-top:14px;">
-              <button class="liquid-btn" id="exportAppDataBtn" type="button">导出数据备份</button>
-              <button class="liquid-btn" id="clearPageCacheBtn" type="button">清除页面缓存</button>
+              <button class="liquid-btn" id="exportAppDataBtn" type="button">导出完整数据备份</button>
+              <button class="liquid-btn" id="clearPageCacheBtn" type="button">刷新并清页面缓存</button>
             </div>
             <div class="single-action" style="margin-top:10px;">
-              <button class="liquid-btn primary" id="triggerImportAppData" type="button">导入备份 JSON 文件</button>
+              <button class="liquid-btn primary" id="triggerImportAppData" type="button">导入已导出的备份文件</button>
               <input id="importAppDataInput" type="file" accept="application/json" style="display:none;" />
             </div>
             <div class="single-action" style="margin-top:10px;">
-              <button class="liquid-btn" id="resetAppBtn" type="button" style="color:#ff3b30;">重置整个应用</button>
+              <button class="liquid-btn" id="resetAppBtn" type="button" style="color:#ff3b30;">抹掉所有数据并重置</button>
             </div>
             <div class="result-box" id="settingsResult" style="margin-top:12px;">
-              这里会显示导出应用数据和重置应用的结果。
+              建议定期导出 JSON 备份，换机或清除浏览器缓存时可随时完整恢复。
             </div>
           </div>
         </article>
@@ -17725,7 +17622,7 @@
         <h3>沅子机更新内容</h3>
         <div class="announcement-author-badge">
           <i class="fa-solid fa-clock"></i>
-          <span>2025年2月23日 10:30 更新</span>
+          <span>2026年10月5日 10:30 更新</span>
         </div>
       </header>
 
@@ -22873,92 +22770,173 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       });
     }
 
-    // 小组件与图标自由拖拽排序交互
+    // 小组件与图标长按拖拽/触屏位置自由调换
     function setupDraggableWidgets() {
-      let draggedElement = null;
+      let activeItem = null;
+      let pressTimer = null;
+      let isDragging = false;
+      let touchStartX = 0;
+      let touchStartY = 0;
 
-      // 拖拽卡片和小组件
-      document.querySelectorAll(".draggable-card").forEach((card) => {
-        card.addEventListener("dragstart", (e) => {
-          draggedElement = card;
-          card.classList.add("dragging");
+      const clearAllPressTimers = () => {
+        if (pressTimer) {
+          clearTimeout(pressTimer);
+          pressTimer = null;
+        }
+      };
+
+      const resetDragState = () => {
+        clearAllPressTimers();
+        if (activeItem) {
+          activeItem.classList.remove("is-moving", "dragging");
+        }
+        document.querySelectorAll(".draggable-card, .draggable-app").forEach((node) => {
+          node.classList.remove("drag-over", "is-moving", "dragging");
+        });
+        activeItem = null;
+        isDragging = false;
+      };
+
+      // 给支持长按互动的元素绑定触摸长按和桌面拖拽事件
+      const bindDraggableElement = (element, isApp) => {
+        // 桌面端原生拖拽
+        element.setAttribute("draggable", "true");
+
+        element.addEventListener("dragstart", (e) => {
+          activeItem = element;
+          element.classList.add("dragging");
           e.dataTransfer.effectAllowed = "move";
         });
 
-        card.addEventListener("dragend", () => {
-          if (draggedElement) draggedElement.classList.remove("dragging");
-          document.querySelectorAll(".draggable-card").forEach(c => c.classList.remove("drag-over"));
-          draggedElement = null;
-        });
+        element.addEventListener("dragend", resetDragState);
 
-        card.addEventListener("dragover", (e) => {
+        element.addEventListener("dragover", (e) => {
           e.preventDefault();
-          if (draggedElement && draggedElement !== card && draggedElement.classList.contains("draggable-card")) {
-            card.classList.add("drag-over");
+          if (activeItem && activeItem !== element && ((isApp && element.classList.contains("draggable-app")) || (!isApp && element.classList.contains("draggable-card")))) {
+            element.classList.add("drag-over");
           }
         });
 
-        card.addEventListener("dragleave", () => {
-          card.classList.remove("drag-over");
+        element.addEventListener("dragleave", () => {
+          element.classList.remove("drag-over");
         });
 
-        card.addEventListener("drop", (e) => {
+        element.addEventListener("drop", (e) => {
           e.preventDefault();
-          card.classList.remove("drag-over");
-          if (draggedElement && draggedElement !== card && draggedElement.classList.contains("draggable-card")) {
-            const parent = card.parentNode;
-            if (parent) {
-              const rect = card.getBoundingClientRect();
-              const next = (e.clientY - rect.top) / (rect.bottom - rect.top) > 0.5;
-              parent.insertBefore(draggedElement, next ? card.nextSibling : card);
-            }
-          }
-        });
-      });
+          element.classList.remove("drag-over");
+          if (!activeItem || activeItem === element) return;
 
-      // 核心应用图标的互相拖拽调换
-      document.querySelectorAll(".draggable-app").forEach((app) => {
-        app.addEventListener("dragstart", (e) => {
-          draggedElement = app;
-          app.classList.add("dragging");
-          e.dataTransfer.effectAllowed = "move";
-        });
-
-        app.addEventListener("dragend", () => {
-          if (draggedElement) draggedElement.classList.remove("dragging");
-          document.querySelectorAll(".draggable-app").forEach(a => a.classList.remove("drag-over"));
-          draggedElement = null;
-        });
-
-        app.addEventListener("dragover", (e) => {
-          e.preventDefault();
-          if (draggedElement && draggedElement !== app && draggedElement.classList.contains("draggable-app")) {
-            app.classList.add("drag-over");
-          }
-        });
-
-        app.addEventListener("dragleave", () => {
-          app.classList.remove("drag-over");
-        });
-
-        app.addEventListener("drop", (e) => {
-          e.preventDefault();
-          app.classList.remove("drag-over");
-          if (draggedElement && draggedElement !== app && draggedElement.classList.contains("draggable-app")) {
+          if (isApp && activeItem.classList.contains("draggable-app") && element.classList.contains("draggable-app")) {
             const grid = document.querySelector("#desktopAppsGrid");
             if (grid) {
               const all = Array.from(grid.querySelectorAll(".draggable-app"));
-              const fromIndex = all.indexOf(draggedElement);
-              const toIndex = all.indexOf(app);
-              if (fromIndex < toIndex) {
-                grid.insertBefore(draggedElement, app.nextSibling);
+              const fromIdx = all.indexOf(activeItem);
+              const toIdx = all.indexOf(element);
+              if (fromIdx < toIdx) {
+                grid.insertBefore(activeItem, element.nextSibling);
               } else {
-                grid.insertBefore(draggedElement, app);
+                grid.insertBefore(activeItem, element);
+              }
+            }
+          } else if (!isApp && activeItem.classList.contains("draggable-card") && element.classList.contains("draggable-card")) {
+            const parent = element.parentNode;
+            if (parent) {
+              const rect = element.getBoundingClientRect();
+              const next = (e.clientY - rect.top) / (rect.bottom - rect.top) > 0.5;
+              parent.insertBefore(activeItem, next ? element.nextSibling : element);
+            }
+          }
+          resetDragState();
+        });
+
+        // 手机触摸端长按（长按 380ms 触发调换模式）
+        element.addEventListener("touchstart", (e) => {
+          if (e.touches.length > 1) return;
+          const touch = e.touches[0];
+          touchStartX = touch.clientX;
+          touchStartY = touch.clientY;
+          clearAllPressTimers();
+
+          pressTimer = setTimeout(() => {
+            activeItem = element;
+            isDragging = true;
+            element.classList.add("is-moving");
+            if (navigator.vibrate) navigator.vibrate(35);
+          }, 380);
+        }, { passive: true });
+
+        element.addEventListener("touchmove", (e) => {
+          const touch = e.touches[0];
+          const deltaX = Math.abs(touch.clientX - touchStartX);
+          const deltaY = Math.abs(touch.clientY - touchStartY);
+
+          if (!isDragging) {
+            // 轻微滑动则取消长按计时
+            if (deltaX > 8 || deltaY > 8) {
+              clearAllPressTimers();
+            }
+            return;
+          }
+
+          e.preventDefault();
+          // 在长按拖拽中根据触摸点寻找下方命中的同类元素
+          const hitElement = document.elementFromPoint(touch.clientX, touch.clientY);
+          if (!hitElement) return;
+
+          const target = isApp
+            ? hitElement.closest(".draggable-app")
+            : hitElement.closest(".draggable-card");
+
+          document.querySelectorAll(".draggable-card, .draggable-app").forEach((node) => {
+            node.classList.toggle("drag-over", node === target && node !== activeItem);
+          });
+        }, { passive: false });
+
+        element.addEventListener("touchend", (e) => {
+          clearAllPressTimers();
+          if (!isDragging || !activeItem) {
+            resetDragState();
+            return;
+          }
+
+          const changedTouch = e.changedTouches[0];
+          const hitElement = document.elementFromPoint(changedTouch.clientX, changedTouch.clientY);
+          if (hitElement) {
+            const target = isApp
+              ? hitElement.closest(".draggable-app")
+              : hitElement.closest(".draggable-card");
+
+            if (target && target !== activeItem) {
+              if (isApp) {
+                const grid = document.querySelector("#desktopAppsGrid");
+                if (grid) {
+                  const all = Array.from(grid.querySelectorAll(".draggable-app"));
+                  const fromIdx = all.indexOf(activeItem);
+                  const toIdx = all.indexOf(target);
+                  if (fromIdx < toIdx) {
+                    grid.insertBefore(activeItem, target.nextSibling);
+                  } else {
+                    grid.insertBefore(activeItem, target);
+                  }
+                }
+              } else {
+                const parent = target.parentNode;
+                if (parent) {
+                  const rect = target.getBoundingClientRect();
+                  const next = (changedTouch.clientY - rect.top) / (rect.bottom - rect.top) > 0.5;
+                  parent.insertBefore(activeItem, next ? target.nextSibling : target);
+                }
               }
             }
           }
+          resetDragState();
         });
-      });
+
+        element.addEventListener("touchcancel", resetDragState);
+      };
+
+      document.querySelectorAll(".draggable-card").forEach((card) => bindDraggableElement(card, false));
+      document.querySelectorAll(".draggable-app").forEach((app) => bindDraggableElement(app, true));
     }
 
     if (beautifyApp && beautifyModalPage) {
