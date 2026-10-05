@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
@@ -31361,4 +31361,4 @@ function extractRoleReplyLines(reply) {
             Object.assign(appState.theme, importedTheme);
             renderState();
             await saveState();
-            setResult(beautifyResult, "美化配置已导�
+            setResult(beautifyResult, "美化配置已导
