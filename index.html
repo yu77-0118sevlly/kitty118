@@ -17526,6 +17526,236 @@
       width: 100%;
     }
 
+    /* 微博个人主页 (Profile Space) · 1:1 截图同款纯黑白灰 */
+    .wb-profile-page {
+      position: fixed;
+      inset: 0;
+      z-index: 70;
+      display: none;
+      background: #f4f5f7;
+      flex-direction: column;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .wb-profile-page.show {
+      display: flex;
+    }
+
+    .wb-pro-banner-box {
+      position: relative;
+      width: 100%;
+      height: 190px;
+      background: #111111;
+      background-size: cover;
+      background-position: center;
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+
+    .wb-pro-banner-mask {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.45) 0%, transparent 40%, rgba(244, 245, 247, 0.95) 100%);
+    }
+
+    .wb-pro-nav-top {
+      position: sticky;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 10;
+      min-height: 48px;
+      padding: calc(6px + env(safe-area-inset-top)) 14px 6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #ffffff;
+    }
+
+    .wb-pro-nav-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.35);
+      border: none;
+      color: #ffffff;
+      font-size: 14px;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      backdrop-filter: blur(4px);
+    }
+
+    .wb-pro-nav-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .wb-pro-header-card {
+      position: relative;
+      margin-top: -46px;
+      padding: 0 16px 14px;
+      background: transparent;
+      z-index: 5;
+    }
+
+    .wb-pro-avatar-row {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .wb-pro-avatar {
+      width: 82px;
+      height: 82px;
+      border-radius: 50%;
+      background: #f0f0f0;
+      background-size: cover;
+      background-position: center;
+      border: 3px solid #ffffff;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      cursor: pointer;
+      position: relative;
+    }
+
+    .wb-pro-name-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+
+    .wb-pro-name {
+      font-size: 20px;
+      font-weight: 800;
+      color: #111111;
+      letter-spacing: -0.02em;
+    }
+
+    .wb-pro-status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 1px 7px;
+      border-radius: 999px;
+      background: #e8e9eb;
+      color: #111111;
+      font-size: 10px;
+      font-weight: 600;
+    }
+
+    .wb-pro-stats-interactive {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin: 10px 0 8px;
+    }
+
+    .wb-pro-stat-item {
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+      cursor: pointer;
+      padding: 2px 0;
+      transition: opacity 0.15s ease;
+    }
+
+    .wb-pro-stat-item:active {
+      opacity: 0.6;
+    }
+
+    .wb-pro-stat-item b {
+      font-size: 17px;
+      font-weight: 800;
+      color: #111111;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .wb-pro-stat-item span {
+      font-size: 11.5px;
+      color: #7b818a;
+    }
+
+    .wb-pro-bio {
+      font-size: 12px;
+      color: #555c66;
+      line-height: 1.45;
+      margin: 6px 0 12px;
+    }
+
+    .wb-pro-edit-wide-btn {
+      width: 100%;
+      min-height: 36px;
+      border-radius: 999px;
+      border: 1px solid #dcdfe3;
+      background: #ffffff;
+      color: #111111;
+      font-size: 12.5px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: background 0.12s ease;
+    }
+
+    .wb-pro-edit-wide-btn:active {
+      background: #f0f0f0;
+    }
+
+    /* Tab 栏 (精选 / 微博 / 视频 / 相册) */
+    .wb-pro-tabs-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      border-top: 1px solid #e8e9eb;
+      border-bottom: 1px solid #e8e9eb;
+      background: #ffffff;
+      padding: 0 10px;
+      margin-bottom: 8px;
+    }
+
+    .wb-pro-tab-btn {
+      padding: 12px 14px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #7b818a;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .wb-pro-tab-btn.active {
+      color: #111111;
+      font-weight: 800;
+    }
+
+    .wb-pro-tab-btn.active::after {
+      content: "";
+      position: absolute;
+      left: 20%;
+      right: 20%;
+      bottom: 0;
+      height: 2.5px;
+      background: #000000;
+      border-radius: 999px;
+    }
+
+    .wb-pro-feed-label {
+      padding: 8px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #7b818a;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
     /* 角色进驻微博选择弹窗 */
     .wb-role-select-modal {
       position: fixed;
@@ -19935,12 +20165,13 @@
       <div class="wb-mine-panel" id="weiboMinePanel">
         <!-- 1. 顶部个人资料大卡 -->
         <div class="wb-mine-profile-card">
-          <div class="wb-mine-user-row">
+          <div class="wb-mine-user-row" id="openWbProfileFromMine" style="cursor: pointer;" title="点击进入微博个人主页">
             <div class="wb-mine-avatar" id="wbMineAvatar"></div>
             <div class="wb-mine-meta">
               <div class="wb-mine-name-line">
                 <strong id="wbMineName">我</strong>
                 <span class="wb-mine-vip-tag">PRO</span>
+                <i class="fa-solid fa-chevron-right" style="font-size: 11px; color: #aaa; margin-left: auto;"></i>
               </div>
               <div class="wb-mine-bio-line" id="wbMineBio">暂无简介</div>
               <div class="wb-mine-status-pill">
@@ -20054,6 +20285,73 @@
         </div>
       </div>
     </div>
+
+    <!-- 微博个人专属主页界面 · 1:1 复刻截图 -->
+    <section class="wb-profile-page" id="wbProfilePage" aria-label="微博个人主页">
+      <!-- 顶部背景墙 Banner -->
+      <div class="wb-pro-banner-box" id="wbProBanner" style="background-image:url('https://771553.xyz/file/studio/5FDVc1VrKzVdH5mO.jpg');">
+        <div class="wb-pro-banner-mask"></div>
+        <div class="wb-pro-nav-top">
+          <button class="wb-pro-nav-btn" id="closeWbProfile" type="button" aria-label="返回"><i class="fa-solid fa-chevron-left"></i></button>
+          <div class="wb-pro-nav-right">
+            <button class="wb-pro-nav-btn" id="wbProSearchBtn" type="button"><i class="fa-solid fa-magnifying-glass"></i></button>
+            <button class="wb-pro-nav-btn" id="wbProSettingsBtn" type="button"><i class="fa-solid fa-gear"></i></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 个人资料大卡片区 -->
+      <div class="wb-pro-header-card">
+        <div class="wb-pro-avatar-row">
+          <div class="wb-pro-avatar" id="wbProAvatar" title="点击更换头像" style="background-image:url('https://771553.xyz/file/studio/5FDVc1VrKzVdH5mO.jpg');"></div>
+        </div>
+
+        <div class="wb-pro-name-row">
+          <span class="wb-pro-name" id="wbProName">我</span>
+          <span class="wb-pro-status-badge">在线 ></span>
+        </div>
+
+        <!-- 关键核心：可点击自定义编辑 粉丝、关注、转评赞 数据！ -->
+        <div class="wb-pro-stats-interactive" aria-label="微博个人统计数值（点击可自定义修改）">
+          <div class="wb-pro-stat-item" id="editWbFansCount" title="点击自定义修改粉丝数">
+            <b id="wbProFansVal">3</b>
+            <span>粉丝</span>
+          </div>
+          <div class="wb-pro-stat-item" id="editWbFollowCount" title="点击自定义修改关注数">
+            <b id="wbProFollowVal">20</b>
+            <span>关注</span>
+          </div>
+          <div class="wb-pro-stat-item" id="editWbPraiseCount" title="点击自定义修改转评赞数">
+            <b id="wbProPraiseVal">4</b>
+            <span>转评赞</span>
+          </div>
+        </div>
+
+        <div class="wb-pro-bio" id="wbProBio">暂无简介</div>
+
+        <button class="wb-pro-edit-wide-btn" id="wbProEditBtn" type="button">
+          <i class="fa-solid fa-pen" style="font-size:11px;"></i>
+          <span>编辑个人资料</span>
+        </button>
+      </div>
+
+      <!-- 分类 Tab (精选 / 微博 / 视频 / 相册) -->
+      <div class="wb-pro-tabs-row">
+        <button class="wb-pro-tab-btn" type="button">精选</button>
+        <button class="wb-pro-tab-btn active" type="button">微博</button>
+        <button class="wb-pro-tab-btn" type="button">视频</button>
+        <button class="wb-pro-tab-btn" type="button">相册</button>
+      </div>
+
+      <div class="wb-pro-feed-label">
+        <span id="wbProTotalPostLabel">全部微博 (0)</span>
+        <span><i class="fa-solid fa-arrow-down-wide-short"></i> 筛选</span>
+      </div>
+
+      <!-- 个人发表的历史博文流 -->
+      <div id="wbProFeedList" style="padding-bottom: calc(40px + env(safe-area-inset-bottom));"></div>
+      <input type="file" id="wbProBannerInput" accept="image/*" style="display:none;" />
+    </section>
 
     <!-- 微博角色进驻选择弹窗 -->
     <section class="wb-role-select-modal" id="wbRoleSelectModal" aria-label="选择进驻微博的角色">
@@ -26945,6 +27243,209 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       if (wbMineWalletVal1) wbMineWalletVal1.textContent = formatMoney(appState.qq?.assets || 50000);
 
       renderWbFrequentStrip();
+    }
+
+    // ============================================================
+    // 微博个人主页 (Profile Space) 与数据自定义编辑系统
+    // ============================================================
+    const wbProfilePage = document.querySelector("#wbProfilePage");
+    const closeWbProfile = document.querySelector("#closeWbProfile");
+    const openWbProfileFromMine = document.querySelector("#openWbProfileFromMine");
+    const wbProAvatar = document.querySelector("#wbProAvatar");
+    const wbProName = document.querySelector("#wbProName");
+    const wbProBio = document.querySelector("#wbProBio");
+    const wbProFansVal = document.querySelector("#wbProFansVal");
+    const wbProFollowVal = document.querySelector("#wbProFollowVal");
+    const wbProPraiseVal = document.querySelector("#wbProPraiseVal");
+    const editWbFansCount = document.querySelector("#editWbFansCount");
+    const editWbFollowCount = document.querySelector("#editWbFollowCount");
+    const editWbPraiseCount = document.querySelector("#editWbPraiseCount");
+    const wbProEditBtn = document.querySelector("#wbProEditBtn");
+    const wbProFeedList = document.querySelector("#wbProFeedList");
+    const wbProTotalPostLabel = document.querySelector("#wbProTotalPostLabel");
+    const wbProBanner = document.querySelector("#wbProBanner");
+    const wbProBannerInput = document.querySelector("#wbProBannerInput");
+
+    function ensureWeiboProfileStats() {
+      ensureWeiboState();
+      if (!appState.weibo.profileStats || typeof appState.weibo.profileStats !== "object") {
+        appState.weibo.profileStats = {
+          fansCount: "3",
+          followCount: "20",
+          praiseCount: "4",
+          bannerImage: ""
+        };
+      }
+      return appState.weibo.profileStats;
+    }
+
+    function renderWeiboProfilePage() {
+      ensureWeiboState();
+      const stats = ensureWeiboProfileStats();
+      const myAvatar = appState.theme.cardProfileCoverImage || appState.theme.avatarImage || "https://771553.xyz/file/studio/5FDVc1VrKzVdH5mO.jpg";
+      const myName = appState.theme.cardProfileName || "我";
+      const myBio = appState.theme.cardProfileBio || "暂无简介";
+
+      if (wbProAvatar) wbProAvatar.style.backgroundImage = `url('${myAvatar}')`;
+      if (wbProName) wbProName.textContent = myName;
+      if (wbProBio) wbProBio.textContent = myBio;
+      if (wbProFansVal) wbProFansVal.textContent = String(stats.fansCount || "3");
+      if (wbProFollowVal) wbProFollowVal.textContent = String(stats.followCount || "20");
+      if (wbProPraiseVal) wbProPraiseVal.textContent = String(stats.praiseCount || "4");
+
+      if (wbProBanner) {
+        const bannerSrc = stats.bannerImage || appState.theme.desktopBackground || "https://771553.xyz/file/studio/5FDVc1VrKzVdH5mO.jpg";
+        wbProBanner.style.backgroundImage = `url('${bannerSrc}')`;
+      }
+
+      // 渲染个人发表的微博流
+      if (wbProFeedList) {
+        wbProFeedList.innerHTML = "";
+        const allPosts = appState.weibo.posts || [];
+        const myPosts = allPosts.filter(p => p.authorName === myName || p.authorName === "我");
+
+        if (wbProTotalPostLabel) {
+          wbProTotalPostLabel.textContent = `全部微博 (${myPosts.length})`;
+        }
+
+        if (!myPosts.length) {
+          wbProFeedList.innerHTML = `<div style="text-align:center; padding:40px 16px; color:#8c9098; font-size:12.5px;">暂未发布微博，快去首页点击右上角【+】发布一条吧。</div>`;
+        } else {
+          myPosts.forEach(post => {
+            const card = document.createElement("article");
+            card.className = "wb-card";
+            card.innerHTML = `
+              <div class="wb-card-header">
+                <div class="wb-card-author-wrap">
+                  <div class="wb-card-avatar-box">
+                    <div class="wb-card-avatar" style="background-image:url('${myAvatar}');"></div>
+                  </div>
+                  <div class="wb-card-meta">
+                    <div class="wb-meta-row1"><strong>${myName}</strong></div>
+                    <div class="wb-meta-row2">
+                      <span>${post.time || "刚刚"}</span>
+                      <span>${post.source || "来自 iPhone 客户端"}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="wb-card-text">${post.text || ""}</div>
+              ${post.image ? `<div class="wb-media-container"><div class="wb-img-grid grid-1"><img src="${post.image}" alt="配图" /></div></div>` : ""}
+              <div class="wb-card-actions">
+                <button class="wb-action-btn" type="button"><i class="fa-solid fa-arrow-up-from-bracket"></i> <span>${post.shares || "转发"}</span></button>
+                <button class="wb-action-btn" type="button"><i class="fa-regular fa-comment"></i> <span>${post.comments?.length || "评论"}</span></button>
+                <button class="wb-action-btn" type="button"><i class="fa-regular fa-thumbs-up"></i> <span>${post.likes || "赞"}</span></button>
+              </div>
+            `;
+            wbProFeedList.appendChild(card);
+          });
+        }
+      }
+    }
+
+    function openWeiboProfilePage() {
+      renderWeiboProfilePage();
+      if (wbProfilePage) wbProfilePage.classList.add("show");
+    }
+
+    if (closeWbProfile && wbProfilePage) {
+      closeWbProfile.addEventListener("click", () => wbProfilePage.classList.remove("show"));
+    }
+
+    if (openWbProfileFromMine) {
+      openWbProfileFromMine.addEventListener("click", openWeiboProfilePage);
+    }
+
+    // 绑定微博个人主页头像点击直接打开个人中心
+    document.addEventListener("click", (e) => {
+      if (e.target.closest("#wbMineAvatar") || e.target.closest(".wb-qc-avatar")) {
+        openWeiboProfilePage();
+      }
+    });
+
+    if (wbProEditBtn) {
+      wbProEditBtn.addEventListener("click", () => {
+        openEditProfileModal();
+      });
+    }
+
+    // 自定义编辑粉丝数量
+    if (editWbFansCount) {
+      editWbFansCount.addEventListener("click", async () => {
+        const stats = ensureWeiboProfileStats();
+        const nextVal = await showMusicPrompt({
+          title: "自定义粉丝数量",
+          placeholder: "例如：100万 / 5200 / 99",
+          value: String(stats.fansCount || "3"),
+          confirmText: "保存修改"
+        });
+        if (nextVal !== null && nextVal.trim()) {
+          stats.fansCount = nextVal.trim();
+          renderWeiboProfilePage();
+          renderWeiboMinePanel();
+          await saveState();
+          showCatpawAlert(`粉丝数量已修改为：${stats.fansCount}`);
+        }
+      });
+    }
+
+    // 自定义编辑关注数量
+    if (editWbFollowCount) {
+      editWbFollowCount.addEventListener("click", async () => {
+        const stats = ensureWeiboProfileStats();
+        const nextVal = await showMusicPrompt({
+          title: "自定义关注数量",
+          placeholder: "例如：20 / 300 / 12",
+          value: String(stats.followCount || "20"),
+          confirmText: "保存修改"
+        });
+        if (nextVal !== null && nextVal.trim()) {
+          stats.followCount = nextVal.trim();
+          renderWeiboProfilePage();
+          renderWeiboMinePanel();
+          await saveState();
+          showCatpawAlert(`关注数量已修改为：${stats.followCount}`);
+        }
+      });
+    }
+
+    // 自定义编辑转评赞/获赞数量
+    if (editWbPraiseCount) {
+      editWbPraiseCount.addEventListener("click", async () => {
+        const stats = ensureWeiboProfileStats();
+        const nextVal = await showMusicPrompt({
+          title: "自定义转评赞/获赞数",
+          placeholder: "例如：2.8万 / 888 / 4",
+          value: String(stats.praiseCount || "4"),
+          confirmText: "保存修改"
+        });
+        if (nextVal !== null && nextVal.trim()) {
+          stats.praiseCount = nextVal.trim();
+          renderWeiboProfilePage();
+          renderWeiboMinePanel();
+          await saveState();
+          showCatpawAlert(`转评赞数量已修改为：${stats.praiseCount}`);
+        }
+      });
+    }
+
+    // 顶部背景墙点击换图
+    if (wbProBanner && wbProBannerInput) {
+      wbProBanner.addEventListener("click", (e) => {
+        if (e.target.closest(".wb-pro-nav-btn")) return;
+        wbProBannerInput.click();
+      });
+      wbProBannerInput.addEventListener("change", (e) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+        readImage(file, async (src) => {
+          const stats = ensureWeiboProfileStats();
+          stats.bannerImage = src;
+          renderWeiboProfilePage();
+          await saveState();
+          showCatpawAlert("微博个人主页背景图更换成功！");
+        });
+      });
     }
 
     // 渲染「我的经常访问」角色头像列表
