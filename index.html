@@ -2426,6 +2426,49 @@
       justify-content: center;
     }
 
+    .chat-presence-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 3.5px;
+      font-size: 9px;
+      font-weight: 600;
+      color: #777777;
+      background: #f2f2f2;
+      padding: 1px 6px;
+      border-radius: 999px;
+      margin-left: 6px;
+      letter-spacing: 0;
+      vertical-align: middle;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .chat-presence-badge.online {
+      color: #111111;
+      background: #ebebeb;
+    }
+
+    .chat-presence-badge.sleeping {
+      color: #8e8e93;
+      background: #f5f5f5;
+    }
+
+    .chat-presence-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: #111111;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+
+    .chat-presence-dot.sleeping {
+      background: #8e8e93;
+    }
+
+    .chat-presence-dot.busy {
+      background: #555555;
+    }
+
     /* 极简无框纯净通讯录名册 (Clean Minimalist Contacts) */
     .qq-contacts-wrap {
       padding: 8px 18px calc(88px + env(safe-area-inset-bottom));
@@ -18358,6 +18401,20 @@
         <div class="chat-setting-section-header">认知与模型感知</div>
 
         <div class="chat-setting-item">
+          <div class="chat-setting-title"><i class="fa-solid fa-signal"></i> 角色实时在线状态</div>
+          <select id="chatPresenceStatusSelect" style="border-radius:14px; padding:10px 14px; min-height:44px; width:100%; background:#f7f7f7; color:#1a1a1a; font-size:13px; border:none; outline:none;">
+            <option value="auto">自动随作息（智能呈现 在线 / 忙碌 / 睡觉中）</option>
+            <option value="online">固定在线</option>
+            <option value="just_online">刚刚在线</option>
+            <option value="10m">10分钟前在线</option>
+            <option value="busy">忙碌中</option>
+            <option value="sleeping">睡觉中 (深夜/休息)</option>
+            <option value="stealth">隐身</option>
+          </select>
+          <div class="chat-ai-result">状态显示在会话列表与顶栏；若为“睡觉中”或“忙碌中”，角色回复会真实体现对应作息（如迷糊、困倦、抱怨被吵醒或简短说明）。</div>
+        </div>
+
+        <div class="chat-setting-item">
           <div class="chat-setting-title"><i class="fa-solid fa-paper-plane"></i> 角色主动发消息</div>
           <div class="chat-role-grid" style="grid-template-columns: 1fr 1fr; margin-bottom: 8px;">
             <select id="chatProactiveModeSelect">
@@ -24913,8 +24970,55 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
         proactiveMode: "normal",
         proactiveStart: "08:00",
         proactiveEnd: "23:30",
-        lastProactiveAt: 0
+        lastProactiveAt: 0,
+        presenceStatus: "auto"
       };
+    }
+
+    function getRolePresenceStatus(role) {
+      if (!role) return { text: "离线", key: "offline" };
+      const roleId = getRoleId(role);
+      const settings = appState.qq.chatSettings?.[roleId] || {};
+      const statusMode = settings.presenceStatus || "auto";
+
+      if (statusMode === "online") return { text: "在线", key: "online" };
+      if (statusMode === "just_online") return { text: "刚刚在线", key: "just_online" };
+      if (statusMode === "10m") return { text: "10分钟前在线", key: "10m" };
+      if (statusMode === "busy") return { text: "忙碌中", key: "busy" };
+      if (statusMode === "sleeping") return { text: "睡觉中", key: "sleeping" };
+      if (statusMode === "stealth") return { text: "隐身", key: "stealth" };
+
+      // auto 模式智能模拟生活作息
+      const now = new Date();
+      const hour = now.getHours();
+      const minute = now.getMinutes();
+      const currentMin = hour * 60 + minute;
+
+      // 00:30 ~ 07:15 深夜熟睡期
+      if (currentMin >= 30 && currentMin < 435) {
+        return { text: "睡觉中", key: "sleeping" };
+      }
+
+      // 根据最近消息时间推断
+      const lastMsg = role.messages && role.messages.length ? role.messages[role.messages.length - 1] : null;
+      if (lastMsg && lastMsg.createdAtMs) {
+        const diffMinutes = Math.floor((Date.now() - lastMsg.createdAtMs) / 60000);
+        if (diffMinutes < 3) return { text: "在线", key: "online" };
+        if (diffMinutes < 15) return { text: "刚刚在线", key: "just_online" };
+        if (diffMinutes < 60) return { text: `${diffMinutes}分钟前在线`, key: "10m" };
+      }
+
+      // 上午工作/学习时段
+      if ((currentMin >= 570 && currentMin <= 710) || (currentMin >= 840 && currentMin <= 1040)) {
+        return { text: "忙碌中", key: "busy" };
+      }
+
+      // 午夜临睡
+      if (currentMin >= 1410 || currentMin < 30) {
+        return { text: "准备睡了", key: "sleeping" };
+      }
+
+      return { text: "在线", key: "online" };
     }
 
     function getActiveChatSettings() {
@@ -25013,6 +25117,12 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       const headerAvatar = document.querySelector("#qqThreadHeaderAvatar");
       if (headerAvatar) {
         setAvatarElementImage(headerAvatar, avatar || "");
+      }
+      const headerSubTyping = document.querySelector(".qq-thread-sub-typing");
+      if (headerSubTyping) {
+        const base = getCurrentChatBase();
+        const presence = getRolePresenceStatus(base.role);
+        headerSubTyping.innerHTML = `<span class="online-dot" style="display:inline-block; background:${presence.key === 'online' ? '#111111' : '#8e8e93'};"></span><span>${presence.text}</span>`;
       }
     }
 
@@ -25830,16 +25940,20 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       });
     }
 
-    function buildChatItem({ id, name, subtitle, avatar, time = formatChatTime(new Date()), unread = 0, onClick }) {
+    function buildChatItem({ id, name, subtitle, avatar, presenceInfo, time = formatChatTime(new Date()), unread = 0, onClick }) {
       const button = document.createElement("button");
       button.className = "qq-chat-row";
       button.type = "button";
       button.dataset.chatId = id;
 
+      const presenceBadge = presenceInfo
+        ? `<span class="chat-presence-badge ${presenceInfo.key}"><i class="chat-presence-dot ${presenceInfo.key}"></i>${presenceInfo.text}</span>`
+        : "";
+
       button.innerHTML = `
         <div class="qq-chat-avatar" aria-hidden="true"></div>
         <div class="qq-chat-copy">
-          <strong>${name || "未命名角色"}</strong>
+          <strong><span>${name || "未命名角色"}</span>${presenceBadge}</strong>
           <p>${subtitle || "点击进入对话"}</p>
         </div>
         <div class="qq-chat-meta">
@@ -25924,11 +26038,13 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
         const latestMessage = messages[messages.length - 1];
         const lastMessage = latestMessage ? getDisplayMessageText(latestMessage) : "点击进入对话";
 
+        const presence = getRolePresenceStatus(role);
         const item = buildChatItem({
           id: role.id || role.name,
           name: role.name || "未命名角色",
           subtitle: lastMessage,
           avatar: role.avatar || "",
+          presenceInfo: presence,
           time: formatChatListTime(latestMessage?.createdAtMs),
           unread: 0,
           onClick: () => {
@@ -26237,6 +26353,9 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
           ? "已保存一张 AI 图片感知素材。"
           : "尚未上传感知图片。";
       }
+      const chatPresenceStatusSelect = document.querySelector("#chatPresenceStatusSelect");
+      if (chatPresenceStatusSelect) chatPresenceStatusSelect.value = settings.presenceStatus || "auto";
+
       const chatProactiveModeSelect = document.querySelector("#chatProactiveModeSelect");
       const chatProactiveStart = document.querySelector("#chatProactiveStart");
       const chatProactiveEnd = document.querySelector("#chatProactiveEnd");
@@ -26302,6 +26421,9 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       settings.friendBubbleColor = "#ffffff";
       settings.selfTextColor = "#2d3035";
       settings.friendTextColor = "#2d3035";
+      const chatPresenceStatusSelect = document.querySelector("#chatPresenceStatusSelect");
+      if (chatPresenceStatusSelect) settings.presenceStatus = chatPresenceStatusSelect.value;
+
       const chatProactiveModeSelect = document.querySelector("#chatProactiveModeSelect");
       const chatProactiveStart = document.querySelector("#chatProactiveStart");
       const chatProactiveEnd = document.querySelector("#chatProactiveEnd");
@@ -29806,12 +29928,21 @@ function extractRoleReplyLines(reply) {
         }
       }
 
+      const presence = getRolePresenceStatus(role);
+      const presenceDirective = presence.key === "sleeping"
+        ? "【非常重要：你当前处于「睡觉中」状态】如果用户此时发来消息，你正在熟睡、休息中，你必须符合半夜或清晨被吵醒的真实反应：可以极度困倦、迷糊、少字、带点迷迷糊糊的错字或抱怨、甚至让对方明天再说，或者只回一个字；绝对不能像大白天一样清醒精神地长篇大论！"
+        : presence.key === "busy"
+        ? "【角色状态：忙碌中】你当前手头有事情正在忙，回复应更简短干练、先告知在忙或稍后再聊。"
+        : `【角色状态：${presence.text}】`;
+
       return [
         "You will simulate the performance of the CLAUDE model in role-playing, simulating its reasoning mechanism and the way it handles human emotional feedback based on everything you know.",
         `你扮演的角色姓名：${role.name || "未命名角色"}`,
         `角色性别：${role.gender || "未填写"}`,
         `角色所在地：${role.location || "未填写"}`,
         `角色生日：${role.birthday || "未填写"}`,
+        `角色当前在线状态：【${presence.text}】`,
+        presenceDirective,
         activeMaskPrompt,
         `## Character settings begin here:## Chat messages:：${persona}`,
         `我的设定/昵称/身份：${myProfile}`,
