@@ -18358,6 +18358,24 @@
         <div class="chat-setting-section-header">认知与模型感知</div>
 
         <div class="chat-setting-item">
+          <div class="chat-setting-title"><i class="fa-solid fa-paper-plane"></i> 角色主动发消息</div>
+          <div class="chat-role-grid" style="grid-template-columns: 1fr 1fr; margin-bottom: 8px;">
+            <select id="chatProactiveModeSelect">
+              <option value="off">主动强度：关闭</option>
+              <option value="rare">偶尔 (约8~18小时)</option>
+              <option value="normal" selected>正常 (约3~6小时)</option>
+              <option value="active">很活跃 (约1~2小时)</option>
+            </select>
+            <div style="display:flex; align-items:center; gap:6px;">
+              <input id="chatProactiveStart" type="text" placeholder="08:00" style="text-align:center; padding:0 8px;" />
+              <span style="color:#8e8e93; font-size:11px;">至</span>
+              <input id="chatProactiveEnd" type="text" placeholder="23:30" style="text-align:center; padding:0 8px;" />
+            </div>
+          </div>
+          <div class="chat-ai-result">按角色生活节奏随机挑起话题：分享生活切片、突然想起某事、感知时刻或重新破冰。</div>
+        </div>
+
+        <div class="chat-setting-item">
           <div class="chat-setting-title"><i class="fa-regular fa-clock"></i> 现实时间感知</div>
           <div class="chat-toggle-row">
             <span>角色能感知当前真实日期、星期与时刻（如深夜、清晨）</span>
@@ -24891,7 +24909,11 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
         voiceId: "",
         voiceSpeed: 1.0,
         voicePitch: 0,
-        forceVoice: false
+        forceVoice: false,
+        proactiveMode: "normal",
+        proactiveStart: "08:00",
+        proactiveEnd: "23:30",
+        lastProactiveAt: 0
       };
     }
 
@@ -26215,6 +26237,13 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
           ? "已保存一张 AI 图片感知素材。"
           : "尚未上传感知图片。";
       }
+      const chatProactiveModeSelect = document.querySelector("#chatProactiveModeSelect");
+      const chatProactiveStart = document.querySelector("#chatProactiveStart");
+      const chatProactiveEnd = document.querySelector("#chatProactiveEnd");
+      if (chatProactiveModeSelect) chatProactiveModeSelect.value = settings.proactiveMode || "normal";
+      if (chatProactiveStart) chatProactiveStart.value = settings.proactiveStart || "08:00";
+      if (chatProactiveEnd) chatProactiveEnd.value = settings.proactiveEnd || "23:30";
+
       if (chatHistorySearch) chatHistorySearch.value = "";
       if (chatHistoryResults) chatHistoryResults.textContent = "输入关键词后显示本地匹配结果。";
       if (chatMemoryTurnsInput) chatMemoryTurnsInput.value = String(settings.memoryTurns || 10);
@@ -26273,6 +26302,13 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       settings.friendBubbleColor = "#ffffff";
       settings.selfTextColor = "#2d3035";
       settings.friendTextColor = "#2d3035";
+      const chatProactiveModeSelect = document.querySelector("#chatProactiveModeSelect");
+      const chatProactiveStart = document.querySelector("#chatProactiveStart");
+      const chatProactiveEnd = document.querySelector("#chatProactiveEnd");
+      if (chatProactiveModeSelect) settings.proactiveMode = chatProactiveModeSelect.value;
+      if (chatProactiveStart) settings.proactiveStart = chatProactiveStart.value.trim() || "08:00";
+      if (chatProactiveEnd) settings.proactiveEnd = chatProactiveEnd.value.trim() || "23:30";
+
       const memoryTurnsValue = Number(chatMemoryTurnsInput?.value || 10);
       settings.memoryTurns = Number.isFinite(memoryTurnsValue) ? memoryTurnsValue : 10;
 
@@ -28798,10 +28834,133 @@ function extractRoleReplyLines(reply) {
       autoMomentBusy = false;
     }
 
+    let proactiveMessageBusy = false;
+
+    function isTimeInProactiveRange(startStr = "08:00", endStr = "23:30") {
+      const now = new Date();
+      const currentMinutes = now.getHours() * 60 + now.getMinutes();
+
+      const parseMinutes = (str, defaultMin) => {
+        if (!str || !str.includes(":")) return defaultMin;
+        const [h, m] = str.split(":").map(Number);
+        return (isNaN(h) ? 0 : h) * 60 + (isNaN(m) ? 0 : m);
+      };
+
+      const start = parseMinutes(startStr, 8 * 60);
+      const end = parseMinutes(endStr, 23 * 60 + 30);
+
+      if (start <= end) {
+        return currentMinutes >= start && currentMinutes <= end;
+      } else {
+        // 跨午夜区间，例如 22:00 至 03:00
+        return currentMinutes >= start || currentMinutes <= end;
+      }
+    }
+
+    async function maybeAutoProactiveMessage() {
+      if (proactiveMessageBusy || roleReplyBusy) return;
+      ensureQqState();
+      if (!appState.qq.roles.length) return;
+      const config = getApiConfigOrAlert(true);
+      if (!config) return;
+
+      const now = Date.now();
+      const reasons = [
+        "突然想起前几天聊过的事",
+        "在生活中看到了某个很有意思的东西想分享",
+        "刚刚忙完一阵，随口问候一下",
+        "此刻很闲、走神、无聊",
+        "感知到了当前具体的时间或天气有感而发",
+        "想起了对方，随手发句消息"
+      ];
+
+      for (const role of appState.qq.roles) {
+        const roleId = getRoleId(role);
+        const settings = getRoleChatSettingsById(roleId);
+        const mode = settings.proactiveMode || "normal";
+        if (mode === "off") continue;
+
+        // 检查活跃时间段
+        if (!isTimeInProactiveRange(settings.proactiveStart, settings.proactiveEnd)) {
+          continue;
+        }
+
+        // 根据强度设定冷却时间
+        let cooldownMs = 4 * 3600 * 1000; // 默认 normal: 4 小时
+        if (mode === "rare") cooldownMs = 12 * 3600 * 1000;
+        if (mode === "active") cooldownMs = 1.5 * 3600 * 1000;
+
+        const lastActiveTime = Math.max(
+          settings.lastProactiveAt || 0,
+          role.messages?.[role.messages.length - 1]?.createdAtMs || 0
+        );
+
+        // 如果距离上次聊天未超过冷却时间，跳过
+        if (now - lastActiveTime < cooldownMs) {
+          continue;
+        }
+
+        // 如果用户当前正打开着这个角色的聊天界面，不进行后台突袭，交给常规聊天
+        if (appState.qq.activeChatId === roleId && qqPage?.classList.contains("show") && qqThreadPanel?.classList.contains("active")) {
+          continue;
+        }
+
+        // 随机触发几率
+        if (Math.random() > 0.45) continue;
+
+        proactiveMessageBusy = true;
+        try {
+          const selectedReason = reasons[Math.floor(Math.random() * reasons.length)];
+          const history = buildListenTogetherHistory(roleId);
+          const rolePrompt = withRoleChatContext(roleId, () => buildRoleReplyPrompt());
+
+          const reply = await callChatCompletion([
+            { role: "system", content: ENHANCED_SYSTEM_PROMPT },
+            { role: "system", content: rolePrompt },
+            ...history,
+            {
+              role: "system",
+              content: [
+                "【AI 角色主动发消息核心设定】",
+                "这不是 user 刚发了消息，而是隔了一段时间后，你自己有了真实的生活节奏和想法，主动给 user 发来的一到两条微信/聊天消息。",
+                `你此刻发消息的心理契机：${selectedReason}。`,
+                "规则铁律：",
+                "1. 完全符合你的人设性格与语言习惯，不要机械问好，不要客套，更不要像客服。",
+                "2. 像真人随手打字：可以极其简短、随口一问、发个刚遇到的事、或是吐槽一句。",
+                "3. 绝对禁止提议线下碰面、上门或接送，严格遵守不可线下见面的最高基线规则。",
+                "4. 只输出 1 到 2 条真实消息内容，多条直接换行，绝对严禁任何前言、解释或括号旁白。"
+              ].join("\n")
+            },
+            {
+              role: "user",
+              content: `[系统触发：距离你们上次聊天已过去数小时，此刻请按照你的动机主动发送消息给 user。]`
+            }
+          ], {
+            temperature: 0.85,
+            top_p: 0.92,
+            max_tokens: 600,
+            silent: true
+          });
+
+          if (reply) {
+            await deliverListenTogetherReply(role, reply);
+            settings.lastProactiveAt = now;
+            await saveState();
+          }
+        } catch (err) {
+          console.warn("主动发消息处理失败：", err);
+        } finally {
+          proactiveMessageBusy = false;
+        }
+        break; // 每次检查循环至多触发一位角色，避免消息轰炸
+      }
+    }
+
     function startAutoMomentLoop() {
       if (autoMomentTimer) clearInterval(autoMomentTimer);
       autoMomentTimer = setInterval(() => {
         maybeAutoGenerateMoment(false);
+        maybeAutoProactiveMessage();
       }, 60000);
     }
 
