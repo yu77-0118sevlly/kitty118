@@ -7587,55 +7587,45 @@
       }
     }
 
-    /* 聊天内「我的」面板重构 · 极简纯黑白灰 · 融入底栏体系 */
+    /* 聊天内「我的」面板重构 · 微信风极简纯黑白灰 */
     #qqPanelCard.active {
       display: flex;
       flex-direction: column;
-      background: #ffffff;
+      background: #f7f7f7;
       flex: 1;
       min-height: 0;
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
-      padding: calc(8px + env(safe-area-inset-top)) 18px calc(96px + env(safe-area-inset-bottom));
+      padding: calc(10px + env(safe-area-inset-top)) 0 calc(96px + env(safe-area-inset-bottom));
     }
 
-    .me-page-head {
-      min-height: 44px;
+    /* 微信风格个人资料卡头部 */
+    .wx-profile-card {
+      background: #ffffff;
+      padding: 16px 20px 22px;
       display: flex;
       align-items: center;
-      justify-content: center;
-      margin-bottom: 12px;
-      border-bottom: 1px solid #f5f5f5;
-      padding-bottom: 6px;
+      gap: 16px;
+      cursor: pointer;
+      margin-bottom: 10px;
+      transition: background 0.12s ease;
     }
 
-    .me-page-head strong {
-      font-size: 16px;
-      font-weight: 700;
-      color: #111111;
-      letter-spacing: -0.02em;
+    .wx-profile-card:active {
+      background: #fbfbfb;
     }
 
-    .me-profile-card {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      padding: 14px 0 16px;
-    }
-
-    .me-avatar-wrap {
-      position: relative;
-      width: 58px;
-      height: 58px;
-      border-radius: 50%;
-      background: #f5f5f5;
+    .wx-avatar-wrap {
+      width: 62px;
+      height: 62px;
+      border-radius: 12px;
+      background: #f0f0f0;
       border: 1px solid #ededed;
       flex-shrink: 0;
       overflow: hidden;
-      cursor: pointer;
     }
 
-    .me-avatar {
+    .wx-avatar {
       width: 100%;
       height: 100%;
       background-size: cover;
@@ -7643,151 +7633,239 @@
       background-repeat: no-repeat;
     }
 
-    .me-meta {
+    .wx-profile-info {
       flex: 1;
       min-width: 0;
     }
 
-    .me-meta strong {
-      display: block;
-      color: #111111;
-      font-size: 17px;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      line-height: 1.25;
-      cursor: pointer;
+    .wx-name-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
-    .me-meta p {
-      margin-top: 4px;
-      color: #8e8e93;
-      font-size: 11.5px;
-      font-weight: 400;
-      line-height: 1.4;
-      cursor: pointer;
+    .wx-name-row strong {
+      font-size: 18px;
+      font-weight: 700;
+      color: #111111;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
 
-    .me-stats-row {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      text-align: center;
-      padding: 12px 0 14px;
-      border-top: 1px solid #f5f5f5;
-      border-bottom: 1px solid #f5f5f5;
-      margin-bottom: 14px;
+    .wx-mask-badge {
+      font-size: 10px;
+      color: #666666;
+      background: #f2f2f2;
+      border: 1px solid #e5e5e5;
+      padding: 1px 7px;
+      border-radius: 999px;
+      flex-shrink: 0;
     }
 
-    .me-stat-item b {
-      display: block;
-      color: #111111;
-      font-size: 16px;
-      font-weight: 700;
-      font-variant-numeric: tabular-nums;
-    }
-
-    .me-stat-item span {
-      display: block;
-      margin-top: 2px;
-      color: #8e8e93;
-      font-size: 10.5px;
-      font-weight: 400;
-    }
-
-    /* 极简灰底余额卡片 */
-    .me-asset-box {
-      border-radius: 18px;
-      background: #f7f7f7;
-      padding: 16px;
-      margin-bottom: 14px;
-    }
-
-    .me-asset-head {
-      margin-bottom: 12px;
-    }
-
-    .me-asset-head span {
-      color: #8e8e93;
-      font-size: 10.5px;
-      font-weight: 500;
-    }
-
-    .me-asset-head .asset-amount {
+    .wx-id-row {
       margin-top: 4px;
-      color: #111111;
-      font-size: 28px;
-      font-weight: 700;
-      letter-spacing: -0.03em;
-      line-height: 1;
-      font-variant-numeric: tabular-nums;
-    }
-
-    .me-asset-btns {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-    }
-
-    .me-btn {
-      min-height: 38px;
-      border-radius: 10px;
-      border: none;
-      background: #ffffff;
-      color: #111111;
       font-size: 12px;
-      font-weight: 600;
-      cursor: pointer;
+      color: #8e8e93;
+      letter-spacing: 0;
+    }
+
+    .wx-bio-row {
+      margin-top: 4px;
+      font-size: 11.5px;
+      color: #999999;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      line-height: 1.35;
+    }
+
+    .wx-head-right {
       display: flex;
       align-items: center;
-      justify-content: center;
-      transition: background 0.12s ease;
+      gap: 10px;
+      color: #c7c7cc;
+      font-size: 14px;
+      flex-shrink: 0;
     }
 
-    .me-btn:active {
-      background: #efefef;
+    .wx-head-right i.fa-qrcode {
+      font-size: 16px;
+      color: #555555;
     }
 
-    .me-btn.primary {
-      background: #000000;
-      color: #ffffff;
-    }
-
-    .me-btn.primary:active {
-      background: #333333;
-    }
-
-    /* 极简无框功能列表 */
-    .me-menu-list {
-      display: grid;
-      gap: 0;
+    /* 微信式独立分组卡片列表 */
+    .wx-cell-group {
+      background: #ffffff;
       margin-bottom: 10px;
+      display: flex;
+      flex-direction: column;
     }
 
-    .me-menu-row {
+    .wx-cell {
       width: 100%;
-      min-height: 50px;
-      border: 0;
-      background: transparent;
+      min-height: 52px;
+      padding: 0 18px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      color: #111111;
-      font-size: 13.5px;
-      font-weight: 500;
+      background: transparent;
+      border: none;
       cursor: pointer;
-      padding: 0 4px;
-      border-bottom: 1px solid #f5f5f5;
+      font-size: 14px;
+      color: #111111;
+      position: relative;
+      transition: background 0.12s ease;
     }
 
-    .me-menu-row:active {
-      opacity: 0.5;
+    .wx-cell:active {
+      background: #f9f9f9;
     }
 
-    .me-menu-row i:last-child {
+    .wx-cell + .wx-cell::before {
+      content: "";
+      position: absolute;
+      left: 54px;
+      right: 0;
+      top: 0;
+      height: 1px;
+      background: #f4f4f4;
+    }
+
+    .wx-cell-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 0;
+    }
+
+    .wx-cell-icon {
+      width: 22px;
+      font-size: 16px;
+      color: #111111;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+
+    .wx-cell-left span {
+      font-weight: 500;
+      letter-spacing: -0.01em;
+    }
+
+    .wx-cell-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #8e8e93;
+      font-size: 12px;
+    }
+
+    .wx-cell-right i.fa-chevron-right {
       color: #c7c7cc;
       font-size: 11px;
+    }
+
+    /* 面具管理弹窗与面具列表 */
+    .mask-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .mask-item {
+      background: #f9f9f9;
+      border-radius: 14px;
+      padding: 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border: 1px solid #eeeeee;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .mask-item.active {
+      border-color: #111111;
+      background: #ffffff;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+    }
+
+    .mask-avatar {
+      width: 46px;
+      height: 46px;
+      border-radius: 10px;
+      background: #e8e8e8;
+      background-size: cover;
+      background-position: center;
+      flex-shrink: 0;
+    }
+
+    .mask-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .mask-info-top {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .mask-info-top strong {
+      font-size: 14px;
+      color: #111111;
+      font-weight: 700;
+    }
+
+    .mask-tag-active {
+      font-size: 9.5px;
+      color: #ffffff;
+      background: #111111;
+      padding: 1px 6px;
+      border-radius: 4px;
+    }
+
+    .mask-info-sub {
+      margin-top: 3px;
+      font-size: 11px;
+      color: #8e8e93;
+    }
+
+    .mask-info-prompt {
+      margin-top: 3px;
+      font-size: 10.5px;
+      color: #666666;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .mask-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .mask-action-btn {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: none;
+      background: #f0f0f0;
+      color: #333333;
+      font-size: 11px;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+    }
+
+    .mask-action-btn.danger {
+      color: #999999;
+      background: transparent;
     }
 
     /* 展开面板（账单、表情、世界书）保持极简灰黑白 */
@@ -16582,51 +16660,103 @@
 
             <!-- 极简纯黑白灰「我的」面板（直接融入底栏Dock体系） -->
             <section class="qq-panel" id="qqPanelCard">
-              <header class="me-page-head">
-                <strong id="cardPageTitle" class="qq-home-editable">我的</strong>
-              </header>
-
-              <div class="me-profile-card">
-                <div class="me-avatar-wrap">
-                  <div class="me-avatar" id="cardProfileCover" role="button" tabindex="0" aria-label="更换头像"></div>
+              <!-- 微信风格 个人信息头部卡片 -->
+              <section class="wx-profile-card" id="openEditProfileBtn" aria-label="个人信息与资料设置">
+                <div class="wx-avatar-wrap">
+                  <div class="wx-avatar" id="cardProfileCover"></div>
                 </div>
-                <div class="me-meta">
-                  <strong id="cardProfileName" class="qq-home-editable">我</strong>
-                  <p id="cardProfileBio" class="qq-home-editable">记录日常与生活</p>
+                <div class="wx-profile-info">
+                  <div class="wx-name-row">
+                    <strong id="cardProfileName">我</strong>
+                    <span class="wx-mask-badge" id="cardMaskName">默认身份</span>
+                  </div>
+                  <div class="wx-id-row">微信号：<span id="cardWechatIdDisplay">yuan_2026</span></div>
+                  <div class="wx-bio-row" id="cardProfileBio">记录日常与生活</div>
                 </div>
+                <div class="wx-head-right">
+                  <i class="fa-solid fa-qrcode"></i>
+                  <i class="fa-solid fa-chevron-right"></i>
+                </div>
+              </section>
+
+              <!-- 分组一：服务与钱包 -->
+              <div class="wx-cell-group">
+                <button class="wx-cell" type="button" id="openWalletRowBtn">
+                  <div class="wx-cell-left">
+                    <span class="wx-cell-icon"><i class="fa-solid fa-wallet"></i></span>
+                    <span>钱包</span>
+                  </div>
+                  <div class="wx-cell-right">
+                    <span id="wxQuickBalanceText">¥50,000.00</span>
+                    <i class="fa-solid fa-chevron-right"></i>
+                  </div>
+                </button>
               </div>
 
-              <div class="me-stats-row">
-                <div class="me-stat-item"><b id="cardStatBills">0</b><span>账单</span></div>
-                <div class="me-stat-item"><b id="cardStatStickers">0</b><span>表情</span></div>
-                <div class="me-stat-item"><b id="cardStatWorlds">0</b><span>设定</span></div>
-              </div>
-
-              <!-- 极简资料操作与编辑入口 -->
-              <div style="display: flex; gap: 8px; margin-bottom: 14px;">
-                <button class="ins-wide-btn" id="openEditProfileBtn" type="button" style="min-height: 38px; border-radius: 12px; font-size: 12px; background: #f7f7f7;">
-                  <i class="fa-solid fa-pen" style="font-size: 11px; color: #555555;"></i>
-                  <span>编辑个人资料</span>
+              <!-- 分组二：身份面具管理 -->
+              <div class="wx-cell-group">
+                <button class="wx-cell" type="button" id="openMaskManagerBtn">
+                  <div class="wx-cell-left">
+                    <span class="wx-cell-icon"><i class="fa-solid fa-masks-theater"></i></span>
+                    <span>面具身份 (Persona)</span>
+                  </div>
+                  <div class="wx-cell-right">
+                    <span id="wxMaskSubText">切换与设定身份</span>
+                    <i class="fa-solid fa-chevron-right"></i>
+                  </div>
                 </button>
               </div>
 
-              <!-- 极简功能列表 -->
-              <div class="me-menu-list">
-                <button class="me-menu-row" type="button" id="openWalletRowBtn">
-                  <span><i class="fa-solid fa-wallet" style="margin-right:6px;"></i> 钱包</span>
-                  <i class="fa-solid fa-chevron-right"></i>
+              <!-- 分组三：社交与记录 -->
+              <div class="wx-cell-group">
+                <button class="wx-cell" type="button" id="openMomentsFromCardBtn">
+                  <div class="wx-cell-left">
+                    <span class="wx-cell-icon"><i class="fa-regular fa-compass"></i></span>
+                    <span>朋友圈</span>
+                  </div>
+                  <div class="wx-cell-right">
+                    <i class="fa-solid fa-chevron-right"></i>
+                  </div>
                 </button>
-                <button class="me-menu-row" type="button" data-card-panel="billPanel">
-                  <span><i class="fa-solid fa-receipt" style="margin-right:6px;"></i> 账单明细</span>
-                  <i class="fa-solid fa-chevron-right"></i>
+                <button class="wx-cell" type="button" data-card-panel="billPanel">
+                  <div class="wx-cell-left">
+                    <span class="wx-cell-icon"><i class="fa-solid fa-receipt"></i></span>
+                    <span>账单明细</span>
+                  </div>
+                  <div class="wx-cell-right">
+                    <i class="fa-solid fa-chevron-right"></i>
+                  </div>
                 </button>
-                <button class="me-menu-row" type="button" data-card-panel="stickerPanel">
-                  <span><i class="fa-regular fa-face-smile" style="margin-right:6px;"></i> 表情包库</span>
-                  <i class="fa-solid fa-chevron-right"></i>
+              </div>
+
+              <!-- 分组四：库与系统设定 -->
+              <div class="wx-cell-group">
+                <button class="wx-cell" type="button" data-card-panel="stickerPanel">
+                  <div class="wx-cell-left">
+                    <span class="wx-cell-icon"><i class="fa-regular fa-face-smile"></i></span>
+                    <span>表情包库</span>
+                  </div>
+                  <div class="wx-cell-right">
+                    <i class="fa-solid fa-chevron-right"></i>
+                  </div>
                 </button>
-                <button class="me-menu-row" type="button" data-card-panel="worldBookPanel">
-                  <span><i class="fa-solid fa-book-open" style="margin-right:6px;"></i> 世界书设定</span>
-                  <i class="fa-solid fa-chevron-right"></i>
+                <button class="wx-cell" type="button" data-card-panel="worldBookPanel">
+                  <div class="wx-cell-left">
+                    <span class="wx-cell-icon"><i class="fa-solid fa-book-open"></i></span>
+                    <span>世界书设定</span>
+                  </div>
+                  <div class="wx-cell-right">
+                    <i class="fa-solid fa-chevron-right"></i>
+                  </div>
+                </button>
+                <button class="wx-cell" type="button" id="openSettingsFromCardBtn">
+                  <div class="wx-cell-left">
+                    <span class="wx-cell-icon"><i class="fa-solid fa-gear"></i></span>
+                    <span>设置</span>
+                  </div>
+                  <div class="wx-cell-right">
+                    <i class="fa-solid fa-chevron-right"></i>
+                  </div>
                 </button>
               </div>
 
@@ -17430,8 +17560,8 @@
       </header>
 
       <div class="rolec-title">
-        <strong>编辑个人资料</strong>
-        <span>自定义我的昵称、个性签名与头像</span>
+        <strong>编辑个人信息</strong>
+        <span>设置头像、名字、微信号与个性签名</span>
       </div>
 
       <div class="role-editor-body" style="gap: 18px; margin-top: 10px;">
@@ -17451,19 +17581,106 @@
 
         <div class="rolec-group" style="margin-bottom: 12px;">
           <div class="field">
-            <label for="editProfileNameInput">昵称</label>
-            <input id="editProfileNameInput" type="text" placeholder="输入我的昵称" />
+            <label for="editProfileNameInput">名字</label>
+            <input id="editProfileNameInput" type="text" placeholder="设置你的名字" />
           </div>
 
           <div class="field" style="margin-top: 12px;">
-            <label for="editProfileBioInput">个性签名 / 简介</label>
-            <textarea id="editProfileBioInput" placeholder="输入你想展示的个人介绍或日常签名..." style="min-height: 90px;"></textarea>
+            <label for="editProfileWechatIdInput">微信号 (ID)</label>
+            <input id="editProfileWechatIdInput" type="text" placeholder="例如：yuan_2026" />
+          </div>
+
+          <div class="field" style="margin-top: 12px;">
+            <label for="editProfileBioInput">个性签名</label>
+            <textarea id="editProfileBioInput" placeholder="输入日常个性签名..." style="min-height: 90px;"></textarea>
           </div>
         </div>
 
         <div class="role-editor-actions">
           <button class="ins-wide-btn" id="cancelEditProfileBtn" type="button">取消</button>
           <button class="ins-wide-btn primary" id="saveEditProfileBtn" type="button">保存修改</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 独立面具管理页面 (Mask / Persona) -->
+  <section class="role-editor-modal" id="maskManagerModal" aria-label="面具身份管理">
+    <div class="role-editor-card" style="padding-bottom: calc(50px + env(safe-area-inset-bottom));">
+      <header class="rolec-topbar">
+        <button class="insc-icon-btn" id="closeMaskManager" type="button" aria-label="返回">
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <span class="rolec-topbar-label">Persona</span>
+        <button class="insc-icon-btn trailing" id="openCreateMaskBtn" type="button" aria-label="新建身份">
+          <i class="fa-solid fa-plus"></i>
+        </button>
+      </header>
+
+      <div class="rolec-title">
+        <strong>面具身份 (Persona)</strong>
+        <span>佩戴不同身份与角色对话，自动代入专属称呼与人设</span>
+      </div>
+
+      <div class="mask-list" id="maskListContainer"></div>
+    </div>
+  </section>
+
+  <!-- 新建/编辑单一面具弹窗 -->
+  <section class="role-editor-modal" id="maskEditModal" aria-label="编辑面具身份">
+    <div class="role-editor-card" style="padding-bottom: calc(50px + env(safe-area-inset-bottom));">
+      <header class="rolec-topbar">
+        <button class="insc-icon-btn" id="closeMaskEdit" type="button" aria-label="返回">
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <span class="rolec-topbar-label" id="maskEditTitleTop">New Mask</span>
+        <span></span>
+      </header>
+
+      <div class="rolec-title">
+        <strong id="maskEditHeading">新建身份面具</strong>
+        <span>设定该身份的称呼、微信号以及在对话中的详细背景</span>
+      </div>
+
+      <div class="role-editor-body" style="gap: 16px; margin-top: 10px;">
+        <section class="rolec-identity">
+          <div class="rolec-avatar-wrap">
+            <div class="role-preview-avatar" id="maskEditPreviewAvatar" role="button" tabindex="0"></div>
+            <span class="role-preview-avatar-badge"><i class="fa-solid fa-camera"></i></span>
+          </div>
+          <div class="rolec-identity-copy">
+            <strong id="maskEditPreviewName">新身份</strong>
+            <span>为该身份设定独立头像</span>
+            <button class="rolec-avatar-link" id="triggerMaskAvatarUpload" type="button">上传面具头像</button>
+            <input id="maskAvatarFileInput" type="file" accept="image/*" style="display:none;" />
+          </div>
+        </section>
+
+        <div class="rolec-group">
+          <div class="field">
+            <label for="maskTitleInput">面具名称 (标签)</label>
+            <input id="maskTitleInput" type="text" placeholder="例如：学妹身份 / 青梅竹马 / 助理" />
+          </div>
+
+          <div class="field" style="margin-top: 12px;">
+            <label for="maskUserNameInput">我的网名 / 昵称</label>
+            <input id="maskUserNameInput" type="text" placeholder="例如：小林" />
+          </div>
+
+          <div class="field" style="margin-top: 12px;">
+            <label for="maskWechatIdInput">微信号 (ID)</label>
+            <input id="maskWechatIdInput" type="text" placeholder="例如：lin_bubble" />
+          </div>
+
+          <div class="field" style="margin-top: 12px;">
+            <label for="maskPromptInput">身份详细设定 (AI 提示词背景)</label>
+            <textarea id="maskPromptInput" placeholder="描述你在此身份下的性格、年龄、职业、与对方角色的关系或说话习惯，AI 会在对话中准确识别该身份..." style="min-height: 140px;"></textarea>
+          </div>
+        </div>
+
+        <div class="role-editor-actions">
+          <button class="ins-wide-btn" id="cancelMaskEditBtn" type="button">取消</button>
+          <button class="ins-wide-btn primary" id="saveMaskEditBtn" type="button">保存面具</button>
         </div>
       </div>
     </div>
@@ -19179,8 +19396,9 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
         cardPageTitle: "我的",
         cardPageSubtitle: "",
         cardProfileName: "我",
-        cardProfileBio: "把角色关系、转账记录、表情和世界观设定收进一张透明卡片。",
+        cardProfileBio: "记录日常与生活",
         cardProfileCoverImage: "",
+        wechatId: "yuan_2026",
         layoutSize: "default",
         enabledWidgets: {
           profileCard: true,
@@ -19221,7 +19439,18 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
         stickerGroups: ["默认"],
         worldBooks: [],
         worldBookGroups: ["默认"],
-        customFonts: []
+        customFonts: [],
+        masks: [
+          {
+            id: "default_mask",
+            title: "默认身份",
+            name: "我",
+            wechatId: "yuan_2026",
+            avatar: "",
+            prompt: "生活中的真实自我，平实质朴，自然交流。"
+          }
+        ],
+        currentMaskId: "default_mask"
       },
       music: {
         accounts: [],
@@ -26546,17 +26775,202 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       const walletBankBalance = document.querySelector("#walletBankBalance");
       if (walletCashBalance) walletCashBalance.textContent = formatMoney(appState.qq.assets);
       if (walletBankBalance) walletBankBalance.textContent = formatMoney(appState.qq.bankAssets || 100000);
-      const cardStatBills = document.querySelector("#cardStatBills");
-      const cardStatStickers = document.querySelector("#cardStatStickers");
-      const cardStatWorlds = document.querySelector("#cardStatWorlds");
-      if (cardStatBills) cardStatBills.textContent = String((appState.qq.transactions || []).length);
-      if (cardStatStickers) cardStatStickers.textContent = String((appState.qq.stickers || []).length);
-      if (cardStatWorlds) cardStatWorlds.textContent = String((appState.qq.worldBooks || []).length);
+
+      const wxQuickBalanceText = document.querySelector("#wxQuickBalanceText");
+      if (wxQuickBalanceText) wxQuickBalanceText.textContent = formatMoney(appState.qq.assets);
+
+      const cardWechatIdDisplay = document.querySelector("#cardWechatIdDisplay");
+      if (cardWechatIdDisplay) cardWechatIdDisplay.textContent = appState.theme.wechatId || "yuan_2026";
+
+      // 渲染当前佩戴面具
+      const curMask = (appState.qq.masks || []).find((m) => m.id === appState.qq.currentMaskId) || appState.qq.masks?.[0];
+      const cardMaskName = document.querySelector("#cardMaskName");
+      const wxMaskSubText = document.querySelector("#wxMaskSubText");
+      if (curMask) {
+        if (cardMaskName) cardMaskName.textContent = curMask.title || curMask.name || "当前身份";
+        if (wxMaskSubText) wxMaskSubText.textContent = curMask.title || curMask.name || "切换与设定";
+      }
+
+      const cardProfileCover = document.querySelector("#cardProfileCover");
+      setAvatarElementImage(cardProfileCover, appState.theme.cardProfileCoverImage || appState.theme.avatarImage || "");
+
       renderBills();
       renderStickers();
       renderWorldBooks();
+      renderMaskList();
       syncLibrarySelectOptions();
       syncTransferRoleSelect();
+    }
+
+    // 面具 (Persona) 系统渲染与管理
+    function renderMaskList() {
+      const container = document.querySelector("#maskListContainer");
+      if (!container) return;
+      ensureQqState();
+
+      if (!Array.isArray(appState.qq.masks) || !appState.qq.masks.length) {
+        appState.qq.masks = [
+          {
+            id: "default_mask",
+            title: "默认身份",
+            name: appState.theme.cardProfileName || "我",
+            wechatId: appState.theme.wechatId || "yuan_2026",
+            avatar: appState.theme.cardProfileCoverImage || appState.theme.avatarImage || "",
+            prompt: "生活中的真实自我，平实质朴，自然交流。"
+          }
+        ];
+        appState.qq.currentMaskId = "default_mask";
+      }
+
+      container.innerHTML = "";
+
+      appState.qq.masks.forEach((mask) => {
+        const isActive = mask.id === appState.qq.currentMaskId;
+        const item = document.createElement("div");
+        item.className = `mask-item${isActive ? " active" : ""}`;
+
+        const avatar = document.createElement("div");
+        avatar.className = "mask-avatar";
+        setAvatarElementImage(avatar, mask.avatar || appState.theme.avatarImage || "");
+
+        const info = document.createElement("div");
+        info.className = "mask-info";
+
+        const top = document.createElement("div");
+        top.className = "mask-info-top";
+        top.innerHTML = `<strong>${mask.title || mask.name || "未命名身份"}</strong>`;
+        if (isActive) {
+          top.innerHTML += `<span class="mask-tag-active">生效中</span>`;
+        }
+
+        const sub = document.createElement("div");
+        sub.className = "mask-info-sub";
+        sub.textContent = `名字：${mask.name || "我"} · 微信号：${mask.wechatId || "未设置"}`;
+
+        const prompt = document.createElement("div");
+        prompt.className = "mask-info-prompt";
+        prompt.textContent = mask.prompt || "暂无具体背景设定";
+
+        info.appendChild(top);
+        info.appendChild(sub);
+        info.appendChild(prompt);
+
+        const actions = document.createElement("div");
+        actions.className = "mask-actions";
+
+        const editBtn = document.createElement("button");
+        editBtn.type = "button";
+        editBtn.className = "mask-action-btn";
+        editBtn.title = "编辑面具";
+        editBtn.innerHTML = '<i class="fa-solid fa-pen"></i>';
+        editBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          openMaskEditModal(mask.id);
+        });
+
+        actions.appendChild(editBtn);
+
+        if (appState.qq.masks.length > 1) {
+          const delBtn = document.createElement("button");
+          delBtn.type = "button";
+          delBtn.className = "mask-action-btn danger";
+          delBtn.title = "删除面具";
+          delBtn.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+          delBtn.addEventListener("click", async (e) => {
+            e.stopPropagation();
+            const ok = await showCatpawConfirm(`确定删除身份「${mask.title || mask.name}」吗？`);
+            if (!ok) return;
+            appState.qq.masks = appState.qq.masks.filter((m) => m.id !== mask.id);
+            if (appState.qq.currentMaskId === mask.id) {
+              appState.qq.currentMaskId = appState.qq.masks[0].id;
+              applyMask(appState.qq.masks[0].id);
+            }
+            renderCardPage();
+            await saveState();
+          });
+          actions.appendChild(delBtn);
+        }
+
+        item.appendChild(avatar);
+        item.appendChild(info);
+        item.appendChild(actions);
+
+        // 点击卡片直接佩戴并切换此面具
+        item.addEventListener("click", async () => {
+          await applyMask(mask.id);
+        });
+
+        container.appendChild(item);
+      });
+    }
+
+    async function applyMask(maskId) {
+      ensureQqState();
+      const mask = appState.qq.masks.find((m) => m.id === maskId);
+      if (!mask) return;
+
+      appState.qq.currentMaskId = mask.id;
+      appState.theme.cardProfileName = mask.name || "我";
+      if (mask.wechatId) appState.theme.wechatId = mask.wechatId;
+      if (mask.avatar) {
+        appState.theme.cardProfileCoverImage = mask.avatar;
+        appState.theme.avatarImage = mask.avatar;
+      }
+
+      renderState();
+      renderCardPage();
+      await saveState();
+      await showCatpawAlert(`已佩戴身份面具：「${mask.title || mask.name}」！与角色对话时将自动生效。`, "身份切换");
+    }
+
+    let currentEditingMaskId = null;
+
+    function openMaskEditModal(maskId = null) {
+      const modal = document.querySelector("#maskEditModal");
+      if (!modal) return;
+      currentEditingMaskId = maskId;
+
+      const heading = document.querySelector("#maskEditHeading");
+      const titleTop = document.querySelector("#maskEditTitleTop");
+      const titleInput = document.querySelector("#maskTitleInput");
+      const nameInput = document.querySelector("#maskUserNameInput");
+      const wechatInput = document.querySelector("#maskWechatIdInput");
+      const promptInput = document.querySelector("#maskPromptInput");
+      const previewAvatar = document.querySelector("#maskEditPreviewAvatar");
+      const previewName = document.querySelector("#maskEditPreviewName");
+
+      if (maskId) {
+        const mask = appState.qq.masks.find((m) => m.id === maskId);
+        if (mask) {
+          if (heading) heading.textContent = "编辑身份面具";
+          if (titleTop) titleTop.textContent = "Edit Mask";
+          if (titleInput) titleInput.value = mask.title || "";
+          if (nameInput) nameInput.value = mask.name || "";
+          if (wechatInput) wechatInput.value = mask.wechatId || "";
+          if (promptInput) promptInput.value = mask.prompt || "";
+          if (previewName) previewName.textContent = mask.name || mask.title || "身份";
+          setAvatarElementImage(previewAvatar, mask.avatar || appState.theme.avatarImage || "");
+          previewAvatar.dataset.newAvatar = mask.avatar || "";
+        }
+      } else {
+        if (heading) heading.textContent = "新建身份面具";
+        if (titleTop) titleTop.textContent = "New Mask";
+        if (titleInput) titleInput.value = "";
+        if (nameInput) nameInput.value = "";
+        if (wechatInput) wechatInput.value = "";
+        if (promptInput) promptInput.value = "";
+        if (previewName) previewName.textContent = "新身份";
+        setAvatarElementImage(previewAvatar, appState.theme.avatarImage || "");
+        previewAvatar.dataset.newAvatar = "";
+      }
+
+      modal.classList.add("show");
+    }
+
+    function closeMaskEditModal() {
+      const modal = document.querySelector("#maskEditModal");
+      if (modal) modal.classList.remove("show");
+      currentEditingMaskId = null;
     }
 
     function renderBills() {
@@ -29220,12 +29634,22 @@ function extractRoleReplyLines(reply) {
       const myProfile = settings.myName || "未填写";
       const relationshipStory = role.story || "未填写";
 
+      // 读取当前生效的面具人设
+      let activeMaskPrompt = "";
+      if (appState.qq?.masks?.length && appState.qq?.currentMaskId) {
+        const curMask = appState.qq.masks.find((m) => m.id === appState.qq.currentMaskId);
+        if (curMask) {
+          activeMaskPrompt = `【User当前佩戴的身份面具】名称：${curMask.name}（ID：${curMask.wechatId || "无"} / 身份设定：${curMask.prompt || "无"}）`;
+        }
+      }
+
       return [
         "You will simulate the performance of the CLAUDE model in role-playing, simulating its reasoning mechanism and the way it handles human emotional feedback based on everything you know.",
         `你扮演的角色姓名：${role.name || "未命名角色"}`,
         `角色性别：${role.gender || "未填写"}`,
         `角色所在地：${role.location || "未填写"}`,
         `角色生日：${role.birthday || "未填写"}`,
+        activeMaskPrompt,
         `## Character settings begin here:## Chat messages:：${persona}`,
         `我的设定/昵称/身份：${myProfile}`,
         `我和角色的经历：${relationshipStory}`,
@@ -30696,16 +31120,123 @@ function extractRoleReplyLines(reply) {
     const cancelEditProfileBtn = document.querySelector("#cancelEditProfileBtn");
     const saveEditProfileBtn = document.querySelector("#saveEditProfileBtn");
     const editProfileNameInput = document.querySelector("#editProfileNameInput");
+    const editProfileWechatIdInput = document.querySelector("#editProfileWechatIdInput");
     const editProfileBioInput = document.querySelector("#editProfileBioInput");
     const editProfilePreviewAvatar = document.querySelector("#editProfilePreviewAvatar");
     const editProfilePreviewName = document.querySelector("#editProfilePreviewName");
     const triggerEditProfileAvatarUpload = document.querySelector("#triggerEditProfileAvatarUpload");
     const editProfileAvatarFileInput = document.querySelector("#editProfileAvatarFileInput");
 
+    // 面具事件相关节点
+    const openMaskManagerBtn = document.querySelector("#openMaskManagerBtn");
+    const maskManagerModal = document.querySelector("#maskManagerModal");
+    const closeMaskManager = document.querySelector("#closeMaskManager");
+    const openCreateMaskBtn = document.querySelector("#openCreateMaskBtn");
+    const closeMaskEdit = document.querySelector("#closeMaskEdit");
+    const cancelMaskEditBtn = document.querySelector("#cancelMaskEditBtn");
+    const saveMaskEditBtn = document.querySelector("#saveMaskEditBtn");
+    const triggerMaskAvatarUpload = document.querySelector("#triggerMaskAvatarUpload");
+    const maskAvatarFileInput = document.querySelector("#maskAvatarFileInput");
+    const maskEditPreviewAvatar = document.querySelector("#maskEditPreviewAvatar");
+    const openMomentsFromCardBtn = document.querySelector("#openMomentsFromCardBtn");
+    const openSettingsFromCardBtn = document.querySelector("#openSettingsFromCardBtn");
+
+    if (openMomentsFromCardBtn) {
+      openMomentsFromCardBtn.addEventListener("click", () => {
+        showQqPanel("qqPanelMoments");
+        qqNavItems.forEach((nav) => nav.classList.remove("active"));
+        const mNav = document.querySelector('.qq-nav-item[data-nav-target="moments"]');
+        if (mNav) mNav.classList.add("active");
+        renderMoments();
+      });
+    }
+
+    if (openSettingsFromCardBtn && settingsPage) {
+      openSettingsFromCardBtn.addEventListener("click", () => {
+        settingsPage.classList.add("show");
+      });
+    }
+
+    if (openMaskManagerBtn) {
+      openMaskManagerBtn.addEventListener("click", () => {
+        renderCardPage();
+        if (maskManagerModal) maskManagerModal.classList.add("show");
+      });
+    }
+    if (closeMaskManager) {
+      closeMaskManager.addEventListener("click", () => {
+        if (maskManagerModal) maskManagerModal.classList.remove("show");
+      });
+    }
+    if (openCreateMaskBtn) {
+      openCreateMaskBtn.addEventListener("click", () => openMaskEditModal(null));
+    }
+    if (closeMaskEdit) closeMaskEdit.addEventListener("click", closeMaskEditModal);
+    if (cancelMaskEditBtn) cancelMaskEditBtn.addEventListener("click", closeMaskEditModal);
+
+    if (triggerMaskAvatarUpload && maskAvatarFileInput) {
+      triggerMaskAvatarUpload.addEventListener("click", () => maskAvatarFileInput.click());
+    }
+    if (maskEditPreviewAvatar && maskAvatarFileInput) {
+      maskEditPreviewAvatar.addEventListener("click", () => maskAvatarFileInput.click());
+    }
+    if (maskAvatarFileInput) {
+      maskAvatarFileInput.addEventListener("change", (e) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+        readImage(file, (src) => {
+          setAvatarElementImage(maskEditPreviewAvatar, src);
+          maskEditPreviewAvatar.dataset.newAvatar = src;
+        });
+      });
+    }
+
+    if (saveMaskEditBtn) {
+      saveMaskEditBtn.addEventListener("click", async () => {
+        ensureQqState();
+        const title = document.querySelector("#maskTitleInput")?.value.trim() || "新身份";
+        const name = document.querySelector("#maskUserNameInput")?.value.trim() || "我";
+        const wechatId = document.querySelector("#maskWechatIdInput")?.value.trim() || "";
+        const prompt = document.querySelector("#maskPromptInput")?.value.trim() || "";
+        const avatar = maskEditPreviewAvatar?.dataset.newAvatar || "";
+
+        if (currentEditingMaskId) {
+          const mask = appState.qq.masks.find((m) => m.id === currentEditingMaskId);
+          if (mask) {
+            mask.title = title;
+            mask.name = name;
+            mask.wechatId = wechatId;
+            mask.prompt = prompt;
+            if (avatar) mask.avatar = avatar;
+            if (appState.qq.currentMaskId === mask.id) {
+              await applyMask(mask.id);
+            }
+          }
+        } else {
+          const newMask = {
+            id: `mask_${Date.now()}_${Math.random().toString(16).slice(2)}`,
+            title,
+            name,
+            wechatId,
+            avatar,
+            prompt
+          };
+          appState.qq.masks.push(newMask);
+          await applyMask(newMask.id);
+        }
+
+        renderCardPage();
+        await saveState();
+        closeMaskEditModal();
+        await showCatpawAlert("面具身份已保存！", "面具管理");
+      });
+    }
+
     function openEditProfileModal() {
       if (!editProfileModal) return;
       if (editProfileNameInput) editProfileNameInput.value = appState.theme.cardProfileName || "我";
-      if (editProfileBioInput) editProfileBioInput.value = appState.theme.cardProfileBio || "";
+      if (editProfileWechatIdInput) editProfileWechatIdInput.value = appState.theme.wechatId || "yuan_2026";
+      if (editProfileBioInput) editProfileBioInput.value = appState.theme.cardProfileBio || "记录日常与生活";
       if (editProfilePreviewName) editProfilePreviewName.textContent = appState.theme.cardProfileName || "我";
       setAvatarElementImage(editProfilePreviewAvatar, appState.theme.cardProfileCoverImage || appState.theme.avatarImage || "");
       editProfileModal.classList.add("show");
@@ -30739,37 +31270,33 @@ function extractRoleReplyLines(reply) {
     if (saveEditProfileBtn) {
       saveEditProfileBtn.addEventListener("click", async () => {
         const newName = editProfileNameInput?.value.trim() || "我";
-        const newBio = editProfileBioInput?.value.trim() || "";
+        const newWechatId = editProfileWechatIdInput?.value.trim() || "yuan_2026";
+        const newBio = editProfileBioInput?.value.trim() || "记录日常与生活";
         appState.theme.cardProfileName = newName;
+        appState.theme.wechatId = newWechatId;
         appState.theme.cardProfileBio = newBio;
+
         if (editProfilePreviewAvatar?.dataset.newAvatar) {
           appState.theme.cardProfileCoverImage = editProfilePreviewAvatar.dataset.newAvatar;
           appState.theme.avatarImage = editProfilePreviewAvatar.dataset.newAvatar;
           delete editProfilePreviewAvatar.dataset.newAvatar;
         }
+
+        // 同步修改当前激活的面具
+        if (appState.qq?.masks && appState.qq?.currentMaskId) {
+          const cur = appState.qq.masks.find((m) => m.id === appState.qq.currentMaskId);
+          if (cur) {
+            cur.name = newName;
+            cur.wechatId = newWechatId;
+            if (appState.theme.cardProfileCoverImage) cur.avatar = appState.theme.cardProfileCoverImage;
+          }
+        }
+
         renderState();
+        renderCardPage();
         await saveState();
         closeEditProfileModal();
-        await showCatpawAlert("个人资料已更新！", "资料修改");
-      });
-    }
-
-    // 头像点击直接更换资料头像
-    if (cardProfileCover) {
-      cardProfileCover.addEventListener("click", () => {
-        openEditProfileModal();
-      });
-    }
-
-    // 点击名字或介绍快速编辑
-    if (cardProfileName) {
-      cardProfileName.addEventListener("click", () => {
-        openEditProfileModal();
-      });
-    }
-    if (cardProfileBio) {
-      cardProfileBio.addEventListener("click", () => {
-        openEditProfileModal();
+        await showCatpawAlert("个人信息已更新！", "个人资料");
       });
     }
 
@@ -31343,6 +31870,13 @@ function extractRoleReplyLines(reply) {
         }
         if (appState.theme.cardProfileName === "Yuan Keeper") {
           appState.theme.cardProfileName = "我";
+        }
+        if (
+          !appState.theme.cardProfileBio ||
+          appState.theme.cardProfileBio.includes("把角色关系") ||
+          appState.theme.cardProfileBio.includes("收进一张透明卡片")
+        ) {
+          appState.theme.cardProfileBio = "记录日常与生活";
         }
       } catch (e) {
         console.warn("加载持久化数据失败：", e);
