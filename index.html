@@ -2762,39 +2762,44 @@
       margin-top: 10px;
     }
 
-    /* 朋友圈 · 资料页式重构（无边框 · 无彩色 · 与消息页同色系） */
+    /* 朋友圈 · 纯黑白灰极简重构（无表情 · 无彩色 · 清爽透气） */
     #qqPanelMoments.active {
-      padding: 0 !important;
+      display: flex;
+      flex-direction: column;
+      background: #ffffff;
+      flex: 1;
+      min-height: 0;
       overflow: hidden;
+      padding: 0 !important;
     }
 
     #qqPanelMoments .moments-page-head {
       position: sticky;
+      top: 0;
       left: 0;
       right: 0;
-      top: 0;
-      z-index: 6;
-      min-height: 0;
-      padding: 8px 14px 8px;
-      grid-template-columns: 38px 1fr 38px;
-      border-bottom: 0 !important;
-      background: rgba(255, 255, 255, 0.92);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      z-index: 10;
+      min-height: 46px;
+      padding: calc(6px + env(safe-area-inset-top)) 16px 8px;
+      display: grid;
+      grid-template-columns: 34px 1fr 34px;
+      align-items: center;
+      background: #ffffff;
+      border-bottom: 1px solid #f2f2f2;
     }
 
     #qqPanelMoments .moments-page-back,
     #qqPanelMoments .moments-page-search {
-      width: 38px;
-      height: 38px;
+      width: 32px;
+      height: 32px;
       border: 0;
       border-radius: 50%;
       display: grid;
       place-items: center;
-      color: #0f0f0f;
-      background: rgba(255, 255, 255, 0.86);
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.07);
-      font-size: 15px;
+      color: #111111;
+      background: transparent;
+      box-shadow: none;
+      font-size: 14px;
       cursor: pointer;
       transition: opacity 0.15s ease;
     }
@@ -2805,240 +2810,203 @@
 
     #qqPanelMoments .moments-page-back:active,
     #qqPanelMoments .moments-page-search:active {
-      opacity: 0.55;
-      background: rgba(255, 255, 255, 0.86);
+      opacity: 0.4;
     }
 
     #qqPanelMoments .moments-page-title strong {
-      color: #0f0f0f;
-      font-size: 14px;
+      display: block;
+      text-align: center;
+      color: #111111;
+      font-size: 15px;
       font-weight: 700;
       letter-spacing: -0.02em;
-      text-shadow: 0 1px 6px rgba(255, 255, 255, 0.7);
     }
 
     #qqPanelMoments .qq-moments-wrap {
-      padding: 0 0 calc(100px + env(safe-area-inset-bottom));
       flex: 1;
       min-height: 0;
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
+      padding: 0 16px calc(96px + env(safe-area-inset-bottom));
+      background: #ffffff;
     }
 
     .mo-cover {
-      position: relative;
-      z-index: 0;
-      height: calc(126px + env(safe-area-inset-top));
-      background:
-        radial-gradient(circle at 78% 18%, rgba(255, 255, 255, 0.9), transparent 46%),
-        linear-gradient(160deg, #f4f4f4 0%, #ebebeb 52%, #e2e2e2 100%);
-      background-size: cover;
-      background-position: center;
-      cursor: pointer;
-    }
-
-    .mo-cover.has-image {
-      filter: grayscale(1) brightness(1.06) contrast(0.94);
+      display: none !important;
     }
 
     #qqPanelMoments .moments-profile {
-      position: relative;
-      z-index: 2;
-      margin: 0;
-      padding: 0 18px 14px;
-      border-bottom: 0 !important;
+      padding: 16px 0 14px;
+      border-bottom: 1px solid #f2f2f2;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
     }
 
     .mo-avatar-row {
-      position: relative;
-      z-index: 3;
-      margin-top: -36px;
-      margin-bottom: 12px;
-      width: fit-content;
+      display: none !important;
     }
 
-    #qqPanelMoments .moments-profile-avatar-box {
-      position: relative;
-      z-index: 3;
-      width: 82px;
-      height: 82px;
-      padding: 0;
-      border: 0 !important;
-      border-radius: 50%;
-      background: #ffffff;
-      box-shadow: 0 0 0 4px #ffffff, 0 6px 18px rgba(0, 0, 0, 0.07);
-    }
-
-    #qqPanelMoments .moments-profile-avatar {
-      background-color: #f2f2f2;
-    }
-
-    #qqPanelMoments .moments-profile-copy {
-      margin-bottom: 14px;
-    }
-
-    .mo-name-row {
+    .moments-profile-user-bar {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 12px;
+    }
+
+    .moments-profile-avatar-wrap {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #f4f4f4;
+      border: 1px solid #ededed;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+
+    .moments-profile-avatar-wrap .moments-profile-avatar {
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      filter: grayscale(0.25);
+    }
+
+    .moments-profile-meta {
+      flex: 1;
       min-width: 0;
     }
 
-    #qqPanelMoments .moments-profile-copy strong {
-      font-size: 20px;
-      line-height: 1.15;
-      letter-spacing: -0.035em;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      cursor: pointer;
+    .moments-profile-meta strong {
+      display: block;
+      color: #111111;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.25;
+      letter-spacing: -0.02em;
     }
 
+    .moments-profile-meta span {
+      display: block;
+      margin-top: 3px;
+      color: #8e8e93;
+      font-size: 11px;
+      font-weight: 400;
+    }
+
+    #qqPanelMoments .moments-profile-email,
+    #qqPanelMoments .moments-profile-copy p,
     .mo-verified {
-      flex-shrink: 0;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      padding: 3px 9px;
-      border-radius: 999px;
-      background: #f5f5f5;
-      color: #8a8a8a;
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: -0.01em;
-    }
-
-    .mo-verified i {
-      color: #b4b4b4;
-      font-size: 10px;
-    }
-
-    #qqPanelMoments .moments-profile-email {
-      margin-top: 7px;
-      gap: 6px;
-      color: #8a8a8a;
-      font-size: 11.5px;
-      font-weight: 500;
-    }
-
-    #qqPanelMoments .moments-profile-email i {
-      color: #a9a9a9;
-      font-size: 12px;
-      transform: rotate(-45deg);
-    }
-
-    #qqPanelMoments .moments-profile-copy p {
-      margin-top: 8px;
-      color: #4a4a4a;
-      font-size: 12px;
-      line-height: 1.55;
-      cursor: pointer;
+      display: none !important;
     }
 
     .mo-stats {
       display: flex;
       align-items: center;
       gap: 16px;
-      margin-top: 11px;
-      color: #9a9a9a;
-      font-size: 11.5px;
+      color: #8e8e93;
+      font-size: 11px;
       font-weight: 400;
+      margin-top: 2px;
     }
 
     .mo-stats b {
-      margin-right: 4px;
-      color: #0f0f0f;
-      font-size: 13px;
+      margin-right: 3px;
+      color: #111111;
+      font-size: 12.5px;
       font-weight: 700;
-      letter-spacing: -0.02em;
       font-variant-numeric: tabular-nums;
     }
 
     #qqPanelMoments .moments-action-btns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       gap: 8px;
-      margin: 0;
+      margin-top: 2px;
     }
 
     #qqPanelMoments .ins-wide-btn {
-      min-height: 42px;
-      border-radius: 999px;
-      color: #0f0f0f;
-      background: #f5f5f5;
+      min-height: 36px;
+      border-radius: 8px;
+      color: #111111;
+      background: #f7f7f7;
+      border: 1px solid #ebebeb;
       box-shadow: none;
-      font-size: 12.5px;
-      font-weight: 600;
-      letter-spacing: -0.01em;
-    }
-
-    #qqPanelMoments .ins-wide-btn i {
-      color: #8a8a8a;
       font-size: 12px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: background 0.12s ease;
     }
 
     #qqPanelMoments .ins-wide-btn:active {
-      transform: none;
-      opacity: 0.6;
-      background: #efefef;
+      background: #ededed;
+    }
+
+    #qqPanelMoments .ins-wide-btn i {
+      color: #555555;
+      font-size: 11px;
     }
 
     .mo-tabs {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      padding: 0 10px;
-      box-shadow: inset 0 -1px 0 #f2f2f2;
+      padding: 0;
+      border-bottom: 1px solid #f2f2f2;
     }
 
     .mo-tab {
-      min-height: 50px;
-      padding: 0;
+      min-height: 42px;
       border: 0;
       background: transparent;
       position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 7px;
-      color: #b4b4b4;
-      font-size: 11.5px;
-      font-weight: 600;
-      letter-spacing: -0.01em;
+      gap: 6px;
+      color: #8e8e93;
+      font-size: 12px;
+      font-weight: 500;
       cursor: pointer;
       transition: color 0.15s ease;
     }
 
     .mo-tab i {
-      font-size: 13px;
+      display: none !important;
     }
 
     .mo-tab b {
-      font-weight: 700;
+      font-weight: 600;
       font-variant-numeric: tabular-nums;
     }
 
     .mo-tab.active {
-      color: #0f0f0f;
+      color: #000000;
+      font-weight: 700;
     }
 
     .mo-tab.active::after {
       content: "";
       position: absolute;
-      left: 18%;
-      right: 18%;
-      bottom: 0;
-      height: 2px;
-      border-radius: 999px;
-      background: #0f0f0f;
+      left: 20%;
+      right: 20%;
+      bottom: -1px;
+      height: 1.5px;
+      background: #000000;
     }
 
     .mo-search {
       display: none;
       align-items: center;
       gap: 8px;
-      min-height: 42px;
-      margin: 12px 18px 0;
-      padding: 0 14px;
-      border-radius: 12px;
-      background: #f5f5f5;
+      min-height: 36px;
+      margin: 10px 0 2px;
+      padding: 0 12px;
+      border-radius: 8px;
+      background: #f7f7f7;
+      border: 1px solid #ededed;
     }
 
     .mo-search.show {
@@ -3046,7 +3014,7 @@
     }
 
     .mo-search i {
-      color: #a9a9a9;
+      color: #8e8e93;
       font-size: 12px;
     }
 
@@ -3056,83 +3024,84 @@
       border: 0;
       background: transparent;
       outline: none;
-      color: #0f0f0f;
-      font-size: 12.5px;
-      font-weight: 400;
+      color: #111111;
+      font-size: 12px;
     }
 
     .mo-search input::placeholder {
-      color: #bcbcbc;
+      color: #aaaaaa;
     }
 
     #momentsList {
-      padding: 4px 18px 0;
+      padding: 4px 0 0;
     }
 
     #momentsList .qq-history-toggle {
-      margin: 12px auto 10px;
-      border: 0 !important;
-      background: #f5f5f5;
-      box-shadow: none;
-      color: #7a7a7a;
-      font-size: 11.5px;
-      font-weight: 600;
+      margin: 12px auto;
+      border: 1px solid #ebebeb !important;
+      border-radius: 999px;
+      padding: 6px 14px;
+      background: #f7f7f7;
+      color: #666666;
+      font-size: 11px;
+      font-weight: 500;
+      cursor: pointer;
     }
 
     #qqPanelMoments .moment-card {
-      padding: 16px 0;
-      border-bottom: 0 !important;
-      box-shadow: inset 0 -1px 0 #f4f4f4;
-    }
-
-    #qqPanelMoments .moment-avatar-box {
-      border: 0 !important;
-      padding: 0;
-      box-shadow: 0 0 0 2px #f2f2f2;
+      padding: 14px 0;
+      border-bottom: 1px solid #f4f4f4 !important;
+      background: #ffffff !important;
     }
 
     .mo-empty {
-      padding: 46px 2px 30px;
+      padding: 48px 0 32px;
+      text-align: center;
     }
 
     .mo-empty strong {
       display: block;
-      color: #0f0f0f;
-      font-size: 24px;
-      line-height: 1.2;
+      color: #111111;
+      font-size: 16px;
       font-weight: 700;
-      letter-spacing: -0.04em;
     }
 
     .mo-empty p {
-      margin-top: 9px;
-      color: #a9a9a9;
-      font-size: 12.5px;
-      line-height: 1.55;
-      font-weight: 400;
+      margin-top: 6px;
+      color: #8e8e93;
+      font-size: 12px;
     }
 
     .mo-empty button {
-      min-height: 44px;
-      margin-top: 20px;
-      padding: 0 26px;
+      min-height: 38px;
+      margin-top: 16px;
+      padding: 0 22px;
       border: 0;
       border-radius: 999px;
       color: #ffffff;
-      background: #0f0f0f;
-      font-size: 13px;
+      background: #000000;
+      font-size: 12px;
       font-weight: 600;
-      letter-spacing: -0.01em;
       cursor: pointer;
-      transition: background 0.15s ease;
+      transition: background 0.12s ease;
     }
 
     .mo-empty button:active {
       background: #333333;
     }
 
-    .mo-fab {
+    /* 彻底隐藏悬浮加号大黑球 */
+    .mo-fab,
+    #openMomentComposer.mo-fab,
+    button.mo-fab {
       display: none !important;
+      opacity: 0 !important;
+      visibility: hidden !important;
+      pointer-events: none !important;
+      width: 0 !important;
+      height: 0 !important;
+      margin: 0 !important;
+      padding: 0 !important;
     }
 
     /* 发布动态 · 极简纯白 Ins 撰写页重构（无边框 · 无彩色 · 全屏适配） */
@@ -17120,29 +17089,18 @@
               </header>
 
               <div class="qq-moments-wrap">
-                <div class="mo-cover" id="momentsCover" role="button" tabindex="0" aria-label="更换朋友圈封面"></div>
-
-                <section class="moments-profile" aria-label="朋友圈个人主页">
-                  <div class="mo-avatar-row">
-                    <div class="moments-profile-avatar-box">
+                <section class="moments-profile" aria-label="朋友圈个人资料">
+                  <div class="moments-profile-user-bar">
+                    <div class="moments-profile-avatar-wrap">
                       <div class="moments-profile-avatar" id="momentsProfileAvatar"></div>
                     </div>
-                  </div>
-
-                  <div class="moments-profile-copy">
-                    <div class="mo-name-row">
+                    <div class="moments-profile-meta">
                       <strong id="momentsHomeTitle" class="qq-home-editable">Yuan Moments</strong>
-                      <span class="mo-verified"><i class="fa-solid fa-circle-check"></i>本机记录</span>
-                    </div>
-                    <div class="moments-profile-email qq-home-editable" id="momentsHomeEmail">
-                      <i class="fa-solid fa-link"></i>
-                      <span>contact@yuan.moments</span>
-                    </div>
-                    <p id="momentsHomeSubtitle" class="qq-home-editable">自动收集角色像真人一样随机发布的碎片，也可以进入发布页写自己的动态。</p>
-                    <div class="mo-stats">
-                      <span><b id="momentsPostCount">0</b>条动态</span>
-                      <span><b id="momentsRoleCount">0</b>位角色</span>
-                      <span><b id="momentsInteractionCount">0</b>次互动</span>
+                      <div class="mo-stats">
+                        <span><b id="momentsPostCount">0</b>条动态</span>
+                        <span><b id="momentsRoleCount">0</b>位联系人</span>
+                        <span><b id="momentsInteractionCount">0</b>条互动</span>
+                      </div>
                     </div>
                   </div>
 
@@ -17153,37 +17111,30 @@
                     </button>
                     <button class="ins-wide-btn" id="refreshMoments" type="button">
                       <i class="fa-solid fa-rotate-right"></i>
-                      <span>刷新朋友圈</span>
+                      <span>刷新动态</span>
                     </button>
                   </div>
                 </section>
 
                 <nav class="mo-tabs" id="momentsFilterTabs" aria-label="动态筛选">
                   <button class="mo-tab active" type="button" data-moment-filter="all">
-                    <i class="fa-regular fa-rectangle-list"></i>
                     <span>全部 <b data-moment-count="all">0</b></span>
                   </button>
                   <button class="mo-tab" type="button" data-moment-filter="self">
-                    <i class="fa-regular fa-user"></i>
                     <span>我的 <b data-moment-count="self">0</b></span>
                   </button>
                   <button class="mo-tab" type="button" data-moment-filter="role">
-                    <i class="fa-solid fa-user-group"></i>
                     <span>角色 <b data-moment-count="role">0</b></span>
                   </button>
                 </nav>
 
                 <div class="mo-search" id="momentsSearchBar">
                   <i class="fa-solid fa-magnifying-glass"></i>
-                  <input id="momentsSearchInput" type="text" placeholder="搜索动态正文或评论..." />
+                  <input id="momentsSearchInput" type="text" placeholder="搜索动态或评论..." />
                 </div>
 
                 <div id="momentsList"></div>
               </div>
-
-              <button class="mo-fab" id="openMomentComposer" type="button" aria-label="发布动态">
-                <i class="fa-solid fa-plus"></i>
-              </button>
             </section>
 
           <section class="qq-panel qq-thread" id="qqPanelThread">
@@ -24356,14 +24307,17 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       const isContacts = panelId === "qqPanelContacts";
       const isChats = panelId === "qqPanelChats";
 
-      // 只有进入具体聊天会话时才隐藏底栏，其余所有页面（消息列表、好友列表、朋友圈）都保持底栏可见
+      // 只有具体聊天会话（thread）才隐藏底栏，朋友圈、联系人、消息列表全部保持底栏 Dock 可见
       if (qqPage) qqPage.classList.toggle("thread-mode", isThread);
-      if (qqBottomBar) qqBottomBar.style.display = isThread ? "none" : "flex";
+      if (qqBottomBar) {
+        qqBottomBar.style.display = isThread ? "none" : "flex";
+        qqBottomBar.style.zIndex = "30";
+      }
       if (qqModeSwitch) qqModeSwitch.style.display = isThread ? "none" : "";
 
-      // 顶栏：只有进入聊天会话时隐藏，其他页面都保留
+      // 主消息顶栏：进入具体聊天或自带顶栏的页面（朋友圈、联系人）时隐藏主顶栏，避免出现双层顶栏
       const heroHead = document.querySelector(".qq-hero-head");
-      if (heroHead) heroHead.style.display = isThread ? "none" : "";
+      if (heroHead) heroHead.style.display = isChats ? "" : "none";
 
       // 资料卡（消息列表的个人信息区域）：仅在消息列表页显示
       if (qqFeatureCard) qqFeatureCard.style.display = isChats ? "" : "none";
