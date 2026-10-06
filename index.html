@@ -2609,13 +2609,12 @@
 
     /* Ins 极简纯白朋友圈重构 */
     #qqPanelMoments.active {
-      position: fixed;
-      inset: 0;
-      z-index: 8;
       display: flex;
       flex-direction: column;
       background: #ffffff;
-      padding: env(safe-area-inset-top) 0 0 0;
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
     }
 
     .moments-page-head {
@@ -2816,7 +2815,11 @@
     }
 
     #qqPanelMoments .qq-moments-wrap {
-      padding: 0 0 calc(104px + env(safe-area-inset-bottom));
+      padding: 0 0 calc(84px + env(safe-area-inset-bottom));
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
     }
 
     .mo-cover {
@@ -9326,14 +9329,12 @@
 
     /* 好友列表 · 独立全屏页 · 极简纯白 Ins 风（无边框 · 无彩色） */
     #qqPanelContacts.active {
-      position: fixed;
-      inset: 0;
-      z-index: 9;
       display: flex;
       flex-direction: column;
       background: #ffffff;
-      padding: env(safe-area-inset-top) 0 0 0;
       overflow: hidden;
+      flex: 1;
+      min-height: 0;
     }
 
     .contacts-page-head {
@@ -9411,7 +9412,7 @@
     }
 
     #qqPanelContacts.active .qq-contacts-wrap {
-      padding: 8px 18px calc(96px + env(safe-area-inset-bottom));
+      padding: 8px 18px calc(84px + env(safe-area-inset-bottom));
       background: #ffffff;
     }
 
@@ -24369,13 +24370,17 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       const isThread = panelId === "qqPanelThread";
       const isMoments = panelId === "qqPanelMoments";
       const isContacts = panelId === "qqPanelContacts";
-      const isStandalone = isThread || isMoments || isContacts;
+      const isChats = panelId === "qqPanelChats";
+
+      // 只有进入具体聊天会话时才隐藏底栏和顶栏，其余页面（好友列表、朋友圈、消息列表）都保持底栏可见
       if (qqPage) qqPage.classList.toggle("thread-mode", isThread);
-      if (qqBottomBar) qqBottomBar.style.display = (isThread || isMoments) ? "none" : "";
-      if (qqModeSwitch) qqModeSwitch.style.display = isStandalone ? "none" : "";
-      if (qqFeatureCard) qqFeatureCard.style.display = isStandalone ? "none" : "";
+      if (qqBottomBar) qqBottomBar.style.display = isThread ? "none" : "";
+      if (qqModeSwitch) qqModeSwitch.style.display = isThread ? "none" : "";
+
+      // 消息列表页显示完整顶栏和资料卡，其他 tab 页隐藏资料卡但保留顶栏
+      if (qqFeatureCard) qqFeatureCard.style.display = (isMoments || isContacts || isThread) ? "none" : "";
       const heroHead = document.querySelector(".qq-hero-head");
-      if (heroHead) heroHead.style.display = isStandalone ? "none" : "";
+      if (heroHead) heroHead.style.display = isThread ? "none" : "";
 
       if (isMoments) {
         renderMoments();
@@ -24471,6 +24476,18 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
         const chatsNav = document.querySelector('.qq-nav-item[data-nav-target="chats"]');
         if (chatsNav) chatsNav.classList.add("active");
       });
+    }
+
+    // 朋友圈返回按钮也切回消息列表并同步底栏高亮
+    if (closeMomentsPage) {
+      closeMomentsPage.removeEventListener("click", closeMomentsPage._handler);
+      closeMomentsPage._handler = () => {
+        showQqPanel("qqPanelChats");
+        qqNavItems.forEach((nav) => nav.classList.remove("active"));
+        const chatsNav = document.querySelector('.qq-nav-item[data-nav-target="chats"]');
+        if (chatsNav) chatsNav.classList.add("active");
+      };
+      closeMomentsPage.addEventListener("click", closeMomentsPage._handler);
     }
 
     if (openRoleEditorFromContacts) {
@@ -30557,7 +30574,7 @@ function extractRoleReplyLines(reply) {
     });
 
     if (triggerOpenMomentComposer) triggerOpenMomentComposer.addEventListener("click", openMomentComposerPage);
-    if (closeMomentsPage) closeMomentsPage.addEventListener("click", () => showQqPanel("qqPanelChats"));
+    // closeMomentsPage 的事件已在下方统一绑定，此处不再重复
     if (openMomentComposer) openMomentComposer.addEventListener("click", openMomentComposerPage);
     if (closeMomentComposer) closeMomentComposer.addEventListener("click", closeMomentComposerPage);
     if (cancelMomentComposer) cancelMomentComposer.addEventListener("click", closeMomentComposerPage);
