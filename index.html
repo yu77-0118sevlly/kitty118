@@ -17756,6 +17756,168 @@
       font-weight: 600;
     }
 
+    /* 微博专属编辑个人资料页面 · 1:1 截图同款纯黑白灰极简 */
+    .wb-edit-profile-page {
+      position: fixed;
+      inset: 0;
+      z-index: 75;
+      display: none;
+      background: #f4f5f7;
+      flex-direction: column;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: calc(40px + env(safe-area-inset-bottom));
+    }
+
+    .wb-edit-profile-page.show {
+      display: flex;
+    }
+
+    .wb-ep-head {
+      position: sticky;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 10;
+      min-height: 48px;
+      padding: calc(6px + env(safe-area-inset-top)) 16px 6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #ffffff;
+      border-bottom: 1px solid #ededed;
+    }
+
+    .wb-ep-head button {
+      border: none;
+      background: transparent;
+      color: #111111;
+      font-size: 16px;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      padding: 4px;
+    }
+
+    .wb-ep-avatar-section {
+      background: #ffffff;
+      padding: 24px 16px 18px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      border-bottom: 8px solid #f4f5f7;
+    }
+
+    .wb-ep-big-avatar {
+      width: 86px;
+      height: 86px;
+      border-radius: 50%;
+      background: #f0f0f0;
+      background-size: cover;
+      background-position: center;
+      border: 1px solid #e8e8e8;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .wb-ep-three-btns {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .wb-ep-mini-btn {
+      min-height: 40px;
+      background: #f8f9fa;
+      border: 1px solid #ebecee;
+      border-radius: 12px;
+      color: #111111;
+      font-size: 12px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: background 0.12s ease;
+    }
+
+    .wb-ep-mini-btn:active {
+      background: #ededed;
+    }
+
+    .wb-ep-group-card {
+      background: #ffffff;
+      margin-bottom: 8px;
+      border-top: 1px solid #f2f3f5;
+      border-bottom: 1px solid #f2f3f5;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .wb-ep-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 52px;
+      padding: 10px 16px;
+      cursor: pointer;
+      position: relative;
+      transition: background 0.12s ease;
+      border-bottom: 1px solid #f6f7f9;
+    }
+
+    .wb-ep-item:last-child {
+      border-bottom: none;
+    }
+
+    .wb-ep-item:active {
+      background: #fbfbfb;
+    }
+
+    .wb-ep-item-left {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14.5px;
+      font-weight: 600;
+      color: #111111;
+    }
+
+    .wb-ep-tag-gray {
+      font-size: 10px;
+      padding: 1px 6px;
+      border-radius: 4px;
+      background: #f0f2f5;
+      color: #666666;
+      font-weight: 600;
+    }
+
+    .wb-ep-item-right {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: #7b818a;
+      max-width: 60%;
+      text-align: right;
+    }
+
+    .wb-ep-item-right span {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .wb-ep-item-right i.fa-chevron-right {
+      font-size: 11px;
+      color: #c7c7cc;
+      flex-shrink: 0;
+    }
+
     /* 角色进驻微博选择弹窗 */
     .wb-role-select-modal {
       position: fixed;
@@ -20285,6 +20447,141 @@
         </div>
       </div>
     </div>
+
+    <!-- 微博专属编辑个人资料全屏页面 · 1:1 截图复刻 -->
+    <section class="wb-edit-profile-page" id="wbEditProfilePage" aria-label="编辑微博个人资料">
+      <div class="wb-ep-head">
+        <button id="closeWbEditProfile" type="button" aria-label="返回"><i class="fa-solid fa-chevron-left"></i></button>
+        <strong style="font-size: 16px; font-weight: 700; color: #111111;">编辑个人资料</strong>
+        <button id="wbEpShareQrBtn" type="button" aria-label="二维码"><i class="fa-solid fa-qrcode"></i></button>
+      </div>
+
+      <!-- 头像大居中与头像挂件/认证三联按键 -->
+      <div class="wb-ep-avatar-section">
+        <div class="wb-ep-big-avatar" id="wbEpBigAvatar" title="点击更换头像"></div>
+        <div class="wb-ep-three-btns">
+          <button class="wb-ep-mini-btn" id="wbEpPendantBtn" type="button">
+            <i class="fa-regular fa-star" style="font-size: 11px;"></i>
+            <span>头像挂件</span>
+          </button>
+          <button class="wb-ep-mini-btn" id="wbEpChangeAvatarBtn" type="button">
+            <i class="fa-regular fa-user" style="font-size: 11px;"></i>
+            <span>更换头像</span>
+          </button>
+          <button class="wb-ep-mini-btn" id="wbEpVerifyBtn" type="button">
+            <i class="fa-regular fa-circle-check" style="font-size: 11px;"></i>
+            <span>头像认证</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 第一组：昵称、认证、等级、简介 -->
+      <div class="wb-ep-group-card">
+        <div class="wb-ep-item" id="wbEpItemName">
+          <div class="wb-ep-item-left">
+            <span>昵称</span>
+            <i class="fa-solid fa-crown" style="font-size: 11px; color: #888;"></i>
+          </div>
+          <div class="wb-ep-item-right">
+            <span id="wbEpNameVal">我</span>
+            <i class="fa-solid fa-chevron-right"></i>
+          </div>
+        </div>
+
+        <div class="wb-ep-item" id="wbEpItemVerify">
+          <div class="wb-ep-item-left">
+            <span class="wb-ep-tag-gray">微博认证</span>
+          </div>
+          <div class="wb-ep-item-right">
+            <span>加入微博认证</span>
+            <i class="fa-solid fa-chevron-right"></i>
+          </div>
+        </div>
+
+        <div class="wb-ep-item" id="wbEpItemLevel">
+          <div class="wb-ep-item-left">
+            <span class="wb-ep-tag-gray">微博等级</span>
+          </div>
+          <div class="wb-ep-item-right">
+            <span id="wbEpLevelVal">已激活 Lv.7</span>
+            <i class="fa-solid fa-chevron-right"></i>
+          </div>
+        </div>
+
+        <div class="wb-ep-item" id="wbEpItemBio">
+          <div class="wb-ep-item-left">
+            <span>简介</span>
+          </div>
+          <div class="wb-ep-item-right">
+            <span id="wbEpBioVal">暂无简介</span>
+            <i class="fa-solid fa-chevron-right"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- 第二组：性别、生日、感情状况、家乡、IP属地 -->
+      <div class="wb-ep-group-card">
+        <div class="wb-ep-item" id="wbEpItemGender">
+          <div class="wb-ep-item-left"><span>性别</span></div>
+          <div class="wb-ep-item-right">
+            <span id="wbEpGenderVal">女</span>
+            <i class="fa-solid fa-chevron-right"></i>
+          </div>
+        </div>
+
+        <div class="wb-ep-item" id="wbEpItemBirthday">
+          <div class="wb-ep-item-left"><span>生日</span></div>
+          <div class="wb-ep-item-right">
+            <span id="wbEpBirthdayVal">2005-05-04 金牛座</span>
+            <i class="fa-solid fa-chevron-right"></i>
+          </div>
+        </div>
+
+        <div class="wb-ep-item" id="wbEpItemRelation">
+          <div class="wb-ep-item-left"><span>感情状况</span></div>
+          <div class="wb-ep-item-right">
+            <span id="wbEpRelationVal">恋爱中</span>
+            <i class="fa-solid fa-chevron-right"></i>
+          </div>
+        </div>
+
+        <div class="wb-ep-item" id="wbEpItemHometown">
+          <div class="wb-ep-item-left"><span>家乡</span></div>
+          <div class="wb-ep-item-right">
+            <span id="wbEpHometownVal">四川 成都</span>
+            <i class="fa-solid fa-chevron-right"></i>
+          </div>
+        </div>
+
+        <div class="wb-ep-item" id="wbEpItemIp">
+          <div class="wb-ep-item-left"><span>IP 属地</span></div>
+          <div class="wb-ep-item-right" style="max-width: 70%;">
+            <span id="wbEpIpVal" style="font-size: 11px;">广东 (IP属地以运营商信息为准)</span>
+            <i class="fa-solid fa-chevron-right"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- 第三组：教育信息、工作信息 -->
+      <div class="wb-ep-group-card">
+        <div class="wb-ep-item" id="wbEpItemEdu">
+          <div class="wb-ep-item-left"><span>教育信息</span></div>
+          <div class="wb-ep-item-right">
+            <span id="wbEpEduVal">添加</span>
+            <i class="fa-solid fa-chevron-right"></i>
+          </div>
+        </div>
+
+        <div class="wb-ep-item" id="wbEpItemWork">
+          <div class="wb-ep-item-left"><span>工作信息</span></div>
+          <div class="wb-ep-item-right">
+            <span id="wbEpWorkVal">添加</span>
+            <i class="fa-solid fa-chevron-right"></i>
+          </div>
+        </div>
+      </div>
+      <input type="file" id="wbEpAvatarFileInput" accept="image/*" style="display:none;" />
+    </section>
 
     <!-- 微博个人专属主页界面 · 1:1 复刻截图 -->
     <section class="wb-profile-page" id="wbProfilePage" aria-label="微博个人主页">
@@ -27363,11 +27660,156 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       }
     });
 
+    // ============================================================
+    // 微博专属 1:1 编辑个人资料完整逻辑
+    // ============================================================
+    const wbEditProfilePage = document.querySelector("#wbEditProfilePage");
+    const closeWbEditProfile = document.querySelector("#closeWbEditProfile");
+    const wbEpBigAvatar = document.querySelector("#wbEpBigAvatar");
+    const wbEpAvatarFileInput = document.querySelector("#wbEpAvatarFileInput");
+    const wbEpChangeAvatarBtn = document.querySelector("#wbEpChangeAvatarBtn");
+    const wbEpPendantBtn = document.querySelector("#wbEpPendantBtn");
+    const wbEpVerifyBtn = document.querySelector("#wbEpVerifyBtn");
+
+    function ensureWeiboProfileFullData() {
+      ensureWeiboState();
+      if (!appState.weibo.fullProfile || typeof appState.weibo.fullProfile !== "object") {
+        appState.weibo.fullProfile = {
+          name: appState.theme.cardProfileName || "我",
+          bio: appState.theme.cardProfileBio || "暂无简介",
+          gender: "女",
+          birthday: "2005-05-04 金牛座",
+          relationship: "恋爱中",
+          hometown: "四川 成都",
+          ipLocation: "广东 (IP属地以运营商信息为准)",
+          education: "添加",
+          work: "添加",
+          level: "已激活 Lv.7"
+        };
+      }
+      return appState.weibo.fullProfile;
+    }
+
+    function renderWbEditProfilePage() {
+      ensureWeiboState();
+      const fp = ensureWeiboProfileFullData();
+      const myAvatar = appState.theme.cardProfileCoverImage || appState.theme.avatarImage || "https://771553.xyz/file/studio/5FDVc1VrKzVdH5mO.jpg";
+
+      if (wbEpBigAvatar) wbEpBigAvatar.style.backgroundImage = `url('${myAvatar}')`;
+      const nameVal = document.querySelector("#wbEpNameVal");
+      const bioVal = document.querySelector("#wbEpBioVal");
+      const genderVal = document.querySelector("#wbEpGenderVal");
+      const birthdayVal = document.querySelector("#wbEpBirthdayVal");
+      const relationVal = document.querySelector("#wbEpRelationVal");
+      const hometownVal = document.querySelector("#wbEpHometownVal");
+      const ipVal = document.querySelector("#wbEpIpVal");
+      const eduVal = document.querySelector("#wbEpEduVal");
+      const workVal = document.querySelector("#wbEpWorkVal");
+      const levelVal = document.querySelector("#wbEpLevelVal");
+
+      if (nameVal) nameVal.textContent = fp.name || appState.theme.cardProfileName || "我";
+      if (bioVal) bioVal.textContent = fp.bio || appState.theme.cardProfileBio || "暂无简介";
+      if (genderVal) genderVal.textContent = fp.gender || "保密";
+      if (birthdayVal) birthdayVal.textContent = fp.birthday || "未设置";
+      if (relationVal) relationVal.textContent = fp.relationship || "未设置";
+      if (hometownVal) hometownVal.textContent = fp.hometown || "未设置";
+      if (ipVal) ipVal.textContent = fp.ipLocation || "中国";
+      if (eduVal) eduVal.textContent = fp.education || "添加";
+      if (workVal) workVal.textContent = fp.work || "添加";
+      if (levelVal) levelVal.textContent = fp.level || "Lv.7";
+    }
+
+    function openWbEditProfilePage() {
+      renderWbEditProfilePage();
+      if (wbEditProfilePage) wbEditProfilePage.classList.add("show");
+    }
+
+    if (closeWbEditProfile && wbEditProfilePage) {
+      closeWbEditProfile.addEventListener("click", () => wbEditProfilePage.classList.remove("show"));
+    }
+
+    // 绑定微博主页的「编辑个人资料」和「我」页面的「编辑资料」全部打开此专属页面
     if (wbProEditBtn) {
-      wbProEditBtn.addEventListener("click", () => {
-        openEditProfileModal();
+      wbProEditBtn.addEventListener("click", openWbEditProfilePage);
+    }
+    const wbMineEditProfileBtnOverride = document.querySelector("#wbMineEditProfileBtn");
+    if (wbMineEditProfileBtnOverride) {
+      wbMineEditProfileBtnOverride.removeEventListener("click", openEditProfileModal);
+      wbMineEditProfileBtnOverride.addEventListener("click", openWbEditProfilePage);
+    }
+
+    // 绑定头像更换
+    const triggerWbAvatarPick = () => wbEpAvatarFileInput?.click();
+    if (wbEpBigAvatar) wbEpBigAvatar.addEventListener("click", triggerWbAvatarPick);
+    if (wbEpChangeAvatarBtn) wbEpChangeAvatarBtn.addEventListener("click", triggerWbAvatarPick);
+
+    if (wbEpAvatarFileInput) {
+      wbEpAvatarFileInput.addEventListener("change", (e) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+        readImage(file, async (src) => {
+          appState.theme.cardProfileCoverImage = src;
+          appState.theme.avatarImage = src;
+          renderWbEditProfilePage();
+          renderWeiboProfilePage();
+          renderWeiboMinePanel();
+          await saveState();
+          showCatpawAlert("头像更换成功！");
+        });
       });
     }
+
+    if (wbEpPendantBtn) {
+      wbEpPendantBtn.addEventListener("click", () => {
+        showCatpawAlert("已佩戴当前黑白极简专属徽章挂件！", "头像挂件");
+      });
+    }
+
+    if (wbEpVerifyBtn) {
+      wbEpVerifyBtn.addEventListener("click", () => {
+        showCatpawAlert("您的账号已完成微博实名认证标识！", "头像认证");
+      });
+    }
+
+    // 绑定各个信息条目的点击可交互编辑
+    const bindWbEpItemEdit = (elementId, fieldKey, titleName, defaultVal) => {
+      const el = document.querySelector(`#${elementId}`);
+      if (!el) return;
+      el.addEventListener("click", async () => {
+        const fp = ensureWeiboProfileFullData();
+        const nextVal = await showMusicPrompt({
+          title: `修改${titleName}`,
+          placeholder: `请输入${titleName}`,
+          value: fp[fieldKey] || defaultVal || "",
+          confirmText: "保存"
+        });
+        if (nextVal !== null && nextVal.trim()) {
+          fp[fieldKey] = nextVal.trim();
+          if (fieldKey === "name") {
+            appState.theme.cardProfileName = fp.name;
+          }
+          if (fieldKey === "bio") {
+            appState.theme.cardProfileBio = fp.bio;
+          }
+          renderWbEditProfilePage();
+          renderWeiboProfilePage();
+          renderWeiboMinePanel();
+          await saveState();
+          showCatpawAlert(`${titleName}已修改为：${fp[fieldKey]}`);
+        }
+      });
+    };
+
+    bindWbEpItemEdit("wbEpItemName", "name", "昵称", "我");
+    bindWbEpItemEdit("wbEpItemBio", "bio", "个性签名/简介", "暂无简介");
+    bindWbEpItemEdit("wbEpItemGender", "gender", "性别", "女");
+    bindWbEpItemEdit("wbEpItemBirthday", "birthday", "生日与星座", "2005-05-04 金牛座");
+    bindWbEpItemEdit("wbEpItemRelation", "relationship", "感情状况", "恋爱中");
+    bindWbEpItemEdit("wbEpItemHometown", "hometown", "家乡城市", "四川 成都");
+    bindWbEpItemEdit("wbEpItemIp", "ipLocation", "IP 属地", "广东");
+    bindWbEpItemEdit("wbEpItemEdu", "education", "教育信息", "四川大学 艺术学院");
+    bindWbEpItemEdit("wbEpItemWork", "work", "工作信息", "自由摄影师 / 设计师");
+    bindWbEpItemEdit("wbEpItemLevel", "level", "微博等级", "已激活 Lv.7");
 
     // 自定义编辑粉丝数量
     if (editWbFansCount) {
