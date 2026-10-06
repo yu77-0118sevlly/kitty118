@@ -31361,4 +31361,225 @@ function extractRoleReplyLines(reply) {
             Object.assign(appState.theme, importedTheme);
             renderState();
             await saveState();
-            setResult(beautifyResult, "美化配置已导
+            setResult(beautifyResult, "美化配置已导入。");
+          } catch (error) {
+            setResult(beautifyResult, `导入失败：${error.message}`);
+          }
+        };
+        reader.readAsText(file);
+      });
+    }
+
+    // 拍立得三联相片点击自主更换照片
+    ["snapPolaroidCard1", "snapPolaroidCard2", "snapPolaroidCard3"].forEach((id, idx) => {
+      const card = document.querySelector(`#${id}`);
+      if (!card) return;
+      card.addEventListener("click", () => {
+        const input = document.createElement("input");
+        input.type = "file";
+        input.accept = "image/*";
+        input.onchange = (e) => {
+          const file = e.target.files?.[0];
+          if (!file) return;
+          readImage(file, async (src) => {
+            appState.theme[`polaroidImg${idx + 1}`] = src;
+            const imgEl = document.querySelector(`#polaroidImg${idx + 1}`);
+            if (imgEl) imgEl.style.backgroundImage = `url(${src})`;
+            await saveState();
+          });
+        };
+        input.click();
+      });
+    });
+
+    // 别针照片小卡点击换图
+    const snapClipCard = document.querySelector("#snapClipCard");
+    if (snapClipCard) {
+      snapClipCard.addEventListener("click", () => {
+        const input = document.createElement("input");
+        input.type = "file";
+        input.accept = "image/*";
+        input.onchange = (e) => {
+          const file = e.target.files?.[0];
+          if (!file) return;
+          readImage(file, async (src) => {
+            appState.theme.clipCardImg = src;
+            const imgEl = document.querySelector("#clipCardImg");
+            if (imgEl) imgEl.style.backgroundImage = `url(${src})`;
+            await saveState();
+          });
+        };
+        input.click();
+      });
+    }
+
+    // 别针卡片文案编辑
+    const clipCardCaptionNode = document.querySelector("#clipCardCaption");
+    if (clipCardCaptionNode) {
+      clipCardCaptionNode.addEventListener("click", (e) => {
+        e.stopPropagation();
+        openTextEditor({
+          target: "clipCaption",
+          title: "编辑别针卡片文案",
+          label: "请输入别针卡片下方的个性文案",
+          value: appState.theme.clipCaption || "ʚ (• . •) ɞ"
+        });
+      });
+    }
+
+    // 个性符号文案编辑
+    const snapSymbolQuote = document.querySelector("#snapSymbolQuote");
+    if (snapSymbolQuote) {
+      snapSymbolQuote.addEventListener("click", () => {
+        openTextEditor({
+          target: "snapQuote",
+          title: "编辑个性符号",
+          label: "请输入顶部个性符号/状态文案",
+          value: appState.theme.snapQuote || "Angel user"
+        });
+      });
+    }
+
+    // 通用文案编辑弹窗管理器
+    let currentTextEditorConfig = null;
+    function openTextEditor(config) {
+      if (!textEditorModal || !textEditorInput) return;
+      currentTextEditorConfig = config;
+      if (textEditorTitle) textEditorTitle.textContent = config.title || "编辑文案";
+      if (textEditorLabel) textEditorLabel.textContent = config.label || "请输入新的文案内容";
+      textEditorInput.value = config.value || "";
+      textEditorModal.classList.add("show");
+      setTimeout(() => textEditorInput.focus(), 120);
+    }
+
+    function closeTextEditorModal() {
+      if (textEditorModal) textEditorModal.classList.remove("show");
+      currentTextEditorConfig = null;
+    }
+
+    if (closeTextEditor) closeTextEditor.addEventListener("click", closeTextEditorModal);
+    if (cancelTextEditor) cancelTextEditor.addEventListener("click", closeTextEditorModal);
+    if (saveTextEditor) {
+      saveTextEditor.addEventListener("click", async () => {
+        if (!currentTextEditorConfig) return;
+        const target = currentTextEditorConfig.target;
+        const val = textEditorInput.value.trim();
+        appState.theme[target] = val;
+        renderState();
+        await saveState();
+        closeTextEditorModal();
+      });
+    }
+
+    // 数据备份与清除重置
+    if (exportAppDataBtn) {
+      exportAppDataBtn.addEventListener("click", () => {
+        downloadJson("yuan-phone-backup.json", appState);
+        setResult(settingsResult, "完整备份数据已导出。");
+      });
+    }
+
+    if (importAppDataInput) {
+      importAppDataInput.addEventListener("change", (e) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = async () => {
+          try {
+            const data = JSON.parse(reader.result);
+            if (data.api) Object.assign(appState.api, data.api);
+            if (data.theme) Object.assign(appState.theme, data.theme);
+            if (data.qq) Object.assign(appState.qq, data.qq);
+            if (data.music) Object.assign(appState.music, data.music);
+            renderState();
+            await saveState();
+            setResult(settingsResult, "数据导入成功！页面即将刷新...");
+            setTimeout(() => window.location.reload(), 800);
+          } catch (err) {
+            setResult(settingsResult, `导入失败：${err.message}`);
+          }
+        };
+        reader.readAsText(file);
+      });
+    }
+
+    if (clearPageCacheBtn) {
+      clearPageCacheBtn.addEventListener("click", () => {
+        window.location.reload();
+      });
+    }
+
+    if (resetAppBtn) {
+      resetAppBtn.addEventListener("click", async () => {
+        const ok = await showCatpawConfirm("确定要抹掉所有数据重置吗？此操作不可逆！", "重置警告");
+        if (!ok) return;
+        if (dbInstance) {
+          indexedDB.deleteDatabase(DB_NAME);
+        }
+        localStorage.clear();
+        window.location.reload();
+      });
+    }
+
+    // 开屏公告弹窗控制
+    const announcementModal = document.querySelector("#announcementModal");
+    const confirmAnnouncementBtn = document.querySelector("#confirmAnnouncementBtn");
+    const announcementCarousel = document.querySelector("#announcementCarousel");
+    const announcementDots = document.querySelectorAll(".announcement-dot");
+
+    if (announcementCarousel && announcementDots.length) {
+      announcementCarousel.addEventListener("scroll", () => {
+        const left = announcementCarousel.scrollLeft;
+        const width = announcementCarousel.offsetWidth || 1;
+        const pageIdx = Math.round(left / width);
+        announcementDots.forEach((dot, idx) => {
+          dot.classList.toggle("active", idx === pageIdx);
+        });
+      }, { passive: true });
+    }
+
+    if (confirmAnnouncementBtn && announcementModal) {
+      confirmAnnouncementBtn.addEventListener("click", () => {
+        announcementModal.classList.remove("show");
+        try {
+          localStorage.setItem("yuan_announcement_seen_v2", "true");
+        } catch (e) {}
+      });
+    }
+
+    const closePwaInstallModal = document.querySelector("#closePwaInstallModal");
+    const pwaInstallModal = document.querySelector("#pwaInstallModal");
+    if (closePwaInstallModal && pwaInstallModal) {
+      closePwaInstallModal.addEventListener("click", () => {
+        pwaInstallModal.classList.remove("show");
+      });
+    }
+
+    // 初始化启动流程
+    (async function init() {
+      try {
+        await loadState();
+      } catch (e) {
+        console.warn("加载持久化数据失败：", e);
+      }
+
+      setupPwaManifest();
+      setupBatteryStatus();
+      updateTime();
+      setInterval(updateTime, 1000);
+      renderState();
+      setupDesktopCarousel();
+      setupDraggableWidgets();
+      startAutoMomentLoop();
+
+      // 判断是否弹出开屏公告
+      try {
+        const seen = localStorage.getItem("yuan_announcement_seen_v2");
+        if (!seen && announcementModal) {
+          announcementModal.classList.add("show");
+        }
+      } catch (e) {}
+    })();
+  </script>
+</body>
+</html>
