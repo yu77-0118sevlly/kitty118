@@ -16502,98 +16502,294 @@
       font-weight: 800;
     }
 
-    /* 热搜榜排版 */
+    /* 发现页面 1:1 截图同款纯黑白灰排版 */
     .wb-hot-panel {
       display: none;
       background: #ffffff;
-      padding: 0;
+      padding: 0 0 20px;
     }
 
     .wb-hot-panel.show {
       display: block;
     }
 
-    .wb-hot-header {
-      padding: 14px 18px 10px;
-      border-bottom: 1px solid #f4f4f4;
+    /* 1. 发现顶部大搜索框 */
+    .wb-disc-search-bar {
+      margin: 10px 14px 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      height: 38px;
+      padding: 0 4px 0 14px;
+      border-radius: 999px;
+      border: 1px solid #111111;
+      background: #ffffff;
+    }
+
+    .wb-disc-search-input {
+      flex: 1;
+      min-width: 0;
+      border: 0;
+      background: transparent;
+      outline: none;
+      font-size: 12.5px;
+      color: #111111;
+    }
+
+    .wb-disc-search-input::placeholder {
+      color: #666666;
+    }
+
+    .wb-disc-camera-btn {
+      width: 28px;
+      height: 28px;
+      border: 0;
+      background: transparent;
+      color: #666666;
+      font-size: 14px;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+    }
+
+    .wb-disc-submit-btn {
+      height: 30px;
+      padding: 0 14px;
+      border-radius: 999px;
+      border: 0;
+      background: #111111;
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* 2. 搜索框下方横向胶囊热词流 */
+    .wb-disc-pills-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 4px 14px 12px;
+      border-bottom: 1px solid #f2f3f5;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .wb-disc-pills-row::-webkit-scrollbar {
+      display: none;
+    }
+
+    .wb-disc-pill-item {
+      flex-shrink: 0;
+      height: 28px;
+      padding: 0 12px;
+      border-radius: 999px;
+      border: 1px solid #e8e9eb;
+      background: #fafafa;
+      color: #4a505a;
+      font-size: 11.5px;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .wb-disc-pill-item:active {
+      background: #f0f0f0;
+    }
+
+    /* 3. 截图同款“微博热搜”双列模块 */
+    .wb-disc-hot-box {
+      padding: 12px 14px 8px;
+      border-bottom: 1px solid #f2f3f5;
+    }
+
+    .wb-disc-hot-top {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      margin-bottom: 10px;
     }
 
-    .wb-hot-header strong {
-      font-size: 16px;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-    }
-
-    .wb-hot-header span {
-      font-size: 11px;
-      color: #8e8e93;
-    }
-
-    .wb-hot-list {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .wb-hot-item {
-      display: grid;
-      grid-template-columns: 28px 1fr auto;
-      gap: 12px;
-      align-items: center;
-      padding: 14px 18px;
-      border-bottom: 1px solid #f7f7f7;
-      cursor: pointer;
-      transition: background 0.12s ease;
-    }
-
-    .wb-hot-item:active {
-      background: #fafafa;
-    }
-
-    .wb-hot-rank {
+    .wb-disc-hot-title {
       font-size: 15px;
       font-weight: 800;
-      color: #000000;
-      font-variant-numeric: tabular-nums;
-      text-align: center;
-    }
-
-    .wb-hot-item.top .wb-hot-rank {
-      color: #000000;
-      font-size: 16px;
-    }
-
-    .wb-hot-item.dim .wb-hot-rank {
-      color: #aaaaaa;
-    }
-
-    .wb-hot-title {
-      font-size: 14px;
-      font-weight: 600;
       color: #111111;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
       display: flex;
       align-items: center;
       gap: 6px;
     }
 
-    .wb-hot-tag {
-      font-size: 9px;
-      color: #ffffff;
-      background: #000000;
-      padding: 1px 5px;
-      border-radius: 3px;
-      font-weight: 700;
+    .wb-disc-hot-brief {
+      font-size: 11.5px;
+      color: #666666;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      cursor: pointer;
     }
 
-    .wb-hot-heat {
-      font-size: 11px;
-      color: #aaaaaa;
-      font-variant-numeric: tabular-nums;
+    .wb-disc-hot-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px 14px;
+    }
+
+    .wb-disc-hot-cell {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 4px;
+      cursor: pointer;
+      min-width: 0;
+    }
+
+    .wb-disc-hot-cell span {
+      font-size: 12.5px;
+      color: #1a1a1a;
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .wb-disc-hot-tag {
+      font-size: 9px;
+      padding: 1px 4px;
+      border-radius: 3px;
+      font-weight: 700;
+      flex-shrink: 0;
+      line-height: 1.1;
+    }
+
+    .wb-disc-hot-tag.hot {
+      background: #111111;
+      color: #ffffff;
+    }
+
+    .wb-disc-hot-tag.new {
+      background: #eeeeee;
+      color: #333333;
+      border: 1px solid #dddddd;
+    }
+
+    .wb-disc-more-hot {
+      margin-top: 10px;
+      font-size: 12px;
+      color: #666666;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      cursor: pointer;
+    }
+
+    /* 4. 截图同款头条要闻大图展示卡 */
+    .wb-disc-focus-card {
+      margin: 12px 14px;
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+      background: #111111;
+      cursor: pointer;
+    }
+
+    .wb-disc-focus-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      display: block;
+      opacity: 0.92;
+    }
+
+    .wb-disc-focus-logo {
+      position: absolute;
+      right: 8px;
+      top: 8px;
+      background: rgba(0, 0, 0, 0.65);
+      color: #ffffff;
+      font-size: 9px;
+      font-weight: 600;
+      padding: 2px 6px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .wb-disc-focus-overlay {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 10px 12px 8px;
+      background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+      color: #ffffff;
+    }
+
+    .wb-disc-focus-title {
+      font-size: 13.5px;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+
+    .wb-disc-focus-meta {
+      font-size: 10px;
+      color: rgba(255, 255, 255, 0.76);
+      display: flex;
+      gap: 10px;
+    }
+
+    /* 5. 发现页分类 Tab (热点/影像/设计/专栏/指数) */
+    .wb-disc-subnav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 14px 4px;
+      border-bottom: 1px solid #f2f3f5;
+    }
+
+    .wb-disc-subnav-tabs {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .wb-disc-subtab {
+      font-size: 14.5px;
+      font-weight: 600;
+      color: #7b818a;
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+      position: relative;
+      padding-bottom: 6px;
+    }
+
+    .wb-disc-subtab.active {
+      color: #000000;
+      font-weight: 800;
+    }
+
+    .wb-disc-subtab.active::after {
+      content: "";
+      position: absolute;
+      left: 10%;
+      right: 10%;
+      bottom: 0;
+      height: 2.5px;
+      background: #000000;
+      border-radius: 999px;
+    }
+
+    .wb-disc-subnav-menu {
+      border: 0;
+      background: transparent;
+      color: #8c9098;
+      font-size: 14px;
+      cursor: pointer;
     }
 
     /* 微博内评论展开区 */
@@ -18831,13 +19027,70 @@
       <!-- 微博推荐卡片流 -->
       <div id="weiboFeedList"></div>
 
-      <!-- 实时热搜榜单抽屉 -->
+      <!-- 发现页面 · 1:1 复刻截图同款排版（纯黑白灰 · 中性主题） -->
       <div class="wb-hot-panel" id="weiboHotPanel">
-        <div class="wb-hot-header">
-          <strong>实时热搜榜单</strong>
-          <span>每分钟实时刷新</span>
+        <!-- 1. 发现顶部大搜索框 -->
+        <div class="wb-disc-search-bar">
+          <i class="fa-solid fa-magnifying-glass" style="font-size: 12px; color: #888888;"></i>
+          <input class="wb-disc-search-input" id="wbDiscSearchInput" type="text" placeholder="猜你想搜：城市夜景胶片摄影" />
+          <button class="wb-disc-camera-btn" type="button" aria-label="拍照"><i class="fa-solid fa-camera"></i></button>
+          <button class="wb-disc-submit-btn" id="wbDiscSearchBtn" type="button">搜索</button>
         </div>
-        <div class="wb-hot-list" id="weiboHotList"></div>
+
+        <!-- 2. 横向滑动热词胶囊 -->
+        <div class="wb-disc-pills-row">
+          <span class="wb-disc-pill-item" data-pill-topic="黑白摄影展">黑白摄影展</span>
+          <span class="wb-disc-pill-item" data-pill-topic="秋日散步路线">秋日散步路线</span>
+          <span class="wb-disc-pill-item" data-pill-topic="极简生活整理">极简生活整理</span>
+          <span class="wb-disc-pill-item" data-pill-topic="冷色调穿搭灵感">冷色调穿搭灵感</span>
+          <span class="wb-disc-pill-item" data-pill-topic="当代独立空间">当代独立空间</span>
+        </div>
+
+        <!-- 3. 截图同款“微博热搜”双列模块 -->
+        <div class="wb-disc-hot-box">
+          <div class="wb-disc-hot-top">
+            <span class="wb-disc-hot-title"><i class="fa-solid fa-fire-flame-curved" style="font-size:13px;"></i> 微博热搜</span>
+            <span class="wb-disc-hot-brief">热搜简报 <i class="fa-solid fa-chevron-right" style="font-size:9px;"></i></span>
+          </div>
+          <div class="wb-disc-hot-grid" id="wbDiscHotGrid">
+            <!-- 由 JS 渲染 10 条左右的中性非明星双列热搜词 -->
+          </div>
+          <div class="wb-disc-more-hot" id="wbDiscMoreHotBtn">
+            <span>更多热搜</span>
+            <i class="fa-solid fa-chevron-right" style="font-size:10px;"></i>
+          </div>
+        </div>
+
+        <!-- 4. 截图同款要闻头条大焦点图卡片 -->
+        <div class="wb-disc-focus-card" id="wbDiscFocusCard">
+          <img src="https://771553.xyz/file/studio/5FDVc1VrKzVdH5mO.jpg" alt="头条要闻" />
+          <div class="wb-disc-focus-logo">
+            <i class="fa-solid fa-newspaper" style="font-size:8px;"></i>
+            <span>专题要闻</span>
+          </div>
+          <div class="wb-disc-focus-overlay">
+            <div class="wb-disc-focus-title">#城市当代艺术展今日启幕#</div>
+            <div class="wb-disc-focus-meta">
+              <span>284讨论</span>
+              <span>310.5万阅读</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. 截图同款发现分类栏 (热点/影像/设计/专栏/指数) -->
+        <div class="wb-disc-subnav">
+          <div class="wb-disc-subnav-tabs">
+            <button class="wb-disc-subtab active" type="button">热点</button>
+            <button class="wb-disc-subtab" type="button">影像</button>
+            <button class="wb-disc-subtab" type="button">设计</button>
+            <button class="wb-disc-subtab" type="button">专栏</button>
+            <button class="wb-disc-subtab" type="button">指数</button>
+          </div>
+          <button class="wb-disc-subnav-menu" type="button" aria-label="更多分类"><i class="fa-solid fa-bars"></i></button>
+        </div>
+
+        <!-- 6. 发现流精选内容卡片 -->
+        <div id="wbDiscSubFeedList" style="margin-top: 8px;"></div>
       </div>
     </div>
 
@@ -25028,31 +25281,113 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
     }
 
     function renderWeiboHot() {
-      if (!weiboHotList) return;
       ensureWeiboState();
-      weiboHotList.innerHTML = "";
 
-      appState.weibo.hotSearches.forEach((hot, idx) => {
-        const item = document.createElement("div");
-        const isTop = idx === 0;
-        const isDim = idx > 3;
-        item.className = `wb-hot-item ${isTop ? "top" : ""} ${isDim ? "dim" : ""}`;
+      // 双列热搜数据（非明星 · 中性生活设计科技主题）
+      const dualHotData = [
+        { title: "全球设计趋势报告发布", tag: "热", tagType: "hot" },
+        { title: "极简桌面整理灵感", tag: "热", tagType: "hot" },
+        { title: "现代建筑黑白光影展", tag: "新", tagType: "new" },
+        { title: "经典唱片黑胶复刻", tag: "", tagType: "" },
+        { title: "独立咖啡馆探店路线", tag: "热", tagType: "hot" },
+        { title: "城市漫步最佳观测点", tag: "", tagType: "" },
+        { title: "夜间骑行路线规划", tag: "", tagType: "" },
+        { title: "沉浸式阅读空间推荐", tag: "新", tagType: "new" },
+        { title: "胶片冲洗全流程解析", tag: "新", tagType: "new" },
+        { title: "智能终端极简体验", tag: "热", tagType: "hot" }
+      ];
 
-        item.innerHTML = `
-          <div class="wb-hot-rank">${hot.rank}</div>
-          <div class="wb-hot-title">
-            <span>${hot.title}</span>
-            ${hot.tag ? `<span class="wb-hot-tag">${hot.tag}</span>` : ""}
-          </div>
-          <div class="wb-hot-heat">${hot.heat}</div>
-        `;
-
-        item.addEventListener("click", () => {
-          openWeiboComposeWithTopic(hot.title);
+      const gridNode = document.querySelector("#wbDiscHotGrid");
+      if (gridNode) {
+        gridNode.innerHTML = "";
+        dualHotData.forEach((item) => {
+          const cell = document.createElement("div");
+          cell.className = "wb-disc-hot-cell";
+          const tagHtml = item.tag ? `<span class="wb-disc-hot-tag ${item.tagType}">${item.tag}</span>` : "";
+          cell.innerHTML = `
+            <span>${item.title}</span>
+            ${tagHtml}
+          `;
+          cell.addEventListener("click", () => {
+            openWeiboComposeWithTopic(item.title);
+          });
+          gridNode.appendChild(cell);
         });
+      }
 
-        weiboHotList.appendChild(item);
+      // 发现页下方的精选博文（截图同款多图样式）
+      const subFeedNode = document.querySelector("#wbDiscSubFeedList");
+      if (subFeedNode) {
+        subFeedNode.innerHTML = `
+          <article class="wb-card" style="margin-bottom:0;">
+            <div class="wb-card-header">
+              <div class="wb-card-author-wrap">
+                <div class="wb-card-avatar-box">
+                  <div class="wb-card-avatar" style="background-image:url('https://771553.xyz/file/studio/5FDVc1VrKzVdH5mO.jpg');"></div>
+                  <span class="wb-v-badge">V</span>
+                </div>
+                <div class="wb-card-meta">
+                  <div class="wb-meta-row1">
+                    <strong>视觉研究所_</strong>
+                    <span class="wb-topic-badge">设计志</span>
+                  </div>
+                  <div class="wb-meta-row2">
+                    <span>昨天 20:56</span>
+                    <span>来自 iPhone 16 Pro</span>
+                  </div>
+                </div>
+              </div>
+              <button class="wb-card-more-btn" type="button"><i class="fa-solid fa-chevron-down"></i></button>
+            </div>
+            <div class="wb-card-text">#空间留白计划# 记录一组自然光影与材质的对话。\n有时候不需要过多的修饰，光线本身就是最好的构图。\n#室内美学##日常随拍#</div>
+            <div class="wb-media-container">
+              <div class="wb-img-grid grid-3">
+                <img src="https://771553.xyz/file/studio/5FDVc1VrKzVdH5mO.jpg" alt="图1" loading="lazy" />
+                <img src="https://771553.xyz/file/studio/5FDVc1VrKzVdH5mO.jpg" alt="图2" loading="lazy" />
+                <img src="https://771553.xyz/file/studio/5FDVc1VrKzVdH5mO.jpg" alt="图3" loading="lazy" />
+              </div>
+            </div>
+            <div class="wb-card-actions">
+              <button class="wb-action-btn" type="button"><i class="fa-solid fa-arrow-up-from-bracket"></i> <span>2.8万</span></button>
+              <button class="wb-action-btn" type="button"><i class="fa-regular fa-comment"></i> <span>8420</span></button>
+              <button class="wb-action-btn" type="button"><i class="fa-regular fa-thumbs-up"></i> <span>5.1万</span></button>
+            </div>
+          </article>
+        `;
+      }
+
+      // 发现页药丸热词点击直接发起话题
+      document.querySelectorAll(".wb-disc-pill-item").forEach((pill) => {
+        pill.addEventListener("click", () => {
+          const topic = pill.dataset.pillTopic || pill.textContent.trim();
+          openWeiboComposeWithTopic(topic);
+        });
       });
+
+      // 发现页大卡片点击
+      const focusCard = document.querySelector("#wbDiscFocusCard");
+      if (focusCard) {
+        focusCard.addEventListener("click", () => {
+          openWeiboComposeWithTopic("城市当代艺术展今日启幕");
+        });
+      }
+
+      // 发现页搜索按钮
+      const discSearchBtn = document.querySelector("#wbDiscSearchBtn");
+      const discSearchInput = document.querySelector("#wbDiscSearchInput");
+      if (discSearchBtn && discSearchInput) {
+        discSearchBtn.addEventListener("click", () => {
+          const val = discSearchInput.value.trim() || "城市夜景胶片摄影";
+          openWeiboComposeWithTopic(val);
+        });
+      }
+
+      const moreHotBtn = document.querySelector("#wbDiscMoreHotBtn");
+      if (moreHotBtn) {
+        moreHotBtn.addEventListener("click", () => {
+          showCatpawAlert("已加载最新一小时微博实时热度上升趋势榜！", "热搜榜");
+        });
+      }
     }
 
     function openWeiboComposeWithTopic(topicTitle = "") {
