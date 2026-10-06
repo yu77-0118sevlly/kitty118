@@ -16602,22 +16602,28 @@
                 <div class="me-stat-item"><b id="cardStatWorlds">0</b><span>设定</span></div>
               </div>
 
-              <!-- 资产余额极简卡片 -->
-              <div class="me-asset-box">
+              <!-- 资产极简卡片 -->
+              <div class="me-asset-box" id="openWalletCardBtn" style="cursor: pointer;">
                 <div class="me-asset-head">
-                  <span>钱包余额</span>
+                  <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <span>钱包</span>
+                    <i class="fa-solid fa-chevron-right" style="font-size:11px; color:#8e8e93;"></i>
+                  </div>
                   <div class="asset-amount" id="assetAmount">¥50,000.00</div>
                 </div>
-                <div class="me-asset-btns">
-                  <button class="me-btn" id="openBillPanel" type="button">账单明细</button>
-                  <button class="me-btn primary" id="openTransferModalFromCard" type="button">给角色转账</button>
+                <div class="me-asset-btns" style="grid-template-columns: 1fr;">
+                  <button class="me-btn primary" id="openWalletBtn" type="button">管理钱包与银行卡</button>
                 </div>
               </div>
 
               <!-- 极简功能列表 -->
               <div class="me-menu-list">
+                <button class="me-menu-row" type="button" id="openWalletRowBtn">
+                  <span><i class="fa-solid fa-wallet" style="margin-right:6px;"></i> 钱包</span>
+                  <i class="fa-solid fa-chevron-right"></i>
+                </button>
                 <button class="me-menu-row" type="button" data-card-panel="billPanel">
-                  <span><i class="fa-solid fa-wallet" style="margin-right:6px;"></i> 账单明细</span>
+                  <span><i class="fa-solid fa-receipt" style="margin-right:6px;"></i> 账单明细</span>
                   <i class="fa-solid fa-chevron-right"></i>
                 </button>
                 <button class="me-menu-row" type="button" data-card-panel="stickerPanel">
@@ -17415,6 +17421,71 @@
     <div id="stickerImportInput"></div>
     <div id="importStickerBtn"></div>
   </div>
+
+  <!-- 独立钱包管理页面：包含钱包与银行卡独立卡片及自定义更改余额 -->
+  <section class="role-editor-modal" id="walletManagerModal" aria-label="钱包管理">
+    <div class="role-editor-card" style="padding-bottom: calc(50px + env(safe-area-inset-bottom));">
+      <header class="rolec-topbar">
+        <button class="insc-icon-btn" id="closeWalletManager" type="button" aria-label="返回">
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <span class="rolec-topbar-label">Wallet</span>
+        <span></span>
+      </header>
+
+      <div class="rolec-title">
+        <strong>我的钱包</strong>
+        <span>资金账户管理与自定义余额设置</span>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:14px; margin-top:8px;">
+        <!-- 账户 1：钱包零钱 -->
+        <div style="background:#f7f7f7; border-radius:18px; padding:18px; border:1px solid #ededed; display:flex; flex-direction:column; gap:10px;">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <i class="fa-solid fa-wallet" style="font-size:15px; color:#111111;"></i>
+              <strong style="font-size:14px; color:#111111;">零钱钱包</strong>
+            </div>
+            <span style="font-size:10px; color:#8e8e93; background:#ffffff; padding:2px 8px; border-radius:999px; border:1px solid #ededed;">即时消费</span>
+          </div>
+          <div style="font-size:28px; font-weight:700; color:#111111; letter-spacing:-0.03em; font-variant-numeric:tabular-nums; margin:4px 0 2px;" id="walletCashBalance">
+            ¥50,000.00
+          </div>
+          <div style="display:flex; justify-content:flex-end; padding-top:6px; border-top:1px solid #ededed;">
+            <button class="ins-wide-btn" id="editCashBalanceBtn" type="button" style="min-height:36px; padding:0 16px; width:auto; font-size:11.5px;">
+              自定义更改余额
+            </button>
+          </div>
+        </div>
+
+        <!-- 账户 2：银行卡 -->
+        <div style="background:#f7f7f7; border-radius:18px; padding:18px; border:1px solid #ededed; display:flex; flex-direction:column; gap:10px;">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <i class="fa-regular fa-credit-card" style="font-size:15px; color:#111111;"></i>
+              <strong style="font-size:14px; color:#111111;">银行储蓄卡</strong>
+            </div>
+            <span style="font-size:10px; color:#8e8e93; background:#ffffff; padding:2px 8px; border-radius:999px; border:1px solid #ededed;">尾号 8888</span>
+          </div>
+          <div style="font-size:28px; font-weight:700; color:#111111; letter-spacing:-0.03em; font-variant-numeric:tabular-nums; margin:4px 0 2px;" id="walletBankBalance">
+            ¥100,000.00
+          </div>
+          <div style="display:flex; justify-content:flex-end; padding-top:6px; border-top:1px solid #ededed;">
+            <button class="ins-wide-btn" id="editBankBalanceBtn" type="button" style="min-height:36px; padding:0 16px; width:auto; font-size:11.5px;">
+              自定义更改余额
+            </button>
+          </div>
+        </div>
+
+        <!-- 查看账单明细按钮 -->
+        <div style="margin-top:10px;">
+          <button class="ins-wide-btn" id="walletGoToBillBtn" type="button" style="min-height:44px; font-size:12.5px;">
+            查看全部账单明细
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <section class="sticker-manager-modal" id="worldBookManagerModal" aria-label="世界书管理">
     <div class="sticker-manager-card">
@@ -24493,6 +24564,7 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
         if (typeof appState.qq.lastAutoMomentAt !== "number") appState.qq.lastAutoMomentAt = 0;
         if (typeof appState.qq.momentsExpanded !== "boolean") appState.qq.momentsExpanded = false;
         if (typeof appState.qq.assets !== "number") appState.qq.assets = 50000;
+        if (typeof appState.qq.bankAssets !== "number") appState.qq.bankAssets = 100000;
         if (!Array.isArray(appState.qq.transactions)) appState.qq.transactions = [];
         if (!Array.isArray(appState.qq.stickers)) appState.qq.stickers = [];
         if (!Array.isArray(appState.qq.stickerGroups)) appState.qq.stickerGroups = ["默认"];
@@ -26423,6 +26495,10 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
     function renderCardPage() {
       ensureQqState();
       if (assetAmount) assetAmount.textContent = formatMoney(appState.qq.assets);
+      const walletCashBalance = document.querySelector("#walletCashBalance");
+      const walletBankBalance = document.querySelector("#walletBankBalance");
+      if (walletCashBalance) walletCashBalance.textContent = formatMoney(appState.qq.assets);
+      if (walletBankBalance) walletBankBalance.textContent = formatMoney(appState.qq.bankAssets || 100000);
       const cardStatBills = document.querySelector("#cardStatBills");
       const cardStatStickers = document.querySelector("#cardStatStickers");
       const cardStatWorlds = document.querySelector("#cardStatWorlds");
@@ -30556,9 +30632,88 @@ function extractRoleReplyLines(reply) {
       button.addEventListener("click", closeCardPanels);
     });
 
+    // 独立钱包管理页面逻辑
+    const walletManagerModal = document.querySelector("#walletManagerModal");
+    const closeWalletManager = document.querySelector("#closeWalletManager");
+    const openWalletCardBtn = document.querySelector("#openWalletCardBtn");
+    const openWalletBtn = document.querySelector("#openWalletBtn");
+    const openWalletRowBtn = document.querySelector("#openWalletRowBtn");
+    const editCashBalanceBtn = document.querySelector("#editCashBalanceBtn");
+    const editBankBalanceBtn = document.querySelector("#editBankBalanceBtn");
+    const walletGoToBillBtn = document.querySelector("#walletGoToBillBtn");
+
+    function openWalletManagerModal() {
+      renderCardPage();
+      if (walletManagerModal) walletManagerModal.classList.add("show");
+    }
+
+    function closeWalletManagerModal() {
+      if (walletManagerModal) walletManagerModal.classList.remove("show");
+    }
+
+    if (openWalletCardBtn) openWalletCardBtn.addEventListener("click", (e) => {
+      openWalletManagerModal();
+    });
+
+    if (openWalletBtn) openWalletBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      openWalletManagerModal();
+    });
+
+    if (openWalletRowBtn) openWalletRowBtn.addEventListener("click", openWalletManagerModal);
+    if (closeWalletManager) closeWalletManager.addEventListener("click", closeWalletManagerModal);
+
+    if (editCashBalanceBtn) {
+      editCashBalanceBtn.addEventListener("click", async () => {
+        const nextVal = await showMusicPrompt({
+          title: "修改零钱余额",
+          placeholder: "请输入新的零钱金额（如 50000）",
+          value: String(appState.qq.assets ?? 50000),
+          confirmText: "保存"
+        });
+        if (nextVal === null) return;
+        const num = parseFloat(nextVal);
+        if (isNaN(num) || num < 0) {
+          await showCatpawAlert("请输入有效的数字金额。");
+          return;
+        }
+        appState.qq.assets = Math.round(num * 100) / 100;
+        renderCardPage();
+        await saveState();
+        await showCatpawAlert(`零钱余额已更新为 ${formatMoney(appState.qq.assets)}`);
+      });
+    }
+
+    if (editBankBalanceBtn) {
+      editBankBalanceBtn.addEventListener("click", async () => {
+        const nextVal = await showMusicPrompt({
+          title: "修改银行卡余额",
+          placeholder: "请输入新的银行卡金额（如 100000）",
+          value: String(appState.qq.bankAssets ?? 100000),
+          confirmText: "保存"
+        });
+        if (nextVal === null) return;
+        const num = parseFloat(nextVal);
+        if (isNaN(num) || num < 0) {
+          await showCatpawAlert("请输入有效的数字金额。");
+          return;
+        }
+        appState.qq.bankAssets = Math.round(num * 100) / 100;
+        renderCardPage();
+        await saveState();
+        await showCatpawAlert(`银行卡余额已更新为 ${formatMoney(appState.qq.bankAssets)}`);
+      });
+    }
+
+    if (walletGoToBillBtn) {
+      walletGoToBillBtn.addEventListener("click", () => {
+        closeWalletManagerModal();
+        openCardPanel("billPanel");
+      });
+    }
+
     if (openBillPanel) openBillPanel.addEventListener("click", () => openCardPanel("billPanel"));
     if (cardQuickAdd) cardQuickAdd.addEventListener("click", () => openCardPanel("stickerPanel"));
-    if (openTransferModalFromCard) openTransferModalFromCard.addEventListener("click", openTransferDialog);
     if (openTransferModal) {
       openTransferModal.addEventListener("click", () => {
         if (qqAttachMenu) qqAttachMenu.classList.remove("show");
