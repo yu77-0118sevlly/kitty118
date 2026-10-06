@@ -19008,12 +19008,20 @@
         </button>
       </div>
 
-      <nav class="wb-head-tabs">
+      <!-- 仅在首页展示的 推荐/关注 切换 -->
+      <nav class="wb-head-tabs" id="wbHeadTabs">
         <button class="wb-tab active" id="wbTabFeed" type="button">推荐</button>
         <button class="wb-tab" id="wbTabFollow" type="button">关注</button>
       </nav>
 
+      <!-- 在发现等其他页面时显示的极简标题 -->
+      <div id="wbHeadSubTitle" style="display:none; font-size:15px; font-weight:700; color:#111111; text-align:center;">发现</div>
+
       <div class="wb-head-right">
+        <!-- AI 实时联网/大模型生成新博文按钮 -->
+        <button class="wb-head-icon-btn" id="wbRefreshBtn" type="button" title="AI 刷新并生成新内容">
+          <i class="fa-solid fa-rotate-right" style="font-size: 14px;"></i>
+        </button>
         <button class="wb-head-icon-btn" id="wbHotSearchBtn" type="button" title="热搜榜">
           <i class="fa-solid fa-fire-flame-curved" style="font-size: 15px;"></i>
         </button>
@@ -25522,12 +25530,23 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       });
     }
 
-    // 底部 5 大原生 Tab 点击事件
+    // 底部 5 大原生 Tab 点击事件（严格控制推荐/关注顶栏只在首页展示）
     const wbBarHome = document.querySelector("#wbBarHome");
     const wbBarVideo = document.querySelector("#wbBarVideo");
     const wbBarDiscover = document.querySelector("#wbBarDiscover");
     const wbBarMsg = document.querySelector("#wbBarMsg");
     const wbBarMine = document.querySelector("#wbBarMine");
+    const wbHeadTabs = document.querySelector("#wbHeadTabs");
+    const wbHeadSubTitle = document.querySelector("#wbHeadSubTitle");
+    const wbRefreshBtn = document.querySelector("#wbRefreshBtn");
+
+    const updateWbHeadDisplay = (isHome, titleText = "") => {
+      if (wbHeadTabs) wbHeadTabs.style.display = isHome ? "flex" : "none";
+      if (wbHeadSubTitle) {
+        wbHeadSubTitle.style.display = isHome ? "none" : "block";
+        wbHeadSubTitle.textContent = titleText;
+      }
+    };
 
     const setWbBarActive = (btn) => {
       document.querySelectorAll(".wb-bar-item").forEach(b => b.classList.remove("active"));
@@ -25537,6 +25556,7 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
     if (wbBarHome) {
       wbBarHome.addEventListener("click", () => {
         setWbBarActive(wbBarHome);
+        updateWbHeadDisplay(true);
         if (weiboFeedList) weiboFeedList.style.display = "block";
         if (weiboHotPanel) weiboHotPanel.classList.remove("show");
         wbTabFeed?.classList.add("active");
@@ -25549,6 +25569,7 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
     if (wbBarVideo) {
       wbBarVideo.addEventListener("click", () => {
         setWbBarActive(wbBarVideo);
+        updateWbHeadDisplay(false, "视频");
         showCatpawAlert("视频信息流正在聚合中，稍后可在视频流观看角色日常动态。", "微博视频");
       });
     }
@@ -25556,6 +25577,7 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
     if (wbBarDiscover) {
       wbBarDiscover.addEventListener("click", () => {
         setWbBarActive(wbBarDiscover);
+        updateWbHeadDisplay(false, "发现");
         if (weiboHotPanel) weiboHotPanel.classList.add("show");
         if (weiboFeedList) weiboFeedList.style.display = "none";
       });
@@ -25564,6 +25586,7 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
     if (wbBarMsg) {
       wbBarMsg.addEventListener("click", () => {
         setWbBarActive(wbBarMsg);
+        updateWbHeadDisplay(false, "消息");
         showCatpawAlert("暂无新的微博互动通知或私信。", "微博消息");
       });
     }
@@ -25571,8 +25594,127 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
     if (wbBarMine) {
       wbBarMine.addEventListener("click", () => {
         setWbBarActive(wbBarMine);
+        updateWbHeadDisplay(false, "我的微博");
         showCatpawAlert(`当前微博主页：${appState.theme.cardProfileName || "我"}，已发布 ${appState.weibo?.posts?.length || 0} 条微博。`, "微博主页");
       });
+    }
+
+    // AI 实时生成/刷新微博内容（需配置 API）
+    let weiboAiRefreshing = false;
+    async function refreshWeiboWithAi() {
+      if (weiboAiRefreshing) return;
+      const config = getApiConfigOrAlert(false);
+      if (!config) return;
+
+      const refreshIcon = wbRefreshBtn?.querySelector("i");
+      if (refreshIcon) refreshIcon.classList.add("fa-spin");
+      weiboAiRefreshing = true;
+
+      const isDiscover = weiboHotPanel?.classList.contains("show");
+
+      try {
+        if (isDiscover) {
+          // 在发现页面：由 AI 重新构思生成 10 条新的热门趋势话题
+          const prompt = [
+            "你是一个现代极简、生活美学与城市文化热搜趋势算法。",
+            "请生成 10 条最新的微博热搜条目，主题涵盖：城市摄影、生活整理、黑白胶片、设计审美、当代艺术、慢节奏生活、轻量科技等中性优质话题，严禁任何明星八卦与低俗炒作。",
+            "严格只输出一个 JSON 数组，格式如下：",
+            '[{"title":"话题标题","tag":"热/新/空字符串","tagType":"hot/new/空字符串"}]',
+            "严禁任何 Markdown 代码块，严禁输出任何表情符号与任何括号动作说明。"
+          ].join("\n");
+
+          const responseText = await callChatCompletion([
+            { role: "system", content: prompt },
+            { role: "user", content: "直接输出 JSON 数组。" }
+          ], { temperature: 0.88, max_tokens: 800, silent: true });
+
+          const cleaned = responseText.replace(/```(?:json)?/gi, "").replace(/```/g, "").trim();
+          const firstBracket = cleaned.indexOf("[");
+          const lastBracket = cleaned.lastIndexOf("]");
+          if (firstBracket !== -1 && lastBracket !== -1) {
+            const parsed = JSON.parse(cleaned.slice(firstBracket, lastBracket + 1));
+            if (Array.isArray(parsed) && parsed.length > 0) {
+              const gridNode = document.querySelector("#wbDiscHotGrid");
+              if (gridNode) {
+                gridNode.innerHTML = "";
+                parsed.slice(0, 10).forEach(item => {
+                  const cell = document.createElement("div");
+                  cell.className = "wb-disc-hot-cell";
+                  const tagHtml = item.tag ? `<span class="wb-disc-hot-tag ${item.tagType || 'hot'}">${item.tag}</span>` : "";
+                  cell.innerHTML = `<span>${item.title}</span>${tagHtml}`;
+                  cell.addEventListener("click", () => openWeiboComposeWithTopic(item.title));
+                  gridNode.appendChild(cell);
+                });
+              }
+              showCatpawAlert("AI 已根据最新趋势重新生成了 10 条发现页热搜！", "发现热搜已刷新");
+            }
+          }
+        } else {
+          // 在首页推荐流：由 AI 结合通讯录已有角色或全新博主，生成 2 条带真实生活质感的微博
+          const roleNames = (appState.qq?.roles || []).map(r => r.name).filter(Boolean);
+          const prompt = [
+            "你负责为真实微博首页生成最新的博文动态信息流。",
+            roleNames.length ? `当前手机中存在的联系人：${roleNames.join("、")}。你可以让其中某个角色作为博主，也可以生成独立的博主。` : "",
+            "风格要求：生活切片、极简黑白摄影、散步记录、日常观察、清冷感、随手记录。",
+            "绝对严禁任何 emoji 表情符号！绝对禁止俗套霸总腔与营销号套路！",
+            "严格只输出一个 JSON 数组，每个对象包含以下字段：",
+            '[{"authorName":"博主昵称","topicTag":"生活志/摄影记录/随想","text":"带话题标签的微博正文，例如 #街头漫步# 今天的风很凉爽...","time":"刚刚","source":"来自 iPhone 16 Pro Max","likes":12000,"commentsCount":320,"shares":890,"commentText":"评论区首条路人或朋友评论内容"}]',
+            "严格只输出一个纯净的 JSON 数组，严禁包含任何前缀、解释或 Markdown 代码块。"
+          ].join("\n");
+
+          const responseText = await callChatCompletion([
+            { role: "system", content: prompt },
+            { role: "user", content: "直接输出 JSON 数组。" }
+          ], { temperature: 0.85, max_tokens: 1200, silent: true });
+
+          const cleaned = responseText.replace(/```(?:json)?/gi, "").replace(/```/g, "").trim();
+          const firstBracket = cleaned.indexOf("[");
+          const lastBracket = cleaned.lastIndexOf("]");
+          if (firstBracket !== -1 && lastBracket !== -1) {
+            const parsed = JSON.parse(cleaned.slice(firstBracket, lastBracket + 1));
+            if (Array.isArray(parsed) && parsed.length > 0) {
+              ensureWeiboState();
+              parsed.forEach((item, idx) => {
+                const newPost = {
+                  id: `wb_ai_${Date.now()}_${idx}`,
+                  authorName: item.authorName || "城市观察者",
+                  topicTag: item.topicTag || "生活切片",
+                  verified: true,
+                  authorAvatar: "https://771553.xyz/file/studio/5FDVc1VrKzVdH5mO.jpg",
+                  time: item.time || "刚刚",
+                  source: item.source || "来自 iPhone 16 Pro Max",
+                  text: item.text || "记录今天的天气与光影变化。",
+                  mediaType: "images",
+                  image: "",
+                  images: [
+                    "https://771553.xyz/file/studio/5FDVc1VrKzVdH5mO.jpg",
+                    "https://771553.xyz/file/studio/5FDVc1VrKzVdH5mO.jpg"
+                  ],
+                  hotIndex: "实时热度上升中",
+                  likes: item.likes || Math.floor(Math.random() * 50000 + 1000),
+                  liked: false,
+                  commentsCount: item.commentsCount || 120,
+                  shares: item.shares || 340,
+                  comments: item.commentText ? [{ authorName: "路过的行者", text: item.commentText }] : []
+                };
+                appState.weibo.posts.unshift(newPost);
+              });
+              renderWeiboFeed();
+              await saveState();
+              showCatpawAlert("AI 联网生成成功，已为你刷新并更新了最新微博信息流！", "已刷新");
+            }
+          }
+        }
+      } catch (err) {
+        showCatpawAlert(`AI 刷新失败：${err.message}`, "刷新提示");
+      } finally {
+        weiboAiRefreshing = false;
+        if (refreshIcon) refreshIcon.classList.remove("fa-spin");
+      }
+    }
+
+    if (wbRefreshBtn) {
+      wbRefreshBtn.addEventListener("click", refreshWeiboWithAi);
     }
 
     if (openWeiboComposer) {
