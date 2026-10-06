@@ -16054,6 +16054,477 @@
       min-height: 16px;
       margin-top: -4px;
     }
+
+    /* ============================================================
+       拟真微博 APP · 纯黑白灰极简轻奢风
+       ============================================================ */
+    .weibo-page {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      display: none;
+      background: #ffffff;
+      color: #111111;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .weibo-page.show {
+      display: flex;
+    }
+
+    .wb-head {
+      flex-shrink: 0;
+      min-height: 54px;
+      padding: calc(6px + env(safe-area-inset-top)) 16px 8px;
+      display: grid;
+      grid-template-columns: 36px 1fr 36px;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid #f2f2f2;
+      background: #ffffff;
+    }
+
+    .wb-icon-btn {
+      width: 36px;
+      height: 36px;
+      border: 0;
+      border-radius: 50%;
+      background: transparent;
+      color: #111111;
+      font-size: 16px;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      transition: background 0.12s ease;
+    }
+
+    .wb-icon-btn:active {
+      background: #f5f5f5;
+    }
+
+    .wb-nav-tabs {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 22px;
+    }
+
+    .wb-tab {
+      font-size: 15px;
+      font-weight: 500;
+      color: #8e8e93;
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+      position: relative;
+      padding: 6px 0;
+      transition: color 0.12s ease;
+    }
+
+    .wb-tab.active {
+      color: #000000;
+      font-weight: 700;
+    }
+
+    .wb-tab.active::after {
+      content: "";
+      position: absolute;
+      left: 15%;
+      right: 15%;
+      bottom: 0;
+      height: 2.5px;
+      background: #000000;
+      border-radius: 999px;
+    }
+
+    .wb-main {
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      background: #f7f7f7;
+    }
+
+    .wb-main::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* 微博卡片流 */
+    .wb-card {
+      background: #ffffff;
+      padding: 16px;
+      margin-bottom: 8px;
+    }
+
+    .wb-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .wb-card-author {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .wb-card-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #f0f0f0;
+      background-size: cover;
+      background-position: center;
+      border: 1px solid #ededed;
+      flex-shrink: 0;
+    }
+
+    .wb-card-meta {
+      min-width: 0;
+    }
+
+    .wb-card-meta strong {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: #111111;
+      line-height: 1.25;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .wb-verified-tag {
+      font-size: 9px;
+      color: #ffffff;
+      background: #111111;
+      padding: 1px 5px;
+      border-radius: 3px;
+      font-weight: 600;
+    }
+
+    .wb-card-meta span {
+      display: block;
+      margin-top: 3px;
+      font-size: 11px;
+      color: #8e8e93;
+    }
+
+    .wb-card-text {
+      font-size: 14.5px;
+      line-height: 1.6;
+      color: #111111;
+      word-break: break-word;
+      white-space: pre-wrap;
+      margin-bottom: 10px;
+    }
+
+    .wb-card-text a {
+      color: #000000;
+      text-decoration: underline;
+      font-weight: 600;
+    }
+
+    .wb-card-img-wrap {
+      margin-bottom: 12px;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid #f0f0f0;
+      max-width: 280px;
+    }
+
+    .wb-card-img-wrap img {
+      width: 100%;
+      display: block;
+      object-fit: cover;
+      max-height: 320px;
+    }
+
+    /* 微博底部互动三连栏 (转发 / 评论 / 点赞) */
+    .wb-card-actions {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      padding-top: 10px;
+      border-top: 1px solid #f7f7f7;
+    }
+
+    .wb-action-btn {
+      border: 0;
+      background: transparent;
+      color: #666666;
+      font-size: 12px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      cursor: pointer;
+      padding: 6px 0;
+      transition: color 0.1s ease;
+    }
+
+    .wb-action-btn i {
+      font-size: 14px;
+    }
+
+    .wb-action-btn.liked {
+      color: #000000;
+      font-weight: 700;
+    }
+
+    .wb-action-btn:active {
+      opacity: 0.6;
+    }
+
+    /* 热搜榜排版 */
+    .wb-hot-panel {
+      display: none;
+      background: #ffffff;
+      padding: 0;
+    }
+
+    .wb-hot-panel.show {
+      display: block;
+    }
+
+    .wb-hot-header {
+      padding: 14px 18px 10px;
+      border-bottom: 1px solid #f4f4f4;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .wb-hot-header strong {
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .wb-hot-header span {
+      font-size: 11px;
+      color: #8e8e93;
+    }
+
+    .wb-hot-list {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .wb-hot-item {
+      display: grid;
+      grid-template-columns: 28px 1fr auto;
+      gap: 12px;
+      align-items: center;
+      padding: 14px 18px;
+      border-bottom: 1px solid #f7f7f7;
+      cursor: pointer;
+      transition: background 0.12s ease;
+    }
+
+    .wb-hot-item:active {
+      background: #fafafa;
+    }
+
+    .wb-hot-rank {
+      font-size: 15px;
+      font-weight: 800;
+      color: #000000;
+      font-variant-numeric: tabular-nums;
+      text-align: center;
+    }
+
+    .wb-hot-item.top .wb-hot-rank {
+      color: #000000;
+      font-size: 16px;
+    }
+
+    .wb-hot-item.dim .wb-hot-rank {
+      color: #aaaaaa;
+    }
+
+    .wb-hot-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #111111;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .wb-hot-tag {
+      font-size: 9px;
+      color: #ffffff;
+      background: #000000;
+      padding: 1px 5px;
+      border-radius: 3px;
+      font-weight: 700;
+    }
+
+    .wb-hot-heat {
+      font-size: 11px;
+      color: #aaaaaa;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* 微博内评论展开区 */
+    .wb-comment-section {
+      display: none;
+      margin-top: 10px;
+      padding-top: 12px;
+      border-top: 1px solid #f4f4f4;
+    }
+
+    .wb-comment-section.show {
+      display: block;
+    }
+
+    .wb-comment-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .wb-comment-item {
+      padding: 8px 12px;
+      border-radius: 10px;
+      background: #fafafa;
+      font-size: 12px;
+      line-height: 1.45;
+      color: #333333;
+    }
+
+    .wb-comment-item b {
+      color: #000000;
+      font-weight: 700;
+    }
+
+    .wb-comment-input-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+    }
+
+    .wb-comment-input {
+      height: 36px;
+      border: 1px solid #ededed;
+      border-radius: 999px;
+      padding: 0 14px;
+      font-size: 12px;
+      outline: none;
+      background: #fbfbfb;
+      color: #111111;
+    }
+
+    .wb-comment-send {
+      min-height: 36px;
+      padding: 0 16px;
+      border: 0;
+      border-radius: 999px;
+      background: #000000;
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* 发微博全屏弹窗 */
+    .wb-compose-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 60;
+      display: none;
+      background: #ffffff;
+      flex-direction: column;
+      padding: calc(6px + env(safe-area-inset-top)) 16px calc(20px + env(safe-area-inset-bottom));
+    }
+
+    .wb-compose-modal.show {
+      display: flex;
+    }
+
+    .wb-compose-head {
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #f4f4f4;
+      padding-bottom: 6px;
+      margin-bottom: 12px;
+    }
+
+    .wb-compose-head strong {
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .wb-compose-textarea {
+      flex: 1;
+      width: 100%;
+      border: 0;
+      outline: none;
+      font-size: 15px;
+      line-height: 1.6;
+      color: #111111;
+      resize: none;
+      background: transparent;
+      padding: 8px 0;
+    }
+
+    .wb-compose-textarea::placeholder {
+      color: #bcbcbc;
+    }
+
+    .wb-compose-img-preview {
+      width: 90px;
+      height: 90px;
+      border-radius: 12px;
+      background-size: cover;
+      background-position: center;
+      margin: 10px 0;
+      position: relative;
+      display: none;
+      border: 1px solid #ededed;
+    }
+
+    .wb-compose-img-preview.show {
+      display: block;
+    }
+
+    .wb-compose-del-img {
+      position: absolute;
+      right: -6px;
+      top: -6px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #000000;
+      color: #ffffff;
+      border: 0;
+      display: grid;
+      place-items: center;
+      font-size: 10px;
+      cursor: pointer;
+    }
+
+    .wb-compose-toolbar {
+      min-height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid #f4f4f4;
+      padding-top: 8px;
+    }
   </style>
 </head>
 <body>
@@ -18108,6 +18579,66 @@
     <div class="dock-center">
       <span class="dock-mini"><i class="fa-solid fa-comment"></i></span>
       <span class="dock-mini"><i class="fa-solid fa-phone"></i></span>
+    </div>
+  </section>
+
+  <!-- 拟真微博独立应用页面 (纯黑白灰极简) -->
+  <section class="weibo-page" id="weiboPage" aria-label="微博应用页面">
+    <header class="wb-head">
+      <button class="wb-icon-btn" id="closeWeiboApp" type="button" aria-label="返回桌面">
+        <i class="fa-solid fa-chevron-left"></i>
+      </button>
+      <nav class="wb-nav-tabs">
+        <button class="wb-tab active" id="wbTabFeed" type="button">关注推荐</button>
+        <button class="wb-tab" id="wbTabHot" type="button">微博热搜</button>
+      </nav>
+      <button class="wb-icon-btn" id="openWeiboComposer" type="button" aria-label="发微博" title="发微博">
+        <i class="fa-solid fa-pen-nib"></i>
+      </button>
+    </header>
+
+    <div class="wb-main" id="weiboMain">
+      <!-- 推荐信息流 -->
+      <div id="weiboFeedList"></div>
+
+      <!-- 热搜流 -->
+      <div class="wb-hot-panel" id="weiboHotPanel">
+        <div class="wb-hot-header">
+          <strong>实时热搜榜单</strong>
+          <span>每分钟实时刷新</span>
+        </div>
+        <div class="wb-hot-list" id="weiboHotList"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 撰写与发布微博模态框 -->
+  <section class="wb-compose-modal" id="weiboComposeModal" aria-label="发微博">
+    <div class="wb-compose-head">
+      <button class="wb-icon-btn" id="closeWeiboComposer" type="button" aria-label="取消">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <strong>发微博</strong>
+      <button class="liquid-btn primary" id="publishWeiboBtn" type="button" style="min-height:34px; padding:0 16px; border-radius:999px; font-size:12.5px;">发送</button>
+    </div>
+
+    <textarea class="wb-compose-textarea" id="weiboComposeText" placeholder="分享此刻的新鲜事..."></textarea>
+
+    <div class="wb-compose-img-preview" id="weiboComposeImgPreview">
+      <button class="wb-compose-del-img" id="weiboComposeDelImg" type="button"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+
+    <div class="wb-compose-toolbar">
+      <div style="display:flex; gap:8px;">
+        <button class="wb-icon-btn" id="triggerWeiboImgUpload" type="button" title="添加配图">
+          <i class="fa-regular fa-image"></i>
+        </button>
+        <button class="wb-icon-btn" id="weiboAddTopicBtn" type="button" title="添加话题">
+          <i class="fa-solid fa-hashtag"></i>
+        </button>
+      </div>
+      <span style="font-size:11px; color:#8e8e93;" id="weiboCharCount">0 / 2000</span>
+      <input type="file" id="weiboImgInput" accept="image/*" style="display:none;" />
     </div>
   </section>
 
@@ -23945,9 +24476,411 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       });
     });
 
+    // ============================================================
+    // 拟真微博系统核心逻辑 (纯黑白灰 · 角色联动与真实信息流)
+    // ============================================================
+    const weiboPage = document.querySelector("#weiboPage");
+    const closeWeiboApp = document.querySelector("#closeWeiboApp");
+    const wbTabFeed = document.querySelector("#wbTabFeed");
+    const wbTabHot = document.querySelector("#wbTabHot");
+    const weiboFeedList = document.querySelector("#weiboFeedList");
+    const weiboHotPanel = document.querySelector("#weiboHotPanel");
+    const weiboHotList = document.querySelector("#weiboHotList");
+    const openWeiboComposer = document.querySelector("#openWeiboComposer");
+    const closeWeiboComposer = document.querySelector("#closeWeiboComposer");
+    const weiboComposeModal = document.querySelector("#weiboComposeModal");
+    const publishWeiboBtn = document.querySelector("#publishWeiboBtn");
+    const weiboComposeText = document.querySelector("#weiboComposeText");
+    const weiboComposeImgPreview = document.querySelector("#weiboComposeImgPreview");
+    const weiboComposeDelImg = document.querySelector("#weiboComposeDelImg");
+    const triggerWeiboImgUpload = document.querySelector("#triggerWeiboImgUpload");
+    const weiboImgInput = document.querySelector("#weiboImgInput");
+    const weiboAddTopicBtn = document.querySelector("#weiboAddTopicBtn");
+    const weiboCharCount = document.querySelector("#weiboCharCount");
+
+    let currentWeiboImg = "";
+
+    function ensureWeiboState() {
+      if (!appState.weibo || typeof appState.weibo !== "object") {
+        appState.weibo = {
+          posts: [],
+          hotSearches: []
+        };
+      }
+      if (!Array.isArray(appState.weibo.posts)) appState.weibo.posts = [];
+      if (!Array.isArray(appState.weibo.hotSearches)) appState.weibo.hotSearches = [];
+
+      // 初始化拟真微博默认内容（保证初次进入有真实世界感）
+      if (!appState.weibo.posts.length) {
+        appState.weibo.posts = [
+          {
+            id: "wb_init_1",
+            authorName: "每日天文视觉",
+            verified: true,
+            authorAvatar: "https://771553.xyz/file/studio/5FDVc1VrKzVdH5mO.jpg",
+            time: "10分钟前",
+            source: "来自 微博网页版",
+            text: "#深空摄影# 猎户座大星云的高清重制切片。宇宙从不说话，却在此刻记录了一切光影的流转与静止。",
+            image: "",
+            likes: 1248,
+            liked: false,
+            shares: 182,
+            comments: [
+              { authorName: "星际记录员", text: "纯黑白灰镜头下的细节太震撼了。" }
+            ]
+          },
+          {
+            id: "wb_init_2",
+            authorName: "极简生活设计",
+            verified: true,
+            authorAvatar: "",
+            time: "42分钟前",
+            source: "来自 iPhone 16 Pro",
+            text: "物体的减法，实质上是给注意力和内心的留白。保持纯粹，舍弃一切冗余的复杂感。",
+            image: "",
+            likes: 586,
+            liked: false,
+            shares: 64,
+            comments: []
+          }
+        ];
+      }
+
+      if (!appState.weibo.hotSearches.length) {
+        appState.weibo.hotSearches = [
+          { rank: "置顶", title: "全国大范围降温气温变化", heat: "420万", tag: "热" },
+          { rank: "1", title: "极简主义生活方式流行", heat: "318万", tag: "沸" },
+          { rank: "2", title: "新一代智能终端全屏交互", heat: "284万", tag: "新" },
+          { rank: "3", title: "这周末去哪里散步放空", heat: "220万", tag: "" },
+          { rank: "4", title: "咖啡馆偶遇窗外落叶", heat: "196万", tag: "" },
+          { rank: "5", title: "如何保持高质量的专注力", heat: "164万", tag: "" },
+          { rank: "6", title: "经典电影黑白剧照重现", heat: "142万", tag: "" },
+          { rank: "7", title: "今日份平淡而治愈的瞬间", heat: "119万", tag: "" }
+        ];
+      }
+    }
+
+    function renderWeiboFeed() {
+      if (!weiboFeedList) return;
+      ensureWeiboState();
+      weiboFeedList.innerHTML = "";
+
+      appState.weibo.posts.forEach((post) => {
+        const card = document.createElement("article");
+        card.className = "wb-card";
+        card.dataset.postId = post.id;
+
+        const avatarSrc = post.authorAvatar || appState.theme.avatarImage || "";
+        const verifiedTag = post.verified ? `<span class="wb-verified-tag">V</span>` : "";
+
+        let imgHtml = "";
+        if (post.image) {
+          imgHtml = `<div class="wb-card-img-wrap"><img src="${post.image}" alt="微博配图" loading="lazy" /></div>`;
+        }
+
+        const comments = Array.isArray(post.comments) ? post.comments : [];
+
+        card.innerHTML = `
+          <div class="wb-card-header">
+            <div class="wb-card-author">
+              <div class="wb-card-avatar" style="background-image:url('${avatarSrc}');"></div>
+              <div class="wb-card-meta">
+                <strong><span>${post.authorName || "我"}</span>${verifiedTag}</strong>
+                <span>${post.time || "刚刚"} · ${post.source || "来自 iPhone"}</span>
+              </div>
+            </div>
+            <button class="wb-icon-btn" data-wb-action="more" type="button"><i class="fa-solid fa-ellipsis"></i></button>
+          </div>
+
+          <div class="wb-card-text">${post.text || ""}</div>
+          ${imgHtml}
+
+          <div class="wb-card-actions">
+            <button class="wb-action-btn" data-wb-action="share" type="button">
+              <i class="fa-solid fa-arrow-up-from-bracket"></i>
+              <span>${post.shares || "转发"}</span>
+            </button>
+            <button class="wb-action-btn" data-wb-action="toggle-comment" type="button">
+              <i class="fa-regular fa-comment"></i>
+              <span>${comments.length || "评论"}</span>
+            </button>
+            <button class="wb-action-btn ${post.liked ? "liked" : ""}" data-wb-action="like" type="button">
+              <i class="fa-regular fa-thumbs-up"></i>
+              <span>${post.likes || "赞"}</span>
+            </button>
+          </div>
+
+          <div class="wb-comment-section" data-wb-comment-box="${post.id}">
+            <div class="wb-comment-list">
+              ${comments.map(c => `
+                <div class="wb-comment-item">
+                  <b>${c.authorName || "我"}</b>：${c.text || ""}
+                </div>
+              `).join("")}
+            </div>
+            <div class="wb-comment-input-row">
+              <input class="wb-comment-input" type="text" placeholder="发表评论..." />
+              <button class="wb-comment-send" data-wb-send-comment="${post.id}" type="button">发送</button>
+            </div>
+          </div>
+        `;
+
+        // 绑定卡片内各项互动逻辑
+        card.querySelector('[data-wb-action="like"]')?.addEventListener("click", async (e) => {
+          e.stopPropagation();
+          post.liked = !post.liked;
+          post.likes = (post.likes || 0) + (post.liked ? 1 : -1);
+          renderWeiboFeed();
+          await saveState();
+        });
+
+        card.querySelector('[data-wb-action="toggle-comment"]')?.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const commentBox = card.querySelector(`[data-wb-comment-box="${post.id}"]`);
+          if (commentBox) commentBox.classList.toggle("show");
+        });
+
+        card.querySelector('[data-wb-action="share"]')?.addEventListener("click", () => {
+          post.shares = (post.shares || 0) + 1;
+          renderWeiboFeed();
+          showCatpawAlert("已转发该条微博至你的个人主页！", "转发成功");
+        });
+
+        const commentInput = card.querySelector(".wb-comment-input");
+        const sendCommentBtn = card.querySelector(`[data-wb-send-comment="${post.id}"]`);
+
+        const submitComment = async () => {
+          const txt = commentInput?.value.trim();
+          if (!txt) return;
+          commentInput.value = "";
+          post.comments.push({
+            authorName: appState.theme.cardProfileName || "我",
+            text: txt
+          });
+          renderWeiboFeed();
+          await saveState();
+
+          // 触发 AI 角色可能前来的评论互动
+          maybeRoleCommentWeibo(post, txt);
+        };
+
+        sendCommentBtn?.addEventListener("click", submitComment);
+        commentInput?.addEventListener("keydown", (e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            submitComment();
+          }
+        });
+
+        weiboFeedList.appendChild(card);
+      });
+    }
+
+    function renderWeiboHot() {
+      if (!weiboHotList) return;
+      ensureWeiboState();
+      weiboHotList.innerHTML = "";
+
+      appState.weibo.hotSearches.forEach((hot, idx) => {
+        const item = document.createElement("div");
+        const isTop = idx === 0;
+        const isDim = idx > 3;
+        item.className = `wb-hot-item ${isTop ? "top" : ""} ${isDim ? "dim" : ""}`;
+
+        item.innerHTML = `
+          <div class="wb-hot-rank">${hot.rank}</div>
+          <div class="wb-hot-title">
+            <span>${hot.title}</span>
+            ${hot.tag ? `<span class="wb-hot-tag">${hot.tag}</span>` : ""}
+          </div>
+          <div class="wb-hot-heat">${hot.heat}</div>
+        `;
+
+        item.addEventListener("click", () => {
+          openWeiboComposeWithTopic(hot.title);
+        });
+
+        weiboHotList.appendChild(item);
+      });
+    }
+
+    function openWeiboComposeWithTopic(topicTitle = "") {
+      if (weiboComposeText) {
+        weiboComposeText.value = topicTitle ? `#${topicTitle}# ` : "";
+      }
+      currentWeiboImg = "";
+      if (weiboComposeImgPreview) {
+        weiboComposeImgPreview.classList.remove("show");
+        weiboComposeImgPreview.style.backgroundImage = "";
+      }
+      updateWeiboCharCount();
+      if (weiboComposeModal) weiboComposeModal.classList.add("show");
+      setTimeout(() => weiboComposeText?.focus(), 150);
+    }
+
+    function updateWeiboCharCount() {
+      const len = (weiboComposeText?.value || "").length;
+      if (weiboCharCount) weiboCharCount.textContent = `${len} / 2000`;
+    }
+
+    // 触发 AI 角色前来评论该微博
+    async function maybeRoleCommentWeibo(post, triggerText = "") {
+      ensureQqState();
+      if (!appState.qq.roles.length) return;
+      const config = getApiConfigOrAlert(true);
+      if (!config) return;
+
+      // 挑一位联系人
+      const role = appState.qq.roles[Math.floor(Math.random() * appState.qq.roles.length)];
+      if (!role) return;
+
+      setTimeout(async () => {
+        try {
+          const rolePrompt = withRoleChatContext(getRoleId(role), () => buildRoleReplyPrompt());
+          const prompt = [
+            rolePrompt,
+            `【当前场景：你在刷微博，看到了 user 发布的微博动态/评论】`,
+            `微博正文：${post.text}`,
+            triggerText ? `user 的评论内容：${triggerText}` : "",
+            `请以你真实角色的性格与口吻，直接写一条简短、接地气、非营销腔的微博评论互动。`,
+            `纯文字，20字以内，绝对禁止任何表情符号与任何括号前缀。`
+          ].join("\n");
+
+          const reply = await callChatCompletion([
+            { role: "system", content: ENHANCED_SYSTEM_PROMPT },
+            { role: "system", content: prompt },
+            { role: "user", content: "直接输出你发表的微博评论。" }
+          ], { temperature: 0.82, max_tokens: 100, silent: true });
+
+          const cleaned = cleanRoleReplyText(reply);
+          if (cleaned) {
+            post.comments.push({
+              authorName: role.name || "角色",
+              text: cleaned
+            });
+            renderWeiboFeed();
+            await saveState();
+            queueChatToast({
+              roleId: getRoleId(role),
+              avatar: role.avatar || "",
+              name: role.name || "角色",
+              text: `在微博评论了你：${cleaned}`
+            });
+          }
+        } catch (e) {}
+      }, 3500);
+    }
+
+    // 事件绑定
     if (forumApp) {
       forumApp.addEventListener("click", () => {
-        showCatpawAlert("微博动态正在同步中，可与角色共同发帖互动。", "微博");
+        ensureWeiboState();
+        renderWeiboFeed();
+        renderWeiboHot();
+        if (weiboPage) weiboPage.classList.add("show");
+      });
+    }
+
+    if (closeWeiboApp && weiboPage) {
+      closeWeiboApp.addEventListener("click", () => weiboPage.classList.remove("show"));
+    }
+
+    if (wbTabFeed && wbTabHot) {
+      wbTabFeed.addEventListener("click", () => {
+        wbTabFeed.classList.add("active");
+        wbTabHot.classList.remove("active");
+        if (weiboFeedList) weiboFeedList.style.display = "block";
+        if (weiboHotPanel) weiboHotPanel.classList.remove("show");
+      });
+
+      wbTabHot.addEventListener("click", () => {
+        wbTabHot.classList.add("active");
+        wbTabFeed.classList.remove("active");
+        if (weiboFeedList) weiboFeedList.style.display = "none";
+        if (weiboHotPanel) weiboHotPanel.classList.add("show");
+      });
+    }
+
+    if (openWeiboComposer) {
+      openWeiboComposer.addEventListener("click", () => openWeiboComposeWithTopic(""));
+    }
+
+    if (closeWeiboComposer && weiboComposeModal) {
+      closeWeiboComposer.addEventListener("click", () => weiboComposeModal.classList.remove("show"));
+    }
+
+    if (weiboComposeText) {
+      weiboComposeText.addEventListener("input", updateWeiboCharCount);
+    }
+
+    if (weiboAddTopicBtn) {
+      weiboAddTopicBtn.addEventListener("click", () => {
+        if (!weiboComposeText) return;
+        const cur = weiboComposeText.value;
+        weiboComposeText.value = cur + "#输入话题# ";
+        weiboComposeText.focus();
+        updateWeiboCharCount();
+      });
+    }
+
+    if (triggerWeiboImgUpload && weiboImgInput) {
+      triggerWeiboImgUpload.addEventListener("click", () => weiboImgInput.click());
+      weiboImgInput.addEventListener("change", (e) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+        readImage(file, (src) => {
+          currentWeiboImg = src;
+          if (weiboComposeImgPreview) {
+            weiboComposeImgPreview.style.backgroundImage = `url('${src}')`;
+            weiboComposeImgPreview.classList.add("show");
+          }
+        });
+      });
+    }
+
+    if (weiboComposeDelImg) {
+      weiboComposeDelImg.addEventListener("click", () => {
+        currentWeiboImg = "";
+        if (weiboComposeImgPreview) {
+          weiboComposeImgPreview.classList.remove("show");
+          weiboComposeImgPreview.style.backgroundImage = "";
+        }
+      });
+    }
+
+    if (publishWeiboBtn) {
+      publishWeiboBtn.addEventListener("click", async () => {
+        const text = weiboComposeText?.value.trim();
+        if (!text && !currentWeiboImg) {
+          await showCatpawAlert("请输入微博内容或添加图片。");
+          return;
+        }
+
+        ensureWeiboState();
+        const newPost = {
+          id: `wb_${Date.now()}`,
+          authorName: appState.theme.cardProfileName || "我",
+          verified: false,
+          authorAvatar: appState.theme.avatarImage || "",
+          time: "刚刚",
+          source: "来自 iPhone 16 Pro",
+          text: text || "分享图片",
+          image: currentWeiboImg,
+          likes: 0,
+          liked: false,
+          shares: 0,
+          comments: []
+        };
+
+        appState.weibo.posts.unshift(newPost);
+        renderWeiboFeed();
+        await saveState();
+
+        if (weiboComposeModal) weiboComposeModal.classList.remove("show");
+        showCatpawAlert("微博发布成功！");
+
+        // 让 AI 角色在稍后看到微博并互动
+        maybeRoleCommentWeibo(newPost);
       });
     }
 
