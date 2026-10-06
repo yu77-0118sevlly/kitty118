@@ -21206,7 +21206,25 @@
           <input type="text" id="wbCtFansNameInput" placeholder="如：小面包、旅行者、星光、猫爪" />
         </div>
 
-        <!-- 4. 超话简介 -->
+        <!-- 4. 超话类型选择与自定义 (决定 AI 刷新生成帖子和粉丝回复的风格) -->
+        <div class="wb-ct-input-row">
+          <label>超话类型 / 垂直领域</label>
+          <select id="wbCtCategorySelect" style="width: 100%; height: 42px; border-radius: 10px; border: 1px solid #e0e2e5; padding: 0 12px; font-size: 13.5px; color: #111111; background: #f8f9fa; outline: none; margin-bottom: 6px;">
+            <option value="明星">明星偶像 (粉圈日常、控评打卡、现场安利、路透生图)</option>
+            <option value="游戏">游戏电竞 (版本攻略、角色同人、抽卡晒欧、对局吐槽)</option>
+            <option value="美食">美食探店 (食谱教程、深夜食堂、吃播打卡、隐藏吃法)</option>
+            <option value="摄影">摄影美学 (黑白影调、器材镜头、胶片颗粒、街头漫步)</option>
+            <option value="影视">影视漫游 (剧情解析、名台词、幕后花絮、二创剪辑)</option>
+            <option value="生活">日常生活 (情绪树洞、碎碎念、独处碎片、天气感知)</option>
+            <option value="自定义">自定义专属类型 (手动在下方输入)</option>
+          </select>
+          <input type="text" id="wbCtCustomCategoryInput" placeholder="输入自定义类型（如：赛博朋克、猫咪日常、室内设计）" style="display:none;" />
+          <span style="font-size:11px; color:#8c9098; line-height:1.45; margin-top:2px;">
+            💡 核心提示：超话类型决定了右上角 AI 刷新的内容偏好！例如选「明星」，AI 粉丝就会生成追星语录、控评打卡和现场返图；选「游戏」就会发战绩讨论和攻略。请务必准确设置！
+          </span>
+        </div>
+
+        <!-- 5. 超话简介 -->
         <div class="wb-ct-input-row">
           <label>超话简介 / 导语</label>
           <input type="text" id="wbCtDescInput" placeholder="简短介绍这个专属超话空间的初衷" />
@@ -21236,6 +21254,8 @@
         <div class="wb-std-top-bar">
           <button class="wb-std-top-btn" id="closeWbStdPage" type="button"><i class="fa-solid fa-chevron-left"></i></button>
           <div style="display:flex; gap:10px;">
+            <!-- 超话内专属 AI 粉丝发帖与讨论刷新按钮 -->
+            <button class="wb-std-top-btn" id="wbStdRefreshAiBtn" type="button" title="AI 生成该类型超话粉丝帖子与热烈讨论"><i class="fa-solid fa-rotate-right"></i></button>
             <button class="wb-std-top-btn" id="wbStdDeleteBtn" type="button" title="删除该超话"><i class="fa-solid fa-trash-can"></i></button>
             <button class="wb-std-top-btn" id="wbStdShareBtn" type="button"><i class="fa-solid fa-share-nodes"></i></button>
           </div>
@@ -29020,6 +29040,13 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       if (wbCtNameInput) wbCtNameInput.value = "";
       if (wbCtFansNameInput) wbCtFansNameInput.value = "";
       if (wbCtDescInput) wbCtDescInput.value = "";
+      const wbCtCategorySelect = document.querySelector("#wbCtCategorySelect");
+      const wbCtCustomCategoryInput = document.querySelector("#wbCtCustomCategoryInput");
+      if (wbCtCategorySelect) wbCtCategorySelect.value = "明星";
+      if (wbCtCustomCategoryInput) {
+        wbCtCustomCategoryInput.value = "";
+        wbCtCustomCategoryInput.style.display = "none";
+      }
 
       // 动态生成 Lv1 - Lv18 输入框
       if (wbCtLevelsGrid) {
@@ -29077,6 +29104,14 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
         const fansName = wbCtFansNameInput?.value?.trim() || "同好伙伴";
         const desc = wbCtDescInput?.value?.trim() || `这是专属 #${name}# 的心动聚集地。`;
 
+        // 获取超话类型
+        const catSelect = document.querySelector("#wbCtCategorySelect");
+        const customCatInp = document.querySelector("#wbCtCustomCategoryInput");
+        let category = catSelect?.value || "综合";
+        if (category === "自定义") {
+          category = customCatInp?.value.trim() || "专属同好";
+        }
+
         // 收集 Lv1 - Lv18 自定义等级名
         const customLevels = [];
         const levelInputs = wbCtLevelsGrid?.querySelectorAll("input") || [];
@@ -29088,6 +29123,7 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
           id: `st_${Date.now()}`,
           title: name.replace(/^#|#$/g, ""),
           fansName: fansName,
+          category: category,
           avatar: currentCreatedAvatarSrc || "https://771553.xyz/file/studio/5FDVc1VrKzVdH5mO.jpg",
           members: "1",
           postsCount: "0",
@@ -29096,7 +29132,7 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
           lastSignDate: "",
           points: 0,
           desc: desc,
-          pinnedPost: `置顶：欢迎来到 #${name}# 专属超话，粉丝专属称谓：${fansName}！`,
+          pinnedPost: `置顶：欢迎来到 #${name}# 专属超话【${category}】，粉丝专属称谓：${fansName}！`,
           levelNames: customLevels,
           posts: []
         };
@@ -29137,6 +29173,8 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       if (wbStdTitle) wbStdTitle.textContent = topic.title;
       if (wbStdPostCount) wbStdPostCount.textContent = `${topic.postsCount || '0'} 帖子`;
       if (wbStdFansMeta) wbStdFansMeta.textContent = `${topic.members || '1'} ${topic.fansName || '粉丝'}`;
+      const wbStdCategoryTag = document.querySelector("#wbStdCategoryTag");
+      if (wbStdCategoryTag) wbStdCategoryTag.textContent = `${topic.category || '专属'}超话`;
       if (wbStdSignStatus) {
         wbStdSignStatus.textContent = topic.signed ? `连签${topic.consecutiveDays || 1}天` : "点击签到";
       }
@@ -29150,6 +29188,16 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
 
       renderSupertopicPosts(topic);
       wbSupertopicDetailPage.classList.add("show");
+    }
+
+    // 超话类型下拉菜单联动监听（选择“自定义”时显示输入框）
+    const wbCtCategorySelect = document.querySelector("#wbCtCategorySelect");
+    const wbCtCustomCategoryInput = document.querySelector("#wbCtCustomCategoryInput");
+    if (wbCtCategorySelect && wbCtCustomCategoryInput) {
+      wbCtCategorySelect.addEventListener("change", () => {
+        wbCtCustomCategoryInput.style.display = wbCtCategorySelect.value === "自定义" ? "block" : "none";
+        if (wbCtCategorySelect.value === "自定义") wbCtCustomCategoryInput.focus();
+      });
     }
 
     // 渲染超话内部帖子
@@ -29227,6 +29275,103 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
         `;
         wbStdPostFeedList.appendChild(card);
       });
+    }
+
+    // 超话专属 AI 粉丝刷新发帖与生成真实评论互动（根据超话类型量身定制）
+    let wbStdAiRefreshing = false;
+    async function refreshSupertopicWithAi() {
+      if (wbStdAiRefreshing || !currentActiveTopic) return;
+      const config = getApiConfigOrAlert(false);
+      if (!config) return;
+
+      const refreshBtn = document.querySelector("#wbStdRefreshAiBtn");
+      const icon = refreshBtn?.querySelector("i");
+      if (icon) icon.classList.add("fa-spin");
+      wbStdAiRefreshing = true;
+
+      const category = currentActiveTopic.category || "综合";
+      const topicTitle = currentActiveTopic.title;
+      const fansName = currentActiveTopic.fansName || "粉丝";
+
+      try {
+        const prompt = [
+          `你是一个超级真实的微博超话生态算法，正在为 #${topicTitle}# 超话生成粉丝最新发表的真实帖子与热门评论。`,
+          `【该超话的重要设定】`,
+          `- 超话名称：#${topicTitle}#`,
+          `- 垂直类型：${category}（比如明星偶像、游戏电竞、美食料理、摄影胶片、影视作品、日常生活等）`,
+          `- 粉丝专属称呼：${fansName}`,
+          `【生成要求与语境深度契合】`,
+          `1. 请严格根据超话类型「${category}」生成 2 条带真实粉圈/同好氛围的博文：`,
+          `   - 若是【明星】：输出舞台直拍返图感叹、新剧安利、应援打卡、现场路透心得，粉丝之间亲切互称；`,
+          `   - 若是【游戏】：输出版本新活动体验、抽卡晒欧或自嘲、角色配装技巧、对局高光讨论；`,
+          `   - 若是【美食】：输出独家探店配方、制作步骤、摆盘品尝感受；`,
+          `   - 若是【摄影/设计/日常】：输出影调质感心得、拍摄光圈参数随感、生活慢节奏记录。`,
+          `2. 绝对严禁任何彩色表情符号（emoji）！`,
+          `3. 每条帖子正文必须包含话题标签 #${topicTitle}#。`,
+          `4. 每条帖子需包含 2~3 条其他粉丝在评论区的热烈跟帖评论。`,
+          `严格输出一个 JSON 数组，格式如下：`,
+          `[{"authorName":"粉丝昵称","userLevel":5,"text":"博文正文内容（带话题 #${topicTitle}#）","time":"刚刚","source":"来自 微博超话客户端","shares":12,"likes":188,"comments":[{"authorName":"另一位粉丝","text":"跟帖评论1"},{"authorName":"路人同好","text":"跟帖评论2"}]}]`,
+          `只输出纯净 JSON，严禁 Markdown 代码块，严禁包含任何前缀或解释。`
+        ].join("\n");
+
+        const responseText = await callChatCompletion([
+          { role: "system", content: prompt },
+          { role: "user", content: "直接输出该类型的粉丝帖子 JSON 数组。" }
+        ], { temperature: 0.88, max_tokens: 1200, silent: true });
+
+        const cleaned = responseText.replace(/```(?:json)?/gi, "").replace(/```/g, "").trim();
+        const firstBracket = cleaned.indexOf("[");
+        const lastBracket = cleaned.lastIndexOf("]");
+        if (firstBracket !== -1 && lastBracket !== -1) {
+          const parsed = JSON.parse(cleaned.slice(firstBracket, lastBracket + 1));
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            ensureWeiboState();
+            parsed.forEach((item, idx) => {
+              const newPost = {
+                id: `wb_topic_${Date.now()}_${idx}`,
+                authorName: item.authorName || `${fansName}_小分队`,
+                topicTag: `${category}超话`,
+                verified: false,
+                authorAvatar: "https://771553.xyz/file/studio/5FDVc1VrKzVdH5mO.jpg",
+                time: item.time || "刚刚",
+                source: item.source || "来自 超话客户端",
+                text: item.text.includes(`#${topicTitle}#`) ? item.text : `#${topicTitle}# ${item.text}`,
+                mediaType: "images",
+                image: "",
+                images: [
+                  currentActiveTopic.avatar || "https://771553.xyz/file/studio/5FDVc1VrKzVdH5mO.jpg"
+                ],
+                likes: item.likes || Math.floor(Math.random() * 500 + 50),
+                liked: false,
+                commentsCount: (item.comments || []).length,
+                shares: item.shares || Math.floor(Math.random() * 50 + 5),
+                comments: (item.comments || []).map(c => ({
+                  authorName: c.authorName || "同好",
+                  text: c.text || "打卡支持！"
+                }))
+              };
+              appState.weibo.posts.unshift(newPost);
+            });
+
+            // 增加超话讨论数
+            currentActiveTopic.postsCount = `${(parseInt(currentActiveTopic.postsCount || "0") + parsed.length)}万`;
+            await persistWeiboSupertopics();
+            renderSupertopicPosts(currentActiveTopic);
+            if (wbStdPostCount) wbStdPostCount.textContent = `${currentActiveTopic.postsCount} 帖子`;
+            showCatpawAlert(`AI 已根据【${category}】类型为您刷新生成了最新粉丝帖子与热烈讨论！`, "超话讨论已刷新");
+          }
+        }
+      } catch (err) {
+        showCatpawAlert(`超话刷新失败：${err.message}`, "提示");
+      } finally {
+        wbStdAiRefreshing = false;
+        if (icon) icon.classList.remove("fa-spin");
+      }
+    }
+
+    const wbStdRefreshAiBtn = document.querySelector("#wbStdRefreshAiBtn");
+    if (wbStdRefreshAiBtn) {
+      wbStdRefreshAiBtn.addEventListener("click", refreshSupertopicWithAi);
     }
 
     // 关闭超话主页
