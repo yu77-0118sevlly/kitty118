@@ -7587,785 +7587,324 @@
       }
     }
 
-    /* Instagram 极简纯白风 Card Page 重构 */
-    .card-page {
-      position: fixed;
-      inset: 0;
-      z-index: 45;
-      display: none;
-      padding: 0;
-      color: #111111;
+    /* 聊天内「我的」面板重构 · 极简纯黑白灰 · 融入底栏体系 */
+    #qqPanelCard.active {
+      display: flex;
+      flex-direction: column;
       background: #ffffff;
-      backdrop-filter: none;
-      -webkit-backdrop-filter: none;
-      overflow: hidden;
-    }
-
-    .card-page.show {
-      display: block;
-    }
-
-    .card-page::before,
-    .card-page::after {
-      display: none !important;
-      content: none !important;
-    }
-
-    .card-shell {
-      position: relative;
-      z-index: 1;
-      width: 100%;
-      max-width: 100%;
-      height: 100dvh;
-      margin: 0 auto;
-      padding: calc(12px + env(safe-area-inset-top)) 16px calc(40px + env(safe-area-inset-bottom));
+      flex: 1;
+      min-height: 0;
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
+      padding: calc(8px + env(safe-area-inset-top)) 18px calc(96px + env(safe-area-inset-bottom));
     }
 
-    .card-shell::-webkit-scrollbar {
-      width: 0;
-      height: 0;
-    }
-
-    .card-hud {
-      display: none !important;
-    }
-
-    .card-head {
-      display: grid;
-      grid-template-columns: 40px 1fr 40px;
+    .me-page-head {
+      min-height: 44px;
+      display: flex;
       align-items: center;
-      gap: 12px;
-      margin-bottom: 20px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid #f4f4f4;
+      justify-content: center;
+      margin-bottom: 12px;
+      border-bottom: 1px solid #f5f5f5;
+      padding-bottom: 6px;
     }
 
-    .card-back,
-    .card-add {
-      width: 40px;
-      height: 40px;
-      border-radius: 999px;
-      color: #111111;
-      background: #fafafa;
-      border: none;
-      box-shadow: none;
-      font-size: 15px;
-      display: grid;
-      place-items: center;
-      transition: background 0.15s ease;
-      cursor: pointer;
-    }
-
-    .card-back:active,
-    .card-add:active {
-      background: #f0f0f0;
-    }
-
-    .card-add {
-      justify-self: end;
-      font-size: 18px;
-    }
-
-    .card-title {
-      text-align: center;
-      min-width: 0;
-    }
-
-    .card-title strong {
-      display: block;
-      color: #000000;
-      font-size: 18px;
+    .me-page-head strong {
+      font-size: 16px;
       font-weight: 700;
+      color: #111111;
       letter-spacing: -0.02em;
     }
 
-    .card-title span {
+    .me-profile-card {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 0 16px;
+    }
+
+    .me-avatar-wrap {
+      position: relative;
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: #f5f5f5;
+      border: 1px solid #ededed;
+      flex-shrink: 0;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .me-avatar {
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .me-meta {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .me-meta strong {
       display: block;
-      margin-top: 3px;
+      color: #111111;
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      cursor: pointer;
+    }
+
+    .me-meta p {
+      margin-top: 4px;
       color: #8e8e93;
-      font-size: 10px;
+      font-size: 11.5px;
       font-weight: 400;
+      line-height: 1.4;
+      cursor: pointer;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
 
-    .card-profile {
+    .me-stats-row {
       display: grid;
-      grid-template-columns: 84px 1fr;
-      gap: 16px;
-      align-items: center;
-      margin: 0 0 18px;
-      padding: 16px;
-      border-radius: 24px;
-      background: #fafafa;
+      grid-template-columns: repeat(3, 1fr);
+      text-align: center;
+      padding: 12px 0 14px;
+      border-top: 1px solid #f5f5f5;
+      border-bottom: 1px solid #f5f5f5;
+      margin-bottom: 14px;
     }
 
-    .card-profile-cover {
-      height: 84px;
-      border-radius: 20px;
-      background: #ffffff;
-      background-size: cover;
-      background-position: center;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-      cursor: pointer;
-    }
-
-    .card-profile-copy strong {
+    .me-stat-item b {
       display: block;
-      color: #000000;
-      font-size: 20px;
-      line-height: 1.2;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-    }
-
-    .card-profile-copy p {
-      margin-top: 6px;
-      color: #8e8e93;
-      font-size: 11px;
-      line-height: 1.4;
-      font-weight: 400;
-    }
-
-    .asset-glass {
-      margin: 0 0 16px;
-      border-radius: 24px;
-      padding: 18px;
-      background: #fafafa;
-      border: none;
-      box-shadow: none;
-      backdrop-filter: none;
-      -webkit-backdrop-filter: none;
-    }
-
-    .asset-top {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      align-items: flex-start;
-      margin-bottom: 16px;
-    }
-
-    .asset-top span {
-      color: #8e8e93;
-      font-size: 11px;
-      font-weight: 600;
-    }
-
-    .asset-amount {
-      color: #000000;
-      font-size: 32px;
-      line-height: 1.1;
-      font-weight: 700;
-      letter-spacing: -0.04em;
-      margin-top: 4px;
-    }
-
-    .asset-actions,
-    .card-form-actions {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-
-    /* Ins 极简超大圆角宽按钮 */
-    .card-mini-btn {
-      width: 100%;
-      min-height: 48px;
-      border-radius: 999px;
-      color: #000000;
-      background: #ffffff;
-      border: none;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-      font-size: 13px;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: background 0.15s ease, transform 0.1s ease;
-    }
-
-    .card-mini-btn:active {
-      transform: scale(0.985);
-      background: #f0f0f0;
-    }
-
-    .card-menu {
-      display: grid;
-      gap: 10px;
-      margin: 0 0 18px;
-    }
-
-    .card-menu-row {
-      width: 100%;
-      min-height: 62px;
-      border: none;
-      border-radius: 999px;
-      padding: 0 20px;
-      display: grid;
-      grid-template-columns: 24px 1fr auto;
-      align-items: center;
-      gap: 12px;
-      color: #000000;
-      background: #fafafa;
-      box-shadow: none;
-      backdrop-filter: none;
-      -webkit-backdrop-filter: none;
-      text-align: left;
-      cursor: pointer;
-      transition: background 0.15s ease, transform 0.1s ease;
-    }
-
-    .card-menu-row:active {
-      transform: scale(0.985);
-      background: #f0f0f0;
-    }
-
-    .card-menu-row i {
-      font-size: 16px;
       color: #111111;
-    }
-
-    .card-menu-row strong {
-      display: block;
-      font-size: 14px;
+      font-size: 16px;
       font-weight: 700;
-      letter-spacing: -0.01em;
-      color: #000000;
+      font-variant-numeric: tabular-nums;
     }
 
-    .card-menu-row small {
+    .me-stat-item span {
       display: block;
       margin-top: 2px;
       color: #8e8e93;
-      font-size: 10px;
+      font-size: 10.5px;
       font-weight: 400;
     }
 
+    /* 极简灰底余额卡片 */
+    .me-asset-box {
+      border-radius: 18px;
+      background: #f7f7f7;
+      padding: 16px;
+      margin-bottom: 14px;
+    }
+
+    .me-asset-head {
+      margin-bottom: 12px;
+    }
+
+    .me-asset-head span {
+      color: #8e8e93;
+      font-size: 10.5px;
+      font-weight: 500;
+    }
+
+    .me-asset-head .asset-amount {
+      margin-top: 4px;
+      color: #111111;
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .me-asset-btns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .me-btn {
+      min-height: 38px;
+      border-radius: 10px;
+      border: none;
+      background: #ffffff;
+      color: #111111;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.12s ease;
+    }
+
+    .me-btn:active {
+      background: #efefef;
+    }
+
+    .me-btn.primary {
+      background: #000000;
+      color: #ffffff;
+    }
+
+    .me-btn.primary:active {
+      background: #333333;
+    }
+
+    /* 极简无框功能列表 */
+    .me-menu-list {
+      display: grid;
+      gap: 0;
+      margin-bottom: 10px;
+    }
+
+    .me-menu-row {
+      width: 100%;
+      min-height: 50px;
+      border: 0;
+      background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #111111;
+      font-size: 13.5px;
+      font-weight: 500;
+      cursor: pointer;
+      padding: 0 4px;
+      border-bottom: 1px solid #f5f5f5;
+    }
+
+    .me-menu-row:active {
+      opacity: 0.5;
+    }
+
+    .me-menu-row i:last-child {
+      color: #c7c7cc;
+      font-size: 11px;
+    }
+
+    /* 展开面板（账单、表情、世界书）保持极简灰黑白 */
     .card-panel {
       display: none;
-      margin: 0 0 18px;
-      border-radius: 24px;
-      padding: 18px;
-      color: #111111;
-      background: #fafafa;
-      border: none;
-      box-shadow: none;
-      backdrop-filter: none;
-      -webkit-backdrop-filter: none;
+      margin: 12px 0;
+      border-radius: 16px;
+      padding: 14px;
+      background: #f7f7f7;
     }
 
     .card-panel.show {
       display: block;
     }
 
-    .card-panel-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 14px;
-    }
-
-    .card-panel-head strong {
-      font-size: 16px;
-      font-weight: 700;
-      color: #000000;
-    }
-
-    .card-panel-head .card-mini-btn {
-      width: auto;
-      min-height: 36px;
-      padding: 0 18px;
-      font-size: 11px;
-    }
-
-    .card-form {
-      display: grid;
-      gap: 12px;
-    }
-
-    .card-form input,
-    .card-form textarea,
-    .card-form select {
-      width: 100%;
-      min-height: 48px;
-      border: none;
-      border-radius: 999px;
-      padding: 0 18px;
-      outline: none;
-      color: #000000;
-      background: #ffffff;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
-      font-size: 13px;
-      font-weight: 500;
-    }
-
-    .card-form textarea {
-      border-radius: 20px;
-      padding: 14px 18px;
-      min-height: 84px;
-      resize: vertical;
-    }
-
-    .library-list,
-    .bill-list {
-      display: grid;
-      gap: 10px;
-      max-height: 280px;
-      overflow-y: auto;
-      padding-right: 2px;
-      margin-top: 12px;
-    }
-
-    .library-item,
-    .bill-item {
-      padding: 14px 16px;
-      border-radius: 20px;
-      background: #ffffff;
-      border: none;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
-      color: #333333;
-      font-size: 12px;
-      font-weight: 500;
-      line-height: 1.5;
-      word-break: break-word;
-    }
-
-    .library-item img {
-      width: 64px;
-      height: 64px;
-      border-radius: 16px;
-      object-fit: cover;
-      display: block;
-      margin-bottom: 8px;
-      background: #f7f7f7;
-    }
-
-    /* 名片 APP · 极简纯白 Ins 主页风重构（无边框 · 无彩色） */
-    #cardPage {
-      color: #0f0f0f;
-      background: #ffffff;
-    }
-
-    #cardPage .card-shell {
-      padding: calc(4px + env(safe-area-inset-top)) 18px calc(52px + env(safe-area-inset-bottom));
-      background: #ffffff;
-    }
-
-    .insc-topbar {
-      min-height: 50px;
-      margin: 0 0 20px;
-      padding: 6px 0 0;
-      display: grid;
-      grid-template-columns: 34px 1fr 34px;
-      align-items: center;
-      gap: 10px;
-      background: transparent;
-      border: 0 !important;
-      box-shadow: none !important;
-    }
-
-    .insc-icon-btn {
-      width: 34px;
-      height: 34px;
-      padding: 0;
-      border: 0 !important;
-      border-radius: 0;
-      background: transparent !important;
-      box-shadow: none !important;
-      color: #0f0f0f;
-      font-size: 17px;
-      display: grid;
-      place-items: center;
-      cursor: pointer;
-      transition: opacity 0.15s ease;
-    }
-
-    .insc-icon-btn:active {
-      opacity: 0.38;
-    }
-
-    .insc-icon-btn.trailing {
-      justify-self: end;
-      font-size: 19px;
-    }
-
-    .insc-topbar-name {
-      min-width: 0;
-      text-align: center;
-    }
-
-    .insc-topbar-name strong {
-      display: block;
-      color: #0f0f0f;
-      font-size: 15px;
-      line-height: 1.2;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      cursor: pointer;
-    }
-
-    .insc-profile {
-      display: grid;
-      grid-template-columns: 84px 1fr;
-      gap: 18px;
-      align-items: center;
-      margin-bottom: 16px;
-    }
-
-    .insc-avatar-wrap {
-      position: relative;
-      width: 84px;
-      height: 84px;
-    }
-
-    #cardPage .insc-avatar {
-      width: 84px;
-      height: 84px;
-      border-radius: 50%;
-      border: 0 !important;
-      box-shadow: none !important;
-      background-color: #f4f4f4;
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      cursor: pointer;
-      transition: transform 0.15s ease;
-    }
-
-    #cardPage .insc-avatar:active {
-      transform: scale(0.96);
-    }
-
-    .insc-avatar-badge {
-      position: absolute;
-      right: -2px;
-      bottom: -2px;
-      width: 26px;
-      height: 26px;
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      color: #ffffff;
-      background: #0f0f0f;
-      font-size: 10px;
-      pointer-events: none;
-    }
-
-    .insc-stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      align-items: center;
-      text-align: center;
-    }
-
-    .insc-stat b {
-      display: block;
-      color: #0f0f0f;
-      font-size: 17px;
-      line-height: 1.1;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      font-variant-numeric: tabular-nums;
-    }
-
-    .insc-stat small {
-      display: block;
-      margin-top: 4px;
-      color: #9a9a9a;
-      font-size: 11px;
-      font-weight: 400;
-    }
-
-    .insc-bio {
-      margin-bottom: 18px;
-    }
-
-    .insc-bio strong {
-      display: block;
-      color: #0f0f0f;
-      font-size: 14px;
-      line-height: 1.3;
-      font-weight: 700;
-      letter-spacing: -0.01em;
-      cursor: pointer;
-    }
-
-    .insc-bio p {
-      margin-top: 4px;
-      color: #6b6b6b;
-      font-size: 12px;
-      line-height: 1.5;
-      font-weight: 400;
-      cursor: pointer;
-    }
-
-    .insc-bio-note {
-      display: block;
-      margin-top: 6px;
-      color: #b4b4b4;
-      font-size: 11px;
-      line-height: 1.45;
-      cursor: pointer;
-    }
-
-    .insc-label {
-      display: block;
-      color: #c0c0c0;
-      font-size: 9px;
-      font-weight: 600;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-    }
-
-    .insc-section-label {
-      margin: 0 0 12px 2px;
-    }
-
-    .insc-balance {
-      margin: 0 0 18px;
-      padding: 0;
-      background: transparent;
-      border: 0 !important;
-      box-shadow: none !important;
-    }
-
-    #cardPage .asset-amount {
-      margin-top: 8px;
-      color: #0f0f0f;
-      font-size: 36px;
-      line-height: 1;
-      font-weight: 700;
-      letter-spacing: -0.05em;
-      font-variant-numeric: tabular-nums;
-    }
-
-    .insc-balance-note {
-      display: block;
-      margin-top: 8px;
-      color: #a8a8a8;
-      font-size: 11px;
-      font-weight: 400;
-    }
-
-    .insc-actions {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      margin-bottom: 24px;
-    }
-
-    #cardPage .insc-btn {
-      width: 100%;
-      min-height: 44px;
-      padding: 0 14px;
-      border: 0 !important;
-      border-radius: 12px;
-      color: #0f0f0f;
-      background: #f5f5f5;
-      box-shadow: none !important;
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: -0.01em;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      cursor: pointer;
-      transition: opacity 0.15s ease, background 0.15s ease;
-    }
-
-    #cardPage .insc-btn:active {
-      opacity: 0.6;
-      background: #efefef;
-    }
-
-    #cardPage .insc-btn.primary {
-      color: #ffffff;
-      background: #0f0f0f;
-    }
-
-    #cardPage .insc-btn.primary:active {
-      opacity: 1;
-      background: #333333;
-    }
-
-    .insc-highlights {
-      display: flex;
-      gap: 22px;
-      margin: 0;
-      padding: 0 0 4px;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-    }
-
-    .insc-highlights::-webkit-scrollbar {
-      display: none;
-    }
-
-    .insc-highlight {
-      flex-shrink: 0;
-      padding: 0;
-      border: 0;
-      background: transparent;
-      display: grid;
-      justify-items: center;
-      gap: 7px;
-      cursor: pointer;
-    }
-
-    .insc-highlight-circle {
-      width: 62px;
-      height: 62px;
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      color: #0f0f0f;
-      background: #f5f5f5;
-      font-size: 19px;
-      transition: transform 0.15s ease, background 0.15s ease;
-    }
-
-    .insc-highlight:active .insc-highlight-circle {
-      transform: scale(0.94);
-      background: #ededed;
-    }
-
-    .insc-highlight span:last-child {
-      max-width: 68px;
-      color: #6b6b6b;
-      font-size: 10.5px;
-      font-weight: 500;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    #cardPage .card-panel {
-      margin: 18px 0 0;
-      padding: 16px;
-      border-radius: 22px;
-      color: #0f0f0f;
-      background: #fafafa;
-      border: 0 !important;
-      box-shadow: none !important;
-      backdrop-filter: none;
-      -webkit-backdrop-filter: none;
-    }
-
     .insc-panel-head {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
 
     .insc-panel-head strong {
-      color: #0f0f0f;
       font-size: 14px;
       font-weight: 700;
-      letter-spacing: -0.01em;
+      color: #111111;
     }
 
     .insc-panel-close {
-      width: 30px;
-      height: 30px;
-      border: 0;
+      width: 26px;
+      height: 26px;
       border-radius: 50%;
+      border: none;
+      background: #ffffff;
+      color: #555555;
       display: grid;
       place-items: center;
-      color: #9a9a9a;
-      background: #ffffff;
-      font-size: 12px;
+      font-size: 11px;
       cursor: pointer;
     }
 
-    .insc-panel-close:active {
-      color: #0f0f0f;
-    }
-
-    #cardPage .card-form {
+    .card-form {
       display: grid;
       gap: 8px;
     }
 
-    #cardPage .card-form input,
-    #cardPage .card-form textarea {
+    .card-form input,
+    .card-form textarea {
       width: 100%;
-      min-height: 44px;
-      padding: 0 14px;
-      border: 0 !important;
-      border-radius: 12px;
-      color: #0f0f0f;
+      min-height: 40px;
+      padding: 0 12px;
+      border: none;
+      border-radius: 10px;
       background: #ffffff;
-      box-shadow: none !important;
-      font-size: 13px;
-      font-weight: 400;
+      color: #111111;
+      font-size: 12.5px;
       outline: none;
     }
 
-    #cardPage .card-form input::placeholder,
-    #cardPage .card-form textarea::placeholder {
-      color: #bcbcbc;
-    }
-
-    #cardPage .card-form textarea {
-      border-radius: 14px;
-      padding: 13px 14px;
-      min-height: 96px;
-      line-height: 1.55;
+    .card-form textarea {
+      padding: 10px 12px;
+      min-height: 80px;
       resize: vertical;
     }
 
-    #cardPage .library-list,
-    #cardPage .bill-list {
+    .card-form-actions {
       display: grid;
+      grid-template-columns: 1fr 1fr;
       gap: 8px;
-      max-height: 300px;
-      overflow-y: auto;
-      margin-top: 12px;
-      padding: 0;
+      margin-top: 4px;
     }
 
-    #cardPage .library-item,
-    #cardPage .bill-item {
-      padding: 13px 14px;
-      border-radius: 14px;
-      color: #4a4a4a;
+    .card-mini-btn,
+    .insc-btn {
+      min-height: 38px;
+      border-radius: 10px;
+      border: none;
       background: #ffffff;
-      border: 0 !important;
-      box-shadow: none !important;
+      color: #111111;
       font-size: 12px;
-      font-weight: 400;
-      line-height: 1.55;
-      word-break: break-word;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
     }
 
-    #cardPage .library-item b,
-    #cardPage .bill-item b {
-      color: #0f0f0f;
+    .card-mini-btn.primary,
+    .insc-btn.primary {
+      background: #000000;
+      color: #ffffff;
+    }
+
+    .bill-list,
+    .library-list {
+      display: grid;
+      gap: 6px;
+      max-height: 240px;
+      overflow-y: auto;
+      margin-top: 10px;
+    }
+
+    .bill-item,
+    .library-item {
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: #ffffff;
+      font-size: 11.5px;
+      color: #444444;
+      line-height: 1.45;
+    }
+
+    .bill-item b,
+    .library-item b {
+      color: #111111;
       font-weight: 700;
-    }
-
-    #cardPage .library-item small,
-    #cardPage .bill-item small {
-      color: #b4b4b4;
-    }
-
-    #cardPage .library-item img {
-      width: 58px;
-      height: 58px;
-      border-radius: 12px;
-      background: #f5f5f5;
     }
 
     .qq-message-bubble.media-message {
@@ -17041,6 +16580,108 @@
               </div>
             </section>
 
+            <!-- 极简纯黑白灰「我的」面板（直接融入底栏Dock体系） -->
+            <section class="qq-panel" id="qqPanelCard">
+              <header class="me-page-head">
+                <strong id="cardPageTitle" class="qq-home-editable">我的</strong>
+              </header>
+
+              <div class="me-profile-card">
+                <div class="me-avatar-wrap">
+                  <div class="me-avatar" id="cardProfileCover" role="button" tabindex="0" aria-label="更换头像"></div>
+                </div>
+                <div class="me-meta">
+                  <strong id="cardProfileName" class="qq-home-editable">我</strong>
+                  <p id="cardProfileBio" class="qq-home-editable">记录日常与生活</p>
+                </div>
+              </div>
+
+              <div class="me-stats-row">
+                <div class="me-stat-item"><b id="cardStatBills">0</b><span>账单</span></div>
+                <div class="me-stat-item"><b id="cardStatStickers">0</b><span>表情</span></div>
+                <div class="me-stat-item"><b id="cardStatWorlds">0</b><span>设定</span></div>
+              </div>
+
+              <!-- 资产余额极简卡片 -->
+              <div class="me-asset-box">
+                <div class="me-asset-head">
+                  <span>钱包余额</span>
+                  <div class="asset-amount" id="assetAmount">¥50,000.00</div>
+                </div>
+                <div class="me-asset-btns">
+                  <button class="me-btn" id="openBillPanel" type="button">账单明细</button>
+                  <button class="me-btn primary" id="openTransferModalFromCard" type="button">给角色转账</button>
+                </div>
+              </div>
+
+              <!-- 极简功能列表 -->
+              <div class="me-menu-list">
+                <button class="me-menu-row" type="button" data-card-panel="billPanel">
+                  <span><i class="fa-solid fa-wallet" style="margin-right:6px;"></i> 账单明细</span>
+                  <i class="fa-solid fa-chevron-right"></i>
+                </button>
+                <button class="me-menu-row" type="button" data-card-panel="stickerPanel">
+                  <span><i class="fa-regular fa-face-smile" style="margin-right:6px;"></i> 表情包库</span>
+                  <i class="fa-solid fa-chevron-right"></i>
+                </button>
+                <button class="me-menu-row" type="button" data-card-panel="worldBookPanel">
+                  <span><i class="fa-solid fa-book-open" style="margin-right:6px;"></i> 世界书设定</span>
+                  <i class="fa-solid fa-chevron-right"></i>
+                </button>
+              </div>
+
+              <!-- 展开抽屉面板（账单、表情、世界书） -->
+              <section class="card-panel" id="billPanel">
+                <div class="insc-panel-head">
+                  <strong>账单明细</strong>
+                  <button class="insc-panel-close" type="button" data-close-card-panel aria-label="收起">
+                    <i class="fa-solid fa-xmark"></i>
+                  </button>
+                </div>
+                <div class="bill-list" id="billList"></div>
+              </section>
+
+              <section class="card-panel" id="stickerPanel">
+                <div class="insc-panel-head">
+                  <strong>表情包库</strong>
+                  <button class="insc-panel-close" type="button" data-close-card-panel aria-label="收起">
+                    <i class="fa-solid fa-xmark"></i>
+                  </button>
+                </div>
+                <div class="card-form">
+                  <input id="stickerGroupInput" type="text" placeholder="分组，如：日常 / 撒娇" />
+                  <input id="stickerUrlInput" type="text" placeholder="图片 URL 链接" />
+                  <input id="stickerNoteInput" type="text" placeholder="备注文案" />
+                  <button class="insc-btn" id="triggerStickerFile" type="button">选择本地图片</button>
+                  <input id="stickerFileInput" type="file" accept="image/*" style="display:none;" />
+                  <div class="card-form-actions">
+                    <button class="insc-btn" id="addStickerBtn" type="button">添加表情</button>
+                    <button class="insc-btn primary" id="openStickerManager" type="button">管理表情包</button>
+                  </div>
+                </div>
+                <div class="library-list" id="stickerList"></div>
+              </section>
+
+              <section class="card-panel" id="worldBookPanel">
+                <div class="insc-panel-head">
+                  <strong>世界书设定</strong>
+                  <button class="insc-panel-close" type="button" data-close-card-panel aria-label="收起">
+                    <i class="fa-solid fa-xmark"></i>
+                  </button>
+                </div>
+                <div class="card-form">
+                  <input id="worldBookGroupInput" type="text" placeholder="设定分组，如：主线 / 关系" />
+                  <input id="worldBookTitleInput" type="text" placeholder="条目标题" />
+                  <textarea id="worldBookContentInput" placeholder="输入设定的详细内容..."></textarea>
+                  <div class="card-form-actions">
+                    <button class="insc-btn" id="addWorldBookBtn" type="button">保存条目</button>
+                    <button class="insc-btn primary" id="openWorldBookManager" type="button">管理世界书</button>
+                  </div>
+                </div>
+                <div class="library-list" id="worldBookList"></div>
+              </section>
+            </section>
+
             <section class="qq-panel" id="qqPanelContacts">
               <header class="contacts-page-head">
                 <button class="insc-icon-btn" id="closeContactsPage" type="button" aria-label="返回消息列表">
@@ -17763,134 +17404,17 @@
     </div>
   </section>
 
-  <section class="card-page" id="cardPage" aria-label="我的名片页面">
-    <div class="card-shell">
-      <section class="screen-hud card-hud" aria-label="名片状态栏">
-        <div class="hud-left">
-          <span id="cardClock">17:27</span>
-        </div>
-        <div class="hud-icons">
-          <i class="fa-solid fa-signal"></i>
-          <i class="fa-solid fa-wifi"></i>
-          <span class="hud-battery">90</span>
-        </div>
-      </section>
-
-      <header class="insc-topbar">
-        <button class="insc-icon-btn" id="closeCardPage" type="button" aria-label="返回桌面">
-          <i class="fa-solid fa-chevron-left"></i>
-        </button>
-        <div class="insc-topbar-name">
-          <strong id="cardPageTitle" class="qq-home-editable">我的 Yuan 名片</strong>
-        </div>
-        <button class="insc-icon-btn trailing" id="cardQuickAdd" type="button" aria-label="快速新增">
-          <i class="fa-solid fa-plus"></i>
-        </button>
-      </header>
-
-      <section class="insc-profile" aria-label="名片资料">
-        <div class="insc-avatar-wrap">
-          <div class="insc-avatar" id="cardProfileCover" role="button" tabindex="0" aria-label="更换名片头像"></div>
-          <span class="insc-avatar-badge" aria-hidden="true"><i class="fa-solid fa-camera"></i></span>
-        </div>
-        <div class="insc-stats">
-          <div class="insc-stat"><b id="cardStatBills">0</b><small>账单</small></div>
-          <div class="insc-stat"><b id="cardStatStickers">0</b><small>表情</small></div>
-          <div class="insc-stat"><b id="cardStatWorlds">0</b><small>世界书</small></div>
-        </div>
-      </section>
-
-      <div class="insc-bio">
-        <strong id="cardProfileName" class="qq-home-editable">Yuan Keeper</strong>
-        <p id="cardProfileBio" class="qq-home-editable">把角色关系、转账记录、表情和世界观设定收进一张透明卡片。</p>
-        <span class="insc-bio-note qq-home-editable" id="cardPageSubtitle">资产、表情包与世界书都在这里整理</span>
-      </div>
-
-      <section class="insc-balance" aria-label="我的资产">
-        <span class="insc-label">Balance</span>
-        <div class="asset-amount" id="assetAmount">¥50,000.00</div>
-        <span class="insc-balance-note" id="assetStatus">可用于聊天转账</span>
-      </section>
-
-      <div class="insc-actions">
-        <button class="insc-btn" id="openBillPanel" type="button">账单详情</button>
-        <button class="insc-btn primary" id="openTransferModalFromCard" type="button">给角色转账</button>
-      </div>
-
-      <span class="insc-label insc-section-label">Collections</span>
-      <nav class="insc-highlights" aria-label="名片功能入口">
-        <button class="insc-highlight" type="button" data-card-panel="billPanel">
-          <span class="insc-highlight-circle"><i class="fa-solid fa-wallet"></i></span>
-          <span>资产账单</span>
-        </button>
-        <button class="insc-highlight" type="button" data-card-panel="stickerPanel">
-          <span class="insc-highlight-circle"><i class="fa-regular fa-face-smile"></i></span>
-          <span>表情包库</span>
-        </button>
-        <button class="insc-highlight" type="button" data-card-panel="worldBookPanel">
-          <span class="insc-highlight-circle"><i class="fa-solid fa-book-open"></i></span>
-          <span>世界书</span>
-        </button>
-      </nav>
-
-      <section class="card-panel" id="billPanel">
-        <div class="insc-panel-head">
-          <strong>资产账单</strong>
-          <button class="insc-panel-close" type="button" data-close-card-panel aria-label="收起">
-            <i class="fa-solid fa-xmark"></i>
-          </button>
-        </div>
-        <div class="bill-list" id="billList"></div>
-      </section>
-
-      <section class="card-panel" id="stickerPanel">
-        <div class="insc-panel-head">
-          <strong>表情包库</strong>
-          <button class="insc-panel-close" type="button" data-close-card-panel aria-label="收起">
-            <i class="fa-solid fa-xmark"></i>
-          </button>
-        </div>
-        <div class="card-form">
-          <input id="stickerGroupInput" type="text" placeholder="表情包分组，例如：撒娇 / 生气 / 日常" />
-          <input id="stickerUrlInput" type="text" placeholder="图床链接，可粘贴图片 URL" />
-          <input id="stickerNoteInput" type="text" placeholder="备注，例如：猫猫点头，表示同意" />
-          <button class="insc-btn" id="triggerStickerFile" type="button">选择本地表情图片</button>
-          <input id="stickerFileInput" type="file" accept="image/*" style="display:none;" />
-          <button class="insc-btn" id="triggerStickerImport" type="button">选择 TXT / Word 批量文档</button>
-          <input id="stickerImportInput" type="file" accept=".txt,.doc,.docx,text/plain,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" style="display:none;" />
-          <div class="card-form-actions">
-            <button class="insc-btn" id="addStickerBtn" type="button">添加表情</button>
-            <button class="insc-btn" id="importStickerBtn" type="button">识别导入文件</button>
-          </div>
-          <button class="insc-btn primary" id="openStickerManager" type="button">
-            <i class="fa-solid fa-layer-group"></i>
-            <span>管理分组与批量删除</span>
-          </button>
-        </div>
-        <div class="library-list" id="stickerList"></div>
-      </section>
-
-      <section class="card-panel" id="worldBookPanel">
-        <div class="insc-panel-head">
-          <strong>世界书</strong>
-          <button class="insc-panel-close" type="button" data-close-card-panel aria-label="收起">
-            <i class="fa-solid fa-xmark"></i>
-          </button>
-        </div>
-        <div class="card-form">
-          <input id="worldBookGroupInput" type="text" placeholder="世界书分组，例如：主线设定 / 禁忌 / 城市资料" />
-          <input id="worldBookTitleInput" type="text" placeholder="条目标题" />
-          <textarea id="worldBookContentInput" placeholder="写入附加设定、世界观、称呼、注意事项等，角色可按绑定分组读取。"></textarea>
-          <button class="insc-btn" id="addWorldBookBtn" type="button">添加世界书条目</button>
-          <button class="insc-btn primary" id="openWorldBookManager" type="button">
-            <i class="fa-solid fa-pen-to-square"></i>
-            <span>管理与编辑世界书</span>
-          </button>
-        </div>
-        <div class="library-list" id="worldBookList"></div>
-      </section>
-    </div>
-  </section>
+  <!-- 兼容旧引用的静默插槽 -->
+  <div style="display:none;" aria-hidden="true">
+    <div id="cardPage"></div>
+    <div id="closeCardPage"></div>
+    <div id="cardQuickAdd"></div>
+    <div id="cardPageSubtitle"></div>
+    <div id="assetStatus"></div>
+    <div id="triggerStickerImport"></div>
+    <div id="stickerImportInput"></div>
+    <div id="importStickerBtn"></div>
+  </div>
 
   <section class="sticker-manager-modal" id="worldBookManagerModal" aria-label="世界书管理">
     <div class="sticker-manager-card">
@@ -19534,9 +19058,9 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
         momentsHomeTitle: "Yuan Moments",
         momentsHomeEmail: "contact@yuan.moments",
         momentsHomeSubtitle: "自动收集角色像真人一样随机发布的碎片，也可以进入发布页写自己的动态。",
-        cardPageTitle: "我的 Yuan 名片",
-        cardPageSubtitle: "资产、表情包与世界书都在这里整理",
-        cardProfileName: "Yuan Keeper",
+        cardPageTitle: "我的",
+        cardPageSubtitle: "",
+        cardProfileName: "我",
         cardProfileBio: "把角色关系、转账记录、表情和世界观设定收进一张透明卡片。",
         cardProfileCoverImage: "",
         layoutSize: "default",
@@ -19985,7 +19509,7 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       if (msgListenText) msgListenText.textContent = appState.theme.listenCopy || "暂无正在播放";
       if (sharedText) sharedText.textContent = appState.theme.sharedCopy || "";
       if (speechText) speechText.textContent = appState.theme.speechCopy || "";
-      if (qqHomeTitle) qqHomeTitle.textContent = appState.theme.qqHomeTitle || "Yuan信箱";
+      if (qqHomeTitle) qqHomeTitle.textContent = appState.theme.qqHomeTitle || "聊天";
       if (qqHomeSubtitle) qqHomeSubtitle.textContent = appState.theme.qqHomeSubtitle || "";
       if (qqFeatureTitle) qqFeatureTitle.textContent = appState.theme.qqFeatureTitle || "";
       if (qqFeatureSubtitle) qqFeatureSubtitle.textContent = appState.theme.qqFeatureSubtitle || "";
@@ -19999,9 +19523,9 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
         if (emailSpan) emailSpan.textContent = appState.theme.momentsHomeEmail || "contact@yuan.moments";
       }
       if (momentsHomeSubtitle) momentsHomeSubtitle.textContent = appState.theme.momentsHomeSubtitle || "自动收集角色像真人一样随机发布的碎片，也可以进入发布页写自己的动态。";
-      if (cardPageTitle) cardPageTitle.textContent = appState.theme.cardPageTitle || "我的 Yuan 名片";
-      if (cardPageSubtitle) cardPageSubtitle.textContent = appState.theme.cardPageSubtitle || "资产、表情包与世界书都在这里整理";
-      if (cardProfileName) cardProfileName.textContent = appState.theme.cardProfileName || "Yuan Keeper";
+      if (cardPageTitle) cardPageTitle.textContent = appState.theme.cardPageTitle || "我的";
+      if (cardPageSubtitle) cardPageSubtitle.textContent = appState.theme.cardPageSubtitle || "";
+      if (cardProfileName) cardProfileName.textContent = appState.theme.cardProfileName || "我";
       if (cardProfileBio) cardProfileBio.textContent = appState.theme.cardProfileBio || "把角色关系、转账记录、表情和世界观设定收进一张透明卡片。";
 
       renderModels();
@@ -20114,15 +19638,15 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       qqApp.addEventListener("click", () => qqPage.classList.add("show"));
     }
 
-    if (cardApp && cardPage) {
+    if (cardApp) {
       cardApp.addEventListener("click", () => {
+        if (qqPage) qqPage.classList.add("show");
+        showQqPanel("qqPanelCard");
+        qqNavItems.forEach((nav) => nav.classList.remove("active"));
+        const cardNav = document.querySelector('.qq-nav-item[data-nav-target="card"]');
+        if (cardNav) cardNav.classList.add("active");
         renderCardPage();
-        cardPage.classList.add("show");
       });
-    }
-
-    if (closeCardPage && cardPage) {
-      closeCardPage.addEventListener("click", () => cardPage.classList.remove("show"));
     }
 
     function setMusicAuthMode(mode) {
@@ -24306,8 +23830,9 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       const isMoments = panelId === "qqPanelMoments";
       const isContacts = panelId === "qqPanelContacts";
       const isChats = panelId === "qqPanelChats";
+      const isCard = panelId === "qqPanelCard";
 
-      // 只有具体聊天会话（thread）才隐藏底栏，朋友圈、联系人、消息列表全部保持底栏 Dock 可见
+      // 只有具体聊天会话（thread）才隐藏底栏，消息、联系人、朋友圈、我的全部常驻保持底栏 Dock 可见
       if (qqPage) qqPage.classList.toggle("thread-mode", isThread);
       if (qqBottomBar) {
         qqBottomBar.style.display = isThread ? "none" : "flex";
@@ -24315,11 +23840,11 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       }
       if (qqModeSwitch) qqModeSwitch.style.display = isThread ? "none" : "";
 
-      // 主消息顶栏：进入具体聊天或自带顶栏的页面（朋友圈、联系人）时隐藏主顶栏，避免出现双层顶栏
+      // 主消息顶栏：进入具体聊天或自带独立顶栏的页面时隐藏主顶栏，避免出现双层顶栏
       const heroHead = document.querySelector(".qq-hero-head");
       if (heroHead) heroHead.style.display = isChats ? "" : "none";
 
-      // 资料卡（消息列表的个人信息区域）：仅在消息列表页显示
+      // 资料卡：仅在主消息列表页显示
       if (qqFeatureCard) qqFeatureCard.style.display = isChats ? "" : "none";
 
       if (isMoments) {
@@ -24328,6 +23853,10 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
 
       if (isContacts) {
         renderRoleList();
+      }
+
+      if (isCard) {
+        renderCardPage();
       }
     }
 
@@ -24391,8 +23920,11 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
     }
     if (triggerOpenCardApp) {
       triggerOpenCardApp.addEventListener("click", () => {
+        showQqPanel("qqPanelCard");
+        qqNavItems.forEach((nav) => nav.classList.remove("active"));
+        const cardNav = document.querySelector('.qq-nav-item[data-nav-target="card"]');
+        if (cardNav) cardNav.classList.add("active");
         renderCardPage();
-        if (cardPage) cardPage.classList.add("show");
       });
     }
     if (qqHomeTabsTriggers.length) {
@@ -24464,8 +23996,8 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
             showQqPanel("qqPanelMoments");
             renderMoments();
           } else if (target === "card") {
+            showQqPanel("qqPanelCard");
             renderCardPage();
-            if (cardPage) cardPage.classList.add("show");
           }
         });
       });
@@ -31516,6 +31048,16 @@ function extractRoleReplyLines(reply) {
     (async function init() {
       try {
         await loadState();
+        // 自动自愈历史旧文案
+        if (appState.theme.qqHomeTitle === "Yuan信箱" || appState.theme.qqHomeTitle === "yuan信箱") {
+          appState.theme.qqHomeTitle = "聊天";
+        }
+        if (appState.theme.cardPageTitle === "我的 Yuan 名片" || appState.theme.cardPageTitle === "我的yuan名片") {
+          appState.theme.cardPageTitle = "我的";
+        }
+        if (appState.theme.cardProfileName === "Yuan Keeper") {
+          appState.theme.cardProfileName = "我";
+        }
       } catch (e) {
         console.warn("加载持久化数据失败：", e);
       }
