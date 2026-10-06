@@ -16079,7 +16079,7 @@
       min-height: 48px;
       padding: calc(6px + env(safe-area-inset-top)) 12px 6px;
       display: grid;
-      grid-template-columns: 70px 1fr 70px;
+      grid-template-columns: 44px 1fr 44px;
       align-items: center;
       border-bottom: 1px solid #ededed;
       background: #ffffff;
@@ -16089,20 +16089,6 @@
     .wb-head-left {
       display: flex;
       align-items: center;
-      gap: 4px;
-    }
-
-    .wb-super-topic-btn {
-      border: 0;
-      background: transparent;
-      color: #111111;
-      font-size: 14px;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      display: inline-flex;
-      align-items: center;
-      gap: 2px;
-      cursor: pointer;
     }
 
     .wb-head-tabs {
@@ -18821,11 +18807,8 @@
     <!-- 截图同款顶部 Header -->
     <header class="wb-head">
       <div class="wb-head-left">
-        <button class="wb-head-icon-btn" id="closeWeiboApp" type="button" aria-label="返回桌面" style="margin-right: 4px;">
+        <button class="wb-head-icon-btn" id="closeWeiboApp" type="button" aria-label="返回桌面">
           <i class="fa-solid fa-chevron-left" style="font-size: 15px;"></i>
-        </button>
-        <button class="wb-super-topic-btn" id="wbSuperTopicBtn" type="button">
-          <span>超话</span>
         </button>
       </div>
 
@@ -24783,22 +24766,23 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       if (!Array.isArray(appState.weibo.posts)) appState.weibo.posts = [];
       if (!Array.isArray(appState.weibo.hotSearches)) appState.weibo.hotSearches = [];
 
-      // 按照用户截图 1:1 风格注入默认真实微博
-      if (!appState.weibo.posts.length) {
+      // 自动清理旧博主缓存并重置为全新极简黑白博文
+      const hasOldAuthor = appState.weibo.posts.some((p) => p.authorName === "卢昱晓_" || p.authorName === "椰小熊崽");
+      if (!appState.weibo.posts.length || hasOldAuthor) {
         appState.weibo.posts = [
           {
             id: "wb_shot_1",
-            authorName: "卢昱晓_",
-            topicTag: "卢昱晓超话",
+            authorName: "日落观察所",
+            topicTag: "生活切片",
             verified: true,
             authorAvatar: "https://771553.xyz/file/studio/5FDVc1VrKzVdH5mO.jpg",
             time: "10-5",
-            source: "来自 新加关注",
-            text: "#卢昱晓超话# 掉落新彩蛋\n是和朋友们的碎碎念的晓碎片\n#卢昱晓遇见才晓##卢昱晓来到地球的另一边#",
+            source: "来自 街头漫步",
+            text: "#城市漫游指南# 在转角处记录下这一束光。\n黑白影调里的安静片刻，风从长街的一头吹过来。\n#胶片摄影##日常碎片#",
             mediaType: "video",
             videoViews: "133万次观看",
             videoDuration: "01:50",
-            videoLogo: "微博视频号",
+            videoLogo: "胶片档案",
             image: "https://771553.xyz/file/studio/5FDVc1VrKzVdH5mO.jpg",
             images: [],
             hotIndex: "热文指数30000+",
@@ -24807,18 +24791,18 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
             commentsCount: 14000,
             shares: 71000,
             comments: [
-              { authorName: "路过的摄影师", text: "黑白调色下的质感太高级了！" }
+              { authorName: "风声收集者", text: "光影层次拿捏得真舒服。" }
             ]
           },
           {
             id: "wb_shot_2",
-            authorName: "椰小熊崽",
-            topicTag: "日常分享",
+            authorName: "白昼梦呓录",
+            topicTag: "摄影日记",
             verified: true,
             authorAvatar: "https://771553.xyz/file/studio/5FDVc1VrKzVdH5mO.jpg",
             time: "10-1",
-            source: "来自 iPhone 17 Pro Max 已编辑",
-            text: "假期快乐\n祝大家日日开心 十月顺遂呀\n#小葱 plog#",
+            source: "来自 iPhone 16 Pro",
+            text: "整理了最近相册里的黑白胶卷。\n把无序的日常重新排列，也是一种自我整理的方式。\n#摄影集##生活美学#",
             mediaType: "images",
             image: "",
             images: [
@@ -25182,14 +25166,6 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
         wbTabFeed.classList.remove("active");
         if (weiboFeedList) weiboFeedList.style.display = "block";
         if (weiboHotPanel) weiboHotPanel.classList.remove("show");
-      });
-    }
-
-    // 顶部超话按钮
-    const wbSuperTopicBtn = document.querySelector("#wbSuperTopicBtn");
-    if (wbSuperTopicBtn) {
-      wbSuperTopicBtn.addEventListener("click", () => {
-        openWeiboComposeWithTopic("微博超话");
       });
     }
 
