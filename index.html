@@ -20352,22 +20352,22 @@
             <button class="wb-mine-banner-btn" type="button" id="wbMineEditProfileBtn">编辑资料</button>
           </div>
 
-          <!-- 四列统计数据 -->
+          <!-- 四列统计数据 (全部打通 ID 实时联动) -->
           <div class="wb-mine-stats-grid">
             <div class="wb-mine-stat-col">
-              <strong id="wbMinePostCount">2</strong>
+              <strong id="wbMinePostCount">0</strong>
               <span>微博</span>
             </div>
-            <div class="wb-mine-stat-col">
-              <strong id="wbMineFollowCount">1</strong>
+            <div class="wb-mine-stat-col" id="wbMineFollowTrigger" style="cursor: pointer;" title="点击修改关注数">
+              <strong id="wbMineFollowCount">20</strong>
               <span>关注</span>
             </div>
-            <div class="wb-mine-stat-col">
-              <strong>3</strong>
+            <div class="wb-mine-stat-col" id="wbMineFansTrigger" style="cursor: pointer;" title="点击修改粉丝数">
+              <strong id="wbMineFansCount">3</strong>
               <span>粉丝</span>
             </div>
-            <div class="wb-mine-stat-col">
-              <strong>0</strong>
+            <div class="wb-mine-stat-col" id="wbMineVisitorTrigger" style="cursor: pointer;" title="点击修改访客数">
+              <strong id="wbMineVisitorCount">0</strong>
               <span>访客</span>
             </div>
           </div>
@@ -27514,31 +27514,74 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       return appState.weibo.allowedRoleIds;
     }
 
-    // 渲染微博「我」个人主页
-    function renderWeiboMinePanel() {
+    // 全局同步微博全部界面的个人资料与统计数据（实现无论在哪改，内外部所有页面 100% 同步联动）
+    function syncAllWeiboUserProfileUI() {
       ensureWeiboState();
       ensureQqState();
-
+      const fp = ensureWeiboProfileFullData();
+      const stats = ensureWeiboProfileStats();
       const myAvatar = appState.theme.cardProfileCoverImage || appState.theme.avatarImage || "https://771553.xyz/file/studio/5FDVc1VrKzVdH5mO.jpg";
-      const myName = appState.theme.cardProfileName || "我";
-      const myBio = appState.theme.cardProfileBio || "暂无简介";
+      const currentName = fp.name || appState.theme.cardProfileName || "未命名旅人";
+      const currentBio = fp.bio || appState.theme.cardProfileBio || "在无声的时间里收集微光。";
 
+      // 1. 同步外部「我」页面 (wbMinePanel)
       const wbMineAvatar = document.querySelector("#wbMineAvatar");
       const wbMineName = document.querySelector("#wbMineName");
       const wbMineBio = document.querySelector("#wbMineBio");
       const wbMinePostCount = document.querySelector("#wbMinePostCount");
       const wbMineFollowCount = document.querySelector("#wbMineFollowCount");
+      const wbMineFansCount = document.querySelector("#wbMineFansCount");
+      const wbMineVisitorCount = document.querySelector("#wbMineVisitorCount");
       const wbMineWalletVal1 = document.querySelector("#wbMineWalletVal1");
 
       if (wbMineAvatar) wbMineAvatar.style.backgroundImage = `url('${myAvatar}')`;
-      if (wbMineName) wbMineName.textContent = myName;
-      if (wbMineBio) wbMineBio.textContent = myBio;
+      if (wbMineName) wbMineName.textContent = currentName;
+      if (wbMineBio) wbMineBio.textContent = currentBio;
       if (wbMinePostCount) wbMinePostCount.textContent = String(appState.weibo?.posts?.length || 0);
-
-      const allowedIds = ensureWeiboAllowedRoles();
-      if (wbMineFollowCount) wbMineFollowCount.textContent = String(allowedIds.length);
+      if (wbMineFollowCount) wbMineFollowCount.textContent = String(stats.followCount || "36");
+      if (wbMineFansCount) wbMineFansCount.textContent = String(stats.fansCount || "128");
+      if (wbMineVisitorCount) wbMineVisitorCount.textContent = String(stats.visitorCount || "89");
       if (wbMineWalletVal1) wbMineWalletVal1.textContent = formatMoney(appState.qq?.assets || 50000);
 
+      // 2. 同步内部个人主页 (Profile Space)
+      if (wbProAvatar) wbProAvatar.style.backgroundImage = `url('${myAvatar}')`;
+      if (wbProName) wbProName.textContent = currentName;
+      if (wbProBio) wbProBio.textContent = currentBio;
+      if (wbProFansVal) wbProFansVal.textContent = String(stats.fansCount || "128");
+      if (wbProFollowVal) wbProFollowVal.textContent = String(stats.followCount || "36");
+      if (wbProPraiseVal) wbProPraiseVal.textContent = String(stats.praiseCount || "260");
+
+      // 3. 同步编辑个人资料页面 (Edit Profile)
+      if (wbEpBigAvatar) wbEpBigAvatar.style.backgroundImage = `url('${myAvatar}')`;
+      const epNameVal = document.querySelector("#wbEpNameVal");
+      const epBioVal = document.querySelector("#wbEpBioVal");
+      const epGenderVal = document.querySelector("#wbEpGenderVal");
+      const epBirthdayVal = document.querySelector("#wbEpBirthdayVal");
+      const epRelationVal = document.querySelector("#wbEpRelationVal");
+      const epHometownVal = document.querySelector("#wbEpHometownVal");
+      const epIpVal = document.querySelector("#wbEpIpVal");
+      const epEduVal = document.querySelector("#wbEpEduVal");
+      const epWorkVal = document.querySelector("#wbEpWorkVal");
+      const epLevelVal = document.querySelector("#wbEpLevelVal");
+
+      if (epNameVal) epNameVal.textContent = currentName;
+      if (epBioVal) epBioVal.textContent = currentBio;
+      if (epGenderVal) epGenderVal.textContent = fp.gender || "保密";
+      if (epBirthdayVal) epBirthdayVal.textContent = fp.birthday || "01-01 摩羯座";
+      if (epRelationVal) epRelationVal.textContent = fp.relationship || "保密";
+      if (epHometownVal) epHometownVal.textContent = fp.hometown || "银河系";
+      if (epIpVal) epIpVal.textContent = fp.ipLocation || "冰岛 (IP属地以运营商信息为准)";
+      if (epEduVal) epEduVal.textContent = fp.education || "未公开";
+      if (epWorkVal) epWorkVal.textContent = fp.work || "独立创作者";
+      if (epLevelVal) epLevelVal.textContent = fp.level || "Lv.7";
+
+      // 4. 同步更新信息流中自己发布的帖子头像与名称
+      renderWeiboFeed();
+    }
+
+    // 渲染微博「我」个人主页
+    function renderWeiboMinePanel() {
+      syncAllWeiboUserProfileUI();
       renderWbFrequentStrip();
     }
 
@@ -27567,28 +27610,25 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       ensureWeiboState();
       if (!appState.weibo.profileStats || typeof appState.weibo.profileStats !== "object") {
         appState.weibo.profileStats = {
-          fansCount: "3",
-          followCount: "20",
-          praiseCount: "4",
+          fansCount: "128",
+          followCount: "36",
+          praiseCount: "260",
+          visitorCount: "89",
           bannerImage: ""
         };
+      }
+      if (appState.weibo.profileStats.visitorCount === undefined) {
+        appState.weibo.profileStats.visitorCount = "89";
       }
       return appState.weibo.profileStats;
     }
 
     function renderWeiboProfilePage() {
-      ensureWeiboState();
+      syncAllWeiboUserProfileUI();
       const stats = ensureWeiboProfileStats();
+      const fp = ensureWeiboProfileFullData();
+      const myName = fp.name || appState.theme.cardProfileName || "未命名旅人";
       const myAvatar = appState.theme.cardProfileCoverImage || appState.theme.avatarImage || "https://771553.xyz/file/studio/5FDVc1VrKzVdH5mO.jpg";
-      const myName = appState.theme.cardProfileName || "我";
-      const myBio = appState.theme.cardProfileBio || "暂无简介";
-
-      if (wbProAvatar) wbProAvatar.style.backgroundImage = `url('${myAvatar}')`;
-      if (wbProName) wbProName.textContent = myName;
-      if (wbProBio) wbProBio.textContent = myBio;
-      if (wbProFansVal) wbProFansVal.textContent = String(stats.fansCount || "3");
-      if (wbProFollowVal) wbProFollowVal.textContent = String(stats.followCount || "20");
-      if (wbProPraiseVal) wbProPraiseVal.textContent = String(stats.praiseCount || "4");
 
       if (wbProBanner) {
         const bannerSrc = stats.bannerImage || appState.theme.desktopBackground || "https://771553.xyz/file/studio/5FDVc1VrKzVdH5mO.jpg";
@@ -27671,52 +27711,47 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
     const wbEpPendantBtn = document.querySelector("#wbEpPendantBtn");
     const wbEpVerifyBtn = document.querySelector("#wbEpVerifyBtn");
 
+    // 彻底脱敏：使用虚拟化、中性且高级的极简档案，清除所有现实真实隐私
+    function sanitizeWeiboProfilePrivacy(fp) {
+      if (!fp) return;
+      const sensitiveTokens = ["四川", "成都", "2005-05-04", "金牛座", "依稀你泪眼决别", "依稀", "广东"];
+      const textJoined = JSON.stringify(fp);
+      const isLeaked = sensitiveTokens.some(token => textJoined.includes(token));
+      if (isLeaked) {
+        fp.name = (fp.name && !sensitiveTokens.some(t => fp.name.includes(t))) ? fp.name : "未命名旅人";
+        fp.gender = "保密";
+        fp.birthday = "01-01 摩羯座";
+        fp.relationship = "保密";
+        fp.hometown = "银河系";
+        fp.ipLocation = "冰岛 (IP属地以运营商信息为准)";
+        fp.education = "视觉艺术与交互研究";
+        fp.work = "独立摄影 / 概念设计";
+        fp.bio = "在无声的时间里收集微光。";
+      }
+    }
+
     function ensureWeiboProfileFullData() {
       ensureWeiboState();
       if (!appState.weibo.fullProfile || typeof appState.weibo.fullProfile !== "object") {
         appState.weibo.fullProfile = {
-          name: appState.theme.cardProfileName || "我",
-          bio: appState.theme.cardProfileBio || "暂无简介",
-          gender: "女",
-          birthday: "2005-05-04 金牛座",
-          relationship: "恋爱中",
-          hometown: "四川 成都",
-          ipLocation: "广东 (IP属地以运营商信息为准)",
-          education: "添加",
-          work: "添加",
+          name: appState.theme.cardProfileName || "未命名旅人",
+          bio: appState.theme.cardProfileBio || "在无声的时间里收集微光。",
+          gender: "保密",
+          birthday: "01-01 摩羯座",
+          relationship: "保密",
+          hometown: "银河系",
+          ipLocation: "冰岛 (IP属地以运营商信息为准)",
+          education: "视觉艺术与交互研究",
+          work: "独立摄影 / 概念设计",
           level: "已激活 Lv.7"
         };
       }
+      sanitizeWeiboProfilePrivacy(appState.weibo.fullProfile);
       return appState.weibo.fullProfile;
     }
 
     function renderWbEditProfilePage() {
-      ensureWeiboState();
-      const fp = ensureWeiboProfileFullData();
-      const myAvatar = appState.theme.cardProfileCoverImage || appState.theme.avatarImage || "https://771553.xyz/file/studio/5FDVc1VrKzVdH5mO.jpg";
-
-      if (wbEpBigAvatar) wbEpBigAvatar.style.backgroundImage = `url('${myAvatar}')`;
-      const nameVal = document.querySelector("#wbEpNameVal");
-      const bioVal = document.querySelector("#wbEpBioVal");
-      const genderVal = document.querySelector("#wbEpGenderVal");
-      const birthdayVal = document.querySelector("#wbEpBirthdayVal");
-      const relationVal = document.querySelector("#wbEpRelationVal");
-      const hometownVal = document.querySelector("#wbEpHometownVal");
-      const ipVal = document.querySelector("#wbEpIpVal");
-      const eduVal = document.querySelector("#wbEpEduVal");
-      const workVal = document.querySelector("#wbEpWorkVal");
-      const levelVal = document.querySelector("#wbEpLevelVal");
-
-      if (nameVal) nameVal.textContent = fp.name || appState.theme.cardProfileName || "我";
-      if (bioVal) bioVal.textContent = fp.bio || appState.theme.cardProfileBio || "暂无简介";
-      if (genderVal) genderVal.textContent = fp.gender || "保密";
-      if (birthdayVal) birthdayVal.textContent = fp.birthday || "未设置";
-      if (relationVal) relationVal.textContent = fp.relationship || "未设置";
-      if (hometownVal) hometownVal.textContent = fp.hometown || "未设置";
-      if (ipVal) ipVal.textContent = fp.ipLocation || "中国";
-      if (eduVal) eduVal.textContent = fp.education || "添加";
-      if (workVal) workVal.textContent = fp.work || "添加";
-      if (levelVal) levelVal.textContent = fp.level || "Lv.7";
+      syncAllWeiboUserProfileUI();
     }
 
     function openWbEditProfilePage() {
@@ -27750,11 +27785,9 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
         readImage(file, async (src) => {
           appState.theme.cardProfileCoverImage = src;
           appState.theme.avatarImage = src;
-          renderWbEditProfilePage();
-          renderWeiboProfilePage();
-          renderWeiboMinePanel();
+          syncAllWeiboUserProfileUI();
           await saveState();
-          showCatpawAlert("头像更换成功！");
+          showCatpawAlert("头像更换成功！全平台已同步。");
         });
       });
     }
@@ -27791,11 +27824,9 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
           if (fieldKey === "bio") {
             appState.theme.cardProfileBio = fp.bio;
           }
-          renderWbEditProfilePage();
-          renderWeiboProfilePage();
-          renderWeiboMinePanel();
+          syncAllWeiboUserProfileUI();
           await saveState();
-          showCatpawAlert(`${titleName}已修改为：${fp[fieldKey]}`);
+          showCatpawAlert(`${titleName}已修改为：${fp[fieldKey]}，内外界面已全部同步！`);
         }
       });
     };
@@ -27811,45 +27842,45 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
     bindWbEpItemEdit("wbEpItemWork", "work", "工作信息", "自由摄影师 / 设计师");
     bindWbEpItemEdit("wbEpItemLevel", "level", "微博等级", "已激活 Lv.7");
 
-    // 自定义编辑粉丝数量
-    if (editWbFansCount) {
-      editWbFansCount.addEventListener("click", async () => {
-        const stats = ensureWeiboProfileStats();
-        const nextVal = await showMusicPrompt({
-          title: "自定义粉丝数量",
-          placeholder: "例如：100万 / 5200 / 99",
-          value: String(stats.fansCount || "3"),
-          confirmText: "保存修改"
-        });
-        if (nextVal !== null && nextVal.trim()) {
-          stats.fansCount = nextVal.trim();
-          renderWeiboProfilePage();
-          renderWeiboMinePanel();
-          await saveState();
-          showCatpawAlert(`粉丝数量已修改为：${stats.fansCount}`);
-        }
+    // 自定义编辑粉丝数量 (支持从内部 Profile 或外部「我」页面点击触发)
+    const handleEditFans = async () => {
+      const stats = ensureWeiboProfileStats();
+      const nextVal = await showMusicPrompt({
+        title: "自定义粉丝数量",
+        placeholder: "例如：100万 / 5200 / 99",
+        value: String(stats.fansCount || "128"),
+        confirmText: "保存修改"
       });
-    }
+      if (nextVal !== null && nextVal.trim()) {
+        stats.fansCount = nextVal.trim();
+        syncAllWeiboUserProfileUI();
+        await saveState();
+        showCatpawAlert(`粉丝数量已同步修改为：${stats.fansCount}`);
+      }
+    };
+    if (editWbFansCount) editWbFansCount.addEventListener("click", handleEditFans);
+    const wbMineFansTrigger = document.querySelector("#wbMineFansTrigger");
+    if (wbMineFansTrigger) wbMineFansTrigger.addEventListener("click", handleEditFans);
 
-    // 自定义编辑关注数量
-    if (editWbFollowCount) {
-      editWbFollowCount.addEventListener("click", async () => {
-        const stats = ensureWeiboProfileStats();
-        const nextVal = await showMusicPrompt({
-          title: "自定义关注数量",
-          placeholder: "例如：20 / 300 / 12",
-          value: String(stats.followCount || "20"),
-          confirmText: "保存修改"
-        });
-        if (nextVal !== null && nextVal.trim()) {
-          stats.followCount = nextVal.trim();
-          renderWeiboProfilePage();
-          renderWeiboMinePanel();
-          await saveState();
-          showCatpawAlert(`关注数量已修改为：${stats.followCount}`);
-        }
+    // 自定义编辑关注数量 (外部「我」与内部 Profile 同步响应)
+    const handleEditFollow = async () => {
+      const stats = ensureWeiboProfileStats();
+      const nextVal = await showMusicPrompt({
+        title: "自定义关注数量",
+        placeholder: "例如：36 / 300 / 12",
+        value: String(stats.followCount || "36"),
+        confirmText: "保存修改"
       });
-    }
+      if (nextVal !== null && nextVal.trim()) {
+        stats.followCount = nextVal.trim();
+        syncAllWeiboUserProfileUI();
+        await saveState();
+        showCatpawAlert(`关注数量已同步修改为：${stats.followCount}`);
+      }
+    };
+    if (editWbFollowCount) editWbFollowCount.addEventListener("click", handleEditFollow);
+    const wbMineFollowTrigger = document.querySelector("#wbMineFollowTrigger");
+    if (wbMineFollowTrigger) wbMineFollowTrigger.addEventListener("click", handleEditFollow);
 
     // 自定义编辑转评赞/获赞数量
     if (editWbPraiseCount) {
@@ -27857,16 +27888,35 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
         const stats = ensureWeiboProfileStats();
         const nextVal = await showMusicPrompt({
           title: "自定义转评赞/获赞数",
-          placeholder: "例如：2.8万 / 888 / 4",
-          value: String(stats.praiseCount || "4"),
+          placeholder: "例如：2.8万 / 888 / 260",
+          value: String(stats.praiseCount || "260"),
           confirmText: "保存修改"
         });
         if (nextVal !== null && nextVal.trim()) {
           stats.praiseCount = nextVal.trim();
-          renderWeiboProfilePage();
-          renderWeiboMinePanel();
+          syncAllWeiboUserProfileUI();
           await saveState();
-          showCatpawAlert(`转评赞数量已修改为：${stats.praiseCount}`);
+          showCatpawAlert(`转评赞数量已同步修改为：${stats.praiseCount}`);
+        }
+      });
+    }
+
+    // 自定义编辑访客数量
+    const wbMineVisitorTrigger = document.querySelector("#wbMineVisitorTrigger");
+    if (wbMineVisitorTrigger) {
+      wbMineVisitorTrigger.addEventListener("click", async () => {
+        const stats = ensureWeiboProfileStats();
+        const nextVal = await showMusicPrompt({
+          title: "自定义访客数量",
+          placeholder: "例如：89 / 1000",
+          value: String(stats.visitorCount || "89"),
+          confirmText: "保存修改"
+        });
+        if (nextVal !== null && nextVal.trim()) {
+          stats.visitorCount = nextVal.trim();
+          syncAllWeiboUserProfileUI();
+          await saveState();
+          showCatpawAlert(`访客数量已修改为：${stats.visitorCount}`);
         }
       });
     }
