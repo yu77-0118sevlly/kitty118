@@ -17092,12 +17092,11 @@
                 <div class="qq-thread-avatar-box">
                   <div class="qq-thread-avatar" id="qqThreadHeaderAvatar"></div>
                 </div>
-                <div class="qq-thread-text-stack" style="align-items:center;">
+                <div class="qq-thread-text-stack">
                   <div class="qq-thread-name" id="qqThreadHeaderName">叶子</div>
-                  <button class="chat-timeline-trigger-btn" id="openChatTimelineBtn" type="button" title="点击查看历史日期时光机">
-                    <i class="fa-regular fa-calendar-days"></i>
-                    <span id="chatTimelineCurrentDate">时间线</span>
-                  </button>
+                  <div class="qq-thread-sub-typing">
+                    <span class="online-dot"></span><span>在线</span>
+                  </div>
                 </div>
               </div>
               <button class="qq-thread-video" id="openChatSettings" type="button" aria-label="会话设置">
@@ -18764,6 +18763,12 @@
             <button class="liquid-btn primary" id="openMemoryManagerBtn" type="button">AI 记忆管理库</button>
           </div>
           <div class="chat-ai-result">关系档案可查看彼此的陪伴天数与发言统计；记忆库支持管理、修改或锁定重要记忆。</div>
+        </div>
+
+        <div class="chat-setting-item">
+          <div class="chat-setting-title"><i class="fa-regular fa-calendar-days"></i> 聊天日期时光机</div>
+          <button class="liquid-btn chat-favorites-open" id="openChatTimelineInSettings" type="button">查看按日期归档的时间线</button>
+          <div class="chat-ai-result">按自然日归拢历史记录，点击任意日期可快速定位跳转到当天首条对话。</div>
         </div>
 
         <div class="chat-setting-item">
@@ -26211,6 +26216,13 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       requestAnimationFrame(() => {
         if (qqThreadMessages) qqThreadMessages.scrollTop = qqThreadMessages.scrollHeight;
       });
+
+      // 发送后自动让角色思考回复
+      if (activeChatId !== "default") {
+        setTimeout(() => {
+          requestRoleReply();
+        }, 360);
+      }
     }
 
     function buildChatItem({ id, name, subtitle, avatar, presenceInfo, time = formatChatTime(new Date()), unread = 0, onClick }) {
@@ -31950,12 +31962,52 @@ function extractRoleReplyLines(reply) {
       });
     }
 
-    const openChatTimelineBtn = document.querySelector("#openChatTimelineBtn");
+    const openChatTimelineInSettings = document.querySelector("#openChatTimelineInSettings");
     const closeChatTimeline = document.querySelector("#closeChatTimeline");
     const chatTimelineModal = document.querySelector("#chatTimelineModal");
-    if (openChatTimelineBtn) openChatTimelineBtn.addEventListener("click", openChatTimelineModal);
+    if (openChatTimelineInSettings) {
+      openChatTimelineInSettings.addEventListener("click", () => {
+        closeChatSettingsModal();
+        openChatTimelineModal();
+      });
+    }
     if (closeChatTimeline && chatTimelineModal) {
       closeChatTimeline.addEventListener("click", () => chatTimelineModal.classList.remove("show"));
+    }
+
+    if (qqSendMessage) {
+      qqSendMessage.addEventListener("click", (e) => {
+        e.preventDefault();
+        sendCurrentMessage();
+      });
+    }
+
+    if (qqRoleReply) {
+      qqRoleReply.addEventListener("click", (e) => {
+        e.preventDefault();
+        requestRoleReply();
+      });
+    }
+
+    if (qqMessageInput) {
+      qqMessageInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" && !e.shiftKey) {
+          e.preventDefault();
+          sendCurrentMessage();
+        }
+      });
+    }
+
+    if (openImagePicker && chatImageFileInput) {
+      openImagePicker.addEventListener("click", () => {
+        if (qqAttachMenu) qqAttachMenu.classList.remove("show");
+        chatImageFileInput.click();
+      });
+      chatImageFileInput.addEventListener("change", (e) => {
+        const file = e.target.files?.[0];
+        if (file) sendImageMessage(file);
+        chatImageFileInput.value = "";
+      });
     }
 
     if (clearCurrentContactMemory) {
