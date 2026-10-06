@@ -17501,7 +17501,7 @@
       color: #666666;
     }
 
-    /* 超话专属详情弹窗模态框 */
+    /* 超话专属社区列表弹窗 */
     .wb-supertopic-modal {
       position: fixed;
       inset: 0;
@@ -17515,6 +17515,351 @@
 
     .wb-supertopic-modal.show {
       display: flex;
+    }
+
+    /* 创建超话表单全屏页面 · 纯黑白灰极简 */
+    .wb-create-topic-page {
+      position: fixed;
+      inset: 0;
+      z-index: 90;
+      display: none;
+      background: #f4f5f7;
+      flex-direction: column;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: calc(40px + env(safe-area-inset-bottom));
+    }
+
+    .wb-create-topic-page.show {
+      display: flex;
+    }
+
+    .wb-ct-form-card {
+      background: #ffffff;
+      padding: 16px;
+      margin-bottom: 8px;
+    }
+
+    .wb-ct-avatar-pick {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding: 18px 0;
+      cursor: pointer;
+    }
+
+    .wb-ct-avatar-circle {
+      width: 80px;
+      height: 80px;
+      border-radius: 18px;
+      background: #f0f2f5;
+      background-size: cover;
+      background-position: center;
+      border: 1.5px dashed #ccc;
+      display: grid;
+      place-items: center;
+      font-size: 24px;
+      color: #666;
+    }
+
+    .wb-ct-input-row {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-top: 14px;
+    }
+
+    .wb-ct-input-row label {
+      font-size: 13px;
+      font-weight: 700;
+      color: #111111;
+    }
+
+    .wb-ct-input-row input {
+      height: 42px;
+      border-radius: 10px;
+      border: 1px solid #e0e2e5;
+      padding: 0 12px;
+      font-size: 13.5px;
+      color: #111111;
+      background: #f8f9fa;
+      outline: none;
+    }
+
+    .wb-ct-levels-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .wb-ct-level-cell {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: #f8f9fa;
+      padding: 6px 8px;
+      border-radius: 8px;
+      border: 1px solid #ebecee;
+    }
+
+    .wb-ct-level-cell span {
+      font-size: 11px;
+      font-weight: 700;
+      color: #555;
+      width: 40px;
+      flex-shrink: 0;
+    }
+
+    .wb-ct-level-cell input {
+      flex: 1;
+      min-width: 0;
+      border: none;
+      background: transparent;
+      font-size: 12px;
+      color: #111;
+      outline: none;
+    }
+
+    /* 超话独立主页 · 1:1 截图同款纯黑白灰极简 */
+    .wb-supertopic-detail-page {
+      position: fixed;
+      inset: 0;
+      z-index: 92;
+      display: none;
+      background: #f4f5f7;
+      flex-direction: column;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: calc(56px + env(safe-area-inset-bottom));
+    }
+
+    .wb-supertopic-detail-page.show {
+      display: flex;
+    }
+
+    .wb-std-header {
+      background: #2b2e33;
+      color: #ffffff;
+      padding: calc(8px + env(safe-area-inset-top)) 16px 14px;
+      position: relative;
+    }
+
+    .wb-std-top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+
+    .wb-std-top-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.12);
+      border: none;
+      color: #ffffff;
+      font-size: 14px;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+    }
+
+    .wb-std-main-info {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+
+    .wb-std-avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 14px;
+      background: #555;
+      background-size: cover;
+      background-position: center;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      flex-shrink: 0;
+    }
+
+    .wb-std-meta {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .wb-std-title-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .wb-std-title {
+      font-size: 19px;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: -0.01em;
+    }
+
+    .wb-std-badge {
+      font-size: 9.5px;
+      padding: 1.5px 6px;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.2);
+      font-weight: 700;
+    }
+
+    .wb-std-stats-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 5px;
+      font-size: 12px;
+      color: #cccccc;
+    }
+
+    .wb-std-tags-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .wb-std-tag-pill {
+      font-size: 10px;
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.14);
+      color: #e0e0e0;
+    }
+
+    .wb-std-sign-calendar {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      padding: 6px 10px;
+      cursor: pointer;
+    }
+
+    .wb-std-sign-calendar i {
+      font-size: 15px;
+    }
+
+    .wb-std-sign-calendar span {
+      font-size: 9.5px;
+      white-space: nowrap;
+    }
+
+    /* 截图同款超话二级分类 Tab */
+    .wb-std-tabs-bar {
+      display: flex;
+      align-items: center;
+      background: #ffffff;
+      border-bottom: 1px solid #ebecee;
+      padding: 0 10px;
+      overflow-x: auto;
+    }
+
+    .wb-std-tab {
+      padding: 11px 12px;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: #777;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      position: relative;
+      white-space: nowrap;
+    }
+
+    .wb-std-tab.active {
+      font-weight: 800;
+      color: #111;
+    }
+
+    .wb-std-tab.active::after {
+      content: "";
+      position: absolute;
+      left: 20%;
+      right: 20%;
+      bottom: 0;
+      height: 2.5px;
+      background: #111;
+      border-radius: 999px;
+    }
+
+    /* 截图同款置顶条目 */
+    .wb-std-top-pinned {
+      background: #ffffff;
+      padding: 9px 14px;
+      margin-top: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: #333;
+      border-bottom: 1px solid #f2f3f5;
+    }
+
+    .wb-std-pin-badge {
+      font-size: 9.5px;
+      padding: 1px 4px;
+      border-radius: 3px;
+      background: #f0f2f5;
+      color: #333;
+      font-weight: 700;
+      border: 1px solid #ddd;
+    }
+
+    /* 截图同款超话专属底栏 (我来发一帖 / 群聊 / 我的) */
+    .wb-std-bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: #ffffff;
+      border-top: 1px solid #ededed;
+      padding: 8px 14px calc(8px + env(safe-area-inset-bottom));
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .wb-std-post-input-mock {
+      flex: 1;
+      height: 38px;
+      border-radius: 999px;
+      background: #f4f5f7;
+      border: 1px solid #e8e9eb;
+      display: flex;
+      align-items: center;
+      padding: 0 14px;
+      gap: 6px;
+      font-size: 13px;
+      color: #8c9098;
+      cursor: pointer;
+    }
+
+    .wb-std-bar-action {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      border: none;
+      background: transparent;
+      color: #333;
+      cursor: pointer;
+      font-size: 10px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .wb-std-bar-action i {
+      font-size: 16px;
     }
 
     /* 我的经常访问 (核心重点：角色进驻) */
@@ -20730,6 +21075,133 @@
       </div>
       <div style="padding:14px 16px 24px;" id="wbSupertopicListContainer">
         <!-- 动态渲染超话列表与精选帖子 -->
+      </div>
+    </section>
+
+    <!-- 创建超话专属完整页面 (包含头像、名字、粉丝名、Lv1-Lv18 等级名称配置) -->
+    <section class="wb-create-topic-page" id="wbCreateTopicPage" aria-label="创建新超话">
+      <div class="wb-head" style="background:#ffffff; border-bottom:1px solid #ededed; position:sticky; top:0; z-index:10;">
+        <div class="wb-head-left">
+          <button class="wb-head-icon-btn" id="closeWbCreateTopic" type="button"><i class="fa-solid fa-chevron-left"></i></button>
+        </div>
+        <div style="font-size:16px; font-weight:800; color:#111111;">创建超话</div>
+        <div class="wb-head-right"><span></span></div>
+      </div>
+
+      <div class="wb-ct-form-card">
+        <!-- 1. 超话头像选择 -->
+        <div class="wb-ct-avatar-pick" id="wbCtAvatarPicker">
+          <div class="wb-ct-avatar-circle" id="wbCtAvatarPreview">
+            <i class="fa-solid fa-camera"></i>
+          </div>
+          <span style="font-size:12px; color:#555; font-weight:600;">点击上传超话头像</span>
+          <input type="file" id="wbCtAvatarFile" accept="image/*" style="display:none;" />
+        </div>
+
+        <!-- 2. 超话名字 -->
+        <div class="wb-ct-input-row">
+          <label>超话名称</label>
+          <input type="text" id="wbCtNameInput" placeholder="输入超话名称（不需要加 # 符号）" />
+        </div>
+
+        <!-- 3. 粉丝名字 -->
+        <div class="wb-ct-input-row">
+          <label>粉丝专属称呼</label>
+          <input type="text" id="wbCtFansNameInput" placeholder="如：小面包、旅行者、星光、猫爪" />
+        </div>
+
+        <!-- 4. 超话简介 -->
+        <div class="wb-ct-input-row">
+          <label>超话简介 / 导语</label>
+          <input type="text" id="wbCtDescInput" placeholder="简短介绍这个专属超话空间的初衷" />
+        </div>
+      </div>
+
+      <!-- 5. Lv1 - Lv18 专属等级名字自定义 -->
+      <div class="wb-ct-form-card">
+        <label style="font-size:13.5px; font-weight:800; color:#111111; display:flex; justify-content:space-between; align-items:center;">
+          <span>等级名称配置 (Lv1 - Lv18)</span>
+          <span style="font-size:11px; color:#888; font-weight:normal;">可自定义或使用默认</span>
+        </label>
+        <div class="wb-ct-levels-grid" id="wbCtLevelsGrid">
+          <!-- 动态生成 18 个输入框 -->
+        </div>
+      </div>
+
+      <div style="padding: 10px 16px 20px;">
+        <button class="liquid-btn primary" id="wbCtSubmitBtn" type="button" style="min-height:46px; font-size:14px; font-weight:700;">确认创建并进入超话</button>
+      </div>
+    </section>
+
+    <!-- 微博超话专属主页 · 1:1 复刻截图 -->
+    <section class="wb-supertopic-detail-page" id="wbSupertopicDetailPage" aria-label="超话主页">
+      <!-- 截图同款超话头部 -->
+      <div class="wb-std-header" id="wbStdHeaderBg">
+        <div class="wb-std-top-bar">
+          <button class="wb-std-top-btn" id="closeWbStdPage" type="button"><i class="fa-solid fa-chevron-left"></i></button>
+          <div style="display:flex; gap:10px;">
+            <button class="wb-std-top-btn" id="wbStdDeleteBtn" type="button" title="删除该超话"><i class="fa-solid fa-trash-can"></i></button>
+            <button class="wb-std-top-btn" id="wbStdShareBtn" type="button"><i class="fa-solid fa-share-nodes"></i></button>
+          </div>
+        </div>
+
+        <div class="wb-std-main-info">
+          <div class="wb-std-avatar" id="wbStdAvatar"></div>
+          <div class="wb-std-meta">
+            <div class="wb-std-title-row">
+              <span class="wb-std-title" id="wbStdTitle">超话</span>
+              <span class="wb-std-badge">钻超</span>
+            </div>
+            <div class="wb-std-stats-row">
+              <span id="wbStdPostCount">180 帖子</span>
+              <span>|</span>
+              <span id="wbStdFansMeta">120 粉丝</span>
+            </div>
+            <div class="wb-std-tags-row">
+              <span class="wb-std-tag-pill" id="wbStdCategoryTag">专属超话</span>
+              <span class="wb-std-tag-pill" id="wbStdSignCountTag">今日签到 88人</span>
+            </div>
+          </div>
+          <div class="wb-std-sign-calendar" id="wbStdSignCalendarBtn">
+            <i class="fa-regular fa-calendar-check"></i>
+            <span id="wbStdSignStatus">连签1天</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 截图同款二级分类 Tab 栏 (热门 / 最新 / 名人动态 / 超友趣 / 星动纪念册 / 精选) -->
+      <div class="wb-std-tabs-bar">
+        <button class="wb-std-tab active" type="button">热门</button>
+        <button class="wb-std-tab" type="button">最新</button>
+        <button class="wb-std-tab" type="button">名人动态</button>
+        <button class="wb-std-tab" type="button">超友趣</button>
+        <button class="wb-std-tab" type="button">星动纪念册</button>
+        <button class="wb-std-tab" type="button">精选</button>
+      </div>
+
+      <!-- 截图同款置顶帖 -->
+      <div class="wb-std-top-pinned">
+        <span class="wb-std-pin-badge">置顶</span>
+        <span id="wbStdPinnedText">欢迎来到专属超话，记录美好日常与心动瞬间...</span>
+      </div>
+
+      <!-- 超话内的动态帖子列表 -->
+      <div id="wbStdPostFeedList" style="padding-bottom: 20px;"></div>
+
+      <!-- 截图同款超话专属底栏 (我来发一帖 / 群聊 / 我的) -->
+      <div class="wb-std-bottom-bar">
+        <div class="wb-std-post-input-mock" id="wbStdPostTrigger">
+          <i class="fa-solid fa-pen-to-square"></i>
+          <span>我来发一帖...</span>
+        </div>
+        <button class="wb-std-bar-action" id="wbStdGroupChatBtn" type="button">
+          <i class="fa-solid fa-users"></i>
+          <span>群聊</span>
+        </button>
+        <button class="wb-std-bar-action" id="wbStdMyLevelBtn" type="button">
+          <i class="fa-solid fa-circle-user"></i>
+          <span id="wbStdMyLevelText">我的 LV.3</span>
+        </button>
       </div>
     </section>
 
@@ -28141,7 +28613,7 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
     }
 
     // ============================================================
-    // 微博超话系统 (Supertopic) 与全屏超话社区管理
+    // 超话完整体系：创建（头像+名字+粉丝名+Lv1-18）、删除、进入超话主页
     // ============================================================
     const wbSupertopicModal = document.querySelector("#wbSupertopicModal");
     const closeWbSupertopic = document.querySelector("#closeWbSupertopic");
@@ -28150,33 +28622,61 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
     const wbCreateTopicBtn = document.querySelector("#wbCreateTopicBtn");
     const wbSupertopicListContainer = document.querySelector("#wbSupertopicListContainer");
 
+    // 创建超话相关节点
+    const wbCreateTopicPage = document.querySelector("#wbCreateTopicPage");
+    const closeWbCreateTopic = document.querySelector("#closeWbCreateTopic");
+    const wbCtAvatarPicker = document.querySelector("#wbCtAvatarPicker");
+    const wbCtAvatarFile = document.querySelector("#wbCtAvatarFile");
+    const wbCtAvatarPreview = document.querySelector("#wbCtAvatarPreview");
+    const wbCtNameInput = document.querySelector("#wbCtNameInput");
+    const wbCtFansNameInput = document.querySelector("#wbCtFansNameInput");
+    const wbCtDescInput = document.querySelector("#wbCtDescInput");
+    const wbCtLevelsGrid = document.querySelector("#wbCtLevelsGrid");
+    const wbCtSubmitBtn = document.querySelector("#wbCtSubmitBtn");
+    let currentCreatedAvatarSrc = "";
+
+    // 超话专属详情主页节点
+    const wbSupertopicDetailPage = document.querySelector("#wbSupertopicDetailPage");
+    const closeWbStdPage = document.querySelector("#closeWbStdPage");
+    const wbStdDeleteBtn = document.querySelector("#wbStdDeleteBtn");
+    const wbStdShareBtn = document.querySelector("#wbStdShareBtn");
+    const wbStdAvatar = document.querySelector("#wbStdAvatar");
+    const wbStdTitle = document.querySelector("#wbStdTitle");
+    const wbStdPostCount = document.querySelector("#wbStdPostCount");
+    const wbStdFansMeta = document.querySelector("#wbStdFansMeta");
+    const wbStdSignCalendarBtn = document.querySelector("#wbStdSignCalendarBtn");
+    const wbStdSignStatus = document.querySelector("#wbStdSignStatus");
+    const wbStdPinnedText = document.querySelector("#wbStdPinnedText");
+    const wbStdPostFeedList = document.querySelector("#wbStdPostFeedList");
+    const wbStdPostTrigger = document.querySelector("#wbStdPostTrigger");
+    const wbStdGroupChatBtn = document.querySelector("#wbStdGroupChatBtn");
+    const wbStdMyLevelBtn = document.querySelector("#wbStdMyLevelBtn");
+    const wbStdMyLevelText = document.querySelector("#wbStdMyLevelText");
+    let currentActiveTopic = null;
+
+    // 默认 Lv1 - Lv18 专属等级称呼预设
+    const DEFAULT_LEVEL_NAMES = [
+      "初见", "萌新", "同好", "常驻", "知心", "星火",
+      "挚友", "同舟", "共鸣", "入骨", "心上", "星辰",
+      "皓月", "炽烈", "至臻", "璀璨", "无双", "永恒"
+    ];
+
     function ensureWeiboSupertopics() {
       ensureWeiboState();
       if (!Array.isArray(appState.weibo.supertopics) || !appState.weibo.supertopics.length) {
         appState.weibo.supertopics = [
           {
-            id: "st_photo",
-            title: "黑白胶片摄影",
-            members: "14.2万",
-            postsCount: "38.6万",
+            id: "st_custom_1",
+            title: "黑白极简美学",
+            fansName: "极简者",
+            avatar: "https://771553.xyz/file/studio/5FDVc1VrKzVdH5mO.jpg",
+            members: "2097万",
+            postsCount: "199万",
             signed: true,
-            desc: "用无声的影调，捕捉流动的时光。"
-          },
-          {
-            id: "st_arch",
-            title: "极简建筑与空间",
-            members: "8.9万",
-            postsCount: "19.1万",
-            signed: false,
-            desc: "线条、阴影与光线的诗意交汇。"
-          },
-          {
-            id: "st_daily",
-            title: "日常生活碎片集",
-            members: "26.4万",
-            postsCount: "92.0万",
-            signed: false,
-            desc: "记录每一个平凡而不褪色的瞬间。"
+            desc: "在极简的世界里，探索光与影的最纯粹形态。",
+            pinnedPost: "置顶：欢迎来到专属超话空间，一人一句留下你的心动切片...",
+            levelNames: [...DEFAULT_LEVEL_NAMES],
+            posts: []
           }
         ];
       }
@@ -28189,11 +28689,17 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       const topics = ensureWeiboSupertopics();
       wbMineTopicHScroll.innerHTML = "";
 
+      if (!topics.length) {
+        wbMineTopicHScroll.innerHTML = `<span style="font-size:11px; color:#8c9098;">暂无关注超话，点击右侧创建或加入。</span>`;
+        return;
+      }
+
       topics.forEach(tp => {
         const chip = document.createElement("div");
         chip.className = "wb-topic-chip";
+        const avatarStyle = tp.avatar ? `background-image:url('${tp.avatar}');` : "";
         chip.innerHTML = `
-          <div class="wb-topic-chip-avatar">#</div>
+          <div class="wb-topic-chip-avatar" style="${avatarStyle}">${tp.avatar ? '' : '#'}</div>
           <div class="wb-topic-chip-info">
             <b>#${tp.title}#</b>
             <span>${tp.members} 讨论 · ${tp.postsCount} 帖子</span>
@@ -28208,67 +28714,89 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
           signBtn.textContent = tp.signed ? "已签到" : "签到";
           signBtn.classList.toggle("signed", tp.signed);
           await saveState();
-          showCatpawAlert(tp.signed ? `已成功完成「${tp.title}」今日签到！` : `已取消签到。`, "超话签到");
+          showCatpawAlert(tp.signed ? `已完成 #${tp.title}# 今日签到！` : `已取消签到。`, "超话签到");
         });
 
+        // 点击直接进入超话详情大页面
         chip.addEventListener("click", () => {
-          openWeiboSupertopicDetails(tp);
+          openSupertopicDetailPage(tp);
         });
 
         wbMineTopicHScroll.appendChild(chip);
       });
     }
 
-    // 打开超话社区大模态框
-    function openWeiboSupertopicDetails(focusTopic = null) {
+    // 打开超话社区大模态框 (管理列表)
+    function openWeiboSupertopicDetails() {
       if (!wbSupertopicModal || !wbSupertopicListContainer) return;
       const topics = ensureWeiboSupertopics();
       wbSupertopicListContainer.innerHTML = "";
 
-      topics.forEach(tp => {
+      topics.forEach((tp, idx) => {
         const card = document.createElement("div");
         card.className = "wb-card";
         card.style.marginBottom = "14px";
+        const avatarStyle = tp.avatar ? `background-image:url('${tp.avatar}');` : "";
+
         card.innerHTML = `
           <div class="wb-card-header" style="margin-bottom:8px;">
-            <div class="wb-card-author-wrap">
-              <div class="wb-topic-chip-avatar" style="width:44px; height:44px; border-radius:10px; font-size:18px;">#</div>
+            <div class="wb-card-author-wrap" style="cursor:pointer;" data-act="enter">
+              <div class="wb-topic-chip-avatar" style="width:48px; height:48px; border-radius:12px; font-size:18px; ${avatarStyle}">${tp.avatar ? '' : '#'}</div>
               <div class="wb-card-meta">
                 <div class="wb-meta-row1"><strong>#${tp.title}#</strong></div>
                 <div class="wb-meta-row2">
-                  <span>${tp.members} 关注</span>
-                  <span>${tp.postsCount} 动态</span>
+                  <span>${tp.members} 粉丝 (${tp.fansName || '粉丝'})</span>
+                  <span>${tp.postsCount} 讨论</span>
                 </div>
               </div>
             </div>
-            <button class="wb-topic-sign-btn ${tp.signed ? 'signed' : ''}" type="button" style="padding:5px 14px; font-size:11px;">
-              ${tp.signed ? '今日已签' : '一键签到'}
-            </button>
+            <div style="display:flex; gap:6px; align-items:center;">
+              <button class="wb-topic-sign-btn ${tp.signed ? 'signed' : ''}" type="button">${tp.signed ? '已签' : '签到'}</button>
+              <button class="wb-head-icon-btn" data-act="del" type="button" title="删除此超话" style="width:30px; height:30px; font-size:12px;"><i class="fa-solid fa-trash-can"></i></button>
+            </div>
           </div>
-          <div style="font-size:12.5px; color:#555; line-height:1.5; margin:6px 0 10px;">${tp.desc}</div>
+          <div style="font-size:12px; color:#555; line-height:1.5; margin:6px 0 10px;">${tp.desc || "专属超话互动空间。"}</div>
           <div style="display:flex; gap:8px;">
-            <button class="liquid-btn" style="flex:1; min-height:34px; font-size:12px;" type="button" data-act="post">发布超话帖子</button>
-            <button class="liquid-btn" style="flex:1; min-height:34px; font-size:12px; background:#f0f2f5; color:#111; border:none;" type="button" data-act="refresh">浏览最新讨论</button>
+            <button class="liquid-btn" style="flex:1; min-height:34px; font-size:12px;" type="button" data-act="enter">进入超话主页</button>
+            <button class="liquid-btn" style="flex:1; min-height:34px; font-size:12px; background:#f0f2f5; color:#111; border:none;" type="button" data-act="post">在超话发帖</button>
           </div>
         `;
 
+        // 签到
         const signBtn = card.querySelector(".wb-topic-sign-btn");
         signBtn.addEventListener("click", async () => {
           tp.signed = !tp.signed;
-          signBtn.textContent = tp.signed ? "今日已签" : "一键签到";
+          signBtn.textContent = tp.signed ? "已签" : "签到";
           signBtn.classList.toggle("signed", tp.signed);
           renderWeiboMineSupertopicCard();
           await saveState();
           showCatpawAlert(tp.signed ? `已在 #${tp.title}# 完成签到！` : "已取消签到。");
         });
 
-        card.querySelector("[data-act='post']").addEventListener("click", () => {
-          wbSupertopicModal.classList.remove("show");
-          openWeiboComposeWithTopic(tp.title);
+        // 删除超话
+        card.querySelector("[data-act='del']").addEventListener("click", async () => {
+          const confirmed = await showCustomConfirmDialog(`确定要删除并注销超话「#${tp.title}#」吗？此操作不可逆。`, "删除超话");
+          if (confirmed) {
+            topics.splice(idx, 1);
+            await saveState();
+            renderWeiboMineSupertopicCard();
+            openWeiboSupertopicDetails();
+            showCatpawAlert(`超话 #${tp.title}# 已成功删除！`, "删除成功");
+          }
         });
 
-        card.querySelector("[data-act='refresh']").addEventListener("click", () => {
-          showCatpawAlert(`已载入 #${tp.title}# 的最新精选讨论流。`, "超话讨论");
+        // 进入超话
+        card.querySelectorAll("[data-act='enter']").forEach(btn => {
+          btn.addEventListener("click", () => {
+            if (wbSupertopicModal) wbSupertopicModal.classList.remove("show");
+            openSupertopicDetailPage(tp);
+          });
+        });
+
+        // 发帖
+        card.querySelector("[data-act='post']").addEventListener("click", () => {
+          if (wbSupertopicModal) wbSupertopicModal.classList.remove("show");
+          openWeiboComposeWithTopic(tp.title);
         });
 
         wbSupertopicListContainer.appendChild(card);
@@ -28285,31 +28813,289 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       wbMineOpenAllTopicsBtn.addEventListener("click", () => openWeiboSupertopicDetails());
     }
 
-    // 新建自定义超话
-    if (wbCreateTopicBtn) {
-      wbCreateTopicBtn.addEventListener("click", async () => {
-        const title = await showMusicPrompt({
-          title: "创建新超话",
-          placeholder: "请输入超话名称（如：午夜私语、黑白日志）",
-          value: "",
-          confirmText: "创建"
-        });
-        if (title && title.trim()) {
-          const topics = ensureWeiboSupertopics();
-          const cleanTitle = title.trim().replace(/^#|#$/g, "");
-          topics.unshift({
-            id: `st_${Date.now()}`,
-            title: cleanTitle,
-            members: "1",
-            postsCount: "0",
-            signed: true,
-            desc: `这是属于 #${cleanTitle}# 的专属交流与记忆空间。`
-          });
-          renderWeiboMineSupertopicCard();
-          openWeiboSupertopicDetails();
-          await saveState();
-          showCatpawAlert(`超话 #${cleanTitle}# 创建成功！已自动关注并置顶。`, "创建超话");
+    // ============================================================
+    // 打开并初始化「创建超话」页面 (包含头像+名字+粉丝名+18等级名称)
+    // ============================================================
+    function openCreateSupertopicPage() {
+      currentCreatedAvatarSrc = "";
+      if (wbCtAvatarPreview) {
+        wbCtAvatarPreview.style.backgroundImage = "none";
+        wbCtAvatarPreview.innerHTML = '<i class="fa-solid fa-camera"></i>';
+      }
+      if (wbCtNameInput) wbCtNameInput.value = "";
+      if (wbCtFansNameInput) wbCtFansNameInput.value = "";
+      if (wbCtDescInput) wbCtDescInput.value = "";
+
+      // 动态生成 Lv1 - Lv18 输入框
+      if (wbCtLevelsGrid) {
+        wbCtLevelsGrid.innerHTML = "";
+        for (let i = 1; i <= 18; i++) {
+          const defaultName = DEFAULT_LEVEL_NAMES[i - 1] || `阶级${i}`;
+          const cell = document.createElement("div");
+          cell.className = "wb-ct-level-cell";
+          cell.innerHTML = `
+            <span>Lv.${i}</span>
+            <input type="text" data-level-idx="${i}" value="${defaultName}" placeholder="等级名称" />
+          `;
+          wbCtLevelsGrid.appendChild(cell);
         }
+      }
+
+      if (wbCreateTopicPage) wbCreateTopicPage.classList.add("show");
+    }
+
+    if (wbCreateTopicBtn) {
+      wbCreateTopicBtn.addEventListener("click", () => {
+        openCreateSupertopicPage();
+      });
+    }
+
+    if (closeWbCreateTopic && wbCreateTopicPage) {
+      closeWbCreateTopic.addEventListener("click", () => wbCreateTopicPage.classList.remove("show"));
+    }
+
+    // 上传超话头像
+    if (wbCtAvatarPicker && wbCtAvatarFile) {
+      wbCtAvatarPicker.addEventListener("click", () => wbCtAvatarFile.click());
+      wbCtAvatarFile.addEventListener("change", (e) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+        readImage(file, (src) => {
+          currentCreatedAvatarSrc = src;
+          if (wbCtAvatarPreview) {
+            wbCtAvatarPreview.style.backgroundImage = `url('${src}')`;
+            wbCtAvatarPreview.innerHTML = "";
+          }
+        });
+      });
+    }
+
+    // 提交创建超话
+    if (wbCtSubmitBtn) {
+      wbCtSubmitBtn.addEventListener("click", async () => {
+        const name = wbCtNameInput?.value?.trim();
+        if (!name) {
+          showCatpawAlert("请输入超话名称！", "提示");
+          return;
+        }
+
+        const fansName = wbCtFansNameInput?.value?.trim() || "同好伙伴";
+        const desc = wbCtDescInput?.value?.trim() || `这是专属 #${name}# 的心动聚集地。`;
+
+        // 收集 Lv1 - Lv18 自定义等级名
+        const customLevels = [];
+        const levelInputs = wbCtLevelsGrid?.querySelectorAll("input") || [];
+        levelInputs.forEach((inp, idx) => {
+          customLevels.push(inp.value.trim() || DEFAULT_LEVEL_NAMES[idx] || `Lv.${idx+1}`);
+        });
+
+        const newTopic = {
+          id: `st_${Date.now()}`,
+          title: name.replace(/^#|#$/g, ""),
+          fansName: fansName,
+          avatar: currentCreatedAvatarSrc || "https://771553.xyz/file/studio/5FDVc1VrKzVdH5mO.jpg",
+          members: "1",
+          postsCount: "0",
+          signed: true,
+          desc: desc,
+          pinnedPost: `置顶：欢迎来到 #${name}# 专属超话，粉丝专属称谓：${fansName}！`,
+          levelNames: customLevels,
+          posts: []
+        };
+
+        const topics = ensureWeiboSupertopics();
+        topics.unshift(newTopic);
+        await saveState();
+
+        renderWeiboMineSupertopicCard();
+        if (wbCreateTopicPage) wbCreateTopicPage.classList.remove("show");
+        if (wbSupertopicModal) wbSupertopicModal.classList.remove("show");
+
+        showCatpawAlert(`超话 #${newTopic.title}# 创建成功！正在进入超话...`, "创建成功");
+        setTimeout(() => {
+          openSupertopicDetailPage(newTopic);
+        }, 300);
+      });
+    }
+
+    // ============================================================
+    // 打开 1:1 截图同款超话主页 (包含删除超话、签到、帖子、专属发帖)
+    // ============================================================
+    function openSupertopicDetailPage(topic) {
+      if (!topic || !wbSupertopicDetailPage) return;
+      currentActiveTopic = topic;
+
+      // 填充超话信息
+      if (wbStdAvatar) {
+        if (topic.avatar) {
+          wbStdAvatar.style.backgroundImage = `url('${topic.avatar}')`;
+          wbStdAvatar.textContent = "";
+        } else {
+          wbStdAvatar.style.backgroundImage = "none";
+          wbStdAvatar.textContent = "#";
+        }
+      }
+
+      if (wbStdTitle) wbStdTitle.textContent = topic.title;
+      if (wbStdPostCount) wbStdPostCount.textContent = `${topic.postsCount || '0'} 帖子`;
+      if (wbStdFansMeta) wbStdFansMeta.textContent = `${topic.members || '1'} ${topic.fansName || '粉丝'}`;
+      if (wbStdSignStatus) wbStdSignStatus.textContent = topic.signed ? "已连签 1 天" : "点击签到";
+      if (wbStdPinnedText) wbStdPinnedText.textContent = topic.pinnedPost || `置顶：欢迎来到 #${topic.title}# 交流讨论！`;
+      if (wbStdMyLevelText) {
+        const lv3Name = topic.levelNames?.[2] || "知心";
+        wbStdMyLevelText.textContent = `我的 LV.3 ${lv3Name}`;
+      }
+
+      renderSupertopicPosts(topic);
+      wbSupertopicDetailPage.classList.add("show");
+    }
+
+    // 渲染超话内部帖子
+    function renderSupertopicPosts(topic) {
+      if (!wbStdPostFeedList) return;
+      wbStdPostFeedList.innerHTML = "";
+
+      // 聚合全站带有此超话话题的帖子 + 超话独立帖子
+      ensureWeiboState();
+      const allWeiboPosts = appState.weibo.posts || [];
+      const matchedPosts = allWeiboPosts.filter(p => p.text && p.text.includes(`#${topic.title}#`));
+
+      const myAvatar = appState.theme.cardProfileCoverImage || appState.theme.avatarImage || "https://771553.xyz/file/studio/5FDVc1VrKzVdH5mO.jpg";
+      const myName = appState.theme.cardProfileName || "我";
+
+      // 默认展示一条截图同款样板帖子
+      const sampleCard = document.createElement("article");
+      sampleCard.className = "wb-card";
+      sampleCard.style.marginTop = "8px";
+      sampleCard.innerHTML = `
+        <div class="wb-card-header">
+          <div class="wb-card-author-wrap">
+            <div class="wb-card-avatar-box">
+              <div class="wb-card-avatar" style="background-image:url('${myAvatar}');"></div>
+            </div>
+            <div class="wb-card-meta">
+              <div class="wb-meta-row1">
+                <strong>${myName}</strong>
+                <span class="wb-pro-status-badge">LV.3 ${topic.levelNames?.[2] || '知心'}</span>
+              </div>
+              <div class="wb-meta-row2">
+                <span>刚刚</span>
+                <span>来自 超话客户端</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="wb-card-text">#${topic.title}# 一人一句心动留言，今日专属纪念切片打卡。</div>
+        ${topic.avatar ? `<div class="wb-media-container"><div class="wb-img-grid grid-1"><img src="${topic.avatar}" alt="超话海报" /></div></div>` : ""}
+        <div class="wb-card-actions">
+          <button class="wb-action-btn" type="button"><i class="fa-solid fa-arrow-up-from-bracket"></i> <span>2</span></button>
+          <button class="wb-action-btn" type="button"><i class="fa-regular fa-comment"></i> <span>73</span></button>
+          <button class="wb-action-btn" type="button"><i class="fa-regular fa-thumbs-up"></i> <span>37</span></button>
+        </div>
+      `;
+      wbStdPostFeedList.appendChild(sampleCard);
+
+      // 渲染匹配的真实发帖
+      matchedPosts.forEach(post => {
+        const card = document.createElement("article");
+        card.className = "wb-card";
+        card.style.marginTop = "8px";
+        card.innerHTML = `
+          <div class="wb-card-header">
+            <div class="wb-card-author-wrap">
+              <div class="wb-card-avatar-box">
+                <div class="wb-card-avatar" style="background-image:url('${post.authorAvatar || myAvatar}');"></div>
+              </div>
+              <div class="wb-card-meta">
+                <div class="wb-meta-row1"><strong>${post.authorName || myName}</strong></div>
+                <div class="wb-meta-row2">
+                  <span>${post.time || "刚刚"}</span>
+                  <span>${post.source || "来自 iPhone"}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="wb-card-text">${post.text || ""}</div>
+          ${post.image ? `<div class="wb-media-container"><div class="wb-img-grid grid-1"><img src="${post.image}" alt="配图" /></div></div>` : ""}
+          <div class="wb-card-actions">
+            <button class="wb-action-btn" type="button"><i class="fa-solid fa-arrow-up-from-bracket"></i> <span>${post.shares || 0}</span></button>
+            <button class="wb-action-btn" type="button"><i class="fa-regular fa-comment"></i> <span>${post.comments?.length || 0}</span></button>
+            <button class="wb-action-btn" type="button"><i class="fa-regular fa-thumbs-up"></i> <span>${post.likes || 0}</span></button>
+          </div>
+        `;
+        wbStdPostFeedList.appendChild(card);
+      });
+    }
+
+    // 关闭超话主页
+    if (closeWbStdPage && wbSupertopicDetailPage) {
+      closeWbStdPage.addEventListener("click", () => {
+        wbSupertopicDetailPage.classList.remove("show");
+      });
+    }
+
+    // 超话主页右上角直接删除该超话
+    if (wbStdDeleteBtn) {
+      wbStdDeleteBtn.addEventListener("click", async () => {
+        if (!currentActiveTopic) return;
+        const confirmed = await showCustomConfirmDialog(`确定要删除并解散超话「#${currentActiveTopic.title}#」吗？`, "删除超话");
+        if (confirmed) {
+          const topics = ensureWeiboSupertopics();
+          const idx = topics.findIndex(t => t.id === currentActiveTopic.id);
+          if (idx !== -1) {
+            topics.splice(idx, 1);
+            await saveState();
+          }
+          if (wbSupertopicDetailPage) wbSupertopicDetailPage.classList.remove("show");
+          renderWeiboMineSupertopicCard();
+          showCatpawAlert(`超话 #${currentActiveTopic.title}# 已成功删除！`, "删除成功");
+          currentActiveTopic = null;
+        }
+      });
+    }
+
+    // 超话主页签到
+    if (wbStdSignCalendarBtn) {
+      wbStdSignCalendarBtn.addEventListener("click", async () => {
+        if (!currentActiveTopic) return;
+        currentActiveTopic.signed = !currentActiveTopic.signed;
+        if (wbStdSignStatus) {
+          wbStdSignStatus.textContent = currentActiveTopic.signed ? "已连签 1 天" : "点击签到";
+        }
+        renderWeiboMineSupertopicCard();
+        await saveState();
+        showCatpawAlert(currentActiveTopic.signed ? `已在 #${currentActiveTopic.title}# 完成签到！` : "已取消签到。");
+      });
+    }
+
+    // 超话底部发帖触发
+    if (wbStdPostTrigger) {
+      wbStdPostTrigger.addEventListener("click", () => {
+        if (!currentActiveTopic) return;
+        openWeiboComposeWithTopic(currentActiveTopic.title);
+      });
+    }
+
+    // 超话底部分享
+    if (wbStdShareBtn) {
+      wbStdShareBtn.addEventListener("click", () => {
+        showCatpawAlert(`超话 #${currentActiveTopic?.title}# 邀请口令已复制！`, "分享超话");
+      });
+    }
+
+    // 超话群聊
+    if (wbStdGroupChatBtn) {
+      wbStdGroupChatBtn.addEventListener("click", () => {
+        showCatpawAlert(`已进入 #${currentActiveTopic?.title}# 的粉丝专属私聊群。`, "超话群聊");
+      });
+    }
+
+    // 我的等级信息
+    if (wbStdMyLevelBtn) {
+      wbStdMyLevelBtn.addEventListener("click", () => {
+        if (!currentActiveTopic) return;
+        const lv3Name = currentActiveTopic.levelNames?.[2] || "知心";
+        showCatpawAlert(`你在 #${currentActiveTopic.title}# 中当前处于 LV.3【${lv3Name}】，持续签到与互动即可升级！`, "我的超话等级");
       });
     }
 
