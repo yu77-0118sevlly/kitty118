@@ -21099,8 +21099,10 @@
         <div class="wb-pro-nav-top">
           <button class="wb-pro-nav-btn" id="closeWbProfile" type="button" aria-label="返回"><i class="fa-solid fa-chevron-left"></i></button>
           <div class="wb-pro-nav-right">
-            <button class="wb-pro-nav-btn" id="wbProSearchBtn" type="button"><i class="fa-solid fa-magnifying-glass"></i></button>
-            <button class="wb-pro-nav-btn" id="wbProSettingsBtn" type="button"><i class="fa-solid fa-gear"></i></button>
+            <!-- 角色主页专属：AI 智能根据人设生成粉丝关注与简介 -->
+            <button class="wb-pro-nav-btn" id="wbProAiGenBtn" type="button" title="AI 生成角色粉丝数据与签名" style="display:none;"><i class="fa-solid fa-wand-magic-sparkles"></i></button>
+            <button class="wb-pro-nav-btn" id="wbProSearchBtn" type="button" title="搜索"><i class="fa-solid fa-magnifying-glass"></i></button>
+            <button class="wb-pro-nav-btn" id="wbProSettingsBtn" type="button" title="设置"><i class="fa-solid fa-gear"></i></button>
           </div>
         </div>
       </div>
@@ -21134,10 +21136,16 @@
 
         <div class="wb-pro-bio" id="wbProBio">暂无简介</div>
 
-        <button class="wb-pro-edit-wide-btn" id="wbProEditBtn" type="button">
-          <i class="fa-solid fa-pen" style="font-size:11px;"></i>
-          <span>编辑个人资料</span>
-        </button>
+        <div style="display:flex; gap:10px;" id="wbProActionRow">
+          <button class="wb-pro-edit-wide-btn" id="wbProEditBtn" type="button" style="flex:1;">
+            <i class="fa-solid fa-pen" style="font-size:11px;"></i>
+            <span id="wbProEditBtnText">编辑个人资料</span>
+          </button>
+          <button class="wb-pro-edit-wide-btn" id="wbProDmBtn" type="button" style="display:none; flex:1; background:#111111; color:#ffffff; border-color:#111111;">
+            <i class="fa-regular fa-paper-plane" style="font-size:11px;"></i>
+            <span>发私信</span>
+          </button>
+        </div>
       </div>
 
       <!-- 分类 Tab (精选 / 微博 / 视频 / 相册) -->
@@ -28287,6 +28295,33 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
     const wbProTotalPostLabel = document.querySelector("#wbProTotalPostLabel");
     const wbProBanner = document.querySelector("#wbProBanner");
     const wbProBannerInput = document.querySelector("#wbProBannerInput");
+    const wbProAiGenBtn = document.querySelector("#wbProAiGenBtn");
+    const wbProEditBtnText = document.querySelector("#wbProEditBtnText");
+    const wbProDmBtn = document.querySelector("#wbProDmBtn");
+
+    // 主页模式状态：'user' 表示看自己的微博主页；'role' 表示看进驻角色的专属微博主页
+    let currentProfileViewMode = "user";
+    let currentViewingProfileRole = null;
+
+    // 确保角色拥有专属独立的微博社交数据
+    function ensureRoleWeiboProfileData(role) {
+      ensureWeiboState();
+      if (!appState.weibo.roleProfiles || typeof appState.weibo.roleProfiles !== "object") {
+        appState.weibo.roleProfiles = {};
+      }
+      const rId = getRoleId(role);
+      if (!appState.weibo.roleProfiles[rId] || typeof appState.weibo.roleProfiles[rId] !== "object") {
+        // 根据角色特征赋予合理初始数据
+        appState.weibo.roleProfiles[rId] = {
+          fansCount: "1.2万",
+          followCount: "86",
+          praiseCount: "9.8万",
+          bio: (role.persona || "生活切片与日常记录。").slice(0, 48),
+          bannerImage: "https://771553.xyz/file/studio/5FDVc1VrKzVdH5mO.jpg"
+        };
+      }
+      return appState.weibo.roleProfiles[rId];
+    }
 
     function ensureWeiboProfileStats() {
       ensureWeiboState();
@@ -28306,11 +28341,91 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
     }
 
     function renderWeiboProfilePage() {
+      if (currentProfileViewMode === "role" && currentViewingProfileRole) {
+        // 渲染进驻角色的专属微博主页
+        const role = currentViewingProfileRole;
+        const roleData = ensureRoleWeiboProfileData(role);
+        const roleAvatar = role.avatar || "https://771553.xyz/file/studio/5FDVc1VrKzVdH5mO.jpg";
+        const roleName = role.name || "角色";
+
+        if (wbProAvatar) wbProAvatar.style.backgroundImage = `url('${roleAvatar}')`;
+        if (wbProName) wbProName.textContent = roleName;
+        if (wbProBio) wbProBio.textContent = roleData.bio || "生活记录与日常分享。";
+        if (wbProFansVal) wbProFansVal.textContent = String(roleData.fansCount || "1.2万");
+        if (wbProFollowVal) wbProFollowVal.textContent = String(roleData.followCount || "86");
+        if (wbProPraiseVal) wbProPraiseVal.textContent = String(roleData.praiseCount || "9.8万");
+
+        if (wbProBanner) {
+          const bannerSrc = roleData.bannerImage || "https://771553.xyz/file/studio/5FDVc1VrKzVdH5mO.jpg";
+          wbProBanner.style.backgroundImage = `url('${bannerSrc}')`;
+        }
+
+        // 显示角色的 AI 智能生成数据按钮与发私信快捷入口
+        if (wbProAiGenBtn) wbProAiGenBtn.style.display = "grid";
+        if (wbProEditBtnText) wbProEditBtnText.textContent = "修改TA的资料";
+        if (wbProDmBtn) {
+          wbProDmBtn.style.display = "flex";
+          wbProDmBtn.onclick = () => {
+            if (wbProfilePage) wbProfilePage.classList.remove("show");
+            openWeiboDirectChat(role);
+          };
+        }
+
+        // 过滤展示属于该角色的微博
+        if (wbProFeedList) {
+          wbProFeedList.innerHTML = "";
+          const allPosts = appState.weibo?.posts || [];
+          const rolePosts = allPosts.filter(p => p.authorName === roleName);
+
+          if (wbProTotalPostLabel) {
+            wbProTotalPostLabel.textContent = `全部微博 (${rolePosts.length})`;
+          }
+
+          if (!rolePosts.length) {
+            wbProFeedList.innerHTML = `<div style="text-align:center; padding:40px 16px; color:#8c9098; font-size:12.5px;">TA 还没有发布过微博，点击右上角 AI 刷新即可生成生活动态。</div>`;
+          } else {
+            rolePosts.forEach(post => {
+              const card = document.createElement("article");
+              card.className = "wb-card";
+              card.innerHTML = `
+                <div class="wb-card-header">
+                  <div class="wb-card-author-wrap">
+                    <div class="wb-card-avatar-box">
+                      <div class="wb-card-avatar" style="background-image:url('${roleAvatar}');"></div>
+                    </div>
+                    <div class="wb-card-meta">
+                      <div class="wb-meta-row1"><strong>${roleName}</strong></div>
+                      <div class="wb-meta-row2">
+                        <span>${post.time || "刚刚"}</span>
+                        <span>${post.source || "来自 iPhone 客户端"}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="wb-card-text">${post.text || ""}</div>
+                ${post.image ? `<div class="wb-media-container"><div class="wb-img-grid grid-1"><img src="${post.image}" alt="配图" /></div></div>` : ""}
+                <div class="wb-card-actions">
+                  <button class="wb-action-btn" type="button"><i class="fa-solid fa-arrow-up-from-bracket"></i> <span>${post.shares || "转发"}</span></button>
+                  <button class="wb-action-btn" type="button"><i class="fa-regular fa-comment"></i> <span>${post.comments?.length || "评论"}</span></button>
+                  <button class="wb-action-btn" type="button"><i class="fa-regular fa-thumbs-up"></i> <span>${post.likes || "赞"}</span></button>
+                </div>
+              `;
+              wbProFeedList.appendChild(card);
+            });
+          }
+        }
+        return;
+      }
+
+      // 用户自己本身的微博主页模式
+      if (wbProAiGenBtn) wbProAiGenBtn.style.display = "none";
+      if (wbProEditBtnText) wbProEditBtnText.textContent = "编辑个人资料";
+      if (wbProDmBtn) wbProDmBtn.style.display = "none";
+
       syncAllWeiboUserProfileUI();
       const stats = ensureWeiboProfileStats();
       const fp = ensureWeiboProfileFullData();
       const myName = fp.name || appState.theme.cardProfileName || "未命名旅人";
-      const myAvatar = appState.theme.cardProfileCoverImage || appState.theme.avatarImage || "https://771553.xyz/file/studio/5FDVc1VrKzVdH5mO.jpg";
 
       if (wbProBanner) {
         const bannerSrc = stats.bannerImage || appState.theme.desktopBackground || "https://771553.xyz/file/studio/5FDVc1VrKzVdH5mO.jpg";
@@ -28363,6 +28478,17 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
     }
 
     function openWeiboProfilePage() {
+      currentProfileViewMode = "user";
+      currentViewingProfileRole = null;
+      renderWeiboProfilePage();
+      if (wbProfilePage) wbProfilePage.classList.add("show");
+    }
+
+    // 打开指定进驻角色的专属微博主页
+    function openRoleWeiboProfilePage(role) {
+      if (!role) return;
+      currentProfileViewMode = "role";
+      currentViewingProfileRole = role;
       renderWeiboProfilePage();
       if (wbProfilePage) wbProfilePage.classList.add("show");
     }
@@ -28447,7 +28573,27 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
 
     // 绑定微博主页的「编辑个人资料」和「我」页面的「编辑资料」全部打开此专属页面
     if (wbProEditBtn) {
-      wbProEditBtn.addEventListener("click", openWbEditProfilePage);
+      wbProEditBtn.addEventListener("click", async () => {
+        if (currentProfileViewMode === "role" && currentViewingProfileRole) {
+          // 修改当前角色的资料
+          const role = currentViewingProfileRole;
+          const roleData = ensureRoleWeiboProfileData(role);
+          const nextBio = await showMusicPrompt({
+            title: `编辑「${role.name}」的微博资料`,
+            placeholder: "输入新的微博个性签名...",
+            value: roleData.bio || "",
+            confirmText: "保存"
+          });
+          if (nextBio !== null && nextBio.trim()) {
+            roleData.bio = nextBio.trim();
+            renderWeiboProfilePage();
+            await saveState();
+            showCatpawAlert(`「${role.name}」的微博资料已保存！`);
+          }
+        } else {
+          openWbEditProfilePage();
+        }
+      });
     }
     const wbMineEditProfileBtnOverride = document.querySelector("#wbMineEditProfileBtn");
     if (wbMineEditProfileBtnOverride) {
@@ -28524,62 +28670,174 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
     bindWbEpItemEdit("wbEpItemWork", "work", "工作信息", "自由摄影师 / 设计师");
     bindWbEpItemEdit("wbEpItemLevel", "level", "微博等级", "已激活 Lv.7");
 
-    // 自定义编辑粉丝数量 (支持从内部 Profile 或外部「我」页面点击触发)
+    // 自定义编辑粉丝数量 (智能区分是修改自己还是修改当前角色的粉丝)
     const handleEditFans = async () => {
-      const stats = ensureWeiboProfileStats();
+      const isRoleMode = currentProfileViewMode === "role" && currentViewingProfileRole;
+      const targetObj = isRoleMode ? ensureRoleWeiboProfileData(currentViewingProfileRole) : ensureWeiboProfileStats();
+      const name = isRoleMode ? currentViewingProfileRole.name : "我";
+
       const nextVal = await showMusicPrompt({
-        title: "自定义粉丝数量",
-        placeholder: "例如：100万 / 5200 / 99",
-        value: String(stats.fansCount || "128"),
+        title: `自定义「${name}」的粉丝数量`,
+        placeholder: "例如：52.4万 / 8800 / 99",
+        value: String(targetObj.fansCount || "1.2万"),
         confirmText: "保存修改"
       });
       if (nextVal !== null && nextVal.trim()) {
-        stats.fansCount = nextVal.trim();
-        syncAllWeiboUserProfileUI();
+        targetObj.fansCount = nextVal.trim();
+        renderWeiboProfilePage();
         await saveState();
-        showCatpawAlert(`粉丝数量已同步修改为：${stats.fansCount}`);
+        showCatpawAlert(`${name} 的粉丝数量已修改为：${targetObj.fansCount}`);
       }
     };
     if (editWbFansCount) editWbFansCount.addEventListener("click", handleEditFans);
     const wbMineFansTrigger = document.querySelector("#wbMineFansTrigger");
     if (wbMineFansTrigger) wbMineFansTrigger.addEventListener("click", handleEditFans);
 
-    // 自定义编辑关注数量 (外部「我」与内部 Profile 同步响应)
+    // 自定义编辑关注数量 (智能区分自己与角色)
     const handleEditFollow = async () => {
-      const stats = ensureWeiboProfileStats();
+      const isRoleMode = currentProfileViewMode === "role" && currentViewingProfileRole;
+      const targetObj = isRoleMode ? ensureRoleWeiboProfileData(currentViewingProfileRole) : ensureWeiboProfileStats();
+      const name = isRoleMode ? currentViewingProfileRole.name : "我";
+
       const nextVal = await showMusicPrompt({
-        title: "自定义关注数量",
-        placeholder: "例如：36 / 300 / 12",
-        value: String(stats.followCount || "36"),
+        title: `自定义「${name}」的关注数量`,
+        placeholder: "例如：36 / 120 / 12",
+        value: String(targetObj.followCount || "86"),
         confirmText: "保存修改"
       });
       if (nextVal !== null && nextVal.trim()) {
-        stats.followCount = nextVal.trim();
-        syncAllWeiboUserProfileUI();
+        targetObj.followCount = nextVal.trim();
+        renderWeiboProfilePage();
         await saveState();
-        showCatpawAlert(`关注数量已同步修改为：${stats.followCount}`);
+        showCatpawAlert(`${name} 的关注数量已修改为：${targetObj.followCount}`);
       }
     };
     if (editWbFollowCount) editWbFollowCount.addEventListener("click", handleEditFollow);
     const wbMineFollowTrigger = document.querySelector("#wbMineFollowTrigger");
     if (wbMineFollowTrigger) wbMineFollowTrigger.addEventListener("click", handleEditFollow);
 
-    // 自定义编辑转评赞/获赞数量
+    // 自定义编辑转评赞/获赞数量 (智能区分自己与角色)
     if (editWbPraiseCount) {
       editWbPraiseCount.addEventListener("click", async () => {
-        const stats = ensureWeiboProfileStats();
+        const isRoleMode = currentProfileViewMode === "role" && currentViewingProfileRole;
+        const targetObj = isRoleMode ? ensureRoleWeiboProfileData(currentViewingProfileRole) : ensureWeiboProfileStats();
+        const name = isRoleMode ? currentViewingProfileRole.name : "我";
+
         const nextVal = await showMusicPrompt({
-          title: "自定义转评赞/获赞数",
-          placeholder: "例如：2.8万 / 888 / 260",
-          value: String(stats.praiseCount || "260"),
+          title: `自定义「${name}」的转评赞/获赞数`,
+          placeholder: "例如：18.9万 / 888 / 260",
+          value: String(targetObj.praiseCount || "9.8万"),
           confirmText: "保存修改"
         });
         if (nextVal !== null && nextVal.trim()) {
-          stats.praiseCount = nextVal.trim();
-          syncAllWeiboUserProfileUI();
+          targetObj.praiseCount = nextVal.trim();
+          renderWeiboProfilePage();
           await saveState();
-          showCatpawAlert(`转评赞数量已同步修改为：${stats.praiseCount}`);
+          showCatpawAlert(`${name} 的转评赞数量已修改为：${targetObj.praiseCount}`);
         }
+      });
+    }
+
+    // 自定义修改简介（角色主页点击简介也能直接修改）
+    if (wbProBio) {
+      wbProBio.style.cursor = "pointer";
+      wbProBio.addEventListener("click", async () => {
+        const isRoleMode = currentProfileViewMode === "role" && currentViewingProfileRole;
+        if (isRoleMode) {
+          const roleData = ensureRoleWeiboProfileData(currentViewingProfileRole);
+          const nextVal = await showMusicPrompt({
+            title: `修改「${currentViewingProfileRole.name}」的微博简介`,
+            placeholder: "输入TA的个性签名...",
+            value: roleData.bio || "",
+            confirmText: "保存"
+          });
+          if (nextVal !== null && nextVal.trim()) {
+            roleData.bio = nextVal.trim();
+            renderWeiboProfilePage();
+            await saveState();
+            showCatpawAlert("角色微博简介已更新！");
+          }
+        }
+      });
+    }
+
+    // 角色主页专属：AI 智能生成契合该角色的粉丝、关注、获赞与签名
+    if (wbProAiGenBtn) {
+      wbProAiGenBtn.addEventListener("click", async () => {
+        if (currentProfileViewMode !== "role" || !currentViewingProfileRole) return;
+        const config = getApiConfigOrAlert(false);
+        if (!config) return;
+
+        const icon = wbProAiGenBtn.querySelector("i");
+        if (icon) icon.classList.add("fa-spin");
+
+        const role = currentViewingProfileRole;
+        const roleData = ensureRoleWeiboProfileData(role);
+
+        try {
+          const prompt = [
+            `你负责为角色「${role.name}」生成契合其身份特征的微博社交主页数据。`,
+            `角色人设背景：${role.persona || "未知"}；性别：${role.gender || "角色"}。`,
+            `要求：`,
+            `1. 评估该角色的身份地位与性格（若是公众人物/明星则粉丝可达几十万到上百万，若是普通职员/学生则几千几万）；`,
+            `2. 生成一个极其符合其性格与腔调的黑白极简个性签名（30字以内，严禁任何emoji表情）；`,
+            `3. 严格输出标准纯净 JSON 格式：{"fansCount":"18.4万","followCount":"72","praiseCount":"32.6万","bio":"个性签名内容"}`,
+            `严禁任何解释或 Markdown 代码块。`
+          ].join("\n");
+
+          const responseText = await callChatCompletion([
+            { role: "system", content: prompt },
+            { role: "user", content: "直接输出该角色的微博主页数据 JSON。" }
+          ], { temperature: 0.85, max_tokens: 300, silent: true });
+
+          const cleaned = responseText.replace(/```(?:json)?/gi, "").replace(/```/g, "").trim();
+          const firstBracket = cleaned.indexOf("{");
+          const lastBracket = cleaned.lastIndexOf("}");
+          if (firstBracket !== -1 && lastBracket !== -1) {
+            const parsed = JSON.parse(cleaned.slice(firstBracket, lastBracket + 1));
+            if (parsed) {
+              if (parsed.fansCount) roleData.fansCount = parsed.fansCount;
+              if (parsed.followCount) roleData.followCount = parsed.followCount;
+              if (parsed.praiseCount) roleData.praiseCount = parsed.praiseCount;
+              if (parsed.bio) roleData.bio = parsed.bio;
+
+              renderWeiboProfilePage();
+              await saveState();
+              showCatpawAlert(`AI 已根据「${role.name}」的人设智能生成了微博社交数据与简介！`, "生成成功");
+            }
+          }
+        } catch (err) {
+          showCatpawAlert(`生成失败：${err.message}`, "提示");
+        } finally {
+          if (icon) icon.classList.remove("fa-spin");
+        }
+      });
+    }
+
+    // 角色主页右上角背景图更换
+    if (wbProBanner && wbProBannerInput) {
+      wbProBanner.addEventListener("click", (e) => {
+        if (e.target.closest(".wb-pro-nav-btn")) return;
+        wbProBannerInput.click();
+      });
+      wbProBannerInput.addEventListener("change", (e) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+        readImage(file, async (src) => {
+          if (currentProfileViewMode === "role" && currentViewingProfileRole) {
+            const roleData = ensureRoleWeiboProfileData(currentViewingProfileRole);
+            roleData.bannerImage = src;
+            renderWeiboProfilePage();
+            await saveState();
+            showCatpawAlert(`已为「${currentViewingProfileRole.name}」更换微博主页背景！`);
+          } else {
+            const stats = ensureWeiboProfileStats();
+            stats.bannerImage = src;
+            renderWeiboProfilePage();
+            await saveState();
+            showCatpawAlert("微博个人主页背景图更换成功！");
+          }
+        });
       });
     }
 
@@ -28654,8 +28912,9 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
           <span>${role.name || "角色"}</span>
         `;
 
+        // 点击角色头像：进入角色的专属微博主页！
         item.addEventListener("click", () => {
-          openWeiboDirectChat(role);
+          openRoleWeiboProfilePage(role);
         });
 
         wbFrequentStrip.appendChild(item);
