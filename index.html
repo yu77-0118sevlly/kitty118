@@ -2320,41 +2320,50 @@
       display: block;
     }
 
+    /* 特色黑白画廊会话列表 (Monochrome Chat Directory) */
     .qq-list {
-      padding: 8px 16px 0;
+      padding: 8px 16px calc(80px + env(safe-area-inset-bottom));
     }
 
     .qq-chat-list {
-      display: grid;
-      gap: 4px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
     }
 
     .qq-chat-row {
       width: 100%;
-      border: 0;
+      border: 1px solid #ededed;
+      border-radius: 16px;
       display: flex;
       align-items: center;
       gap: 14px;
-      min-height: 64px;
-      padding: 10px 0;
-      border-radius: 0;
-      background: transparent;
-      box-shadow: none;
-      border-bottom: none;
+      min-height: 70px;
+      padding: 12px 14px;
+      background: #ffffff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
       text-align: left;
       cursor: pointer;
+      position: relative;
+      transition: all 0.15s ease;
+    }
+
+    .qq-chat-row:active {
+      background: #fbfbfb;
+      transform: scale(0.99);
+      border-color: #000000;
     }
 
     .qq-chat-avatar {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
       flex-shrink: 0;
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
-      background-color: #fafafa;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+      background-color: #f2f2f2;
+      border: 1px solid #e8e8e8;
     }
 
     .qq-chat-copy {
@@ -2364,20 +2373,22 @@
 
     .qq-chat-copy strong {
       display: block;
-      color: #000000;
-      font-size: 14px;
+      color: #111111;
+      font-size: 14.5px;
       font-weight: 700;
-      letter-spacing: -0.01em;
+      letter-spacing: -0.02em;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      line-height: 1.25;
     }
 
     .qq-chat-copy p {
-      margin-top: 3px;
+      margin-top: 4px;
       color: #8e8e93;
-      font-size: 11px;
+      font-size: 11.5px;
       font-weight: 400;
+      line-height: 1.35;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -2386,32 +2397,38 @@
     .qq-chat-meta {
       text-align: right;
       flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 6px;
     }
 
     .qq-chat-meta span {
       display: block;
-      color: #8e8e93;
-      font-size: 10px;
-      font-weight: 400;
+      color: #aaaaaa;
+      font-size: 9.5px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      font-variant-numeric: tabular-nums;
     }
 
     .qq-badge {
-      margin-top: 4px;
-      min-width: 16px;
-      height: 16px;
+      min-width: 18px;
+      height: 18px;
       padding: 0 5px;
       border-radius: 999px;
       background: #000000;
       color: #ffffff;
-      font-size: 9px;
+      font-size: 9.5px;
       font-weight: 700;
       display: inline-flex;
       align-items: center;
       justify-content: center;
     }
 
+    /* 特色黑白通讯录名册 (Monochrome Architectural Contacts Directory) */
     .qq-contacts-wrap {
-      padding: 12px 16px 80px;
+      padding: 10px 16px calc(88px + env(safe-area-inset-bottom));
     }
 
     .qq-contacts-glass {
@@ -2423,94 +2440,149 @@
 
     .qq-group-manager {
       display: grid;
-      grid-template-columns: 1fr 90px;
-      gap: 10px;
+      grid-template-columns: 1fr 80px;
+      gap: 8px;
       padding: 0 0 14px;
-      border-bottom: 1px solid #f4f4f4;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
+      border-bottom: 1px solid #ededed;
     }
 
     .qq-group-manager input {
       min-width: 0;
-      height: 44px;
-      border: none;
-      border-radius: 999px;
-      padding: 0 16px;
+      height: 42px;
+      border: 1px solid #ededed;
+      border-radius: 12px;
+      padding: 0 14px;
       outline: none;
-      background: #fafafa;
-      color: #000000;
+      background: #fbfbfb;
+      color: #111111;
       font-size: 12px;
       font-weight: 500;
+      transition: border-color 0.15s ease;
+    }
+
+    .qq-group-manager input:focus {
+      border-color: #000000;
+      background: #ffffff;
     }
 
     .qq-group-manager button {
       border: none;
-      border-radius: 999px;
+      border-radius: 12px;
       color: #ffffff;
       background: #000000;
       font-size: 12px;
       font-weight: 700;
       cursor: pointer;
+      transition: opacity 0.12s ease;
+    }
+
+    .qq-group-manager button:active {
+      opacity: 0.75;
     }
 
     .qq-contact-group {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      min-height: 40px;
-      padding: 8px 0;
-      font-size: 13px;
+      padding: 8px 2px 10px;
+      font-size: 10px;
       font-weight: 700;
-      color: #000000;
-      border-bottom: none;
+      color: #8e8e93;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
     }
 
     .qq-group-block {
-      border-bottom: 1px solid #f4f4f4;
+      background: #ffffff;
+      border: 1px solid #ededed;
+      border-radius: 16px;
+      margin-bottom: 10px;
+      overflow: hidden;
+      transition: border-color 0.15s ease;
     }
 
-    .qq-group-block:last-child {
-      border-bottom: none;
+    .qq-group-block.open {
+      border-color: #dcdcdc;
     }
 
     .qq-group-head {
       width: 100%;
       min-height: 48px;
-      padding: 12px 0;
+      padding: 12px 16px;
       border: 0;
-      background: transparent;
+      background: #ffffff;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 10px;
-      color: #000000;
+      color: #111111;
       font-size: 13px;
       font-weight: 700;
       text-align: left;
       cursor: pointer;
     }
 
-    .qq-contact-avatar {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      background-size: cover;
-      background-position: center;
-      flex-shrink: 0;
-      background-color: #fafafa;
+    .qq-group-head i {
+      font-size: 10px;
+      color: #8e8e93;
+      transition: transform 0.2s ease;
+    }
+
+    .qq-group-block.open .qq-group-head i {
+      transform: rotate(90deg);
+      color: #000000;
+    }
+
+    .qq-group-body {
+      display: none;
+      padding: 0 14px 12px;
+      border-top: 1px solid #f4f4f4;
+    }
+
+    .qq-group-block.open .qq-group-body {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding-top: 10px;
+    }
+
+    .qq-group-empty {
+      padding: 14px 4px;
+      color: #aaaaaa;
+      font-size: 11.5px;
+      text-align: center;
     }
 
     .qq-card {
       width: 100%;
-      border: 0;
+      border: 1px solid #f0f0f0;
+      border-radius: 12px;
       display: flex;
       align-items: center;
       gap: 12px;
-      min-height: 56px;
-      padding: 8px 0;
-      background: transparent;
-      box-shadow: none;
+      min-height: 58px;
+      padding: 8px 12px;
+      background: #fbfbfb;
       text-align: left;
+      cursor: pointer;
+      transition: background 0.12s ease, border-color 0.12s ease;
+    }
+
+    .qq-card:active {
+      background: #f5f5f5;
+      border-color: #111111;
+    }
+
+    .qq-contact-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background-size: cover;
+      background-position: center;
+      flex-shrink: 0;
+      background-color: #eeeeee;
+      border: 1px solid #e0e0e0;
     }
 
     .qq-contact-copy {
@@ -2519,41 +2591,68 @@
     }
 
     .qq-contact-copy strong {
-      display: block;
-      color: #000000;
-      font-size: 13px;
-      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #111111;
+      font-size: 13.5px;
+      font-weight: 700;
       letter-spacing: -0.01em;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
 
+    .qq-gender {
+      font-size: 10px;
+      color: #8e8e93;
+    }
+
+    .qq-role-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
     .qq-role-mini-btn {
-      min-height: 32px;
-      border-radius: 999px;
-      padding: 0 14px;
-      border: none;
-      background: #fafafa;
-      color: #000000;
+      min-height: 30px;
+      border-radius: 8px;
+      padding: 0 12px;
+      border: 1px solid #e8e8e8;
+      background: #ffffff;
+      color: #111111;
       font-size: 11px;
       font-weight: 700;
       cursor: pointer;
+      transition: all 0.12s ease;
+    }
+
+    .qq-role-mini-btn:active {
+      background: #000000;
+      color: #ffffff;
+      border-color: #000000;
     }
 
     .qq-role-mini-btn.danger {
-      color: #ff3b30;
-      background: #fff5f5;
+      color: #666666;
+      background: #f0f0f0;
+      border: none;
+    }
+
+    .qq-role-mini-btn.danger:active {
+      color: #000000;
+      background: #e2e2e2;
     }
 
     .qq-role-group-select {
-      height: 32px;
-      border: none;
-      border-radius: 999px;
-      padding: 0 10px;
-      background: #fafafa;
+      height: 30px;
+      border: 1px solid #ededed;
+      border-radius: 8px;
+      padding: 0 8px;
+      background: #ffffff;
       color: #666666;
-      font-size: 11px;
+      font-size: 10.5px;
       outline: none;
     }
 
@@ -25937,22 +26036,25 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
           article.className = "qq-card";
 
           const genderIcon = role.gender === "男"
-            ? "fa-mars"
-            : role.gender === "女"
-              ? "fa-venus"
-              : "fa-user";
-
+          ? "fa-mars"
+          : role.gender === "女"
+          ? "fa-venus"
+          : "fa-circle-dot";
+          
           const options = groups.map((item) => `<option value="${item}" ${item === (role.group || "未分组") ? "selected" : ""}>${item}</option>`).join("");
-
+          
           article.innerHTML = `
-            <div class="qq-contact-avatar" aria-hidden="true"></div>
-            <div class="qq-contact-copy">
-              <strong>${role.name || "未命名角色"} <i class="fa-solid ${genderIcon} qq-gender"></i></strong>
-            </div>
-            <div class="qq-role-actions">
-              <select class="qq-role-group-select" aria-label="移动分组">${options}</select>
-              <button class="qq-role-mini-btn" type="button">聊天</button>
-            </div>
+          <div class="qq-contact-avatar" aria-hidden="true"></div>
+          <div class="qq-contact-copy">
+          <strong>
+          <span>${role.name || "未命名角色"}</span>
+          <i class="fa-solid ${genderIcon} qq-gender"></i>
+          </strong>
+          </div>
+          <div class="qq-role-actions">
+          <select class="qq-role-group-select" aria-label="移动分组">${options}</select>
+          <button class="qq-role-mini-btn" type="button">对话</button>
+          </div>
           `;
 
           const avatar = article.querySelector(".qq-contact-avatar");
