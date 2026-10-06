@@ -16854,6 +16854,366 @@
       cursor: pointer;
     }
 
+    /* 微博消息/私信列表页面 · 1:1 截图同款纯黑白灰排版 */
+    .wb-msg-panel {
+      display: none;
+      background: #ffffff;
+      min-height: 100%;
+    }
+
+    .wb-msg-panel.show {
+      display: block;
+    }
+
+    .wb-msg-subhead {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 16px 8px;
+      border-bottom: 1px solid #f2f3f5;
+      background: #ffffff;
+    }
+
+    .wb-msg-subhead-tabs {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+    }
+
+    .wb-msg-subhead-tab {
+      font-size: 15px;
+      font-weight: 600;
+      color: #7b818a;
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+      position: relative;
+      padding: 2px 0 4px;
+    }
+
+    .wb-msg-subhead-tab.active {
+      font-size: 16px;
+      font-weight: 800;
+      color: #111111;
+    }
+
+    .wb-msg-subhead-tab.active::after {
+      content: "";
+      position: absolute;
+      left: 10%;
+      right: 10%;
+      bottom: -2px;
+      height: 2.5px;
+      background: #000000;
+      border-radius: 999px;
+    }
+
+    .wb-msg-subhead-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .wb-msg-tool-btn {
+      border: 0;
+      background: transparent;
+      color: #4a505a;
+      font-size: 15px;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+    }
+
+    /* 顶部三大固定入口（@我的、评论、赞） */
+    .wb-msg-fixed-entries {
+      display: flex;
+      flex-direction: column;
+      background: #ffffff;
+      border-bottom: 8px solid #f4f5f7;
+    }
+
+    .wb-msg-entry-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      cursor: pointer;
+      transition: background 0.12s ease;
+      border-bottom: 1px solid #f6f7f9;
+    }
+
+    .wb-msg-entry-row:last-child {
+      border-bottom: none;
+    }
+
+    .wb-msg-entry-row:active {
+      background: #fbfbfb;
+    }
+
+    .wb-msg-entry-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .wb-msg-entry-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #f4f5f7;
+      color: #111111;
+      display: grid;
+      place-items: center;
+      font-size: 18px;
+      border: 1px solid #ebecee;
+    }
+
+    .wb-msg-entry-left span {
+      font-size: 15px;
+      font-weight: 600;
+      color: #111111;
+      letter-spacing: -0.01em;
+    }
+
+    .wb-msg-entry-row i.fa-chevron-right {
+      font-size: 12px;
+      color: #c7c7cc;
+    }
+
+    /* 私信与通知列表 */
+    .wb-msg-list {
+      display: flex;
+      flex-direction: column;
+      background: #ffffff;
+    }
+
+    .wb-msg-item {
+      display: grid;
+      grid-template-columns: 46px 1fr auto;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      cursor: pointer;
+      border-bottom: 1px solid #f6f7f9;
+      transition: background 0.12s ease;
+      position: relative;
+    }
+
+    .wb-msg-item:active {
+      background: #f9fafb;
+    }
+
+    .wb-msg-avatar-box {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: #f4f5f7;
+      border: 1px solid #ededed;
+      background-size: cover;
+      background-position: center;
+      display: grid;
+      place-items: center;
+      color: #4a505a;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+
+    .wb-msg-content {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .wb-msg-title-line {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .wb-msg-title-line strong {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: #111111;
+      letter-spacing: -0.015em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .wb-msg-top-tag {
+      font-size: 9.5px;
+      padding: 1px 5px;
+      border-radius: 3px;
+      background: #111111;
+      color: #ffffff;
+      font-weight: 600;
+      line-height: 1.1;
+      flex-shrink: 0;
+    }
+
+    .wb-msg-preview-line {
+      font-size: 12px;
+      color: #8c9098;
+      line-height: 1.4;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .wb-msg-meta-col {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .wb-msg-time {
+      font-size: 10.5px;
+      color: #aaaaaa;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .wb-msg-badge {
+      min-width: 18px;
+      height: 18px;
+      padding: 0 5px;
+      border-radius: 999px;
+      background: #111111;
+      color: #ffffff;
+      font-size: 9.5px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* 独立微博私信对话窗口模态框 */
+    .wb-direct-chat-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 65;
+      display: none;
+      background: #f7f7f5;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .wb-direct-chat-modal.show {
+      display: flex;
+    }
+
+    .wb-dc-head {
+      min-height: 50px;
+      padding: calc(6px + env(safe-area-inset-top)) 14px 8px;
+      display: grid;
+      grid-template-columns: 36px 1fr 36px;
+      align-items: center;
+      background: #ffffff;
+      border-bottom: 1px solid #ededed;
+    }
+
+    .wb-dc-head strong {
+      text-align: center;
+      font-size: 16px;
+      font-weight: 700;
+      color: #111111;
+    }
+
+    .wb-dc-messages {
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      padding: 14px 14px calc(20px + env(safe-area-inset-bottom));
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .wb-dc-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      max-width: 82%;
+    }
+
+    .wb-dc-row.self {
+      align-self: flex-end;
+      flex-direction: row-reverse;
+    }
+
+    .wb-dc-row.friend {
+      align-self: flex-start;
+    }
+
+    .wb-dc-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #e8e8e8;
+      background-size: cover;
+      background-position: center;
+      flex-shrink: 0;
+    }
+
+    .wb-dc-bubble {
+      padding: 10px 13px;
+      border-radius: 16px;
+      font-size: 13.5px;
+      line-height: 1.5;
+      word-break: break-word;
+    }
+
+    .wb-dc-row.self .wb-dc-bubble {
+      background: #111111;
+      color: #ffffff;
+      border-bottom-right-radius: 4px;
+    }
+
+    .wb-dc-row.friend .wb-dc-bubble {
+      background: #ffffff;
+      color: #111111;
+      border: 1px solid #e8e8e8;
+      border-bottom-left-radius: 4px;
+    }
+
+    .wb-dc-bottom {
+      min-height: 54px;
+      padding: 8px 14px calc(10px + env(safe-area-inset-bottom));
+      background: #ffffff;
+      border-top: 1px solid #ededed;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .wb-dc-input {
+      flex: 1;
+      height: 38px;
+      padding: 0 14px;
+      border-radius: 999px;
+      border: 1px solid #e2e4e8;
+      background: #f7f8fa;
+      outline: none;
+      font-size: 13px;
+      color: #111111;
+    }
+
+    .wb-dc-send-btn {
+      height: 36px;
+      padding: 0 16px;
+      border-radius: 999px;
+      border: none;
+      background: #111111;
+      color: #ffffff;
+      font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
     /* 发微博全屏弹窗 */
     .wb-compose-modal {
       position: fixed;
@@ -19100,7 +19460,65 @@
         <!-- 6. 发现流精选内容卡片 -->
         <div id="wbDiscSubFeedList" style="margin-top: 8px;"></div>
       </div>
+
+      <!-- 消息/私信列表页面 · 1:1 截图同款排版（纯黑白灰极简） -->
+      <div class="wb-msg-panel" id="weiboMsgPanel">
+        <!-- 截图顶部子栏目：发现群 / 动态 / 消息 + 清理按钮与设置 -->
+        <div class="wb-msg-subhead">
+          <div class="wb-msg-subhead-tabs">
+            <button class="wb-msg-subhead-tab" id="wbSubTabGroup" type="button">发现群</button>
+            <button class="wb-msg-subhead-tab" id="wbSubTabDynamic" type="button">动态</button>
+            <button class="wb-msg-subhead-tab active" id="wbSubTabMsg" type="button">消息</button>
+          </div>
+          <div class="wb-msg-subhead-actions">
+            <button class="wb-msg-tool-btn" id="wbClearUnreadBtn" type="button" title="清除未读"><i class="fa-solid fa-broom"></i></button>
+            <button class="wb-msg-tool-btn" id="wbMsgSettingsBtn" type="button" title="消息设置"><i class="fa-solid fa-gear"></i></button>
+          </div>
+        </div>
+
+        <!-- 截图顶部三大固定入口（@我的、评论、赞） -->
+        <div class="wb-msg-fixed-entries">
+          <div class="wb-msg-entry-row" data-wb-entry="mention">
+            <div class="wb-msg-entry-left">
+              <div class="wb-msg-entry-icon"><i class="fa-solid fa-at"></i></div>
+              <span>@我的</span>
+            </div>
+            <i class="fa-solid fa-chevron-right"></i>
+          </div>
+          <div class="wb-msg-entry-row" data-wb-entry="comment">
+            <div class="wb-msg-entry-left">
+              <div class="wb-msg-entry-icon"><i class="fa-regular fa-comment-dots"></i></div>
+              <span>评论</span>
+            </div>
+            <i class="fa-solid fa-chevron-right"></i>
+          </div>
+          <div class="wb-msg-entry-row" data-wb-entry="like">
+            <div class="wb-msg-entry-left">
+              <div class="wb-msg-entry-icon"><i class="fa-regular fa-thumbs-up"></i></div>
+              <span>赞</span>
+            </div>
+            <i class="fa-solid fa-chevron-right"></i>
+          </div>
+        </div>
+
+        <!-- 私信通知与角色私信列表 -->
+        <div class="wb-msg-list" id="weiboMsgList"></div>
+      </div>
     </div>
+
+    <!-- 微博私信即时对话弹窗 -->
+    <section class="wb-direct-chat-modal" id="wbDirectChatModal" aria-label="微博私信对话">
+      <div class="wb-dc-head">
+        <button class="wb-head-icon-btn" id="closeWbDirectChat" type="button" aria-label="返回"><i class="fa-solid fa-chevron-left"></i></button>
+        <strong id="wbDcTargetName">私信</strong>
+        <span></span>
+      </div>
+      <div class="wb-dc-messages" id="wbDcMessages"></div>
+      <div class="wb-dc-bottom">
+        <input class="wb-dc-input" id="wbDcInput" type="text" placeholder="发送私信..." />
+        <button class="wb-dc-send-btn" id="wbDcSendBtn" type="button">发送</button>
+      </div>
+    </section>
 
     <!-- 截图同款底部 5 大原生导航栏 (首页 / 视频 / 发现 / 消息 / 我) -->
     <div class="wb-bottom-bar" aria-label="微博底栏导航">
@@ -25559,6 +25977,7 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
         updateWbHeadDisplay(true);
         if (weiboFeedList) weiboFeedList.style.display = "block";
         if (weiboHotPanel) weiboHotPanel.classList.remove("show");
+        if (weiboMsgPanel) weiboMsgPanel.classList.remove("show");
         wbTabFeed?.classList.add("active");
         wbTabFollow?.classList.remove("active");
         const main = document.querySelector("#weiboMain");
@@ -25580,6 +25999,301 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
         updateWbHeadDisplay(false, "发现");
         if (weiboHotPanel) weiboHotPanel.classList.add("show");
         if (weiboFeedList) weiboFeedList.style.display = "none";
+        if (weiboMsgPanel) weiboMsgPanel.classList.remove("show");
+      });
+    }
+
+    const weiboMsgPanel = document.querySelector("#weiboMsgPanel");
+    const weiboMsgList = document.querySelector("#weiboMsgList");
+
+    // 微博私信对话窗口节点
+    const wbDirectChatModal = document.querySelector("#wbDirectChatModal");
+    const closeWbDirectChat = document.querySelector("#closeWbDirectChat");
+    const wbDcTargetName = document.querySelector("#wbDcTargetName");
+    const wbDcMessages = document.querySelector("#wbDcMessages");
+    const wbDcInput = document.querySelector("#wbDcInput");
+    const wbDcSendBtn = document.querySelector("#wbDcSendBtn");
+    let currentWbChatRoleId = null;
+
+    // 默认或已持久化的微博私信记录
+    function ensureWeiboDirectMessages() {
+      if (!appState.weibo.directMessages || typeof appState.weibo.directMessages !== "object") {
+        appState.weibo.directMessages = {};
+      }
+      return appState.weibo.directMessages;
+    }
+
+    // 渲染消息/私信列表页面（完全 1:1 对齐截图排版与通知样式）
+    function renderWeiboMsgPanel() {
+      if (!weiboMsgList) return;
+      ensureWeiboState();
+      ensureQqState();
+      const dmMap = ensureWeiboDirectMessages();
+      weiboMsgList.innerHTML = "";
+
+      // 1. 如果通讯录中有角色，则优先渲染该角色的专属私信项
+      const roles = appState.qq.roles || [];
+      roles.forEach(role => {
+        const rId = getRoleId(role);
+        const chatLogs = dmMap[rId] || [
+          { sender: "friend", text: "刚刚在微博看到了你发的内容，拍得真好。", time: "11:20" }
+        ];
+        dmMap[rId] = chatLogs;
+        const lastMsg = chatLogs[chatLogs.length - 1];
+
+        const item = document.createElement("div");
+        item.className = "wb-msg-item";
+        item.dataset.roleDirectId = rId;
+
+        const avatarSrc = role.avatar || "https://771553.xyz/file/studio/5FDVc1VrKzVdH5mO.jpg";
+        item.innerHTML = `
+          <div class="wb-msg-avatar-box" style="background-image:url('${avatarSrc}');"></div>
+          <div class="wb-msg-content">
+            <div class="wb-msg-title-line">
+              <strong>${role.name || "联系人"}</strong>
+            </div>
+            <div class="wb-msg-preview-line">${lastMsg ? lastMsg.text : "点击发送私信..."}</div>
+          </div>
+          <div class="wb-msg-meta-col">
+            <span class="wb-msg-time">${lastMsg ? lastMsg.time : "刚刚"}</span>
+            <span class="wb-msg-badge">1</span>
+          </div>
+        `;
+
+        item.addEventListener("click", () => openWeiboDirectChat(role));
+        weiboMsgList.appendChild(item);
+      });
+
+      // 2. 截图同款默认系统服务与通知类列表条目（纯黑白灰）
+      const defaultNotifyItems = [
+        {
+          icon: "fa-bookmark",
+          title: "服务通知",
+          isTop: true,
+          preview: "超话社区：你好，这些超话里有人给你打招呼...",
+          time: "12:00",
+          unread: 33
+        },
+        {
+          icon: "fa-flag",
+          title: "活动通知",
+          isTop: false,
+          preview: "微博会员：随机返现金、多倍时长！",
+          time: "10-1",
+          unread: 27
+        },
+        {
+          icon: "fa-wallet",
+          title: "钱包通知",
+          isTop: false,
+          preview: "微博任务：余额清零通知",
+          time: "2025-4-19",
+          unread: 9
+        },
+        {
+          icon: "fa-user-group",
+          title: "群推荐",
+          isTop: false,
+          preview: "加入感兴趣的粉丝群，开启热聊模式",
+          time: "2025-1-10",
+          unread: 1
+        },
+        {
+          icon: "fa-bell",
+          title: "系统通知",
+          isTop: false,
+          preview: "微博视频：您 2025年01月06日 07:55 发送的视频已审核通过",
+          time: "2025-1-6",
+          unread: 18
+        },
+        {
+          icon: "fa-comment",
+          title: "留言板",
+          isTop: false,
+          preview: "超话社区：你好，这些超话里有人给你打招呼哦...",
+          time: "2022-12-10",
+          unread: 0
+        },
+        {
+          icon: "fa-gem",
+          title: "超话社区",
+          isTop: false,
+          preview: "你好，这些超话里有人给你打招呼哦，欢迎你...",
+          time: "2022-5-8",
+          unread: 0
+        },
+        {
+          icon: "fa-shield-halved",
+          title: "微博管理员",
+          isTop: false,
+          preview: "微博安全中心守护您的账号安全与社区秩序",
+          time: "2022-4-13",
+          unread: 0
+        }
+      ];
+
+      defaultNotifyItems.forEach(noti => {
+        const item = document.createElement("div");
+        item.className = "wb-msg-item";
+
+        const topBadge = noti.isTop ? '<span class="wb-msg-top-tag">置顶</span>' : '';
+        const unreadBadge = noti.unread > 0 ? `<span class="wb-msg-badge">${noti.unread}</span>` : '';
+
+        item.innerHTML = `
+          <div class="wb-msg-avatar-box"><i class="fa-solid ${noti.icon}"></i></div>
+          <div class="wb-msg-content">
+            <div class="wb-msg-title-line">
+              <strong>${noti.title}</strong>
+              ${topBadge}
+            </div>
+            <div class="wb-msg-preview-line">${noti.preview}</div>
+          </div>
+          <div class="wb-msg-meta-col">
+            <span class="wb-msg-time">${noti.time}</span>
+            ${unreadBadge}
+          </div>
+        `;
+
+        item.addEventListener("click", () => {
+          showCatpawAlert(noti.preview, noti.title);
+        });
+
+        weiboMsgList.appendChild(item);
+      });
+    }
+
+    // 打开微博私信对话窗口
+    function openWeiboDirectChat(role) {
+      if (!role || !wbDirectChatModal) return;
+      currentWbChatRoleId = getRoleId(role);
+      if (wbDcTargetName) wbDcTargetName.textContent = role.name || "私信";
+      renderWeiboDirectChatMessages();
+      wbDirectChatModal.classList.add("show");
+      setTimeout(() => {
+        if (wbDcMessages) wbDcMessages.scrollTop = wbDcMessages.scrollHeight;
+      }, 100);
+    }
+
+    function renderWeiboDirectChatMessages() {
+      if (!wbDcMessages || !currentWbChatRoleId) return;
+      const dmMap = ensureWeiboDirectMessages();
+      const logs = dmMap[currentWbChatRoleId] || [];
+      const role = (appState.qq?.roles || []).find(r => getRoleId(r) === currentWbChatRoleId);
+      const roleAvatar = role?.avatar || "https://771553.xyz/file/studio/5FDVc1VrKzVdH5mO.jpg";
+      const myAvatar = appState.theme.cardProfileCoverImage || appState.theme.avatarImage || "https://771553.xyz/file/studio/5FDVc1VrKzVdH5mO.jpg";
+
+      wbDcMessages.innerHTML = "";
+      logs.forEach(msg => {
+        const isSelf = msg.sender === "self";
+        const row = document.createElement("div");
+        row.className = `wb-dc-row ${isSelf ? "self" : "friend"}`;
+        row.innerHTML = `
+          <div class="wb-dc-avatar" style="background-image:url('${isSelf ? myAvatar : roleAvatar}');"></div>
+          <div class="wb-dc-bubble">${msg.text || ""}</div>
+        `;
+        wbDcMessages.appendChild(row);
+      });
+    }
+
+    // 发送微博私信并触发角色通过 API 智能回复
+    async function sendWeiboDirectMessage() {
+      if (!wbDcInput || !currentWbChatRoleId) return;
+      const text = wbDcInput.value.trim();
+      if (!text) return;
+      wbDcInput.value = "";
+
+      const dmMap = ensureWeiboDirectMessages();
+      if (!dmMap[currentWbChatRoleId]) dmMap[currentWbChatRoleId] = [];
+      const now = new Date();
+      const timeStr = `${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
+
+      dmMap[currentWbChatRoleId].push({
+        sender: "self",
+        text,
+        time: timeStr
+      });
+
+      renderWeiboDirectChatMessages();
+      renderWeiboMsgPanel();
+      await saveState();
+
+      if (wbDcMessages) wbDcMessages.scrollTop = wbDcMessages.scrollHeight;
+
+      // 角色通过大模型 API 在微博私信内回复
+      const role = (appState.qq?.roles || []).find(r => getRoleId(r) === currentWbChatRoleId);
+      if (!role) return;
+
+      const config = getApiConfigOrAlert(true);
+      if (!config) return;
+
+      setTimeout(async () => {
+        try {
+          const rolePrompt = withRoleChatContext(currentWbChatRoleId, () => buildRoleReplyPrompt());
+          const prompt = [
+            rolePrompt,
+            `【当前场景：你在微博私信界面收到了 user 发来的私信】`,
+            `user 发给你的微博私信：${text}`,
+            `请以你的角色性格与语言风格，简短自然地回复这条微博私信。`,
+            `严格纯文本，严禁包含任何表情符号、括号旁白、或营销客套。30字以内。`
+          ].join("\n");
+
+          const reply = await callChatCompletion([
+            { role: "system", content: ENHANCED_SYSTEM_PROMPT },
+            { role: "system", content: prompt },
+            { role: "user", content: "直接输出你的私信回复。" }
+          ], { temperature: 0.82, max_tokens: 150, silent: true });
+
+          const cleaned = cleanRoleReplyText(reply);
+          if (cleaned) {
+            dmMap[currentWbChatRoleId].push({
+              sender: "friend",
+              text: cleaned,
+              time: timeStr
+            });
+            renderWeiboDirectChatMessages();
+            renderWeiboMsgPanel();
+            await saveState();
+            if (wbDcMessages) wbDcMessages.scrollTop = wbDcMessages.scrollHeight;
+          }
+        } catch (e) {}
+      }, 1200);
+    }
+
+    if (wbDcSendBtn) wbDcSendBtn.addEventListener("click", sendWeiboDirectMessage);
+    if (wbDcInput) {
+      wbDcInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          sendWeiboDirectMessage();
+        }
+      });
+    }
+
+    if (closeWbDirectChat && wbDirectChatModal) {
+      closeWbDirectChat.addEventListener("click", () => wbDirectChatModal.classList.remove("show"));
+    }
+
+    // 消息页顶部三大入口点击事件
+    document.querySelectorAll("[data-wb-entry]").forEach(entry => {
+      entry.addEventListener("click", () => {
+        const type = entry.dataset.wbEntry;
+        const nameMap = { mention: "@我的", comment: "评论", like: "赞" };
+        showCatpawAlert(`暂无新的${nameMap[type] || ""}通知。`, nameMap[type] || "消息通知");
+      });
+    });
+
+    const wbClearUnreadBtn = document.querySelector("#wbClearUnreadBtn");
+    if (wbClearUnreadBtn) {
+      wbClearUnreadBtn.addEventListener("click", () => {
+        document.querySelectorAll(".wb-msg-badge").forEach(badge => badge.style.display = "none");
+        showCatpawAlert("已一键清空全部未读消息与提醒！", "清除成功");
+      });
+    }
+
+    const wbMsgSettingsBtn = document.querySelector("#wbMsgSettingsBtn");
+    if (wbMsgSettingsBtn) {
+      wbMsgSettingsBtn.addEventListener("click", () => {
+        showCatpawAlert("已开启微博私信防打扰与智能过滤保护。", "消息设置");
       });
     }
 
@@ -25587,7 +26301,10 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       wbBarMsg.addEventListener("click", () => {
         setWbBarActive(wbBarMsg);
         updateWbHeadDisplay(false, "消息");
-        showCatpawAlert("暂无新的微博互动通知或私信。", "微博消息");
+        if (weiboFeedList) weiboFeedList.style.display = "none";
+        if (weiboHotPanel) weiboHotPanel.classList.remove("show");
+        if (weiboMsgPanel) weiboMsgPanel.classList.add("show");
+        renderWeiboMsgPanel();
       });
     }
 
