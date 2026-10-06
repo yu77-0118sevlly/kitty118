@@ -18441,6 +18441,125 @@
       flex-shrink: 0;
     }
 
+    /* 微博群聊中心与群聊相关样式 · 纯黑白灰极简 */
+    .wb-group-center-page {
+      position: fixed;
+      inset: 0;
+      z-index: 76;
+      display: none;
+      background: #f4f5f7;
+      flex-direction: column;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: calc(40px + env(safe-area-inset-bottom));
+    }
+
+    .wb-group-center-page.show {
+      display: flex;
+    }
+
+    .wb-group-item-card {
+      background: #ffffff;
+      padding: 14px 16px;
+      margin-bottom: 8px;
+      display: grid;
+      grid-template-columns: 48px 1fr auto;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      border-bottom: 1px solid #ededed;
+    }
+
+    .wb-group-item-card:active {
+      background: #fbfbfb;
+    }
+
+    .wb-group-avatar-box {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: #111111;
+      color: #ffffff;
+      display: grid;
+      place-items: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .wb-group-info {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .wb-group-title-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .wb-group-title-row strong {
+      font-size: 15px;
+      font-weight: 700;
+      color: #111111;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .wb-group-tag {
+      font-size: 9.5px;
+      padding: 1px 6px;
+      border-radius: 4px;
+      background: #f0f2f5;
+      color: #555555;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+
+    .wb-group-sub-line {
+      font-size: 11.5px;
+      color: #8c9098;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .wb-group-member-count {
+      font-size: 11px;
+      color: #8c9098;
+      font-variant-numeric: tabular-nums;
+      text-align: right;
+    }
+
+    /* 粉丝入群申请抽屉/列表 */
+    .wb-applicant-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 14px;
+      background: #ffffff;
+      border-radius: 12px;
+      border: 1px solid #ebecee;
+      margin-bottom: 8px;
+    }
+
+    .wb-applicant-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .wb-applicant-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: #e8e8e8;
+      background-size: cover;
+      background-position: center;
+    }
+
     /* 角色进驻微博选择弹窗 */
     .wb-role-select-modal {
       position: fixed;
@@ -21337,6 +21456,88 @@
           <i class="fa-solid fa-circle-user"></i>
           <span id="wbStdMyLevelText">我的 LV.3</span>
         </button>
+      </div>
+    </section>
+
+    <!-- 微博粉丝群聊中心全屏页面 -->
+    <section class="wb-group-center-page" id="wbGroupCenterPage" aria-label="粉丝群聊中心">
+      <div class="wb-ep-head" style="position: sticky; top: 0; background: #ffffff; border-bottom: 1px solid #ededed; z-index: 10;">
+        <button id="closeWbGroupCenter" type="button" aria-label="返回"><i class="fa-solid fa-chevron-left"></i></button>
+        <strong style="font-size: 16px; font-weight: 700; color: #111111;">粉丝群聊中心</strong>
+        <button id="openCreateGroupBtn" type="button" title="创建新群聊"><i class="fa-solid fa-plus"></i></button>
+      </div>
+
+      <div style="padding: 12px 16px 8px; display: flex; justify-content: space-between; align-items: center; color: #8c9098; font-size: 12px;">
+        <span>我的粉丝群 (<span id="wbGroupTotalCount">0</span>)</span>
+        <span style="font-size: 11px;">粉丝量越多 · 进群速度越快</span>
+      </div>
+
+      <div id="wbGroupListContainer" style="display: flex; flex-direction: column;"></div>
+    </section>
+
+    <!-- 创建群聊表单弹窗 -->
+    <section class="wb-role-select-modal" id="wbCreateGroupModal" aria-label="创建群聊">
+      <div class="wb-role-select-card" style="max-height: 82dvh;">
+        <header class="wb-role-select-head">
+          <strong>创建新粉丝群</strong>
+          <button class="wb-head-icon-btn" id="closeCreateGroupModal" type="button"><i class="fa-solid fa-xmark"></i></button>
+        </header>
+
+        <div style="display: flex; flex-direction: column; gap: 14px; padding: 4px 0 16px;">
+          <div class="wb-ct-input-row">
+            <label>群聊名称</label>
+            <input type="text" id="wbGroupNameInput" placeholder="例如：黑白光影粉丝1群、日常灵感交流群" />
+          </div>
+
+          <div class="wb-ct-input-row">
+            <label>群人数上限</label>
+            <input type="number" id="wbGroupMaxMembersInput" value="500" min="50" max="5000" placeholder="例如：500" />
+          </div>
+
+          <div class="wb-ct-input-row">
+            <label>加群方式</label>
+            <select id="wbGroupJoinModeSelect" style="width: 100%; height: 42px; border-radius: 10px; border: 1px solid #e0e2e5; padding: 0 12px; font-size: 13.5px; color: #111111; background: #f8f9fa; outline: none;">
+              <option value="direct">直接进入 (粉丝点击或收到通知后立刻加群)</option>
+              <option value="verify">需要申请 (粉丝发来入群申请，由群主审批)</option>
+            </select>
+          </div>
+        </div>
+
+        <button class="liquid-btn primary" id="submitCreateGroupBtn" type="button" style="min-height: 44px;">确认创建群聊</button>
+      </div>
+    </section>
+
+    <!-- 粉丝入群审批申请弹窗 -->
+    <section class="wb-role-select-modal" id="wbGroupApplicantsModal" aria-label="入群申请审批">
+      <div class="wb-role-select-card" style="max-height: 82dvh;">
+        <header class="wb-role-select-head">
+          <div>
+            <strong id="wbApplicantsGroupTitle">入群申请</strong>
+            <span style="font-size: 11px; color: #8c9098; margin-left: 6px;">待审批粉丝</span>
+          </div>
+          <button class="wb-head-icon-btn" id="closeApplicantsModal" type="button"><i class="fa-solid fa-xmark"></i></button>
+        </header>
+
+        <div id="wbApplicantsListContainer" style="flex: 1; overflow-y: auto; padding: 4px 0 14px; min-height: 180px;"></div>
+
+        <button class="liquid-btn primary" id="acceptAllApplicantsBtn" type="button" style="min-height: 42px;">一键全部同意入群</button>
+      </div>
+    </section>
+
+    <!-- 独立粉丝群聊即时对话模态框 -->
+    <section class="wb-direct-chat-modal" id="wbGroupChatModal" aria-label="粉丝群即时聊天">
+      <div class="wb-dc-head" style="grid-template-columns: 36px 1fr 60px;">
+        <button class="wb-head-icon-btn" id="closeWbGroupChat" type="button"><i class="fa-solid fa-chevron-left"></i></button>
+        <div style="text-align: center; min-width: 0;">
+          <strong id="wbGroupChatTitle" style="font-size: 15px; display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">群聊</strong>
+          <small id="wbGroupChatMemberMeta" style="font-size: 10px; color: #8c9098; font-variant-numeric: tabular-nums;">0 人在线</small>
+        </div>
+        <button class="wb-head-icon-btn" id="wbGroupManageBtn" type="button" title="群管理/申请" style="font-size: 13px; font-weight: 700; color: #111111;">管理</button>
+      </div>
+      <div class="wb-dc-messages" id="wbGroupMessagesList"></div>
+      <div class="wb-dc-bottom">
+        <input class="wb-dc-input" id="wbGroupChatInput" type="text" placeholder="在群里说点什么..." />
+        <button class="wb-dc-send-btn" id="wbGroupChatSendBtn" type="button">发送</button>
       </div>
     </section>
 
@@ -27796,6 +27997,475 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
     }
 
     // 底部 5 大原生 Tab 点击事件（严格控制推荐/关注顶栏只在首页展示）
+    // 将字符串形式的粉丝数（如 100万、1.2万、5200、128）解析为具体纯数字以计算速度与比例
+    function parseFanStringToNumber(str) {
+      if (!str) return 100;
+      const s = String(str).trim();
+      if (s.includes("万")) {
+        const num = parseFloat(s.replace("万", "")) || 1;
+        return Math.floor(num * 10000);
+      }
+      return parseInt(s, 10) || 100;
+    }
+
+    // ============================================================
+    // 微博粉丝群聊完整体系（自定义创建、人数上限、粉丝量决定加群速度）
+    // ============================================================
+    const wbGroupCenterPage = document.querySelector("#wbGroupCenterPage");
+    const closeWbGroupCenter = document.querySelector("#closeWbGroupCenter");
+    const openCreateGroupBtn = document.querySelector("#openCreateGroupBtn");
+    const wbGroupListContainer = document.querySelector("#wbGroupListContainer");
+    const wbGroupTotalCount = document.querySelector("#wbGroupTotalCount");
+
+    // 创建群模态框
+    const wbCreateGroupModal = document.querySelector("#wbCreateGroupModal");
+    const closeCreateGroupModal = document.querySelector("#closeCreateGroupModal");
+    const submitCreateGroupBtn = document.querySelector("#submitCreateGroupBtn");
+    const wbGroupNameInput = document.querySelector("#wbGroupNameInput");
+    const wbGroupMaxMembersInput = document.querySelector("#wbGroupMaxMembersInput");
+    const wbGroupJoinModeSelect = document.querySelector("#wbGroupJoinModeSelect");
+
+    // 群聊窗口与审批
+    const wbGroupChatModal = document.querySelector("#wbGroupChatModal");
+    const closeWbGroupChat = document.querySelector("#closeWbGroupChat");
+    const wbGroupChatTitle = document.querySelector("#wbGroupChatTitle");
+    const wbGroupChatMemberMeta = document.querySelector("#wbGroupChatMemberMeta");
+    const wbGroupManageBtn = document.querySelector("#wbGroupManageBtn");
+    const wbGroupMessagesList = document.querySelector("#wbGroupMessagesList");
+    const wbGroupChatInput = document.querySelector("#wbGroupChatInput");
+    const wbGroupChatSendBtn = document.querySelector("#wbGroupChatSendBtn");
+
+    const wbGroupApplicantsModal = document.querySelector("#wbGroupApplicantsModal");
+    const closeApplicantsModal = document.querySelector("#closeApplicantsModal");
+    const wbApplicantsGroupTitle = document.querySelector("#wbApplicantsGroupTitle");
+    const wbApplicantsListContainer = document.querySelector("#wbApplicantsListContainer");
+    const acceptAllApplicantsBtn = document.querySelector("#acceptAllApplicantsBtn");
+
+    let currentActiveGroupId = null;
+
+    function ensureWeiboGroups() {
+      ensureWeiboState();
+      if (!Array.isArray(appState.weibo.fanGroups)) {
+        appState.weibo.fanGroups = [];
+      }
+      return appState.weibo.fanGroups;
+    }
+
+    // 渲染粉丝群列表
+    function renderWeiboGroupCenter() {
+      if (!wbGroupListContainer) return;
+      const groups = ensureWeiboGroups();
+      wbGroupListContainer.innerHTML = "";
+
+      if (wbGroupTotalCount) wbGroupTotalCount.textContent = String(groups.length);
+
+      if (!groups.length) {
+        wbGroupListContainer.innerHTML = `
+          <div style="text-align:center; padding: 48px 16px; color:#8c9098; font-size:13px;">
+            <i class="fa-solid fa-users" style="font-size:32px; display:block; margin-bottom:10px; color:#ccc;"></i>
+            还没有创建粉丝群，点击右上角【+】立即创建专属粉丝群！
+          </div>
+        `;
+        return;
+      }
+
+      groups.forEach(g => {
+        const item = document.createElement("div");
+        item.className = "wb-group-item-card";
+        const modeLabel = g.joinMode === "direct" ? "直接进入" : "需审批";
+
+        item.innerHTML = `
+          <div class="wb-group-avatar-box"><i class="fa-solid fa-users"></i></div>
+          <div class="wb-group-info">
+            <div class="wb-group-title-row">
+              <strong>${g.name}</strong>
+              <span class="wb-group-tag">${modeLabel}</span>
+            </div>
+            <div class="wb-group-sub-line">${g.lastMessage ? g.lastMessage.text : (g.joinMode === 'direct' ? '群聊已建立，粉丝正在涌入...' : '等待粉丝发来入群申请...')}</div>
+          </div>
+          <div class="wb-group-member-count">
+            <span style="font-weight:700; color:#111;">${g.currentMembers}</span> / ${g.maxMembers} 人
+          </div>
+        `;
+
+        item.addEventListener("click", () => {
+          openWeiboGroupChat(g);
+        });
+
+        wbGroupListContainer.appendChild(item);
+      });
+    }
+
+    // 打开群聊窗口
+    function openWeiboGroupChat(group) {
+      if (!group || !wbGroupChatModal) return;
+      currentActiveGroupId = group.id;
+
+      if (wbGroupChatTitle) wbGroupChatTitle.textContent = group.name;
+      if (wbGroupChatMemberMeta) wbGroupChatMemberMeta.textContent = `${group.currentMembers} / ${group.maxMembers} 人 · ${group.joinMode === 'direct' ? '直接进入' : '需审批'}`;
+
+      renderWeiboGroupMessages(group);
+      wbGroupChatModal.classList.add("show");
+      setTimeout(() => {
+        if (wbGroupMessagesList) wbGroupMessagesList.scrollTop = wbGroupMessagesList.scrollHeight;
+      }, 100);
+    }
+
+    // 渲染群消息
+    function renderWeiboGroupMessages(group) {
+      if (!wbGroupMessagesList || !group) return;
+      wbGroupMessagesList.innerHTML = "";
+      const myAvatar = appState.theme.cardProfileCoverImage || appState.theme.avatarImage || "https://771553.xyz/file/studio/5FDVc1VrKzVdH5mO.jpg";
+
+      // 欢迎系统提示
+      const notice = document.createElement("div");
+      notice.style.cssText = "text-align:center; font-size:11px; color:#8c9098; margin: 4px 0 10px;";
+      notice.textContent = `欢迎来到「${group.name}」，群上限 ${group.maxMembers} 人`;
+      wbGroupMessagesList.appendChild(notice);
+
+      (group.messages || []).forEach(msg => {
+        const isSelf = msg.sender === "self";
+        const row = document.createElement("div");
+        row.className = `wb-dc-row ${isSelf ? "self" : "friend"}`;
+
+        const avatarUrl = isSelf ? myAvatar : (msg.authorAvatar || "https://771553.xyz/file/studio/5FDVc1VrKzVdH5mO.jpg");
+        const authorLabel = isSelf ? "" : `<div style="font-size:10.5px; color:#8c9098; margin-bottom:2px;">${msg.authorName || "粉丝"}</div>`;
+
+        row.innerHTML = `
+          <div class="wb-dc-avatar" style="background-image:url('${avatarUrl}');"></div>
+          <div>
+            ${authorLabel}
+            <div class="wb-dc-bubble">${msg.text || ""}</div>
+          </div>
+        `;
+        wbGroupMessagesList.appendChild(row);
+      });
+    }
+
+    // 用户在粉丝群内发消息
+    if (wbGroupChatSendBtn && wbGroupChatInput) {
+      const sendGroupMsg = async () => {
+        const text = wbGroupChatInput.value.trim();
+        if (!text || !currentActiveGroupId) return;
+        wbGroupChatInput.value = "";
+
+        const groups = ensureWeiboGroups();
+        const group = groups.find(g => g.id === currentActiveGroupId);
+        if (!group) return;
+
+        if (!Array.isArray(group.messages)) group.messages = [];
+        group.messages.push({
+          sender: "self",
+          text: text,
+          time: "刚刚"
+        });
+        group.lastMessage = { text, time: "刚刚" };
+
+        renderWeiboGroupMessages(group);
+        renderWeiboGroupCenter();
+        await saveState();
+
+        if (wbGroupMessagesList) wbGroupMessagesList.scrollTop = wbGroupMessagesList.scrollHeight;
+
+        // 群内粉丝模拟回复互动
+        setTimeout(async () => {
+          const fanNames = ["星夜行者", "咖啡豆收集家", "微光纪实", "街角风声", "留白记录"];
+          const fanQuotes = [
+            "群主说得对！",
+            "前排打卡支持～",
+            "哇，刚刚在看微博正文，没想到群里冒泡了",
+            "收到收到！",
+            "这周的更新也超棒"
+          ];
+          const randomFan = fanNames[Math.floor(Math.random() * fanNames.length)];
+          const randomQuote = fanQuotes[Math.floor(Math.random() * fanQuotes.length)];
+
+          group.messages.push({
+            sender: "fan",
+            authorName: randomFan,
+            authorAvatar: "https://771553.xyz/file/studio/5FDVc1VrKzVdH5mO.jpg",
+            text: randomQuote,
+            time: "刚刚"
+          });
+          group.lastMessage = { text: `${randomFan}: ${randomQuote}`, time: "刚刚" };
+
+          renderWeiboGroupMessages(group);
+          renderWeiboGroupCenter();
+          await saveState();
+          if (wbGroupMessagesList) wbGroupMessagesList.scrollTop = wbGroupMessagesList.scrollHeight;
+        }, 1200);
+      };
+
+      wbGroupChatSendBtn.addEventListener("click", sendGroupMsg);
+      wbGroupChatInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          sendGroupMsg();
+        }
+      });
+    }
+
+    // 打开群管理/查看入群申请
+    if (wbGroupManageBtn) {
+      wbGroupManageBtn.addEventListener("click", () => {
+        if (!currentActiveGroupId) return;
+        const groups = ensureWeiboGroups();
+        const group = groups.find(g => g.id === currentActiveGroupId);
+        if (!group) return;
+
+        if (group.joinMode === "direct") {
+          showCatpawAlert(`当前群已设置为「直接进入」，粉丝无需审批即可入群。当前群人数：${group.currentMembers} / ${group.maxMembers} 人。`, "群设置");
+        } else {
+          openGroupApplicantsModal(group);
+        }
+      });
+    }
+
+    // 打开粉丝入群申请模态框
+    function openGroupApplicantsModal(group) {
+      if (!wbGroupApplicantsModal || !wbApplicantsListContainer) return;
+      if (wbApplicantsGroupTitle) wbApplicantsGroupTitle.textContent = `${group.name} · 入群申请`;
+
+      const applicants = group.pendingApplicants || [];
+      wbApplicantsListContainer.innerHTML = "";
+
+      if (!applicants.length) {
+        wbApplicantsListContainer.innerHTML = `
+          <div style="text-align:center; padding: 36px 16px; color:#8c9098; font-size:12px;">
+            暂无新的粉丝申请入群。随着粉丝增长，TA们会陆续发来申请。
+          </div>
+        `;
+      } else {
+        applicants.forEach((app, idx) => {
+          const item = document.createElement("div");
+          item.className = "wb-applicant-item";
+          item.innerHTML = `
+            <div class="wb-applicant-left">
+              <div class="wb-applicant-avatar" style="background-image:url('https://771553.xyz/file/studio/5FDVc1VrKzVdH5mO.jpg');"></div>
+              <div>
+                <strong style="font-size:13.5px; color:#111;">${app.name}</strong>
+                <span style="font-size:11px; color:#8c9098; display:block;">理由: ${app.reason || '超喜欢你的微博内容，求通过！'}</span>
+              </div>
+            </div>
+            <button class="liquid-btn primary" style="min-height:30px; padding:0 12px; font-size:11.5px;" type="button">同意入群</button>
+          `;
+
+          item.querySelector("button").addEventListener("click", async () => {
+            if (group.currentMembers >= group.maxMembers) {
+              showCatpawAlert("当前群人数已达上限，无法再添加！");
+              return;
+            }
+            group.currentMembers += 1;
+            group.pendingApplicants.splice(idx, 1);
+            await saveState();
+            openGroupApplicantsModal(group);
+            renderWeiboGroupCenter();
+            if (wbGroupChatMemberMeta) wbGroupChatMemberMeta.textContent = `${group.currentMembers} / ${group.maxMembers} 人`;
+          });
+
+          wbApplicantsListContainer.appendChild(item);
+        });
+      }
+
+      wbGroupApplicantsModal.classList.add("show");
+    }
+
+    if (closeApplicantsModal && wbGroupApplicantsModal) {
+      closeApplicantsModal.addEventListener("click", () => wbGroupApplicantsModal.classList.remove("show"));
+    }
+
+    if (acceptAllApplicantsBtn) {
+      acceptAllApplicantsBtn.addEventListener("click", async () => {
+        if (!currentActiveGroupId) return;
+        const groups = ensureWeiboGroups();
+        const group = groups.find(g => g.id === currentActiveGroupId);
+        if (!group) return;
+
+        const count = (group.pendingApplicants || []).length;
+        if (!count) {
+          showCatpawAlert("当前没有待审批的申请。");
+          return;
+        }
+
+        const canAdd = Math.min(count, group.maxMembers - group.currentMembers);
+        group.currentMembers += canAdd;
+        group.pendingApplicants = [];
+        await saveState();
+
+        openGroupApplicantsModal(group);
+        renderWeiboGroupCenter();
+        if (wbGroupChatMemberMeta) wbGroupChatMemberMeta.textContent = `${group.currentMembers} / ${group.maxMembers} 人`;
+        showCatpawAlert(`已一键同意入群！当前群人数增至 ${group.currentMembers} 人。`, "审批通过");
+      });
+    }
+
+    if (closeWbGroupChat && wbGroupChatModal) {
+      closeWbGroupChat.addEventListener("click", () => wbGroupChatModal.classList.remove("show"));
+    }
+
+    // 核心算法：触发“通知粉丝”入群进程（粉丝量越大，速度越快）
+    function triggerNotifyFansProcess(group) {
+      const stats = ensureWeiboProfileStats();
+      const fansNumber = parseFanStringToNumber(stats.fansCount || "128");
+
+      // 根据粉丝数量计算涌入批次与速度：
+      // 例如粉丝数 > 10万：极速涌入，每 1.2 秒增加 50~150 人，几秒填满
+      // 粉丝数 1000~1万：中速，每 2 秒增加 5~20 人
+      // 粉丝数 < 1000：较慢，每次增加 1~3 人
+      let intervalMs = 2500;
+      let batchMin = 1;
+      let batchMax = 3;
+
+      if (fansNumber >= 500000) {
+        intervalMs = 800;
+        batchMin = 60;
+        batchMax = 180;
+      } else if (fansNumber >= 50000) {
+        intervalMs = 1200;
+        batchMin = 20;
+        batchMax = 60;
+      } else if (fansNumber >= 5000) {
+        intervalMs = 1800;
+        batchMin = 5;
+        batchMax = 15;
+      } else {
+        intervalMs = 3000;
+        batchMin = 1;
+        batchMax = 3;
+      }
+
+      showCatpawAlert(`已一键向你的 ${stats.fansCount} 位粉丝推送了群邀请！粉丝量级越大，进群速度越快！`, "通知已发送");
+
+      const fanNamesPool = ["晚风来信", "胶卷日记", "白昼梦", "星际漫步者", "秋日微光", "折叠空间", "云雀", "北纬30度", "夜行动物"];
+      let wave = 0;
+
+      const timer = setInterval(async () => {
+        wave += 1;
+        if (group.currentMembers >= group.maxMembers || wave > 20) {
+          clearInterval(timer);
+          return;
+        }
+
+        const addCount = Math.floor(Math.random() * (batchMax - batchMin + 1) + batchMin);
+
+        if (group.joinMode === "direct") {
+          // 直接进入模式：群人数飙升，群内自动发消息
+          const nextMembers = Math.min(group.maxMembers, group.currentMembers + addCount);
+          group.currentMembers = nextMembers;
+
+          const randomName = fanNamesPool[Math.floor(Math.random() * fanNamesPool.length)];
+          if (!Array.isArray(group.messages)) group.messages = [];
+          group.messages.push({
+            sender: "fan",
+            authorName: randomName,
+            authorAvatar: "https://771553.xyz/file/studio/5FDVc1VrKzVdH5mO.jpg",
+            text: wave === 1 ? "哇，收到微博推送立马进群啦！" : "进群报道！大家聊什么呢～",
+            time: "刚刚"
+          });
+          group.lastMessage = { text: `${randomName}: 进群报道！`, time: "刚刚" };
+
+          renderWeiboGroupCenter();
+          if (currentActiveGroupId === group.id) {
+            renderWeiboGroupMessages(group);
+            if (wbGroupChatMemberMeta) wbGroupChatMemberMeta.textContent = `${group.currentMembers} / ${group.maxMembers} 人`;
+          }
+          await saveState();
+
+          if (group.currentMembers >= group.maxMembers) {
+            clearInterval(timer);
+            showCatpawAlert(`🎉 粉丝热情空前！你的群聊「${group.name}」已达 ${group.maxMembers} 人完全满员！`, "群聊已满员");
+          }
+        } else {
+          // 审批模式：粉丝陆续发来申请
+          if (!Array.isArray(group.pendingApplicants)) group.pendingApplicants = [];
+          for (let i = 0; i < Math.min(addCount, 8); i++) {
+            const randomName = fanNamesPool[Math.floor(Math.random() * fanNamesPool.length)];
+            group.pendingApplicants.unshift({
+              name: `${randomName}_${Math.floor(Math.random() * 899 + 100)}`,
+              reason: "超喜欢你的微博日常，希望能进粉丝群交流！"
+            });
+          }
+          renderWeiboGroupCenter();
+          await saveState();
+        }
+      }, intervalMs);
+    }
+
+    // 提交创建新群聊
+    if (submitCreateGroupBtn) {
+      submitCreateGroupBtn.addEventListener("click", async () => {
+        const name = wbGroupNameInput?.value.trim();
+        if (!name) {
+          showCatpawAlert("请输入群聊名称！");
+          return;
+        }
+
+        const max = parseInt(wbGroupMaxMembersInput?.value || "500", 10) || 500;
+        const joinMode = wbGroupJoinModeSelect?.value || "direct";
+
+        const newGroup = {
+          id: `wb_group_${Date.now()}`,
+          name: name,
+          maxMembers: max,
+          currentMembers: 1, // 自己首先是群主
+          joinMode: joinMode,
+          pendingApplicants: [],
+          messages: [],
+          lastMessage: null,
+          createdAt: new Date().toLocaleString("zh-CN")
+        };
+
+        const groups = ensureWeiboGroups();
+        groups.unshift(newGroup);
+        await saveState();
+
+        if (wbCreateGroupModal) wbCreateGroupModal.classList.remove("show");
+        renderWeiboGroupCenter();
+
+        // 核心流程：询问是否通知粉丝
+        const notifyNow = window.confirm(`群聊「${name}」已创建成功！\n是否立即一键通知全部粉丝入群？（粉丝量越大，进群越快！）`);
+        if (notifyNow) {
+          triggerNotifyFansProcess(newGroup);
+        } else {
+          showCatpawAlert("已创建群聊！稍后可在群聊中点击管理进行粉丝扩散。", "群聊已就绪");
+        }
+      });
+    }
+
+    if (openCreateGroupBtn) {
+      openCreateGroupBtn.addEventListener("click", () => {
+        if (wbGroupNameInput) wbGroupNameInput.value = "";
+        if (wbGroupMaxMembersInput) wbGroupMaxMembersInput.value = "500";
+        if (wbCreateGroupModal) wbCreateGroupModal.classList.add("show");
+      });
+    }
+
+    if (closeCreateGroupModal && wbCreateGroupModal) {
+      closeCreateGroupModal.addEventListener("click", () => wbCreateGroupModal.classList.remove("show"));
+    }
+
+    // 消息页顶部点击「发现群」打开群聊中心
+    const wbSubTabGroup = document.querySelector("#wbSubTabGroup");
+    if (wbSubTabGroup) {
+      wbSubTabGroup.addEventListener("click", () => {
+        renderWeiboGroupCenter();
+        if (wbGroupCenterPage) wbGroupCenterPage.classList.add("show");
+      });
+    }
+
+    if (closeWbGroupCenter && wbGroupCenterPage) {
+      closeWbGroupCenter.addEventListener("click", () => wbGroupCenterPage.classList.remove("show"));
+    }
+
+    // 消息列表中的「群推荐」点击也打开群中心
+    document.addEventListener("click", (e) => {
+      const groupNotiItem = e.target.closest(".wb-msg-item");
+      if (groupNotiItem && groupNotiItem.textContent.includes("群推荐")) {
+        renderWeiboGroupCenter();
+        if (wbGroupCenterPage) wbGroupCenterPage.classList.add("show");
+      }
+    });
+
     const wbBarHome = document.querySelector("#wbBarHome");
     const wbBarVideo = document.querySelector("#wbBarVideo");
     const wbBarDiscover = document.querySelector("#wbBarDiscover");
@@ -29999,10 +30669,18 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
 
         appState.weibo.posts.unshift(newPost);
         renderWeiboFeed();
+
+        // 发帖增加粉丝系统：根据博文曝光自然增加 10 ~ 80 位真实粉丝
+        const stats = ensureWeiboProfileStats();
+        const currentFansNum = parseFanStringToNumber(stats.fansCount || "128");
+        const addedFans = Math.floor(Math.random() * 65 + 15);
+        const newTotal = currentFansNum + addedFans;
+        stats.fansCount = newTotal >= 10000 ? (newTotal / 10000).toFixed(1) + "万" : String(newTotal);
+        syncAllWeiboUserProfileUI();
         await saveState();
 
         if (weiboComposeModal) weiboComposeModal.classList.remove("show");
-        showCatpawAlert("微博发布成功！");
+        showCatpawAlert(`微博发布成功！该动态获得曝光，吸引了 ${addedFans} 位新粉丝关注了你！`, "发布成功");
 
         // 让 AI 角色在稍后看到微博并互动
         maybeRoleCommentWeibo(newPost);
