@@ -17656,6 +17656,85 @@
       display: flex;
     }
 
+    /* 超话签到成功弹窗 · 纯黑白灰极简 */
+    .wb-sign-card-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 120;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.45);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    .wb-sign-card-modal.show {
+      display: flex;
+    }
+
+    .wb-sign-card-content {
+      width: min(100%, 310px);
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 24px 20px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.16);
+      border: 1px solid #ededed;
+    }
+
+    .wb-sign-card-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: #111111;
+      color: #ffffff;
+      display: grid;
+      place-items: center;
+      font-size: 18px;
+      margin-bottom: 12px;
+    }
+
+    .wb-sign-card-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: #111111;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+
+    .wb-sign-card-days {
+      font-size: 14px;
+      font-weight: 600;
+      color: #333333;
+      margin-bottom: 10px;
+    }
+
+    .wb-sign-card-points {
+      font-size: 12px;
+      color: #777777;
+      background: #f5f6f8;
+      padding: 5px 12px;
+      border-radius: 999px;
+      margin-bottom: 18px;
+    }
+
+    .wb-sign-card-btn {
+      width: 100%;
+      height: 42px;
+      border-radius: 999px;
+      border: none;
+      background: #111111;
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
     .wb-std-header {
       background: #2b2e33;
       color: #ffffff;
@@ -21204,6 +21283,17 @@
 
       <!-- 超话内的动态帖子列表 -->
       <div id="wbStdPostFeedList" style="padding-bottom: 20px;"></div>
+
+      <!-- 超话签到成功专用弹窗 -->
+      <div class="wb-sign-card-modal" id="wbSignCardModal" aria-label="签到成功">
+        <div class="wb-sign-card-content">
+          <div class="wb-sign-card-icon"><i class="fa-solid fa-check"></i></div>
+          <div class="wb-sign-card-title">签到成功</div>
+          <div class="wb-sign-card-days" id="wbSignModalDays">已连续签到 1 天</div>
+          <div class="wb-sign-card-points" id="wbSignModalPoints">+15 积分 · 当前 Lv.1 初见</div>
+          <button class="wb-sign-card-btn" id="closeWbSignCardModal" type="button">我知道了</button>
+        </div>
+      </div>
 
       <!-- 截图同款超话专属底栏 (我来发一帖 / 群聊 / 我的) -->
       <div class="wb-std-bottom-bar">
@@ -28701,7 +28791,10 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
             avatar: "https://771553.xyz/file/studio/5FDVc1VrKzVdH5mO.jpg",
             members: "2097万",
             postsCount: "199万",
-            signed: true,
+            signed: false,
+            consecutiveDays: 0,
+            lastSignDate: "",
+            points: 0,
             desc: "在极简的世界里，探索光与影的最纯粹形态。",
             pinnedPost: "置顶：欢迎来到专属超话空间，一人一句留下你的心动切片...",
             levelNames: [...DEFAULT_LEVEL_NAMES],
@@ -28709,7 +28802,75 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
           }
         ];
       }
+      // 检查超话签到状态，若跨日自动重置今日 signed 为 false
+      const todayStr = getTodayDateString();
+      appState.weibo.supertopics.forEach(tp => {
+        if (typeof tp.points !== "number") tp.points = 0;
+        if (typeof tp.consecutiveDays !== "number") tp.consecutiveDays = 0;
+        if (typeof tp.lastSignDate !== "string") tp.lastSignDate = "";
+        if (tp.lastSignDate !== todayStr) {
+          tp.signed = false;
+        }
+      });
       return appState.weibo.supertopics;
+    }
+
+    function getTodayDateString() {
+      const now = new Date();
+      return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
+    }
+
+    // 根据超话积分计算当前等级 (Lv1 - Lv18)
+    function calculateTopicLevel(points = 0) {
+      // 每 15 积分升 1 级，最高 Lv18
+      const lvl = Math.floor((points || 0) / 15) + 1;
+      return Math.min(18, Math.max(1, lvl));
+    }
+
+    // 执行超话签到核心算法
+    async function executeTopicSign(topic) {
+      if (!topic) return;
+      const todayStr = getTodayDateString();
+
+      if (topic.lastSignDate === todayStr && topic.signed) {
+        showCatpawAlert(`今日已经在 #${topic.title}# 完成签到啦！`, "提示");
+        return;
+      }
+
+      // 计算连续签到天数
+      const yesterday = new Date();
+      yesterday.setDate(yesterday.getDate() - 1);
+      const yesterdayStr = `${yesterday.getFullYear()}-${String(yesterday.getMonth() + 1).padStart(2, "0")}-${String(yesterday.getDate()).padStart(2, "0")}`;
+
+      if (topic.lastSignDate === yesterdayStr) {
+        topic.consecutiveDays = (topic.consecutiveDays || 0) + 1;
+      } else {
+        topic.consecutiveDays = 1;
+      }
+
+      topic.signed = true;
+      topic.lastSignDate = todayStr;
+      topic.points = (topic.points || 0) + 15;
+
+      const currentLvl = calculateTopicLevel(topic.points);
+      const levelName = topic.levelNames?.[currentLvl - 1] || DEFAULT_LEVEL_NAMES[currentLvl - 1] || "知心";
+
+      await persistWeiboSupertopics();
+      renderWeiboMineSupertopicCard();
+
+      // 更新超话主页显示
+      if (currentActiveTopic && currentActiveTopic.id === topic.id) {
+        if (wbStdSignStatus) wbStdSignStatus.textContent = `连签${topic.consecutiveDays}天`;
+        if (wbStdMyLevelText) wbStdMyLevelText.textContent = `我的 LV.${currentLvl} ${levelName}`;
+      }
+
+      // 弹出签到成功卡片
+      const signModal = document.querySelector("#wbSignCardModal");
+      const signModalDays = document.querySelector("#wbSignModalDays");
+      const signModalPoints = document.querySelector("#wbSignModalPoints");
+      if (signModalDays) signModalDays.textContent = `已连续签到 ${topic.consecutiveDays} 天`;
+      if (signModalPoints) signModalPoints.textContent = `+15 积分 · 当前成长至 Lv.${currentLvl} ${levelName}`;
+      if (signModal) signModal.classList.add("show");
     }
 
     // 同步把超话永久写进双重缓存
@@ -28749,11 +28910,7 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
         const signBtn = chip.querySelector(".wb-topic-sign-btn");
         signBtn.addEventListener("click", async (e) => {
           e.stopPropagation();
-          tp.signed = !tp.signed;
-          signBtn.textContent = tp.signed ? "已签到" : "签到";
-          signBtn.classList.toggle("signed", tp.signed);
-          await saveState();
-          showCatpawAlert(tp.signed ? `已完成 #${tp.title}# 今日签到！` : `已取消签到。`, "超话签到");
+          await executeTopicSign(tp);
         });
 
         // 点击直接进入超话详情大页面
@@ -28803,13 +28960,11 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
 
         // 签到
         const signBtn = card.querySelector(".wb-topic-sign-btn");
-        signBtn.addEventListener("click", async () => {
-          tp.signed = !tp.signed;
+        signBtn.addEventListener("click", async (e) => {
+          e.stopPropagation();
+          await executeTopicSign(tp);
           signBtn.textContent = tp.signed ? "已签" : "签到";
           signBtn.classList.toggle("signed", tp.signed);
-          renderWeiboMineSupertopicCard();
-          await saveState();
-          showCatpawAlert(tp.signed ? `已在 #${tp.title}# 完成签到！` : "已取消签到。");
         });
 
         // 删除超话（彻底修复点击不动，采用 100% 响应的确认机制）
@@ -28936,7 +29091,10 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
           avatar: currentCreatedAvatarSrc || "https://771553.xyz/file/studio/5FDVc1VrKzVdH5mO.jpg",
           members: "1",
           postsCount: "0",
-          signed: true,
+          signed: false,
+          consecutiveDays: 0,
+          lastSignDate: "",
+          points: 0,
           desc: desc,
           pinnedPost: `置顶：欢迎来到 #${name}# 专属超话，粉丝专属称谓：${fansName}！`,
           levelNames: customLevels,
@@ -28979,11 +29137,15 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       if (wbStdTitle) wbStdTitle.textContent = topic.title;
       if (wbStdPostCount) wbStdPostCount.textContent = `${topic.postsCount || '0'} 帖子`;
       if (wbStdFansMeta) wbStdFansMeta.textContent = `${topic.members || '1'} ${topic.fansName || '粉丝'}`;
-      if (wbStdSignStatus) wbStdSignStatus.textContent = topic.signed ? "已连签 1 天" : "点击签到";
+      if (wbStdSignStatus) {
+        wbStdSignStatus.textContent = topic.signed ? `连签${topic.consecutiveDays || 1}天` : "点击签到";
+      }
       if (wbStdPinnedText) wbStdPinnedText.textContent = topic.pinnedPost || `置顶：欢迎来到 #${topic.title}# 交流讨论！`;
+
+      const curLevel = calculateTopicLevel(topic.points);
+      const curLevelName = topic.levelNames?.[curLevel - 1] || DEFAULT_LEVEL_NAMES[curLevel - 1] || "初见";
       if (wbStdMyLevelText) {
-        const lv3Name = topic.levelNames?.[2] || "知心";
-        wbStdMyLevelText.textContent = `我的 LV.3 ${lv3Name}`;
+        wbStdMyLevelText.textContent = `我的 LV.${curLevel} ${curLevelName}`;
       }
 
       renderSupertopicPosts(topic);
@@ -29095,17 +29257,21 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       });
     }
 
-    // 超话主页签到
+    // 超话主页签到（点击执行累计连续签到、获得积分并自动提升等级）
     if (wbStdSignCalendarBtn) {
       wbStdSignCalendarBtn.addEventListener("click", async () => {
         if (!currentActiveTopic) return;
-        currentActiveTopic.signed = !currentActiveTopic.signed;
-        if (wbStdSignStatus) {
-          wbStdSignStatus.textContent = currentActiveTopic.signed ? "已连签 1 天" : "点击签到";
-        }
-        renderWeiboMineSupertopicCard();
-        await saveState();
-        showCatpawAlert(currentActiveTopic.signed ? `已在 #${currentActiveTopic.title}# 完成签到！` : "已取消签到。");
+        await executeTopicSign(currentActiveTopic);
+      });
+    }
+
+    // 关闭签到成功弹窗
+    const closeWbSignCardModal = document.querySelector("#closeWbSignCardModal");
+    const wbSignCardModal = document.querySelector("#wbSignCardModal");
+    if (closeWbSignCardModal && wbSignCardModal) {
+      closeWbSignCardModal.addEventListener("click", () => wbSignCardModal.classList.remove("show"));
+      wbSignCardModal.addEventListener("click", (e) => {
+        if (e.target === wbSignCardModal) wbSignCardModal.classList.remove("show");
       });
     }
 
@@ -29135,8 +29301,9 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
     if (wbStdMyLevelBtn) {
       wbStdMyLevelBtn.addEventListener("click", () => {
         if (!currentActiveTopic) return;
-        const lv3Name = currentActiveTopic.levelNames?.[2] || "知心";
-        showCatpawAlert(`你在 #${currentActiveTopic.title}# 中当前处于 LV.3【${lv3Name}】，持续签到与互动即可升级！`, "我的超话等级");
+        const curLevel = calculateTopicLevel(currentActiveTopic.points);
+        const curLevelName = currentActiveTopic.levelNames?.[curLevel - 1] || DEFAULT_LEVEL_NAMES[curLevel - 1] || "初见";
+        showCatpawAlert(`你在 #${currentActiveTopic.title}# 中当前处于 LV.${curLevel}【${curLevelName}】，拥有 ${currentActiveTopic.points || 0} 积分。每天签到可获得 15 积分持续升级！`, "我的超话等级");
       });
     }
 
