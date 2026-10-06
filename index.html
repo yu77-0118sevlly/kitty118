@@ -16602,18 +16602,12 @@
                 <div class="me-stat-item"><b id="cardStatWorlds">0</b><span>设定</span></div>
               </div>
 
-              <!-- 资产极简卡片 -->
-              <div class="me-asset-box" id="openWalletCardBtn" style="cursor: pointer;">
-                <div class="me-asset-head">
-                  <div style="display:flex; justify-content:space-between; align-items:center;">
-                    <span>钱包</span>
-                    <i class="fa-solid fa-chevron-right" style="font-size:11px; color:#8e8e93;"></i>
-                  </div>
-                  <div class="asset-amount" id="assetAmount">¥50,000.00</div>
-                </div>
-                <div class="me-asset-btns" style="grid-template-columns: 1fr;">
-                  <button class="me-btn primary" id="openWalletBtn" type="button">管理钱包与银行卡</button>
-                </div>
+              <!-- 极简资料操作与编辑入口 -->
+              <div style="display: flex; gap: 8px; margin-bottom: 14px;">
+                <button class="ins-wide-btn" id="openEditProfileBtn" type="button" style="min-height: 38px; border-radius: 12px; font-size: 12px; background: #f7f7f7;">
+                  <i class="fa-solid fa-pen" style="font-size: 11px; color: #555555;"></i>
+                  <span>编辑个人资料</span>
+                </button>
               </div>
 
               <!-- 极简功能列表 -->
@@ -17414,6 +17408,8 @@
   <div style="display:none;" aria-hidden="true">
     <div id="cardPage"></div>
     <div id="closeCardPage"></div>
+    <div id="openWalletCardBtn"></div>
+    <div id="openWalletBtn"></div>
     <div id="cardQuickAdd"></div>
     <div id="cardPageSubtitle"></div>
     <div id="assetStatus"></div>
@@ -17421,6 +17417,57 @@
     <div id="stickerImportInput"></div>
     <div id="importStickerBtn"></div>
   </div>
+
+  <!-- 独立个人资料编辑页面 -->
+  <section class="role-editor-modal" id="editProfileModal" aria-label="编辑个人资料">
+    <div class="role-editor-card" style="padding-bottom: calc(50px + env(safe-area-inset-bottom));">
+      <header class="rolec-topbar">
+        <button class="insc-icon-btn" id="closeEditProfile" type="button" aria-label="返回">
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <span class="rolec-topbar-label">Profile</span>
+        <span></span>
+      </header>
+
+      <div class="rolec-title">
+        <strong>编辑个人资料</strong>
+        <span>自定义我的昵称、个性签名与头像</span>
+      </div>
+
+      <div class="role-editor-body" style="gap: 18px; margin-top: 10px;">
+        <!-- 头像更换 -->
+        <section class="rolec-identity" aria-label="我的头像">
+          <div class="rolec-avatar-wrap">
+            <div class="role-preview-avatar" id="editProfilePreviewAvatar" role="button" tabindex="0" aria-label="更换头像"></div>
+            <span class="role-preview-avatar-badge" aria-hidden="true"><i class="fa-solid fa-camera"></i></span>
+          </div>
+          <div class="rolec-identity-copy">
+            <strong id="editProfilePreviewName">我</strong>
+            <span>点击更换头像图片</span>
+            <button class="rolec-avatar-link" id="triggerEditProfileAvatarUpload" type="button">上传新头像</button>
+            <input id="editProfileAvatarFileInput" type="file" accept="image/*" style="display:none;" />
+          </div>
+        </section>
+
+        <div class="rolec-group" style="margin-bottom: 12px;">
+          <div class="field">
+            <label for="editProfileNameInput">昵称</label>
+            <input id="editProfileNameInput" type="text" placeholder="输入我的昵称" />
+          </div>
+
+          <div class="field" style="margin-top: 12px;">
+            <label for="editProfileBioInput">个性签名 / 简介</label>
+            <textarea id="editProfileBioInput" placeholder="输入你想展示的个人介绍或日常签名..." style="min-height: 90px;"></textarea>
+          </div>
+        </div>
+
+        <div class="role-editor-actions">
+          <button class="ins-wide-btn" id="cancelEditProfileBtn" type="button">取消</button>
+          <button class="ins-wide-btn primary" id="saveEditProfileBtn" type="button">保存修改</button>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- 独立钱包管理页面：包含钱包与银行卡独立卡片及自定义更改余额 -->
   <section class="role-editor-modal" id="walletManagerModal" aria-label="钱包管理">
@@ -30641,6 +30688,90 @@ function extractRoleReplyLines(reply) {
     const editCashBalanceBtn = document.querySelector("#editCashBalanceBtn");
     const editBankBalanceBtn = document.querySelector("#editBankBalanceBtn");
     const walletGoToBillBtn = document.querySelector("#walletGoToBillBtn");
+
+    // 个人主页编辑功能绑定
+    const openEditProfileBtn = document.querySelector("#openEditProfileBtn");
+    const editProfileModal = document.querySelector("#editProfileModal");
+    const closeEditProfile = document.querySelector("#closeEditProfile");
+    const cancelEditProfileBtn = document.querySelector("#cancelEditProfileBtn");
+    const saveEditProfileBtn = document.querySelector("#saveEditProfileBtn");
+    const editProfileNameInput = document.querySelector("#editProfileNameInput");
+    const editProfileBioInput = document.querySelector("#editProfileBioInput");
+    const editProfilePreviewAvatar = document.querySelector("#editProfilePreviewAvatar");
+    const editProfilePreviewName = document.querySelector("#editProfilePreviewName");
+    const triggerEditProfileAvatarUpload = document.querySelector("#triggerEditProfileAvatarUpload");
+    const editProfileAvatarFileInput = document.querySelector("#editProfileAvatarFileInput");
+
+    function openEditProfileModal() {
+      if (!editProfileModal) return;
+      if (editProfileNameInput) editProfileNameInput.value = appState.theme.cardProfileName || "我";
+      if (editProfileBioInput) editProfileBioInput.value = appState.theme.cardProfileBio || "";
+      if (editProfilePreviewName) editProfilePreviewName.textContent = appState.theme.cardProfileName || "我";
+      setAvatarElementImage(editProfilePreviewAvatar, appState.theme.cardProfileCoverImage || appState.theme.avatarImage || "");
+      editProfileModal.classList.add("show");
+    }
+
+    function closeEditProfileModal() {
+      if (editProfileModal) editProfileModal.classList.remove("show");
+    }
+
+    if (openEditProfileBtn) openEditProfileBtn.addEventListener("click", openEditProfileModal);
+    if (closeEditProfile) closeEditProfile.addEventListener("click", closeEditProfileModal);
+    if (cancelEditProfileBtn) cancelEditProfileBtn.addEventListener("click", closeEditProfileModal);
+
+    if (triggerEditProfileAvatarUpload && editProfileAvatarFileInput) {
+      triggerEditProfileAvatarUpload.addEventListener("click", () => editProfileAvatarFileInput.click());
+    }
+    if (editProfilePreviewAvatar && editProfileAvatarFileInput) {
+      editProfilePreviewAvatar.addEventListener("click", () => editProfileAvatarFileInput.click());
+    }
+    if (editProfileAvatarFileInput) {
+      editProfileAvatarFileInput.addEventListener("change", (e) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+        readImage(file, (src) => {
+          setAvatarElementImage(editProfilePreviewAvatar, src);
+          editProfilePreviewAvatar.dataset.newAvatar = src;
+        });
+      });
+    }
+
+    if (saveEditProfileBtn) {
+      saveEditProfileBtn.addEventListener("click", async () => {
+        const newName = editProfileNameInput?.value.trim() || "我";
+        const newBio = editProfileBioInput?.value.trim() || "";
+        appState.theme.cardProfileName = newName;
+        appState.theme.cardProfileBio = newBio;
+        if (editProfilePreviewAvatar?.dataset.newAvatar) {
+          appState.theme.cardProfileCoverImage = editProfilePreviewAvatar.dataset.newAvatar;
+          appState.theme.avatarImage = editProfilePreviewAvatar.dataset.newAvatar;
+          delete editProfilePreviewAvatar.dataset.newAvatar;
+        }
+        renderState();
+        await saveState();
+        closeEditProfileModal();
+        await showCatpawAlert("个人资料已更新！", "资料修改");
+      });
+    }
+
+    // 头像点击直接更换资料头像
+    if (cardProfileCover) {
+      cardProfileCover.addEventListener("click", () => {
+        openEditProfileModal();
+      });
+    }
+
+    // 点击名字或介绍快速编辑
+    if (cardProfileName) {
+      cardProfileName.addEventListener("click", () => {
+        openEditProfileModal();
+      });
+    }
+    if (cardProfileBio) {
+      cardProfileBio.addEventListener("click", () => {
+        openEditProfileModal();
+      });
+    }
 
     function openWalletManagerModal() {
       renderCardPage();
