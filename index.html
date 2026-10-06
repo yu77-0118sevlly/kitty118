@@ -6663,78 +6663,98 @@
       color: #111111;
     }
 
-    /* 聊天主题扩展类 */
-    .qq-thread.theme-imessage {
-      --self-bubble-color: #0b84fe !important;
-      --friend-bubble-color: #e9e9eb !important;
+    /* 聊天主题扩展类 · 高权重强化覆盖 */
+    .qq-page.thread-mode #qqPanelThread.theme-imessage,
+    .qq-page.thread-mode.theme-imessage,
+    .qq-page.thread-mode.theme-imessage .qq-shell,
+    .qq-page.thread-mode.theme-imessage .qq-main,
+    .qq-page.thread-mode.theme-imessage .qq-home-shell,
+    .qq-page.thread-mode.theme-imessage #qqPanelThread.active,
+    .qq-page.thread-mode.theme-imessage .qq-thread-messages {
+      background: #f2f2f7 !important;
     }
-    .qq-thread.theme-imessage .qq-message-row.self .qq-message-bubble {
+    .qq-page.thread-mode.theme-imessage .qq-message-row.self .qq-message-bubble {
       color: #ffffff !important;
-      background: #0b84fe !important;
+      background: #007aff !important;
     }
-    .qq-thread.theme-imessage .qq-message-row.friend .qq-message-bubble {
+    .qq-page.thread-mode.theme-imessage .qq-message-row.friend .qq-message-bubble {
       color: #000000 !important;
       background: #e9e9eb !important;
     }
 
-    .qq-thread.theme-wechat {
+    .qq-page.thread-mode #qqPanelThread.theme-wechat,
+    .qq-page.thread-mode.theme-wechat,
+    .qq-page.thread-mode.theme-wechat .qq-shell,
+    .qq-page.thread-mode.theme-wechat .qq-main,
+    .qq-page.thread-mode.theme-wechat .qq-home-shell,
+    .qq-page.thread-mode.theme-wechat #qqPanelThread.active,
+    .qq-page.thread-mode.theme-wechat .qq-thread-messages {
       background: #ededed !important;
     }
-    .qq-thread.theme-wechat .qq-thread-messages {
-      background: #ededed !important;
-    }
-    .qq-thread.theme-wechat .qq-message-row.self .qq-message-bubble {
+    .qq-page.thread-mode.theme-wechat .qq-message-row.self .qq-message-bubble {
       color: #000000 !important;
       background: #95ec69 !important;
     }
-    .qq-thread.theme-wechat .qq-message-row.friend .qq-message-bubble {
+    .qq-page.thread-mode.theme-wechat .qq-message-row.friend .qq-message-bubble {
       color: #000000 !important;
       background: #ffffff !important;
     }
 
-    .qq-thread.theme-telegram {
-      background: #f0f2f5 !important;
+    .qq-page.thread-mode #qqPanelThread.theme-telegram,
+    .qq-page.thread-mode.theme-telegram,
+    .qq-page.thread-mode.theme-telegram .qq-shell,
+    .qq-page.thread-mode.theme-telegram .qq-main,
+    .qq-page.thread-mode.theme-telegram .qq-home-shell,
+    .qq-page.thread-mode.theme-telegram #qqPanelThread.active,
+    .qq-page.thread-mode.theme-telegram .qq-thread-messages {
+      background: #d4e3ee !important;
     }
-    .qq-thread.theme-telegram .qq-message-row.self .qq-message-bubble {
+    .qq-page.thread-mode.theme-telegram .qq-message-row.self .qq-message-bubble {
       color: #000000 !important;
       background: #eeffde !important;
     }
-    .qq-thread.theme-telegram .qq-message-row.friend .qq-message-bubble {
+    .qq-page.thread-mode.theme-telegram .qq-message-row.friend .qq-message-bubble {
       color: #000000 !important;
       background: #ffffff !important;
     }
 
-    .qq-thread.theme-dark {
+    .qq-page.thread-mode #qqPanelThread.theme-dark,
+    .qq-page.thread-mode.theme-dark,
+    .qq-page.thread-mode.theme-dark .qq-shell,
+    .qq-page.thread-mode.theme-dark .qq-main,
+    .qq-page.thread-mode.theme-dark .qq-home-shell,
+    .qq-page.thread-mode.theme-dark #qqPanelThread.active,
+    .qq-page.thread-mode.theme-dark .qq-thread-messages,
+    .qq-page.thread-mode.theme-dark .qq-thread-compose {
       background: #121212 !important;
     }
-    .qq-thread.theme-dark .qq-thread-messages {
-      background: #121212 !important;
-    }
-    .qq-thread.theme-dark .qq-thread-head {
-      background: transparent !important;
-    }
-    .qq-thread.theme-dark .qq-thread-name,
-    .qq-thread.theme-dark .qq-thread-back,
-    .qq-thread.theme-dark .qq-thread-video {
+    .qq-page.thread-mode.theme-dark .qq-thread-name,
+    .qq-page.thread-mode.theme-dark .qq-thread-back,
+    .qq-page.thread-mode.theme-dark .qq-thread-video,
+    .qq-page.thread-mode.theme-dark .qq-compose-input,
+    .qq-page.thread-mode.theme-dark .qq-compose-heart-btn,
+    .qq-page.thread-mode.theme-dark .qq-compose-icon-btn {
       color: #ffffff !important;
     }
-    .qq-thread.theme-dark .qq-message-row.self .qq-message-bubble {
+    .qq-page.thread-mode.theme-dark .qq-message-row.self .qq-message-bubble {
       color: #ffffff !important;
       background: #2c2c2e !important;
     }
-    .qq-thread.theme-dark .qq-message-row.friend .qq-message-bubble {
+    .qq-page.thread-mode.theme-dark .qq-message-row.friend .qq-message-bubble {
       color: #f2f2f2 !important;
       background: #1c1c1e !important;
     }
 
-    .qq-thread.theme-glass {
+    .qq-page.thread-mode #qqPanelThread.theme-glass,
+    .qq-page.thread-mode.theme-glass .qq-thread-messages {
       backdrop-filter: blur(20px) !important;
       -webkit-backdrop-filter: blur(20px) !important;
+      background: rgba(245, 245, 245, 0.85) !important;
     }
-    .qq-thread.theme-glass .qq-message-bubble {
+    .qq-page.thread-mode.theme-glass .qq-message-bubble {
       backdrop-filter: blur(12px) !important;
       -webkit-backdrop-filter: blur(12px) !important;
-      background: rgba(255, 255, 255, 0.72) !important;
+      background: rgba(255, 255, 255, 0.75) !important;
       border: 1px solid rgba(255, 255, 255, 0.6) !important;
     }
 
