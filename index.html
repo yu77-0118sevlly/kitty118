@@ -17389,11 +17389,13 @@
       color: #3b4047;
     }
 
-    /* 我的钱包小卡 */
-    .wb-mine-wallet-card {
+    /* 我的超话专属卡片 (替代原有钱包) · 纯黑白灰极简高质感 */
+    .wb-mine-topic-card {
       background: #ffffff;
-      padding: 14px 16px;
+      padding: 15px 16px;
       margin-bottom: 8px;
+      border-top: 1px solid #f2f3f5;
+      border-bottom: 1px solid #f2f3f5;
     }
 
     .wb-mine-card-head {
@@ -17404,35 +17406,115 @@
     }
 
     .wb-mine-card-head strong {
+      font-size: 14.5px;
+      font-weight: 800;
+      color: #111111;
+      letter-spacing: -0.01em;
+    }
+
+    .wb-mine-card-head small {
+      font-size: 11.5px;
+      color: #7b818a;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .wb-topic-h-scroll {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      overflow-x: auto;
+      padding: 2px 2px 6px;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .wb-topic-h-scroll::-webkit-scrollbar {
+      display: none;
+    }
+
+    .wb-topic-chip {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px 8px 8px;
+      border-radius: 12px;
+      background: #f8f9fa;
+      border: 1px solid #ebecee;
+      flex-shrink: 0;
+      cursor: pointer;
+      transition: background 0.12s ease;
+    }
+
+    .wb-topic-chip:active {
+      background: #eef0f3;
+    }
+
+    .wb-topic-chip-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: #e0e2e5;
+      background-size: cover;
+      background-position: center;
+      display: grid;
+      place-items: center;
       font-size: 14px;
       font-weight: 800;
       color: #111111;
     }
 
-    .wb-mine-card-head small {
-      font-size: 11.5px;
-      color: #8c9098;
-      cursor: pointer;
+    .wb-topic-chip-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
     }
 
-    .wb-mine-wallet-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      text-align: center;
-    }
-
-    .wb-mine-wallet-cell b {
-      display: block;
-      font-size: 15px;
-      font-weight: 800;
+    .wb-topic-chip-info b {
+      font-size: 12.5px;
+      font-weight: 700;
       color: #111111;
+      white-space: nowrap;
     }
 
-    .wb-mine-wallet-cell span {
-      display: block;
-      margin-top: 3px;
-      font-size: 10.5px;
+    .wb-topic-chip-info span {
+      font-size: 10px;
       color: #8c9098;
+      white-space: nowrap;
+    }
+
+    .wb-topic-sign-btn {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: #111111;
+      color: #ffffff;
+      border: none;
+      cursor: pointer;
+      margin-left: 6px;
+    }
+
+    .wb-topic-sign-btn.signed {
+      background: #e2e4e8;
+      color: #666666;
+    }
+
+    /* 超话专属详情弹窗模态框 */
+    .wb-supertopic-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 85;
+      display: none;
+      background: #f4f5f7;
+      flex-direction: column;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .wb-supertopic-modal.show {
+      display: flex;
     }
 
     /* 我的经常访问 (核心重点：角色进驻) */
@@ -20373,65 +20455,50 @@
           </div>
         </div>
 
-        <!-- 2. 八宫格常用入口 -->
+        <!-- 2. 八宫格常用入口 (彻底替换钱包，全部可交互) -->
         <div class="wb-mine-grid-card">
-          <div class="wb-mine-grid-item" data-wb-mine-act="album">
+          <div class="wb-mine-grid-item" data-wb-mine-act="album" title="我的相册">
             <div class="wb-mine-grid-icon"><i class="fa-regular fa-image"></i></div>
             <span>我的相册</span>
           </div>
-          <div class="wb-mine-grid-item" data-wb-mine-act="fav">
+          <div class="wb-mine-grid-item" data-wb-mine-act="fav" title="赞/收藏">
             <div class="wb-mine-grid-icon"><i class="fa-regular fa-star"></i></div>
             <span>赞/收藏</span>
           </div>
-          <div class="wb-mine-grid-item" data-wb-mine-act="history">
+          <div class="wb-mine-grid-item" data-wb-mine-act="history" title="浏览记录">
             <div class="wb-mine-grid-icon"><i class="fa-regular fa-clock"></i></div>
             <span>浏览记录</span>
           </div>
-          <div class="wb-mine-grid-item" data-wb-mine-act="draft">
+          <div class="wb-mine-grid-item" data-wb-mine-act="draft" title="草稿箱">
             <div class="wb-mine-grid-icon"><i class="fa-regular fa-file-lines"></i></div>
             <span>草稿箱</span>
           </div>
-          <div class="wb-mine-grid-item" data-wb-mine-act="wallet">
-            <div class="wb-mine-grid-icon"><i class="fa-solid fa-wallet"></i></div>
-            <span>我的钱包</span>
+          <div class="wb-mine-grid-item" data-wb-mine-act="supertopic" title="我的超话">
+            <div class="wb-mine-grid-icon"><i class="fa-solid fa-hashtag"></i></div>
+            <span>我的超话</span>
           </div>
-          <div class="wb-mine-grid-item" data-wb-mine-act="order">
+          <div class="wb-mine-grid-item" data-wb-mine-act="order" title="微博订单">
             <div class="wb-mine-grid-icon"><i class="fa-solid fa-bag-shopping"></i></div>
             <span>微博订单</span>
           </div>
-          <div class="wb-mine-grid-item" data-wb-mine-act="creator">
+          <div class="wb-mine-grid-item" data-wb-mine-act="creator" title="创作中心">
             <div class="wb-mine-grid-icon"><i class="fa-solid fa-lightbulb"></i></div>
             <span>创作中心</span>
           </div>
-          <div class="wb-mine-grid-item" data-wb-mine-act="theme">
+          <div class="wb-mine-grid-item" data-wb-mine-act="theme" title="个性皮肤">
             <div class="wb-mine-grid-icon"><i class="fa-solid fa-shirt"></i></div>
             <span>个性皮肤</span>
           </div>
         </div>
 
-        <!-- 3. 我的钱包小卡 -->
-        <div class="wb-mine-wallet-card">
+        <!-- 3. 新增超话卡片 (已去除原有钱包卡片) -->
+        <div class="wb-mine-topic-card">
           <div class="wb-mine-card-head">
-            <strong>我的钱包</strong>
-            <small id="wbMineWalletDetailBtn">查看详情 <i class="fa-solid fa-chevron-right" style="font-size:9px;"></i></small>
+            <strong>我的超话</strong>
+            <small id="wbMineOpenAllTopicsBtn">进入超话社区 <i class="fa-solid fa-chevron-right" style="font-size:9px;"></i></small>
           </div>
-          <div class="wb-mine-wallet-grid">
-            <div class="wb-mine-wallet-cell">
-              <b id="wbMineWalletVal1">¥50,000</b>
-              <span>零钱余额</span>
-            </div>
-            <div class="wb-mine-wallet-cell">
-              <b>免息</b>
-              <span>积分服务</span>
-            </div>
-            <div class="wb-mine-wallet-cell">
-              <b>5888</b>
-              <span>灵感额度</span>
-            </div>
-            <div class="wb-mine-wallet-cell">
-              <b>正常</b>
-              <span>资金账户</span>
-            </div>
+          <div class="wb-topic-h-scroll" id="wbMineTopicHScroll">
+            <!-- 动态渲染已关注的超话列表 -->
           </div>
         </div>
 
@@ -20648,6 +20715,22 @@
       <!-- 个人发表的历史博文流 -->
       <div id="wbProFeedList" style="padding-bottom: calc(40px + env(safe-area-inset-bottom));"></div>
       <input type="file" id="wbProBannerInput" accept="image/*" style="display:none;" />
+    </section>
+
+    <!-- 微博超话社区全屏弹窗 · 1:1 纯黑白灰极简 -->
+    <section class="wb-supertopic-modal" id="wbSupertopicModal" aria-label="超话社区">
+      <div class="wb-head" style="background:#ffffff; border-bottom:1px solid #ededed; position:sticky; top:0; z-index:10;">
+        <div class="wb-head-left">
+          <button class="wb-head-icon-btn" id="closeWbSupertopic" type="button"><i class="fa-solid fa-chevron-left"></i></button>
+        </div>
+        <div style="font-size:16px; font-weight:800; color:#111111;">超话社区</div>
+        <div class="wb-head-right">
+          <button class="wb-head-icon-btn" id="wbCreateTopicBtn" type="button" title="新建超话"><i class="fa-solid fa-plus"></i></button>
+        </div>
+      </div>
+      <div style="padding:14px 16px 24px;" id="wbSupertopicListContainer">
+        <!-- 动态渲染超话列表与精选帖子 -->
+      </div>
     </section>
 
     <!-- 微博角色进驻选择弹窗 -->
@@ -28057,37 +28140,275 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       });
     }
 
-    // 「我」页面快捷入口点击交互
+    // ============================================================
+    // 微博超话系统 (Supertopic) 与全屏超话社区管理
+    // ============================================================
+    const wbSupertopicModal = document.querySelector("#wbSupertopicModal");
+    const closeWbSupertopic = document.querySelector("#closeWbSupertopic");
+    const wbMineTopicHScroll = document.querySelector("#wbMineTopicHScroll");
+    const wbMineOpenAllTopicsBtn = document.querySelector("#wbMineOpenAllTopicsBtn");
+    const wbCreateTopicBtn = document.querySelector("#wbCreateTopicBtn");
+    const wbSupertopicListContainer = document.querySelector("#wbSupertopicListContainer");
+
+    function ensureWeiboSupertopics() {
+      ensureWeiboState();
+      if (!Array.isArray(appState.weibo.supertopics) || !appState.weibo.supertopics.length) {
+        appState.weibo.supertopics = [
+          {
+            id: "st_photo",
+            title: "黑白胶片摄影",
+            members: "14.2万",
+            postsCount: "38.6万",
+            signed: true,
+            desc: "用无声的影调，捕捉流动的时光。"
+          },
+          {
+            id: "st_arch",
+            title: "极简建筑与空间",
+            members: "8.9万",
+            postsCount: "19.1万",
+            signed: false,
+            desc: "线条、阴影与光线的诗意交汇。"
+          },
+          {
+            id: "st_daily",
+            title: "日常生活碎片集",
+            members: "26.4万",
+            postsCount: "92.0万",
+            signed: false,
+            desc: "记录每一个平凡而不褪色的瞬间。"
+          }
+        ];
+      }
+      return appState.weibo.supertopics;
+    }
+
+    // 渲染「我」页面里的超话横向胶囊
+    function renderWeiboMineSupertopicCard() {
+      if (!wbMineTopicHScroll) return;
+      const topics = ensureWeiboSupertopics();
+      wbMineTopicHScroll.innerHTML = "";
+
+      topics.forEach(tp => {
+        const chip = document.createElement("div");
+        chip.className = "wb-topic-chip";
+        chip.innerHTML = `
+          <div class="wb-topic-chip-avatar">#</div>
+          <div class="wb-topic-chip-info">
+            <b>#${tp.title}#</b>
+            <span>${tp.members} 讨论 · ${tp.postsCount} 帖子</span>
+          </div>
+          <button class="wb-topic-sign-btn ${tp.signed ? 'signed' : ''}" type="button">${tp.signed ? '已签到' : '签到'}</button>
+        `;
+
+        const signBtn = chip.querySelector(".wb-topic-sign-btn");
+        signBtn.addEventListener("click", async (e) => {
+          e.stopPropagation();
+          tp.signed = !tp.signed;
+          signBtn.textContent = tp.signed ? "已签到" : "签到";
+          signBtn.classList.toggle("signed", tp.signed);
+          await saveState();
+          showCatpawAlert(tp.signed ? `已成功完成「${tp.title}」今日签到！` : `已取消签到。`, "超话签到");
+        });
+
+        chip.addEventListener("click", () => {
+          openWeiboSupertopicDetails(tp);
+        });
+
+        wbMineTopicHScroll.appendChild(chip);
+      });
+    }
+
+    // 打开超话社区大模态框
+    function openWeiboSupertopicDetails(focusTopic = null) {
+      if (!wbSupertopicModal || !wbSupertopicListContainer) return;
+      const topics = ensureWeiboSupertopics();
+      wbSupertopicListContainer.innerHTML = "";
+
+      topics.forEach(tp => {
+        const card = document.createElement("div");
+        card.className = "wb-card";
+        card.style.marginBottom = "14px";
+        card.innerHTML = `
+          <div class="wb-card-header" style="margin-bottom:8px;">
+            <div class="wb-card-author-wrap">
+              <div class="wb-topic-chip-avatar" style="width:44px; height:44px; border-radius:10px; font-size:18px;">#</div>
+              <div class="wb-card-meta">
+                <div class="wb-meta-row1"><strong>#${tp.title}#</strong></div>
+                <div class="wb-meta-row2">
+                  <span>${tp.members} 关注</span>
+                  <span>${tp.postsCount} 动态</span>
+                </div>
+              </div>
+            </div>
+            <button class="wb-topic-sign-btn ${tp.signed ? 'signed' : ''}" type="button" style="padding:5px 14px; font-size:11px;">
+              ${tp.signed ? '今日已签' : '一键签到'}
+            </button>
+          </div>
+          <div style="font-size:12.5px; color:#555; line-height:1.5; margin:6px 0 10px;">${tp.desc}</div>
+          <div style="display:flex; gap:8px;">
+            <button class="liquid-btn" style="flex:1; min-height:34px; font-size:12px;" type="button" data-act="post">发布超话帖子</button>
+            <button class="liquid-btn" style="flex:1; min-height:34px; font-size:12px; background:#f0f2f5; color:#111; border:none;" type="button" data-act="refresh">浏览最新讨论</button>
+          </div>
+        `;
+
+        const signBtn = card.querySelector(".wb-topic-sign-btn");
+        signBtn.addEventListener("click", async () => {
+          tp.signed = !tp.signed;
+          signBtn.textContent = tp.signed ? "今日已签" : "一键签到";
+          signBtn.classList.toggle("signed", tp.signed);
+          renderWeiboMineSupertopicCard();
+          await saveState();
+          showCatpawAlert(tp.signed ? `已在 #${tp.title}# 完成签到！` : "已取消签到。");
+        });
+
+        card.querySelector("[data-act='post']").addEventListener("click", () => {
+          wbSupertopicModal.classList.remove("show");
+          openWeiboComposeWithTopic(tp.title);
+        });
+
+        card.querySelector("[data-act='refresh']").addEventListener("click", () => {
+          showCatpawAlert(`已载入 #${tp.title}# 的最新精选讨论流。`, "超话讨论");
+        });
+
+        wbSupertopicListContainer.appendChild(card);
+      });
+
+      wbSupertopicModal.classList.add("show");
+    }
+
+    if (closeWbSupertopic && wbSupertopicModal) {
+      closeWbSupertopic.addEventListener("click", () => wbSupertopicModal.classList.remove("show"));
+    }
+
+    if (wbMineOpenAllTopicsBtn) {
+      wbMineOpenAllTopicsBtn.addEventListener("click", () => openWeiboSupertopicDetails());
+    }
+
+    // 新建自定义超话
+    if (wbCreateTopicBtn) {
+      wbCreateTopicBtn.addEventListener("click", async () => {
+        const title = await showMusicPrompt({
+          title: "创建新超话",
+          placeholder: "请输入超话名称（如：午夜私语、黑白日志）",
+          value: "",
+          confirmText: "创建"
+        });
+        if (title && title.trim()) {
+          const topics = ensureWeiboSupertopics();
+          const cleanTitle = title.trim().replace(/^#|#$/g, "");
+          topics.unshift({
+            id: `st_${Date.now()}`,
+            title: cleanTitle,
+            members: "1",
+            postsCount: "0",
+            signed: true,
+            desc: `这是属于 #${cleanTitle}# 的专属交流与记忆空间。`
+          });
+          renderWeiboMineSupertopicCard();
+          openWeiboSupertopicDetails();
+          await saveState();
+          showCatpawAlert(`超话 #${cleanTitle}# 创建成功！已自动关注并置顶。`, "创建超话");
+        }
+      });
+    }
+
+    // ============================================================
+    // 界面所有可见元素全面激活可点交互 (支持每一个细节点击)
+    // ============================================================
+
+    // 1. 顶部 PRO VIP 标点击
+    const wbMineVipTag = document.querySelector(".wb-mine-vip-tag");
+    if (wbMineVipTag) {
+      wbMineVipTag.style.cursor = "pointer";
+      wbMineVipTag.addEventListener("click", (e) => {
+        e.stopPropagation();
+        showCatpawAlert("当前为黑白极简专属 PRO 会员状态，拥有尊贵全站特权与免广告流。", "PRO 会员");
+      });
+    }
+
+    // 2. 状态胶囊点击 (在线 / 隐身 切换)
+    const wbMineStatusPill = document.querySelector(".wb-mine-status-pill");
+    if (wbMineStatusPill) {
+      wbMineStatusPill.style.cursor = "pointer";
+      wbMineStatusPill.addEventListener("click", async (e) => {
+        e.stopPropagation();
+        const curStatus = wbMineStatusPill.textContent.trim();
+        const isOnline = curStatus.includes("在线");
+        const nextStatus = isOnline ? "离线 / 潜水中" : "在线";
+        wbMineStatusPill.querySelector("span").textContent = nextStatus;
+        showCatpawAlert(`已切换微博状态为：${nextStatus}`, "状态切换");
+      });
+    }
+
+    // 3. 创作者中心与灵感空间横幅点击
+    const wbMineBannerStrip = document.querySelector(".wb-mine-banner-strip");
+    if (wbMineBannerStrip) {
+      wbMineBannerStrip.style.cursor = "pointer";
+      wbMineBannerStrip.addEventListener("click", (e) => {
+        if (e.target.closest("#wbMineEditProfileBtn")) return;
+        showCatpawAlert("已接入创作中心灵感库，你的动态将获得更高的曝光与推荐权重。", "创作者中心");
+      });
+    }
+
+    // 4. 四大统计之首「微博」数量点击直达个人微博动态
+    const wbMinePostCount = document.querySelector("#wbMinePostCount");
+    if (wbMinePostCount && wbMinePostCount.parentElement) {
+      wbMinePostCount.parentElement.style.cursor = "pointer";
+      wbMinePostCount.parentElement.addEventListener("click", () => {
+        openWeiboProfilePage();
+      });
+    }
+
+    // 5. 八宫格入口点击（去除钱包，全部有真实完备交互）
     document.querySelectorAll("[data-wb-mine-act]").forEach(item => {
       item.addEventListener("click", () => {
         const act = item.dataset.wbMineAct;
-        const nameMap = {
-          album: "我的相册",
-          fav: "赞与收藏",
-          history: "浏览记录",
-          draft: "草稿箱",
-          wallet: "我的钱包",
-          order: "微博订单",
-          creator: "创作中心",
-          theme: "个性皮肤"
-        };
-        if (act === "wallet") {
-          openWalletManagerModal();
-        } else {
-          showCatpawAlert(`已进入${nameMap[act] || "功能"}，当前记录已自动同步。`, nameMap[act] || "提示");
+        switch (act) {
+          case "album":
+            openWeiboProfilePage();
+            showCatpawAlert("已载入你发表的所有微博高清图集与相册。", "我的相册");
+            break;
+          case "fav":
+            showCatpawAlert("你收藏了 12 条微博精选灵感切片。", "赞与收藏");
+            break;
+          case "history":
+            showCatpawAlert("已自动记录最近浏览的 30 条微博与热搜话题。", "浏览记录");
+            break;
+          case "draft":
+            showCatpawAlert("草稿箱暂无未发送的内容，点击右上角【+】可直接发博。", "草稿箱");
+            break;
+          case "supertopic":
+            openWeiboSupertopicDetails();
+            break;
+          case "order":
+            showCatpawAlert("暂无进行中的服务或周边订单。", "微博订单");
+            break;
+          case "creator":
+            showCatpawAlert("灵感指数：98.4 · 互动率：优 · 欢迎持续记录日常。", "创作中心");
+            break;
+          case "theme":
+            showCatpawAlert("当前已默认应用「纯黑白灰轻奢极简」高级质感皮肤。", "个性皮肤");
+            break;
+          default:
+            break;
         }
       });
     });
 
-    const wbMineEditProfileBtn = document.querySelector("#wbMineEditProfileBtn");
-    if (wbMineEditProfileBtn) {
-      wbMineEditProfileBtn.addEventListener("click", () => openEditProfileModal());
-    }
+    // 6. 「暂无进驻角色」空状态区域点击，也自动打开角色进驻弹窗
+    document.addEventListener("click", (e) => {
+      if (e.target.closest(".wb-frequent-empty")) {
+        openWbRoleSelectModal();
+      }
+    });
 
-    const wbMineWalletDetailBtn = document.querySelector("#wbMineWalletDetailBtn");
-    if (wbMineWalletDetailBtn) {
-      wbMineWalletDetailBtn.addEventListener("click", () => openWalletManagerModal());
-    }
+    // 微博「我」页面渲染时同步渲染超话卡片
+    const originalRenderWeiboMinePanel = renderWeiboMinePanel;
+    renderWeiboMinePanel = function() {
+      originalRenderWeiboMinePanel();
+      renderWeiboMineSupertopicCard();
+    };
 
     // AI 实时生成/刷新微博内容（需配置 API）
     let weiboAiRefreshing = false;
