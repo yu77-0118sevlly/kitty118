@@ -6623,6 +6623,121 @@
       font-weight: 400;
     }
 
+    .chat-search-filter-tag {
+      padding: 5px 12px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 600;
+      color: #8e8e93;
+      background: #f5f5f5;
+      border: none;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+      flex-shrink: 0;
+    }
+
+    .chat-search-filter-tag.active {
+      color: #ffffff;
+      background: #000000;
+    }
+
+    .chat-timeline-trigger-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: #f4f4f4;
+      border: none;
+      color: #8e8e93;
+      font-size: 9.5px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 2px;
+      transition: background 0.12s ease, color 0.12s ease;
+    }
+
+    .chat-timeline-trigger-btn:active {
+      background: #e8e8e8;
+      color: #111111;
+    }
+
+    /* 聊天主题扩展类 */
+    .qq-thread.theme-imessage {
+      --self-bubble-color: #0b84fe !important;
+      --friend-bubble-color: #e9e9eb !important;
+    }
+    .qq-thread.theme-imessage .qq-message-row.self .qq-message-bubble {
+      color: #ffffff !important;
+      background: #0b84fe !important;
+    }
+    .qq-thread.theme-imessage .qq-message-row.friend .qq-message-bubble {
+      color: #000000 !important;
+      background: #e9e9eb !important;
+    }
+
+    .qq-thread.theme-wechat {
+      background: #ededed !important;
+    }
+    .qq-thread.theme-wechat .qq-thread-messages {
+      background: #ededed !important;
+    }
+    .qq-thread.theme-wechat .qq-message-row.self .qq-message-bubble {
+      color: #000000 !important;
+      background: #95ec69 !important;
+    }
+    .qq-thread.theme-wechat .qq-message-row.friend .qq-message-bubble {
+      color: #000000 !important;
+      background: #ffffff !important;
+    }
+
+    .qq-thread.theme-telegram {
+      background: #f0f2f5 !important;
+    }
+    .qq-thread.theme-telegram .qq-message-row.self .qq-message-bubble {
+      color: #000000 !important;
+      background: #eeffde !important;
+    }
+    .qq-thread.theme-telegram .qq-message-row.friend .qq-message-bubble {
+      color: #000000 !important;
+      background: #ffffff !important;
+    }
+
+    .qq-thread.theme-dark {
+      background: #121212 !important;
+    }
+    .qq-thread.theme-dark .qq-thread-messages {
+      background: #121212 !important;
+    }
+    .qq-thread.theme-dark .qq-thread-head {
+      background: transparent !important;
+    }
+    .qq-thread.theme-dark .qq-thread-name,
+    .qq-thread.theme-dark .qq-thread-back,
+    .qq-thread.theme-dark .qq-thread-video {
+      color: #ffffff !important;
+    }
+    .qq-thread.theme-dark .qq-message-row.self .qq-message-bubble {
+      color: #ffffff !important;
+      background: #2c2c2e !important;
+    }
+    .qq-thread.theme-dark .qq-message-row.friend .qq-message-bubble {
+      color: #f2f2f2 !important;
+      background: #1c1c1e !important;
+    }
+
+    .qq-thread.theme-glass {
+      backdrop-filter: blur(20px) !important;
+      -webkit-backdrop-filter: blur(20px) !important;
+    }
+    .qq-thread.theme-glass .qq-message-bubble {
+      backdrop-filter: blur(12px) !important;
+      -webkit-backdrop-filter: blur(12px) !important;
+      background: rgba(255, 255, 255, 0.72) !important;
+      border: 1px solid rgba(255, 255, 255, 0.6) !important;
+    }
+
     /* 极简白系 Ins 主页风 Settings Page · 无边框重构 */
     #settingsPage {
       padding: 0;
@@ -16957,8 +17072,12 @@
                 <div class="qq-thread-avatar-box">
                   <div class="qq-thread-avatar" id="qqThreadHeaderAvatar"></div>
                 </div>
-                <div class="qq-thread-text-stack">
+                <div class="qq-thread-text-stack" style="align-items:center;">
                   <div class="qq-thread-name" id="qqThreadHeaderName">叶子</div>
+                  <button class="chat-timeline-trigger-btn" id="openChatTimelineBtn" type="button" title="点击查看历史日期时光机">
+                    <i class="fa-regular fa-calendar-days"></i>
+                    <span id="chatTimelineCurrentDate">时间线</span>
+                  </button>
                 </div>
               </div>
               <button class="qq-thread-video" id="openChatSettings" type="button" aria-label="会话设置">
@@ -18477,6 +18596,19 @@
         <div class="chat-setting-section-header">气泡与界面视觉</div>
 
         <div class="chat-setting-item">
+          <div class="chat-setting-title"><i class="fa-solid fa-palette"></i> 专属聊天主题风格</div>
+          <select id="chatThemePresetSelect" style="border-radius:14px; padding:10px 14px; min-height:44px; width:100%; background:#f7f7f7; color:#1a1a1a; font-size:13px; border:none; outline:none;">
+            <option value="minimal">极简纯白 (Minimal White)</option>
+            <option value="imessage">iMessage 轻灰质感</option>
+            <option value="wechat">微信经典灰白阶</option>
+            <option value="telegram">Telegram 纯粹流线</option>
+            <option value="dark">黑夜沉浸 (Obsidian Dark)</option>
+            <option value="glass">透光毛玻璃 (Frosted Glass)</option>
+          </select>
+          <div class="chat-ai-result">每个角色拥有独立专属主题，可随时自由切换或微调下方自定义尺寸。</div>
+        </div>
+
+        <div class="chat-setting-item">
           <div class="chat-setting-title"><i class="fa-solid fa-users-viewfinder"></i> 头像显隐方式</div>
           <div class="chat-toggle-row">
             <span>显示聊天气泡旁头像</span>
@@ -18606,9 +18738,25 @@
         <div class="chat-setting-section-header">数据与记录管理</div>
 
         <div class="chat-setting-item">
-          <div class="chat-setting-title"><i class="fa-solid fa-magnifying-glass"></i> 搜索本地聊天历史</div>
-          <input id="chatHistorySearch" type="search" placeholder="输入关键词匹配本地记录" />
-          <div class="chat-history-results" id="chatHistoryResults">输入关键词后实时检索。</div>
+          <div class="chat-setting-title"><i class="fa-solid fa-address-book"></i> 关系档案与长期记忆</div>
+          <div class="inline-actions" style="margin-top:6px;">
+            <button class="liquid-btn" id="openRelationArchiveBtn" type="button">查看关系档案</button>
+            <button class="liquid-btn primary" id="openMemoryManagerBtn" type="button">AI 记忆管理库</button>
+          </div>
+          <div class="chat-ai-result">关系档案可查看彼此的陪伴天数与发言统计；记忆库支持管理、修改或锁定重要记忆。</div>
+        </div>
+
+        <div class="chat-setting-item">
+          <div class="chat-setting-title"><i class="fa-solid fa-magnifying-glass"></i> 多维本地聊天搜索</div>
+          <div style="display:flex; gap:6px; margin-bottom:8px; overflow-x:auto;">
+            <button class="chat-search-filter-tag active" type="button" data-search-filter="all">全部</button>
+            <button class="chat-search-filter-tag" type="button" data-search-filter="text">文字</button>
+            <button class="chat-search-filter-tag" type="button" data-search-filter="image">图片</button>
+            <button class="chat-search-filter-tag" type="button" data-search-filter="voice">语音</button>
+            <button class="chat-search-filter-tag" type="button" data-search-filter="fav">收藏</button>
+          </div>
+          <input id="chatHistorySearch" type="search" placeholder="搜索关键词，或输入日期如 10月5日" />
+          <div class="chat-history-results" id="chatHistoryResults">输入关键词后实时检索，点击结果可直接跳转。</div>
         </div>
 
         <div class="chat-setting-item">
@@ -18695,6 +18843,101 @@
           <button class="liquid-btn primary" id="confirmChatRoleEditPage" type="button">保存设定</button>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- 关系档案弹窗 (轻奢杂志式关系数据统计) -->
+  <section class="announcement-modal" id="relationArchiveModal" aria-label="关系档案">
+    <div class="announcement-card" style="padding-bottom: calc(24px + env(safe-area-inset-bottom));">
+      <header class="announcement-head" style="display:flex; justify-content:space-between; align-items:center;">
+        <div>
+          <h3 style="font-size:20px; margin:0;">关系档案</h3>
+          <span style="font-size:10px; color:#8e8e93; font-weight:600; letter-spacing:0.1em; text-transform:uppercase;">RELATION ARCHIVE</span>
+        </div>
+        <button class="text-editor-close" id="closeRelationArchive" type="button" aria-label="关闭">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </header>
+
+      <div style="display:flex; flex-direction:column; gap:12px; margin-top:10px;">
+        <div style="display:flex; align-items:center; gap:12px; padding:12px 14px; background:#f7f7f7; border-radius:18px;">
+          <div class="qq-thread-avatar" id="archiveRoleAvatar" style="width:50px; height:50px; border-radius:50%; background-size:cover; background-position:center; flex-shrink:0;"></div>
+          <div style="min-width:0; flex:1;">
+            <strong style="font-size:16px; color:#111111; display:block;" id="archiveRoleName">角色</strong>
+            <span style="font-size:11px; color:#8e8e93; display:block; margin-top:2px;" id="archiveDaysTogether">相识陪伴第 1 天</span>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+          <div class="announcement-item" style="text-align:center;">
+            <strong style="font-size:20px; color:#000000; font-weight:800;" id="archiveTotalMsgs">0</strong>
+            <p style="margin:2px 0 0; font-size:10.5px; color:#8e8e93;">累计消息总数</p>
+          </div>
+          <div class="announcement-item" style="text-align:center;">
+            <strong style="font-size:20px; color:#000000; font-weight:800;" id="archivePeakHour">--:00</strong>
+            <p style="margin:2px 0 0; font-size:10.5px; color:#8e8e93;">最常聊天时段</p>
+          </div>
+        </div>
+
+        <div class="announcement-item">
+          <div style="display:flex; justify-content:space-between; margin-bottom:6px; font-size:11.5px; font-weight:600; color:#333;">
+            <span>我发送 <b id="archiveSelfCount">0</b> 条</span>
+            <span>TA发送 <b id="archiveFriendCount">0</b> 条</span>
+          </div>
+          <div style="height:6px; background:#e8e8e8; border-radius:999px; overflow:hidden; display:flex;">
+            <div id="archiveRatioBar" style="height:100%; width:50%; background:#111111; transition:width 0.3s ease;"></div>
+          </div>
+        </div>
+
+        <div class="announcement-item">
+          <strong style="font-size:12px; margin-bottom:3px;">初次对话时间</strong>
+          <p id="archiveFirstDate" style="font-size:11.5px; color:#555;">暂无记录</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AI 记忆管理库弹窗 (三层记忆管理：短期、阶段、长期锁定记忆) -->
+  <section class="role-editor-modal" id="memoryManagerModal" aria-label="AI 记忆管理库">
+    <div class="role-editor-card" style="padding-bottom: calc(48px + env(safe-area-inset-bottom));">
+      <header class="rolec-topbar">
+        <button class="insc-icon-btn" id="closeMemoryManager" type="button" aria-label="返回">
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <span class="rolec-topbar-label">AI MEMORY</span>
+        <button class="insc-icon-btn trailing" id="addPermanentMemoryBtn" type="button" aria-label="新增长期记忆">
+          <i class="fa-solid fa-plus"></i>
+        </button>
+      </header>
+
+      <div class="rolec-title">
+        <strong>记忆管理库</strong>
+        <span>查看角色记住了你的哪些细节，可自由修改、删除或长久锁定</span>
+      </div>
+
+      <div style="display:flex; gap:8px; margin-bottom:14px; overflow-x:auto;">
+        <button class="chat-search-filter-tag active" type="button" data-memory-tab="long">长期记忆 (<span id="memCountLong">0</span>)</button>
+        <button class="chat-search-filter-tag" type="button" data-memory-tab="stage">阶段摘要 (<span id="memCountStage">0</span>)</button>
+        <button class="chat-search-filter-tag" type="button" data-memory-tab="short">短期对话轮数</button>
+      </div>
+
+      <div id="memoryListContainer" style="display:flex; flex-direction:column; gap:10px;"></div>
+    </div>
+  </section>
+
+  <!-- 时光机日期快速跳转抽屉 -->
+  <section class="announcement-modal" id="chatTimelineModal" aria-label="聊天时光机">
+    <div class="announcement-card" style="max-height:75dvh; padding-bottom:calc(20px + env(safe-area-inset-bottom));">
+      <header class="announcement-head" style="display:flex; justify-content:space-between; align-items:center;">
+        <div>
+          <h3 style="font-size:18px; margin:0;">日期时光机</h3>
+          <span style="font-size:10px; color:#8e8e93; font-weight:600;">选择日期直达当天对话</span>
+        </div>
+        <button class="text-editor-close" id="closeChatTimeline" type="button" aria-label="关闭">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </header>
+      <div id="timelineDateList" style="display:flex; flex-direction:column; gap:8px; margin-top:10px; overflow-y:auto;"></div>
     </div>
   </section>
 
@@ -24935,7 +25178,10 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
 
     function getChatDefaultSettings() {
       return {
-        theme: "blue",
+        theme: "minimal",
+        themePreset: "minimal",
+        permanentMemories: [],
+        stageMemories: [],
         remark: "",
         contactNote: "",
         myName: "",
@@ -25088,6 +25334,13 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       qqThreadPanel.style.setProperty("--friend-text-color", "#2d3035");
       const activeFont = getCustomFontById(settings.chatFontId);
       qqThreadPanel.style.fontFamily = activeFont ? `"${activeFont.family}", "Noto Sans TC", "Noto Sans SC", "PingFang SC", sans-serif` : "";
+
+      // 主题预设样式挂载
+      qqThreadPanel.classList.remove("theme-minimal", "theme-imessage", "theme-wechat", "theme-telegram", "theme-dark", "theme-glass");
+      const preset = settings.themePreset || "minimal";
+      if (preset !== "minimal") {
+        qqThreadPanel.classList.add(`theme-${preset}`);
+      }
 
       const threadMessages = document.querySelector("#qqThreadMessages");
       if (settings.wallpaper) {
@@ -26363,7 +26616,12 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       if (chatProactiveStart) chatProactiveStart.value = settings.proactiveStart || "08:00";
       if (chatProactiveEnd) chatProactiveEnd.value = settings.proactiveEnd || "23:30";
 
+      const chatThemePresetSelect = document.querySelector("#chatThemePresetSelect");
+      if (chatThemePresetSelect) chatThemePresetSelect.value = settings.themePreset || "minimal";
+
       if (chatHistorySearch) chatHistorySearch.value = "";
+      currentSearchFilterType = "all";
+      document.querySelectorAll("[data-search-filter]").forEach(b => b.classList.toggle("active", b.dataset.searchFilter === "all"));
       if (chatHistoryResults) chatHistoryResults.textContent = "输入关键词后显示本地匹配结果。";
       if (chatMemoryTurnsInput) chatMemoryTurnsInput.value = String(settings.memoryTurns || 10);
     }
@@ -26434,6 +26692,9 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       const memoryTurnsValue = Number(chatMemoryTurnsInput?.value || 10);
       settings.memoryTurns = Number.isFinite(memoryTurnsValue) ? memoryTurnsValue : 10;
 
+      const chatThemePresetSelect = document.querySelector("#chatThemePresetSelect");
+      if (chatThemePresetSelect) settings.themePreset = chatThemePresetSelect.value;
+
       const base = getCurrentChatBase();
       if (base.role) {
         base.role.name = chatSettingRoleName?.value.trim() || base.role.name || "未命名角色";
@@ -26456,31 +26717,302 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       }, 0);
     }
 
+    let currentSearchFilterType = "all";
+
     function updateChatHistorySearch() {
       if (!chatHistorySearch || !chatHistoryResults) return;
       const keyword = chatHistorySearch.value.trim().toLowerCase();
       chatHistoryResults.innerHTML = "";
 
-      if (!keyword) {
-        chatHistoryResults.textContent = "输入关键词后显示本地匹配结果。";
-        return;
+      const messages = getCurrentChatMessages();
+      const settings = getActiveChatSettings();
+      const favSet = new Set((settings.favorites || []).map(f => f.messageId));
+
+      let pool = messages.slice();
+      if (currentSearchFilterType === "image") {
+        pool = pool.filter(m => m.type === "image" || m.subtype === "role-photo");
+      } else if (currentSearchFilterType === "voice") {
+        pool = pool.filter(m => m.type === "voice");
+      } else if (currentSearchFilterType === "fav") {
+        pool = pool.filter(m => favSet.has(getMessageId(m)));
+      } else if (currentSearchFilterType === "text") {
+        pool = pool.filter(m => !m.type || m.type === "textpost");
       }
 
-      const messages = getCurrentChatMessages();
-      const hits = messages.filter((item) => (item.text || "").toLowerCase().includes(keyword));
+      const hits = pool.filter((item) => {
+        if (!keyword) return true;
+        const textMatch = (item.text || "").toLowerCase().includes(keyword);
+        const dateMatch = formatMessageGapTime(item.createdAtMs).toLowerCase().includes(keyword);
+        const noteMatch = (item.note || "").toLowerCase().includes(keyword);
+        return textMatch || dateMatch || noteMatch;
+      });
 
       if (!hits.length) {
-        chatHistoryResults.textContent = "没有找到匹配的本地会话历史。";
+        chatHistoryResults.textContent = keyword ? "没有找到匹配的本地会话历史。" : "该分类下暂无消息。";
         return;
       }
 
-      hits.forEach((item) => {
+      hits.slice(-50).forEach((item) => {
         const hit = document.createElement("div");
         hit.className = "chat-history-hit";
+        hit.style.cursor = "pointer";
         const speaker = item.sender === "friend" ? "对方" : "我";
-        hit.innerHTML = `<small>${speaker}</small>${item.text || ""}`;
+        const timeStr = formatMessageGapTime(item.createdAtMs);
+        let preview = item.text || "";
+        if (item.type === "voice") preview = `[语音] ${item.text || ""}`;
+        if (item.type === "image") preview = `[图片]`;
+        if (item.type === "sticker") preview = `[表情包: ${item.note || "未备注"}]`;
+        hit.innerHTML = `<small>${timeStr} · ${speaker}</small>${preview}`;
+
+        // 点击直接定位到消息
+        hit.addEventListener("click", () => {
+          closeChatSettingsModal();
+          const targetMsgId = getMessageId(item);
+          const targetEl = document.querySelector(`.qq-message-row[data-message-id="${targetMsgId}"]`);
+          if (targetEl) {
+            targetEl.scrollIntoView({ behavior: "smooth", block: "center" });
+            targetEl.style.transition = "transform 0.2s ease";
+            targetEl.style.transform = "scale(1.05)";
+            setTimeout(() => targetEl.style.transform = "none", 400);
+          }
+        });
+
         chatHistoryResults.appendChild(hit);
       });
+    }
+
+    // 关系档案弹窗逻辑
+    function openRelationArchiveModal() {
+      const modal = document.querySelector("#relationArchiveModal");
+      if (!modal) return;
+      const base = getCurrentChatBase();
+      const role = base.role;
+      const messages = getCurrentChatMessages();
+
+      const avatarEl = document.querySelector("#archiveRoleAvatar");
+      const nameEl = document.querySelector("#archiveRoleName");
+      const daysTogetherEl = document.querySelector("#archiveDaysTogether");
+      const totalMsgsEl = document.querySelector("#archiveTotalMsgs");
+      const peakHourEl = document.querySelector("#archivePeakHour");
+      const selfCountEl = document.querySelector("#archiveSelfCount");
+      const friendCountEl = document.querySelector("#archiveFriendCount");
+      const ratioBar = document.querySelector("#archiveRatioBar");
+      const firstDateEl = document.querySelector("#archiveFirstDate");
+
+      if (avatarEl) setAvatarElementImage(avatarEl, base.avatar || "");
+      if (nameEl) nameEl.textContent = getChatDisplayName(base);
+
+      // 计算统计
+      const firstMsg = messages[0];
+      const firstTime = firstMsg ? firstMsg.createdAtMs : Date.now();
+      const diffDays = Math.max(1, Math.ceil((Date.now() - firstTime) / (1000 * 3600 * 24)));
+      if (daysTogetherEl) daysTogetherEl.textContent = `相识陪伴第 ${diffDays} 天`;
+
+      let selfCount = 0;
+      let friendCount = 0;
+      const hourCounts = new Array(24).fill(0);
+
+      messages.forEach(m => {
+        if (m.sender === "self") selfCount++;
+        else friendCount++;
+        if (m.createdAtMs) {
+          const h = new Date(m.createdAtMs).getHours();
+          hourCounts[h]++;
+        }
+      });
+
+      if (totalMsgsEl) totalMsgsEl.textContent = String(messages.length);
+      if (selfCountEl) selfCountEl.textContent = String(selfCount);
+      if (friendCountEl) friendCountEl.textContent = String(friendCount);
+
+      const ratio = messages.length ? (selfCount / messages.length) * 100 : 50;
+      if (ratioBar) ratioBar.style.width = `${ratio}%`;
+
+      let peakH = 0;
+      let maxC = 0;
+      hourCounts.forEach((cnt, h) => {
+        if (cnt > maxC) { maxC = cnt; peakH = h; }
+      });
+      if (peakHourEl) peakHourEl.textContent = `${String(peakH).padStart(2, "0")}:00`;
+
+      if (firstDateEl) {
+        firstDateEl.textContent = firstMsg ? new Date(firstMsg.createdAtMs).toLocaleString("zh-CN") : "尚未开始初次对话";
+      }
+
+      modal.classList.add("show");
+    }
+
+    // AI 三层记忆管理库逻辑
+    let currentMemoryTab = "long";
+
+    function renderMemoryManagerList() {
+      const container = document.querySelector("#memoryListContainer");
+      if (!container) return;
+      container.innerHTML = "";
+
+      const settings = getActiveChatSettings();
+      if (!Array.isArray(settings.permanentMemories)) settings.permanentMemories = [];
+      if (!Array.isArray(settings.stageMemories)) settings.stageMemories = [];
+
+      const countLong = document.querySelector("#memCountLong");
+      const countStage = document.querySelector("#memCountStage");
+      if (countLong) countLong.textContent = String(settings.permanentMemories.length);
+      if (countStage) countStage.textContent = String(settings.stageMemories.length);
+
+      if (currentMemoryTab === "short") {
+        const card = document.createElement("div");
+        card.className = "announcement-item";
+        card.innerHTML = `
+          <strong>短期会话记忆 (Short-term Context)</strong>
+          <p style="margin-top:6px;">目前 AI 每次回复会实时参考最近 <b>${settings.memoryTurns || 10} 轮 (${(settings.memoryTurns || 10) * 2} 条)</b> 真实对话，保持当刻交流无缝连贯。</p>
+        `;
+        container.appendChild(card);
+        return;
+      }
+
+      if (currentMemoryTab === "stage") {
+        if (!settings.stageMemories.length) {
+          container.innerHTML = `<div class="favorite-message-empty">暂无阶段性记忆。当一段重要时期或深入长聊后，角色会自动提炼阶段记忆。</div>`;
+          return;
+        }
+        settings.stageMemories.forEach((mem, idx) => {
+          const item = document.createElement("div");
+          item.className = "announcement-item";
+          item.innerHTML = `
+            <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+              <strong style="color:#111;">${mem.title || "阶段记忆"}</strong>
+              <button class="mask-action-btn danger" type="button" title="删除"><i class="fa-solid fa-trash"></i></button>
+            </div>
+            <p style="margin-top:4px; color:#444;">${mem.content || ""}</p>
+            <small style="font-size:10px; color:#aaa; margin-top:4px; display:block;">${mem.date || ""}</small>
+          `;
+          item.querySelector("button").addEventListener("click", async () => {
+            settings.stageMemories.splice(idx, 1);
+            renderMemoryManagerList();
+            await saveState();
+          });
+          container.appendChild(item);
+        });
+        return;
+      }
+
+      // 长期核心记忆 (Long-term & Locked)
+      if (!settings.permanentMemories.length) {
+        container.innerHTML = `<div class="favorite-message-empty">暂无长期锁定记忆。点击右上角 <b>+</b> 按钮为角色注入绝对不能忘记的重要约定或习惯！</div>`;
+        return;
+      }
+
+      settings.permanentMemories.forEach((mem, idx) => {
+        const item = document.createElement("div");
+        item.className = "announcement-item";
+        const isLocked = !!mem.locked;
+        item.innerHTML = `
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+            <strong style="color:#000;">${isLocked ? '<i class="fa-solid fa-lock" style="margin-right:4px;"></i>' : ''}${mem.title || "长期事实"}</strong>
+            <div style="display:flex; gap:6px;">
+              <button class="mask-action-btn" type="button" data-mem-act="lock" title="${isLocked ? '解锁' : '锁定牢记'}"><i class="fa-solid ${isLocked ? 'fa-lock-open' : 'fa-lock'}"></i></button>
+              <button class="mask-action-btn" type="button" data-mem-act="edit" title="编辑"><i class="fa-solid fa-pen"></i></button>
+              <button class="mask-action-btn danger" type="button" data-mem-act="del" title="删除"><i class="fa-solid fa-trash"></i></button>
+            </div>
+          </div>
+          <p style="color:#333; font-size:12px; line-height:1.5;">${mem.content || ""}</p>
+        `;
+
+        item.querySelector('[data-mem-act="lock"]')?.addEventListener("click", async () => {
+          mem.locked = !mem.locked;
+          renderMemoryManagerList();
+          await saveState();
+        });
+
+        item.querySelector('[data-mem-act="edit"]')?.addEventListener("click", async () => {
+          const nextVal = await showMusicPrompt({
+            title: "编辑记忆内容",
+            value: mem.content || "",
+            confirmText: "保存"
+          });
+          if (nextVal !== null && nextVal.trim()) {
+            mem.content = nextVal.trim();
+            renderMemoryManagerList();
+            await saveState();
+          }
+        });
+
+        item.querySelector('[data-mem-act="del"]')?.addEventListener("click", async () => {
+          const ok = await showCatpawConfirm("确定删除该条长期记忆吗？角色将不再牢记此事实。");
+          if (!ok) return;
+          settings.permanentMemories.splice(idx, 1);
+          renderMemoryManagerList();
+          await saveState();
+        });
+
+        container.appendChild(item);
+      });
+    }
+
+    function openMemoryManagerModal() {
+      const modal = document.querySelector("#memoryManagerModal");
+      if (!modal) return;
+      currentMemoryTab = "long";
+      document.querySelectorAll("[data-memory-tab]").forEach(b => b.classList.toggle("active", b.dataset.memoryTab === "long"));
+      renderMemoryManagerList();
+      modal.classList.add("show");
+    }
+
+    // 时间线日期时光机
+    function openChatTimelineModal() {
+      const modal = document.querySelector("#chatTimelineModal");
+      const listEl = document.querySelector("#timelineDateList");
+      if (!modal || !listEl) return;
+
+      const messages = getCurrentChatMessages();
+      listEl.innerHTML = "";
+
+      if (!messages.length) {
+        listEl.innerHTML = `<div class="favorite-message-empty">当前还没有聊天记录。</div>`;
+        modal.classList.add("show");
+        return;
+      }
+
+      // 按自然日分组
+      const dateMap = new Map();
+      messages.forEach(m => {
+        if (!m.createdAtMs) return;
+        const d = new Date(m.createdAtMs);
+        const dateKey = `${d.getFullYear()}年${d.getMonth() + 1}月${d.getDate()}日`;
+        if (!dateMap.has(dateKey)) {
+          dateMap.set(dateKey, { firstMsgId: getMessageId(m), count: 0 });
+        }
+        dateMap.get(dateKey).count++;
+      });
+
+      dateMap.forEach((val, dateStr) => {
+        const row = document.createElement("button");
+        row.type = "button";
+        row.className = "musa-pl-row";
+        row.style.minHeight = "48px";
+        row.style.padding = "10px 14px";
+        row.style.background = "#f7f7f7";
+        row.style.borderRadius = "14px";
+        row.innerHTML = `
+          <div style="flex:1; text-align:left;">
+            <strong style="font-size:13.5px; color:#111;">${dateStr}</strong>
+            <span style="font-size:10.5px; color:#8e8e93; display:block; margin-top:2px;">当天共有 ${val.count} 条记录</span>
+          </div>
+          <i class="fa-solid fa-chevron-right" style="font-size:11px; color:#aaa;"></i>
+        `;
+
+        row.addEventListener("click", () => {
+          modal.classList.remove("show");
+          const targetEl = document.querySelector(`.qq-message-row[data-message-id="${val.firstMsgId}"]`);
+          if (targetEl) {
+            targetEl.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        });
+
+        listEl.appendChild(row);
+      });
+
+      modal.classList.add("show");
     }
 
     async function deleteActiveContact() {
@@ -28434,6 +28966,7 @@ function extractRoleReplyLines(reply) {
         `我的身份/昵称/设定：${settings.myName || "未填写"}`,
         `我和角色的经历：${role.story || "未填写"}`,
         `已绑定世界书（本次回复会读取以下内容）：\n${getBoundWorldBookText(role)}`,
+        `【角色的长期牢固记忆】\n${(settings.permanentMemories || []).map(m => `· [${m.locked ? '不可遗忘约定' : '重要事实'}] ${m.title || ''}: ${m.content || ''}`).join("\n") || "暂无特别锁定的长期记忆"}`,
         `可用表情包：\n${getBoundStickerText()}`,
         `最近十条动态与互动记忆：\n${getRoleMomentMemoryText(role)}`,
         `最近聊天记忆：\n${memory || "暂无聊天记录"}`
@@ -31338,6 +31871,71 @@ function extractRoleReplyLines(reply) {
 
     if (chatHistorySearch) {
       chatHistorySearch.addEventListener("input", updateChatHistorySearch);
+    }
+
+    document.querySelectorAll("[data-search-filter]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll("[data-search-filter]").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        currentSearchFilterType = btn.dataset.searchFilter || "all";
+        updateChatHistorySearch();
+      });
+    });
+
+    const openRelationArchiveBtn = document.querySelector("#openRelationArchiveBtn");
+    const closeRelationArchive = document.querySelector("#closeRelationArchive");
+    const relationArchiveModal = document.querySelector("#relationArchiveModal");
+    if (openRelationArchiveBtn) openRelationArchiveBtn.addEventListener("click", openRelationArchiveModal);
+    if (closeRelationArchive && relationArchiveModal) {
+      closeRelationArchive.addEventListener("click", () => relationArchiveModal.classList.remove("show"));
+    }
+
+    const openMemoryManagerBtn = document.querySelector("#openMemoryManagerBtn");
+    const closeMemoryManager = document.querySelector("#closeMemoryManager");
+    const memoryManagerModal = document.querySelector("#memoryManagerModal");
+    const addPermanentMemoryBtn = document.querySelector("#addPermanentMemoryBtn");
+
+    if (openMemoryManagerBtn) openMemoryManagerBtn.addEventListener("click", openMemoryManagerModal);
+    if (closeMemoryManager && memoryManagerModal) {
+      closeMemoryManager.addEventListener("click", () => memoryManagerModal.classList.remove("show"));
+    }
+
+    document.querySelectorAll("[data-memory-tab]").forEach(tabBtn => {
+      tabBtn.addEventListener("click", () => {
+        document.querySelectorAll("[data-memory-tab]").forEach(b => b.classList.remove("active"));
+        tabBtn.classList.add("active");
+        currentMemoryTab = tabBtn.dataset.memoryTab || "long";
+        renderMemoryManagerList();
+      });
+    });
+
+    if (addPermanentMemoryBtn) {
+      addPermanentMemoryBtn.addEventListener("click", async () => {
+        const title = await showMusicPrompt({ title: "记忆标题/关键词", placeholder: "例如：我的称呼偏好 / 我们的约定", confirmText: "下一步" });
+        if (!title) return;
+        const content = await showMusicPrompt({ title: "具体记忆详情", placeholder: "例如：不喜欢被叫做小朋友；约定好冬天一起喝奶茶", confirmText: "牢记" });
+        if (!content) return;
+
+        const settings = getActiveChatSettings();
+        if (!Array.isArray(settings.permanentMemories)) settings.permanentMemories = [];
+        settings.permanentMemories.unshift({
+          id: `mem_${Date.now()}`,
+          title: title.trim(),
+          content: content.trim(),
+          locked: true,
+          date: new Date().toLocaleDateString("zh-CN")
+        });
+        renderMemoryManagerList();
+        await saveState();
+      });
+    }
+
+    const openChatTimelineBtn = document.querySelector("#openChatTimelineBtn");
+    const closeChatTimeline = document.querySelector("#closeChatTimeline");
+    const chatTimelineModal = document.querySelector("#chatTimelineModal");
+    if (openChatTimelineBtn) openChatTimelineBtn.addEventListener("click", openChatTimelineModal);
+    if (closeChatTimeline && chatTimelineModal) {
+      closeChatTimeline.addEventListener("click", () => chatTimelineModal.classList.remove("show"));
     }
 
     if (clearCurrentContactMemory) {
