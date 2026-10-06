@@ -16056,14 +16056,14 @@
     }
 
     /* ============================================================
-       拟真微博 APP · 纯黑白灰极简轻奢风
+       拟真微博 APP · 纯黑白灰深度复刻截图同款排版
        ============================================================ */
     .weibo-page {
       position: fixed;
       inset: 0;
       z-index: 50;
       display: none;
-      background: #ffffff;
+      background: #f4f5f7;
       color: #111111;
       flex-direction: column;
       overflow: hidden;
@@ -16073,213 +16073,447 @@
       display: flex;
     }
 
+    /* 截图同款顶部 Header */
     .wb-head {
       flex-shrink: 0;
-      min-height: 54px;
-      padding: calc(6px + env(safe-area-inset-top)) 16px 8px;
+      min-height: 48px;
+      padding: calc(6px + env(safe-area-inset-top)) 12px 6px;
       display: grid;
-      grid-template-columns: 36px 1fr 36px;
+      grid-template-columns: 70px 1fr 70px;
       align-items: center;
-      gap: 10px;
-      border-bottom: 1px solid #f2f2f2;
+      border-bottom: 1px solid #ededed;
       background: #ffffff;
+      z-index: 10;
     }
 
-    .wb-icon-btn {
-      width: 36px;
-      height: 36px;
+    .wb-head-left {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .wb-super-topic-btn {
       border: 0;
-      border-radius: 50%;
       background: transparent;
       color: #111111;
-      font-size: 16px;
-      display: grid;
-      place-items: center;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
       cursor: pointer;
-      transition: background 0.12s ease;
     }
 
-    .wb-icon-btn:active {
-      background: #f5f5f5;
-    }
-
-    .wb-nav-tabs {
+    .wb-head-tabs {
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 22px;
+      gap: 20px;
     }
 
     .wb-tab {
-      font-size: 15px;
-      font-weight: 500;
-      color: #8e8e93;
+      font-size: 16px;
+      font-weight: 600;
+      color: #7b818a;
       border: 0;
       background: transparent;
       cursor: pointer;
       position: relative;
-      padding: 6px 0;
+      padding: 4px 0 6px;
       transition: color 0.12s ease;
     }
 
     .wb-tab.active {
       color: #000000;
-      font-weight: 700;
+      font-weight: 800;
+      font-size: 17px;
     }
 
     .wb-tab.active::after {
       content: "";
       position: absolute;
-      left: 15%;
-      right: 15%;
+      left: 10%;
+      right: 10%;
       bottom: 0;
-      height: 2.5px;
+      height: 3px;
       background: #000000;
       border-radius: 999px;
     }
 
+    .wb-head-right {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+
+    .wb-head-icon-btn {
+      border: 0;
+      background: transparent;
+      color: #111111;
+      font-size: 17px;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+    }
+
+    .wb-head-add-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #111111;
+      color: #ffffff;
+      border: 0;
+      font-size: 13px;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      transition: opacity 0.12s ease;
+    }
+
+    .wb-head-add-btn:active {
+      opacity: 0.8;
+    }
+
+    /* 微博内容滚动流 */
     .wb-main {
       flex: 1;
       min-height: 0;
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
-      background: #f7f7f7;
+      background: #f4f5f7;
+      padding-bottom: calc(64px + env(safe-area-inset-bottom));
     }
 
     .wb-main::-webkit-scrollbar {
       display: none;
     }
 
-    /* 微博卡片流 */
+    /* 截图同款微博卡片 */
     .wb-card {
       background: #ffffff;
-      padding: 16px;
+      padding: 12px 14px 10px;
       margin-bottom: 8px;
+      border-bottom: 1px solid #ebecee;
     }
 
     .wb-card-header {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 12px;
+      gap: 10px;
+      margin-bottom: 10px;
     }
 
-    .wb-card-author {
+    .wb-card-author-wrap {
       display: flex;
       align-items: center;
       gap: 10px;
       min-width: 0;
     }
 
+    .wb-card-avatar-box {
+      position: relative;
+      width: 42px;
+      height: 42px;
+      flex-shrink: 0;
+    }
+
     .wb-card-avatar {
-      width: 44px;
-      height: 44px;
+      width: 100%;
+      height: 100%;
       border-radius: 50%;
       background: #f0f0f0;
       background-size: cover;
       background-position: center;
-      border: 1px solid #ededed;
-      flex-shrink: 0;
+      border: 1px solid #e8e8e8;
+    }
+
+    .wb-v-badge {
+      position: absolute;
+      right: -1px;
+      bottom: -1px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #111111;
+      color: #ffffff;
+      font-size: 7.5px;
+      font-weight: 900;
+      display: grid;
+      place-items: center;
+      border: 1.5px solid #ffffff;
     }
 
     .wb-card-meta {
       min-width: 0;
     }
 
-    .wb-card-meta strong {
-      font-size: 14.5px;
-      font-weight: 700;
-      color: #111111;
-      line-height: 1.25;
+    .wb-meta-row1 {
       display: flex;
       align-items: center;
-      gap: 5px;
+      gap: 6px;
+      line-height: 1.25;
+    }
+
+    .wb-meta-row1 strong {
+      font-size: 14px;
+      font-weight: 700;
+      color: #111111;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      max-width: 160px;
     }
 
-    .wb-verified-tag {
-      font-size: 9px;
-      color: #ffffff;
-      background: #111111;
-      padding: 1px 5px;
-      border-radius: 3px;
+    .wb-topic-badge {
+      font-size: 9.5px;
+      color: #666666;
+      background: #f0f2f5;
+      padding: 1px 6px;
+      border-radius: 4px;
       font-weight: 600;
+      white-space: nowrap;
     }
 
-    .wb-card-meta span {
-      display: block;
+    .wb-meta-row2 {
       margin-top: 3px;
-      font-size: 11px;
-      color: #8e8e93;
+      font-size: 10.5px;
+      color: #8c9098;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
+    .wb-card-more-btn {
+      border: 0;
+      background: transparent;
+      color: #b0b4bc;
+      font-size: 13px;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    /* 微博正文 */
     .wb-card-text {
       font-size: 14.5px;
       line-height: 1.6;
-      color: #111111;
+      color: #1a1a1a;
       word-break: break-word;
       white-space: pre-wrap;
       margin-bottom: 10px;
+      letter-spacing: -0.01em;
     }
 
-    .wb-card-text a {
-      color: #000000;
-      text-decoration: underline;
-      font-weight: 600;
+    .wb-card-text .wb-tag-highlight {
+      color: #111111;
+      font-weight: 700;
+      margin-right: 4px;
     }
 
-    .wb-card-img-wrap {
-      margin-bottom: 12px;
-      border-radius: 12px;
+    /* 截图同款图片/视频媒体展示卡 */
+    .wb-media-container {
+      margin-bottom: 10px;
+    }
+
+    .wb-video-card {
+      position: relative;
+      width: 100%;
+      border-radius: 10px;
       overflow: hidden;
-      border: 1px solid #f0f0f0;
+      background: #111111;
+      max-height: 280px;
+    }
+
+    .wb-video-card img {
+      width: 100%;
+      height: 230px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .wb-video-corner-logo {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      color: rgba(255, 255, 255, 0.88);
+      font-size: 9px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+    }
+
+    .wb-video-bot-bar {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 6px 10px;
+      background: linear-gradient(transparent, rgba(0,0,0,0.6));
+      color: #ffffff;
+      font-size: 10px;
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* 多图并排 */
+    .wb-img-grid {
+      display: grid;
+      gap: 4px;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .wb-img-grid.grid-1 {
+      grid-template-columns: 1fr;
       max-width: 280px;
     }
 
-    .wb-card-img-wrap img {
-      width: 100%;
-      display: block;
-      object-fit: cover;
-      max-height: 320px;
+    .wb-img-grid.grid-2 {
+      grid-template-columns: 1fr 1fr;
     }
 
-    /* 微博底部互动三连栏 (转发 / 评论 / 点赞) */
+    .wb-img-grid.grid-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .wb-img-grid img {
+      width: 100%;
+      height: 110px;
+      object-fit: cover;
+      display: block;
+      background: #ededed;
+    }
+
+    /* 截图同款热文胶囊 */
+    .wb-hot-tag-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: #f0f2f5;
+      color: #555c66;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 999px;
+      margin-bottom: 10px;
+    }
+
+    .wb-hot-tag-pill .wb-hot-bullet {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #111111;
+    }
+
+    /* 截图同款“友善评论，文明发言”快捷栏 */
+    .wb-quick-comment-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #f4f5f7;
+      padding: 6px 12px;
+      border-radius: 999px;
+      margin-bottom: 12px;
+      cursor: pointer;
+    }
+
+    .wb-qc-avatar {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #e0e0e0;
+      background-size: cover;
+      background-position: center;
+      flex-shrink: 0;
+    }
+
+    .wb-quick-comment-row span {
+      font-size: 11.5px;
+      color: #8c9098;
+    }
+
+    /* 截图同款底部三联互动栏 (转发 / 评论 / 点赞) */
     .wb-card-actions {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      padding-top: 10px;
-      border-top: 1px solid #f7f7f7;
+      padding-top: 8px;
+      border-top: 1px solid #f2f3f5;
     }
 
     .wb-action-btn {
       border: 0;
       background: transparent;
-      color: #666666;
+      color: #4a505a;
       font-size: 12px;
-      font-weight: 500;
+      font-weight: 600;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 6px;
       cursor: pointer;
-      padding: 6px 0;
+      padding: 4px 0;
       transition: color 0.1s ease;
     }
 
     .wb-action-btn i {
-      font-size: 14px;
+      font-size: 13px;
     }
 
     .wb-action-btn.liked {
       color: #000000;
-      font-weight: 700;
+      font-weight: 800;
     }
 
     .wb-action-btn:active {
       opacity: 0.6;
+    }
+
+    /* 截图同款微博底部原生 5 个 Tab 导航栏 */
+    .wb-bottom-bar {
+      position: fixed;
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%);
+      width: min(390px, 100vw);
+      height: calc(50px + env(safe-area-inset-bottom));
+      padding-bottom: env(safe-area-inset-bottom);
+      background: #ffffff;
+      border-top: 1px solid #ebecee;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      z-index: 20;
+    }
+
+    .wb-bar-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      color: #8c9098;
+      font-size: 9.5px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 0;
+      background: transparent;
+      width: 54px;
+      height: 100%;
+    }
+
+    .wb-bar-item i {
+      font-size: 16px;
+    }
+
+    .wb-bar-item.active {
+      color: #000000;
+      font-weight: 800;
     }
 
     /* 热搜榜排版 */
@@ -18582,26 +18816,39 @@
     </div>
   </section>
 
-  <!-- 拟真微博独立应用页面 (纯黑白灰极简) -->
+  <!-- 拟真微博独立应用页面 (纯黑白灰 · 截图 1:1 同款架构) -->
   <section class="weibo-page" id="weiboPage" aria-label="微博应用页面">
+    <!-- 截图同款顶部 Header -->
     <header class="wb-head">
-      <button class="wb-icon-btn" id="closeWeiboApp" type="button" aria-label="返回桌面">
-        <i class="fa-solid fa-chevron-left"></i>
-      </button>
-      <nav class="wb-nav-tabs">
-        <button class="wb-tab active" id="wbTabFeed" type="button">关注推荐</button>
-        <button class="wb-tab" id="wbTabHot" type="button">微博热搜</button>
+      <div class="wb-head-left">
+        <button class="wb-head-icon-btn" id="closeWeiboApp" type="button" aria-label="返回桌面" style="margin-right: 4px;">
+          <i class="fa-solid fa-chevron-left" style="font-size: 15px;"></i>
+        </button>
+        <button class="wb-super-topic-btn" id="wbSuperTopicBtn" type="button">
+          <span>超话</span>
+        </button>
+      </div>
+
+      <nav class="wb-head-tabs">
+        <button class="wb-tab active" id="wbTabFeed" type="button">推荐</button>
+        <button class="wb-tab" id="wbTabFollow" type="button">关注</button>
       </nav>
-      <button class="wb-icon-btn" id="openWeiboComposer" type="button" aria-label="发微博" title="发微博">
-        <i class="fa-solid fa-pen-nib"></i>
-      </button>
+
+      <div class="wb-head-right">
+        <button class="wb-head-icon-btn" id="wbHotSearchBtn" type="button" title="热搜榜">
+          <i class="fa-solid fa-fire-flame-curved" style="font-size: 15px;"></i>
+        </button>
+        <button class="wb-head-add-btn" id="openWeiboComposer" type="button" aria-label="发微博" title="发微博">
+          <i class="fa-solid fa-plus"></i>
+        </button>
+      </div>
     </header>
 
     <div class="wb-main" id="weiboMain">
-      <!-- 推荐信息流 -->
+      <!-- 微博推荐卡片流 -->
       <div id="weiboFeedList"></div>
 
-      <!-- 热搜流 -->
+      <!-- 实时热搜榜单抽屉 -->
       <div class="wb-hot-panel" id="weiboHotPanel">
         <div class="wb-hot-header">
           <strong>实时热搜榜单</strong>
@@ -18609,6 +18856,30 @@
         </div>
         <div class="wb-hot-list" id="weiboHotList"></div>
       </div>
+    </div>
+
+    <!-- 截图同款底部 5 大原生导航栏 (首页 / 视频 / 发现 / 消息 / 我) -->
+    <div class="wb-bottom-bar" aria-label="微博底栏导航">
+      <button class="wb-bar-item active" id="wbBarHome" type="button">
+        <i class="fa-solid fa-house"></i>
+        <span>首页</span>
+      </button>
+      <button class="wb-bar-item" id="wbBarVideo" type="button">
+        <i class="fa-regular fa-circle-play"></i>
+        <span>视频</span>
+      </button>
+      <button class="wb-bar-item" id="wbBarDiscover" type="button">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <span>发现</span>
+      </button>
+      <button class="wb-bar-item" id="wbBarMsg" type="button">
+        <i class="fa-regular fa-bell"></i>
+        <span>消息</span>
+      </button>
+      <button class="wb-bar-item" id="wbBarMine" type="button">
+        <i class="fa-regular fa-user"></i>
+        <span>我</span>
+      </button>
     </div>
   </section>
 
@@ -24477,12 +24748,13 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
     });
 
     // ============================================================
-    // 拟真微博系统核心逻辑 (纯黑白灰 · 角色联动与真实信息流)
+    // 拟真微博系统核心逻辑 (纯黑白灰 · 截图 1:1 对齐与角色互动流)
     // ============================================================
     const weiboPage = document.querySelector("#weiboPage");
     const closeWeiboApp = document.querySelector("#closeWeiboApp");
     const wbTabFeed = document.querySelector("#wbTabFeed");
-    const wbTabHot = document.querySelector("#wbTabHot");
+    const wbTabFollow = document.querySelector("#wbTabFollow");
+    const wbHotSearchBtn = document.querySelector("#wbHotSearchBtn");
     const weiboFeedList = document.querySelector("#weiboFeedList");
     const weiboHotPanel = document.querySelector("#weiboHotPanel");
     const weiboHotList = document.querySelector("#weiboHotList");
@@ -24499,6 +24771,7 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
     const weiboCharCount = document.querySelector("#weiboCharCount");
 
     let currentWeiboImg = "";
+    let activeWbTab = "feed"; // "feed" | "follow" | "hot"
 
     function ensureWeiboState() {
       if (!appState.weibo || typeof appState.weibo !== "object") {
@@ -24510,37 +24783,54 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       if (!Array.isArray(appState.weibo.posts)) appState.weibo.posts = [];
       if (!Array.isArray(appState.weibo.hotSearches)) appState.weibo.hotSearches = [];
 
-      // 初始化拟真微博默认内容（保证初次进入有真实世界感）
+      // 按照用户截图 1:1 风格注入默认真实微博
       if (!appState.weibo.posts.length) {
         appState.weibo.posts = [
           {
-            id: "wb_init_1",
-            authorName: "每日天文视觉",
+            id: "wb_shot_1",
+            authorName: "卢昱晓_",
+            topicTag: "卢昱晓超话",
             verified: true,
             authorAvatar: "https://771553.xyz/file/studio/5FDVc1VrKzVdH5mO.jpg",
-            time: "10分钟前",
-            source: "来自 微博网页版",
-            text: "#深空摄影# 猎户座大星云的高清重制切片。宇宙从不说话，却在此刻记录了一切光影的流转与静止。",
-            image: "",
-            likes: 1248,
+            time: "10-5",
+            source: "来自 新加关注",
+            text: "#卢昱晓超话# 掉落新彩蛋\n是和朋友们的碎碎念的晓碎片\n#卢昱晓遇见才晓##卢昱晓来到地球的另一边#",
+            mediaType: "video",
+            videoViews: "133万次观看",
+            videoDuration: "01:50",
+            videoLogo: "微博视频号",
+            image: "https://771553.xyz/file/studio/5FDVc1VrKzVdH5mO.jpg",
+            images: [],
+            hotIndex: "热文指数30000+",
+            likes: 79000,
             liked: false,
-            shares: 182,
+            commentsCount: 14000,
+            shares: 71000,
             comments: [
-              { authorName: "星际记录员", text: "纯黑白灰镜头下的细节太震撼了。" }
+              { authorName: "路过的摄影师", text: "黑白调色下的质感太高级了！" }
             ]
           },
           {
-            id: "wb_init_2",
-            authorName: "极简生活设计",
+            id: "wb_shot_2",
+            authorName: "椰小熊崽",
+            topicTag: "日常分享",
             verified: true,
-            authorAvatar: "",
-            time: "42分钟前",
-            source: "来自 iPhone 16 Pro",
-            text: "物体的减法，实质上是给注意力和内心的留白。保持纯粹，舍弃一切冗余的复杂感。",
+            authorAvatar: "https://771553.xyz/file/studio/5FDVc1VrKzVdH5mO.jpg",
+            time: "10-1",
+            source: "来自 iPhone 17 Pro Max 已编辑",
+            text: "假期快乐\n祝大家日日开心 十月顺遂呀\n#小葱 plog#",
+            mediaType: "images",
             image: "",
-            likes: 586,
+            images: [
+              "https://771553.xyz/file/studio/5FDVc1VrKzVdH5mO.jpg",
+              "https://771553.xyz/file/studio/5FDVc1VrKzVdH5mO.jpg",
+              "https://771553.xyz/file/studio/5FDVc1VrKzVdH5mO.jpg"
+            ],
+            hotIndex: "热文指数18000+",
+            likes: 42000,
             liked: false,
-            shares: 64,
+            commentsCount: 8600,
+            shares: 3200,
             comments: []
           }
         ];
@@ -24548,16 +24838,23 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
 
       if (!appState.weibo.hotSearches.length) {
         appState.weibo.hotSearches = [
-          { rank: "置顶", title: "全国大范围降温气温变化", heat: "420万", tag: "热" },
-          { rank: "1", title: "极简主义生活方式流行", heat: "318万", tag: "沸" },
-          { rank: "2", title: "新一代智能终端全屏交互", heat: "284万", tag: "新" },
-          { rank: "3", title: "这周末去哪里散步放空", heat: "220万", tag: "" },
-          { rank: "4", title: "咖啡馆偶遇窗外落叶", heat: "196万", tag: "" },
-          { rank: "5", title: "如何保持高质量的专注力", heat: "164万", tag: "" },
-          { rank: "6", title: "经典电影黑白剧照重现", heat: "142万", tag: "" },
-          { rank: "7", title: "今日份平淡而治愈的瞬间", heat: "119万", tag: "" }
+          { rank: "置顶", title: "全国气温大范围波动提醒", heat: "420万", tag: "热" },
+          { rank: "1", title: "极简黑白美学设计潮流", heat: "318万", tag: "沸" },
+          { rank: "2", title: "新一代智能终端全屏交互体验", heat: "284万", tag: "新" },
+          { rank: "3", title: "散步与生活慢节奏记录", heat: "220万", tag: "" },
+          { rank: "4", title: "秋天第一张黑白质感相片", heat: "196万", tag: "" },
+          { rank: "5", title: "保持内心清爽专注的方法", heat: "164万", tag: "" },
+          { rank: "6", title: "独立摄影展作品赏析", heat: "142万", tag: "" }
         ];
       }
+    }
+
+    function formatWbCount(num) {
+      const n = Number(num || 0);
+      if (n >= 10000) {
+        return (n / 10000).toFixed(1).replace(/\.0$/, "") + "万";
+      }
+      return n > 0 ? String(n) : "";
     }
 
     function renderWeiboFeed() {
@@ -24565,48 +24862,118 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       ensureWeiboState();
       weiboFeedList.innerHTML = "";
 
+      const myAvatar = appState.theme.cardProfileCoverImage || appState.theme.avatarImage || "https://771553.xyz/file/studio/5FDVc1VrKzVdH5mO.jpg";
+
       appState.weibo.posts.forEach((post) => {
         const card = document.createElement("article");
         card.className = "wb-card";
         card.dataset.postId = post.id;
 
-        const avatarSrc = post.authorAvatar || appState.theme.avatarImage || "";
-        const verifiedTag = post.verified ? `<span class="wb-verified-tag">V</span>` : "";
+        const avatarSrc = post.authorAvatar || myAvatar;
+        const topicHtml = post.topicTag ? `<span class="wb-topic-badge">${post.topicTag}</span>` : "";
 
-        let imgHtml = "";
-        if (post.image) {
-          imgHtml = `<div class="wb-card-img-wrap"><img src="${post.image}" alt="微博配图" loading="lazy" /></div>`;
+        // 话题高亮转化
+        let richText = (post.text || "").replace(/(#[^#\n]+#)/g, '<span class="wb-tag-highlight">$1</span>');
+
+        // 多媒体排版（视频大卡片 / 多图九宫格）
+        let mediaHtml = "";
+        if (post.mediaType === "video" && post.image) {
+          mediaHtml = `
+            <div class="wb-media-container">
+              <div class="wb-video-card">
+                <img src="${post.image}" alt="视频画面" loading="lazy" />
+                <div class="wb-video-corner-logo">
+                  <i class="fa-solid fa-play" style="font-size:7px;"></i>
+                  <span>${post.videoLogo || "微博视频号"}</span>
+                </div>
+                <div class="wb-video-bot-bar">
+                  <span>${post.videoViews || "10万次观看"}</span>
+                  <span>${post.videoDuration || "01:20"}</span>
+                </div>
+              </div>
+            </div>
+          `;
+        } else if (Array.isArray(post.images) && post.images.length > 0) {
+          const gridClass = post.images.length === 1 ? "grid-1" : post.images.length === 2 ? "grid-2" : "grid-3";
+          mediaHtml = `
+            <div class="wb-media-container">
+              <div class="wb-img-grid ${gridClass}">
+                ${post.images.slice(0, 9).map(img => `<img src="${img}" alt="配图" loading="lazy" />`).join("")}
+              </div>
+            </div>
+          `;
+        } else if (post.image) {
+          mediaHtml = `
+            <div class="wb-media-container">
+              <div class="wb-img-grid grid-1">
+                <img src="${post.image}" alt="配图" loading="lazy" />
+              </div>
+            </div>
+          `;
+        }
+
+        // 热文标签
+        let hotTagHtml = "";
+        if (post.hotIndex) {
+          hotTagHtml = `
+            <div class="wb-hot-tag-pill">
+              <span class="wb-hot-bullet"></span>
+              <span>${post.hotIndex}</span>
+            </div>
+          `;
         }
 
         const comments = Array.isArray(post.comments) ? post.comments : [];
+        const displayCommentsCount = formatWbCount(post.commentsCount || comments.length);
+        const displayLikesCount = formatWbCount(post.likes || 0);
+        const displaySharesCount = formatWbCount(post.shares || 0);
 
         card.innerHTML = `
           <div class="wb-card-header">
-            <div class="wb-card-author">
-              <div class="wb-card-avatar" style="background-image:url('${avatarSrc}');"></div>
+            <div class="wb-card-author-wrap">
+              <div class="wb-card-avatar-box">
+                <div class="wb-card-avatar" style="background-image:url('${avatarSrc}');"></div>
+                <span class="wb-v-badge">V</span>
+              </div>
               <div class="wb-card-meta">
-                <strong><span>${post.authorName || "我"}</span>${verifiedTag}</strong>
-                <span>${post.time || "刚刚"} · ${post.source || "来自 iPhone"}</span>
+                <div class="wb-meta-row1">
+                  <strong>${post.authorName || "我"}</strong>
+                  ${topicHtml}
+                </div>
+                <div class="wb-meta-row2">
+                  <span>${post.time || "刚刚"}</span>
+                  <span>${post.source || "来自 iPhone 16 Pro Max"}</span>
+                </div>
               </div>
             </div>
-            <button class="wb-icon-btn" data-wb-action="more" type="button"><i class="fa-solid fa-ellipsis"></i></button>
+            <button class="wb-card-more-btn" data-wb-action="more" type="button" aria-label="更多操作">
+              <i class="fa-solid fa-chevron-down"></i>
+            </button>
           </div>
 
-          <div class="wb-card-text">${post.text || ""}</div>
-          ${imgHtml}
+          <div class="wb-card-text">${richText}</div>
+          ${mediaHtml}
+          ${hotTagHtml}
 
+          <!-- 截图同款“友善评论，文明发言”快捷栏 -->
+          <div class="wb-quick-comment-row" data-wb-action="quick-comment">
+            <div class="wb-qc-avatar" style="background-image:url('${myAvatar}');"></div>
+            <span>友善评论，文明发言</span>
+          </div>
+
+          <!-- 截图同款底部三联互动栏 -->
           <div class="wb-card-actions">
             <button class="wb-action-btn" data-wb-action="share" type="button">
               <i class="fa-solid fa-arrow-up-from-bracket"></i>
-              <span>${post.shares || "转发"}</span>
+              <span>${displaySharesCount || "转发"}</span>
             </button>
             <button class="wb-action-btn" data-wb-action="toggle-comment" type="button">
               <i class="fa-regular fa-comment"></i>
-              <span>${comments.length || "评论"}</span>
+              <span>${displayCommentsCount || "评论"}</span>
             </button>
             <button class="wb-action-btn ${post.liked ? "liked" : ""}" data-wb-action="like" type="button">
               <i class="fa-regular fa-thumbs-up"></i>
-              <span>${post.likes || "赞"}</span>
+              <span>${displayLikesCount || "赞"}</span>
             </button>
           </div>
 
@@ -24771,6 +25138,22 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       }, 3500);
     }
 
+    // 微博卡片内快捷评论交互绑定
+    document.addEventListener("click", (e) => {
+      const qcRow = e.target.closest('[data-wb-action="quick-comment"]');
+      if (qcRow) {
+        const card = qcRow.closest(".wb-card");
+        if (!card) return;
+        const postId = card.dataset.postId;
+        const commentBox = card.querySelector(`[data-wb-comment-box="${postId}"]`);
+        if (commentBox) {
+          commentBox.classList.add("show");
+          const input = commentBox.querySelector(".wb-comment-input");
+          input?.focus();
+        }
+      }
+    });
+
     // 事件绑定
     if (forumApp) {
       forumApp.addEventListener("click", () => {
@@ -24785,19 +25168,99 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       closeWeiboApp.addEventListener("click", () => weiboPage.classList.remove("show"));
     }
 
-    if (wbTabFeed && wbTabHot) {
+    // 推荐 / 关注 切换
+    if (wbTabFeed && wbTabFollow) {
       wbTabFeed.addEventListener("click", () => {
         wbTabFeed.classList.add("active");
-        wbTabHot.classList.remove("active");
+        wbTabFollow.classList.remove("active");
         if (weiboFeedList) weiboFeedList.style.display = "block";
         if (weiboHotPanel) weiboHotPanel.classList.remove("show");
       });
 
-      wbTabHot.addEventListener("click", () => {
-        wbTabHot.classList.add("active");
+      wbTabFollow.addEventListener("click", () => {
+        wbTabFollow.classList.add("active");
         wbTabFeed.classList.remove("active");
-        if (weiboFeedList) weiboFeedList.style.display = "none";
+        if (weiboFeedList) weiboFeedList.style.display = "block";
+        if (weiboHotPanel) weiboHotPanel.classList.remove("show");
+      });
+    }
+
+    // 顶部超话按钮
+    const wbSuperTopicBtn = document.querySelector("#wbSuperTopicBtn");
+    if (wbSuperTopicBtn) {
+      wbSuperTopicBtn.addEventListener("click", () => {
+        openWeiboComposeWithTopic("微博超话");
+      });
+    }
+
+    // 顶部火苗按钮切换热搜榜
+    if (wbHotSearchBtn) {
+      wbHotSearchBtn.addEventListener("click", () => {
+        const isHotShown = weiboHotPanel?.classList.contains("show");
+        if (isHotShown) {
+          if (weiboHotPanel) weiboHotPanel.classList.remove("show");
+          if (weiboFeedList) weiboFeedList.style.display = "block";
+          wbTabFeed?.classList.add("active");
+          wbTabFollow?.classList.remove("active");
+        } else {
+          if (weiboHotPanel) weiboHotPanel.classList.add("show");
+          if (weiboFeedList) weiboFeedList.style.display = "none";
+          wbTabFeed?.classList.remove("active");
+          wbTabFollow?.classList.remove("active");
+        }
+      });
+    }
+
+    // 底部 5 大原生 Tab 点击事件
+    const wbBarHome = document.querySelector("#wbBarHome");
+    const wbBarVideo = document.querySelector("#wbBarVideo");
+    const wbBarDiscover = document.querySelector("#wbBarDiscover");
+    const wbBarMsg = document.querySelector("#wbBarMsg");
+    const wbBarMine = document.querySelector("#wbBarMine");
+
+    const setWbBarActive = (btn) => {
+      document.querySelectorAll(".wb-bar-item").forEach(b => b.classList.remove("active"));
+      btn?.classList.add("active");
+    };
+
+    if (wbBarHome) {
+      wbBarHome.addEventListener("click", () => {
+        setWbBarActive(wbBarHome);
+        if (weiboFeedList) weiboFeedList.style.display = "block";
+        if (weiboHotPanel) weiboHotPanel.classList.remove("show");
+        wbTabFeed?.classList.add("active");
+        wbTabFollow?.classList.remove("active");
+        const main = document.querySelector("#weiboMain");
+        if (main) main.scrollTop = 0;
+      });
+    }
+
+    if (wbBarVideo) {
+      wbBarVideo.addEventListener("click", () => {
+        setWbBarActive(wbBarVideo);
+        showCatpawAlert("视频信息流正在聚合中，稍后可在视频流观看角色日常动态。", "微博视频");
+      });
+    }
+
+    if (wbBarDiscover) {
+      wbBarDiscover.addEventListener("click", () => {
+        setWbBarActive(wbBarDiscover);
         if (weiboHotPanel) weiboHotPanel.classList.add("show");
+        if (weiboFeedList) weiboFeedList.style.display = "none";
+      });
+    }
+
+    if (wbBarMsg) {
+      wbBarMsg.addEventListener("click", () => {
+        setWbBarActive(wbBarMsg);
+        showCatpawAlert("暂无新的微博互动通知或私信。", "微博消息");
+      });
+    }
+
+    if (wbBarMine) {
+      wbBarMine.addEventListener("click", () => {
+        setWbBarActive(wbBarMine);
+        showCatpawAlert(`当前微博主页：${appState.theme.cardProfileName || "我"}，已发布 ${appState.weibo?.posts?.length || 0} 条微博。`, "微博主页");
       });
     }
 
