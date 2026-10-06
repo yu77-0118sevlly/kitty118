@@ -17517,17 +17517,25 @@
       display: flex;
     }
 
-    /* 创建超话表单全屏页面 · 纯黑白灰极简 */
+    /* 创建超话表单全屏页面 · 100% 防溢出自适应与纯黑白灰极简 */
     .wb-create-topic-page {
       position: fixed;
       inset: 0;
+      width: 100%;
+      max-width: 100%;
       z-index: 90;
       display: none;
       background: #f4f5f7;
       flex-direction: column;
       overflow-y: auto;
+      overflow-x: hidden;
       -webkit-overflow-scrolling: touch;
       padding-bottom: calc(40px + env(safe-area-inset-bottom));
+      box-sizing: border-box;
+    }
+
+    .wb-create-topic-page * {
+      box-sizing: border-box;
     }
 
     .wb-create-topic-page.show {
@@ -17538,6 +17546,8 @@
       background: #ffffff;
       padding: 16px;
       margin-bottom: 8px;
+      width: 100%;
+      max-width: 100%;
     }
 
     .wb-ct-avatar-pick {
@@ -17545,29 +17555,30 @@
       flex-direction: column;
       align-items: center;
       gap: 10px;
-      padding: 18px 0;
+      padding: 14px 0 6px;
       cursor: pointer;
     }
 
     .wb-ct-avatar-circle {
-      width: 80px;
-      height: 80px;
-      border-radius: 18px;
+      width: 76px;
+      height: 76px;
+      border-radius: 16px;
       background: #f0f2f5;
       background-size: cover;
       background-position: center;
-      border: 1.5px dashed #ccc;
+      border: 1.5px dashed #cccccc;
       display: grid;
       place-items: center;
-      font-size: 24px;
-      color: #666;
+      font-size: 22px;
+      color: #555555;
     }
 
     .wb-ct-input-row {
       display: flex;
       flex-direction: column;
       gap: 6px;
-      margin-top: 14px;
+      margin-top: 12px;
+      width: 100%;
     }
 
     .wb-ct-input-row label {
@@ -17577,6 +17588,7 @@
     }
 
     .wb-ct-input-row input {
+      width: 100%;
       height: 42px;
       border-radius: 10px;
       border: 1px solid #e0e2e5;
@@ -17589,37 +17601,42 @@
 
     .wb-ct-levels-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
       margin-top: 12px;
+      width: 100%;
     }
 
     .wb-ct-level-cell {
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 4px;
       background: #f8f9fa;
       padding: 6px 8px;
       border-radius: 8px;
       border: 1px solid #ebecee;
+      min-width: 0;
+      overflow: hidden;
     }
 
     .wb-ct-level-cell span {
-      font-size: 11px;
+      font-size: 10.5px;
       font-weight: 700;
-      color: #555;
-      width: 40px;
+      color: #444444;
+      width: 36px;
       flex-shrink: 0;
     }
 
     .wb-ct-level-cell input {
       flex: 1;
       min-width: 0;
+      width: 100%;
       border: none;
       background: transparent;
       font-size: 12px;
-      color: #111;
+      color: #111111;
       outline: none;
+      padding: 0;
     }
 
     /* 超话独立主页 · 1:1 截图同款纯黑白灰极简 */
@@ -28663,7 +28680,19 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
 
     function ensureWeiboSupertopics() {
       ensureWeiboState();
+      // 优先从独立 localStorage 恢复超话名单，确保重开或刷新 100% 存在
       if (!Array.isArray(appState.weibo.supertopics) || !appState.weibo.supertopics.length) {
+        try {
+          const cached = localStorage.getItem("weibo_saved_supertopics");
+          if (cached) {
+            const parsed = JSON.parse(cached);
+            if (Array.isArray(parsed) && parsed.length > 0) {
+              appState.weibo.supertopics = parsed;
+              return appState.weibo.supertopics;
+            }
+          }
+        } catch (e) {}
+
         appState.weibo.supertopics = [
           {
             id: "st_custom_1",
@@ -28681,6 +28710,16 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
         ];
       }
       return appState.weibo.supertopics;
+    }
+
+    // 同步把超话永久写进双重缓存
+    async function persistWeiboSupertopics() {
+      if (appState.weibo?.supertopics) {
+        try {
+          localStorage.setItem("weibo_saved_supertopics", JSON.stringify(appState.weibo.supertopics));
+        } catch (e) {}
+      }
+      await saveState();
     }
 
     // 渲染「我」页面里的超话横向胶囊
@@ -28773,12 +28812,13 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
           showCatpawAlert(tp.signed ? `已在 #${tp.title}# 完成签到！` : "已取消签到。");
         });
 
-        // 删除超话
-        card.querySelector("[data-act='del']").addEventListener("click", async () => {
-          const confirmed = await showCustomConfirmDialog(`确定要删除并注销超话「#${tp.title}#」吗？此操作不可逆。`, "删除超话");
+        // 删除超话（彻底修复点击不动，采用 100% 响应的确认机制）
+        card.querySelector("[data-act='del']").addEventListener("click", async (e) => {
+          e.stopPropagation();
+          const confirmed = window.confirm(`确定要彻底删除并注销超话「#${tp.title}#」吗？`);
           if (confirmed) {
             topics.splice(idx, 1);
-            await saveState();
+            await persistWeiboSupertopics();
             renderWeiboMineSupertopicCard();
             openWeiboSupertopicDetails();
             showCatpawAlert(`超话 #${tp.title}# 已成功删除！`, "删除成功");
@@ -28905,13 +28945,13 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
 
         const topics = ensureWeiboSupertopics();
         topics.unshift(newTopic);
-        await saveState();
+        await persistWeiboSupertopics();
 
         renderWeiboMineSupertopicCard();
         if (wbCreateTopicPage) wbCreateTopicPage.classList.remove("show");
         if (wbSupertopicModal) wbSupertopicModal.classList.remove("show");
 
-        showCatpawAlert(`超话 #${newTopic.title}# 创建成功！正在进入超话...`, "创建成功");
+        showCatpawAlert(`超话 #${newTopic.title}# 创建成功！已永久保存。正在进入超话...`, "创建成功");
         setTimeout(() => {
           openSupertopicDetailPage(newTopic);
         }, 300);
@@ -29034,21 +29074,22 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       });
     }
 
-    // 超话主页右上角直接删除该超话
+    // 超话主页右上角直接删除该超话（彻底修复点击无响应问题）
     if (wbStdDeleteBtn) {
       wbStdDeleteBtn.addEventListener("click", async () => {
         if (!currentActiveTopic) return;
-        const confirmed = await showCustomConfirmDialog(`确定要删除并解散超话「#${currentActiveTopic.title}#」吗？`, "删除超话");
+        const titleToDelete = currentActiveTopic.title;
+        const confirmed = window.confirm(`确定要彻底解散并删除超话「#${titleToDelete}#」吗？`);
         if (confirmed) {
           const topics = ensureWeiboSupertopics();
           const idx = topics.findIndex(t => t.id === currentActiveTopic.id);
           if (idx !== -1) {
             topics.splice(idx, 1);
-            await saveState();
+            await persistWeiboSupertopics();
           }
           if (wbSupertopicDetailPage) wbSupertopicDetailPage.classList.remove("show");
           renderWeiboMineSupertopicCard();
-          showCatpawAlert(`超话 #${currentActiveTopic.title}# 已成功删除！`, "删除成功");
+          showCatpawAlert(`超话 #${titleToDelete}# 已成功删除！`, "删除成功");
           currentActiveTopic = null;
         }
       });
