@@ -2615,6 +2615,7 @@
       flex: 1;
       min-height: 0;
       overflow: hidden;
+      position: relative;
     }
 
     .moments-page-head {
@@ -2768,16 +2769,18 @@
     }
 
     #qqPanelMoments .moments-page-head {
-      position: absolute;
+      position: sticky;
       left: 0;
       right: 0;
       top: 0;
       z-index: 6;
       min-height: 0;
-      padding: calc(8px + env(safe-area-inset-top)) 14px 8px;
+      padding: 8px 14px 8px;
       grid-template-columns: 38px 1fr 38px;
       border-bottom: 0 !important;
-      background: transparent;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
     }
 
     #qqPanelMoments .moments-page-back,
@@ -2815,7 +2818,7 @@
     }
 
     #qqPanelMoments .qq-moments-wrap {
-      padding: 0 0 calc(84px + env(safe-area-inset-bottom));
+      padding: 0 0 calc(100px + env(safe-area-inset-bottom));
       flex: 1;
       min-height: 0;
       overflow-y: auto;
@@ -3129,27 +3132,7 @@
     }
 
     .mo-fab {
-      position: absolute;
-      right: 18px;
-      bottom: calc(26px + env(safe-area-inset-bottom));
-      z-index: 7;
-      width: 54px;
-      height: 54px;
-      border: 0;
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      color: #ffffff;
-      background: #0f0f0f;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22);
-      font-size: 19px;
-      cursor: pointer;
-      transition: transform 0.15s ease, background 0.15s ease;
-    }
-
-    .mo-fab:active {
-      transform: scale(0.92);
-      background: #333333;
+      display: none !important;
     }
 
     /* 发布动态 · 极简纯白 Ins 撰写页重构（无边框 · 无彩色 · 全屏适配） */
@@ -9335,6 +9318,7 @@
       overflow: hidden;
       flex: 1;
       min-height: 0;
+      position: relative;
     }
 
     .contacts-page-head {
@@ -9412,7 +9396,7 @@
     }
 
     #qqPanelContacts.active .qq-contacts-wrap {
-      padding: 8px 18px calc(84px + env(safe-area-inset-bottom));
+      padding: 8px 18px calc(100px + env(safe-area-inset-bottom));
       background: #ffffff;
     }
 
@@ -24372,15 +24356,17 @@ const momentsAutoStatus = document.querySelector("#momentsAutoStatus");
       const isContacts = panelId === "qqPanelContacts";
       const isChats = panelId === "qqPanelChats";
 
-      // 只有进入具体聊天会话时才隐藏底栏和顶栏，其余页面（好友列表、朋友圈、消息列表）都保持底栏可见
+      // 只有进入具体聊天会话时才隐藏底栏，其余所有页面（消息列表、好友列表、朋友圈）都保持底栏可见
       if (qqPage) qqPage.classList.toggle("thread-mode", isThread);
-      if (qqBottomBar) qqBottomBar.style.display = isThread ? "none" : "";
+      if (qqBottomBar) qqBottomBar.style.display = isThread ? "none" : "flex";
       if (qqModeSwitch) qqModeSwitch.style.display = isThread ? "none" : "";
 
-      // 消息列表页显示完整顶栏和资料卡，其他 tab 页隐藏资料卡但保留顶栏
-      if (qqFeatureCard) qqFeatureCard.style.display = (isMoments || isContacts || isThread) ? "none" : "";
+      // 顶栏：只有进入聊天会话时隐藏，其他页面都保留
       const heroHead = document.querySelector(".qq-hero-head");
       if (heroHead) heroHead.style.display = isThread ? "none" : "";
+
+      // 资料卡（消息列表的个人信息区域）：仅在消息列表页显示
+      if (qqFeatureCard) qqFeatureCard.style.display = isChats ? "" : "none";
 
       if (isMoments) {
         renderMoments();
